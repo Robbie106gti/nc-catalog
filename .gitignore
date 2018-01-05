@@ -7,6 +7,7 @@
 
 # dependencies
 /node_modules
+functions/node_modules
 
 # IDEs and editors
 /.idea
@@ -40,3 +41,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+functions/firebase-debug.log
+functions/nickels-catalog-firebase-adminsdk-m8g1g-600cf4ab30.json
+src/assets/json/*.json
+src/assets/user code temp.txt
