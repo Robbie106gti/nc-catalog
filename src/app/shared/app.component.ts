@@ -4,10 +4,13 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: `
   <app-header></app-header>
-  <div>Hello world</div>
+  <router-outlet></router-outlet>
   <app-footer></app-footer>
-  `
+  `,
+  styleUrls: ['../app.styles.scss']
 })
 export class AppComponent {
-  
-}
+  constructor() {
+    document.getElementById('splash').style.display = 'none';
+  }
+ }

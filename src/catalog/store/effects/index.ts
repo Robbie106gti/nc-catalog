@@ -1,5 +1,5 @@
-import { RouterEffects } from './router.effect';
+import { CatalogEffects } from './catalog.effect';
 
-export const effects: any[] = [RouterEffects];
+export const effects: any[] = [CatalogEffects];
 
-export * from './router.effect';
+export * from './catalog.effect';

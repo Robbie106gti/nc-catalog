@@ -14,32 +14,35 @@ import { reducers, effects, CustomSerializer } from './store';
 // not used in production
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './shared/ui/header/header.component';
-import { FooterComponent } from './shared/ui/footer/footer.component';
-import { SidebarComponent } from './shared/ui/sidebar/sidebar.component';
-
-// feature modules
-import { AuthModule } from './shared/auth/auth.module';
+import { AppComponent } from './shared/app.component';
+import { HeaderComponent } from './shared/ui/header.component';
+import { FooterComponent } from './shared/ui/footer.component';
+import { HomeComponent } from './shared/ui/home.component';
 
 // routes
 export const ROUTES: Routes = [
-  { path: '', pathMatch: 'full' }
+  { path: '', pathMatch: 'full', component: HomeComponent },
+  {
+    path: 'catalog',
+    loadChildren: '../catalog/catalog.module#CatalogModule',
+  }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
     HeaderComponent,
-    FooterComponent,
-    SidebarComponent
+    FooterComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(ROUTES),
-    AuthModule
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot(effects),
+    StoreRouterConnectingModule
   ],
-  providers: [Store],
+  providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
