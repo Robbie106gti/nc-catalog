@@ -2,7 +2,7 @@ import * as fromCatalog from '../actions/catalog.action';
 import { Catalog } from '../../models/catalog.model';
 
 export interface CatalogState {
-  entities: { [id: number]: Catalog };
+  entities: { [id: string]: Catalog };
   loaded: boolean;
   loading: boolean;
 }
@@ -18,6 +18,7 @@ export function reducer(
   action: fromCatalog.CatalogAction
 ): CatalogState {
   switch (action.type) {
+
     case fromCatalog.LOAD_CATALOG: {
       return {
         ...state,
@@ -26,19 +27,14 @@ export function reducer(
     }
 
     case fromCatalog.LOAD_CATALOG_SUCCESS: {
-      const base = action.payload;
+      const catagories = action.payload;
 
-      const entities = base.reduce(
-        (entities1: { [id: number]: Catalog }, base1: Catalog) => {
-          return {
-            ...entities,
-            [base1.id]: base,
-          };
-        },
-        {
-          ...state.entities,
-        }
-      );
+      const entities = catagories.reduce(
+        // tslint:disable-next-line:no-shadowed-variable
+      (entities: { [id: string]: Catalog }, cat: Catalog) => {
+        return { ...entities, [cat.id]: { ...cat} };
+      },
+      { ...state.entities, });
 
       return {
         ...state,

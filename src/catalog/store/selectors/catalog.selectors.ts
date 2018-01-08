@@ -25,7 +25,7 @@ export const getSelectedCatalog = createSelector(
 );
 
 export const getCatalogBase = createSelector(getCatalogEntities, entities => {
-  return Object.keys(entities).map(id => entities[parseInt(id, 10)]);
+  return Object.keys(entities).map(id => entities[id]);
 });
 
 export const getCatalogLoaded = createSelector(

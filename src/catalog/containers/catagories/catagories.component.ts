@@ -16,7 +16,7 @@ import { Catalog } from '../../models/catalog.model';
         </div>
         <catagory-item
           *ngFor="let catagory of (catagories$ | async)"
-          [catagory]="catagory">
+          [catagory]="catagory" class="card">
         </catagory-item>
       </div>
     </div>
@@ -29,5 +29,6 @@ export class CatagoriesComponent implements OnInit {
 
   ngOnInit() {
     this.catagories$ = this.store.select(fromStore.getCatalogBase);
+    this.catagories$.subscribe(catagories => console.log(catagories));
   }
 }
