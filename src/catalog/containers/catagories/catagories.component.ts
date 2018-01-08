@@ -9,22 +9,15 @@ import { Catalog } from '../../models/catalog.model';
   selector: 'catagories',
   // styleUrls: ['products.component.scss'],
   template: `
-    <div class="products">
-      <div class="products__new">
-        <a
-          class="btn btn__ok"
-          routerLink="./new">
-          New Pizza
-        </a>
-      </div>
-      <div class="products__list">
-        <div *ngIf="!((pizzas$ | async)?.length)">
-          No pizzas, add one to get started.
+    <div class="section no-pad-bot" id="index-banner">
+      <div class="row grid" id="catalog">
+        <div *ngIf="!((catagories$ | async)?.length)">
+          No catagories, add one to get started.
         </div>
-        <pizza-item
-          *ngFor="let pizza of (pizzas$ | async)"
-          [pizza]="pizza">
-        </pizza-item>
+        <catagory-item
+          *ngFor="let catagory of (catagories$ | async)"
+          [catagory]="catagory">
+        </catagory-item>
       </div>
     </div>
   `,

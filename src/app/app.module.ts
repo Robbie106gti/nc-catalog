@@ -18,6 +18,13 @@ import { AppComponent } from './shared/app.component';
 import { HeaderComponent } from './shared/ui/header.component';
 import { FooterComponent } from './shared/ui/footer.component';
 import { HomeComponent } from './shared/ui/home.component';
+import { StoreDevtools } from '@ngrx/store-devtools/src/devtools';
+
+// this would be done dynamically with webpack for builds
+const environment = {
+  development: true,
+  production: false,
+};
 
 // routes
 export const ROUTES: Routes = [
@@ -40,7 +47,8 @@ export const ROUTES: Routes = [
     RouterModule.forRoot(ROUTES),
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot(effects),
-    StoreRouterConnectingModule
+    StoreRouterConnectingModule,
+    environment.development ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
   bootstrap: [AppComponent]
