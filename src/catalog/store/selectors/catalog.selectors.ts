@@ -20,11 +20,11 @@ export const getSelectedCatalog = createSelector(
   getCatalogEntities,
   fromRoot.getRouterState,
   (entities, router): Catalog => {
-    return router.state && entities[router.state.params.pizzaId];
+    return router.state && entities[router.state.params.Id];
   }
 );
 
-export const getAllPizzas = createSelector(getCatalogEntities, entities => {
+export const getCatalogBase = createSelector(getCatalogEntities, entities => {
   return Object.keys(entities).map(id => entities[parseInt(id, 10)]);
 });
 
