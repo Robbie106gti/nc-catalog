@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/Observable/of';
@@ -9,9 +10,9 @@ import { Catalog } from '../models/catalog.model';
 
 @Injectable()
 export class CatalogService {
-  constructor() {}
+  constructor(private afs: AngularFirestore) {}
 
-  getBase(): Observable<Catalog[]> {
+ /*  getBase(): Observable<Catalog[]> {
       const obj = {
           crudInfo: {
             createdAt: 'December 19, 2017 at 11:55:29 AM UTC-8',
@@ -25,6 +26,6 @@ export class CatalogService {
         tags: [],
         title: 'Vanity Channel Cabinets'
     };
-    return of([ ...obj ]);
-  }
+    const catalog = this.afs.collection<Catalog[]>('categories');
+  } */
 }

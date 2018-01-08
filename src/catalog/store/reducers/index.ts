@@ -1,12 +1,12 @@
 import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
-import * as fromCatalog from './catalog.reduce';
+import * as fromCatalog from './catalog.reducer';
 
-export interface CatalogState {
+export interface ProductsState {
     catalog: fromCatalog.CatalogState;
 }
 
-export const reducers: ActionReducerMap<CatalogState> = {
+export const reducers: ActionReducerMap<ProductsState> = {
     catalog: fromCatalog.reducer
 };
 
-export const getCatalogState = createFeatureSelector<CatalogState>('catalog');
+export const getProductsState = createFeatureSelector<ProductsState>('products');

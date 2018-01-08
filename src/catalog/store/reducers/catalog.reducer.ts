@@ -18,14 +18,14 @@ export function reducer(
   action: fromCatalog.CatalogAction
 ): CatalogState {
   switch (action.type) {
-    case fromCatalog.LOAD_BASE: {
+    case fromCatalog.LOAD_CATALOG: {
       return {
         ...state,
         loading: true,
       };
     }
 
-    case fromCatalog.LOAD_BASE_SUCCESS: {
+    case fromCatalog.LOAD_CATALOG_SUCCESS: {
       const base = action.payload;
 
       const entities = base.reduce(
@@ -48,7 +48,7 @@ export function reducer(
       };
     }
 
-    case fromCatalog.LOAD_BASE_FAIL: {
+    case fromCatalog.LOAD_CATALOG_FAIL: {
       return {
         ...state,
         loading: false,

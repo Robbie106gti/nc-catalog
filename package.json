@@ -28,7 +28,7 @@
     "@ngrx/store-devtools": "^4.1.1",
     "angularfire2": "^5.0.0-rc.4",
     "core-js": "^2.4.1",
-    "firebase": "^4.8.1",
+    "firebase": "^4.8.0",
     "firebase-functions": "^0.8.0",
     "materialize-css": "^0.100.2",
     "rxjs": "^5.5.2",

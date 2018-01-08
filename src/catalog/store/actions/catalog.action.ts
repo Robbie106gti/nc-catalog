@@ -2,21 +2,21 @@ import { Action } from '@ngrx/store';
 import { Catalog } from '../../models/catalog.model';
 
 // load catalog
-export const LOAD_BASE = '[Catalog] Load Base setup';
-export const LOAD_BASE_FAIL = '[Catalog] Load Base setup Fail';
-export const LOAD_BASE_SUCCESS = '[Catalog] Load Base setup Success';
+export const LOAD_CATALOG = '[Catalog] Load Base Catalog setup';
+export const LOAD_CATALOG_FAIL = '[Catalog] Load Base Catalog setup Fail';
+export const LOAD_CATALOG_SUCCESS = '[Catalog] Load Base Catalog setup Success';
 
-export class LoadBase implements Action {
-  readonly type = LOAD_BASE;
+export class LoadCatalog implements Action {
+  readonly type = LOAD_CATALOG;
 }
 
-export class LoadBaseFail implements Action {
-  readonly type = LOAD_BASE_FAIL;
+export class LoadCatalogFail implements Action {
+  readonly type = LOAD_CATALOG_FAIL;
   constructor(public payload: any) {}
 }
 
-export class LoadBaseSuccess implements Action {
-  readonly type = LOAD_BASE_SUCCESS;
+export class LoadCatalogSuccess implements Action {
+  readonly type = LOAD_CATALOG_SUCCESS;
   constructor(public payload: Catalog[]) {}
 }
 
@@ -25,4 +25,4 @@ export class LoadBaseSuccess implements Action {
 // delete items
 
 // action types
-export type CatalogAction = LoadBase | LoadBaseFail | LoadBaseSuccess;
+export type CatalogAction = LoadCatalog | LoadCatalogFail | LoadCatalogSuccess;

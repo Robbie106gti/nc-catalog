@@ -12,17 +12,17 @@ import * as fromServices from '../../services';
 export class CatalogEffects {
   constructor(
     private actions$: Actions,
-    private catalogService: fromServices.CatalogService
+    private firestoreService: fromServices.FirestoreService
   ) {}
 
   @Effect()
-  loadBase$ = this.actions$.ofType(catalogActions.LOAD_BASE).pipe(
+  loadCatalog$ = this.actions$.ofType(catalogActions.LOAD_CATALOG).pipe(
     switchMap(() => {
-      return this.catalogService
-        .getBase()
+      return this.firestoreService
+        .colWithIds$('categories')
         .pipe(
-          map(base => new catalogActions.LoadBaseSuccess(base)),
-          catchError(error => of(new catalogActions.LoadBaseFail(error)))
+          map(catalog => new catalogActions.LoadCatalogSuccess(catalog)),
+          catchError(error => of(new catalogActions.LoadCatalogFail(error)))
         );
     })
   );
