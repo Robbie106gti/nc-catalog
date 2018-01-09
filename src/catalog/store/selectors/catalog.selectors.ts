@@ -16,7 +16,7 @@ export const getCatalogEntities = createSelector(
   fromCatalog.getCatalogEntities
 );
 
-export const getSelectedCatalog = createSelector(
+export const getSelectedCategory = createSelector(
   getCatalogEntities,
   fromRoot.getRouterState,
   (entities, router): Catalog => {

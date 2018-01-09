@@ -31,7 +31,7 @@ export const ROUTES: Routes = [
   {
     path: '',
     canActivate: [fromGuards.CatalogGuard],
-    component: fromContainers.CatagoriesComponent,
+    component: fromContainers.CategoriesComponent,
   },
   {
     path: 'new',
@@ -39,8 +39,9 @@ export const ROUTES: Routes = [
    // component: fromContainers.ProductItemComponent,
   },
   {
-    path: ':Id',
-    // component: fromContainers.ProductItemComponent,
+    path: 'category/:Id',
+    canActivate: [fromGuards.CatalogGuard],
+    component: fromContainers.ItemViewComponent,
   },
 ];
 
