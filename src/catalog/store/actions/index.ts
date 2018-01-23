@@ -1,2 +1,3 @@
 export * from './catalog.action';
-export * from './base.action';
+export * from './bccabinets.action';
+export * from './bcabinets.action';

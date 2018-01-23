@@ -32,7 +32,7 @@ export function reducer(
       const entities = catagories.reduce(
         // tslint:disable-next-line:no-shadowed-variable
       (entities: { [id: string]: Catalog }, cat: Catalog) => {
-        return { ...entities, [cat.id]: { ...cat} };
+        return { ...entities, [cat.title]: { ...cat} };
       },
       { ...state.entities, });
 

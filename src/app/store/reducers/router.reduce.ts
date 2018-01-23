@@ -36,7 +36,6 @@ import {
         state = state.firstChild;
       }
       const { params } = state;
-
-      return { url, queryParams, params };
+        return { url, queryParams, params };
     }
   }

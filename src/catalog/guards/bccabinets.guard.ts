@@ -7,9 +7,11 @@ import { of } from 'rxjs/observable/of';
 import { tap, filter, take, switchMap, catchError } from 'rxjs/operators';
 
 import * as fromStore from '../store';
+import * as fromRoot from '../../app/store';
 
 @Injectable()
-export class CategoryGuard implements CanActivate {
+export class BCCabinetsGuard implements CanActivate {
+  loaded: Observable<boolean>;
   constructor(private store: Store<fromStore.ProductsState>) {}
 
   canActivate(): Observable<boolean> {
@@ -20,14 +22,14 @@ export class CategoryGuard implements CanActivate {
   }
 
   checkStore(): Observable<boolean> {
-    return this.store.select(fromStore.getCatalogLoaded).pipe(
+    return this.store.select(fromStore.getBCCabinetsLoaded).pipe(
       tap(loaded => {
         if (!loaded) {
-          this.store.dispatch(new fromStore.LoadCatalog());
+          this.store.dispatch(new fromStore.LoadBCCabinets());
         }
       }),
       filter(loaded => loaded),
       take(1)
-    );
-  }
+        );
+    }
 }

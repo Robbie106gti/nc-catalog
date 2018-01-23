@@ -1,10 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
 import { Catalog } from '../../models/catalog.model';
-import { Category } from '../../models/category.model';
+import { Cabinets } from '../../models/cabinets.model';
 import { tap, filter, take } from 'rxjs/operators';
 
 @Component({
@@ -15,7 +16,7 @@ import { tap, filter, take } from 'rxjs/operators';
     <div class="section no-pad-bot" id="index-banner">
       <div class="card" id="top">
         <div class="container">
-            <a [routerLink]="['../../']" class="right"><i class="small material-icons">arrow_back</i></a>
+            <a routerLink="/catalog" class="right"><i class="small material-icons">arrow_back</i></a>
             <div id="topic"><h1 id="topic">{{ (cat$ | async)?.title }}</h1></div>
         </div>
       </div>
@@ -34,26 +35,27 @@ import { tap, filter, take } from 'rxjs/operators';
 export class ItemViewComponent implements OnInit {
   categories$: Observable<Catalog[]>;
   cat$: Observable<any>;
-  category$: Observable<Category[]>;
+  category$: Observable<any[]>;
   boo$: any;
-  // /structure/cabinets/vanity channel cabinets
+  robj: any;
 
-  constructor(private store: Store<fromStore.ProductsState>) {}
+  constructor(
+    private store: Store<fromStore.ProductsState>,
+    private route: ActivatedRoute
+  ) {
+    this.robj = this.route.snapshot.parent.children['0'].parent.pathFromRoot[1].children['0'].url[1].path;
+  }
 
   ngOnInit() {
     this.cat$ = this.store.select(fromStore.getSelectedCategory);
-    this.cat$.subscribe(cat => {
-      switch (cat.title) {
-        case 'Base Cabinets': {
-          this.boo$ = this.store.select(fromStore.getBaseCabLoaded);
-          this.boo$.subscribe(boo => {
-            if (!boo) {
-              this.store.dispatch(new fromStore.LoadCabinetsBase());
-            }
-          });
-          return this.category$ = this.store.select(fromStore.getBaseCab);
-        }
-      }
-    });
+    this.category$ = this.switchCases(this.robj);
+  }
+
+
+  switchCases(id) {
+    switch (id) {
+      case 'Base Cabinets': return this.store.select(fromStore.getBCabinets);
+      case 'Base Channel Cabinets': return this.store.select(fromStore.getBCCabinets);
+    }
   }
 }

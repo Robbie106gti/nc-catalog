@@ -43,6 +43,21 @@ export const ROUTES: Routes = [
     canActivate: [fromGuards.CatalogGuard],
     component: fromContainers.ItemViewComponent,
   },
+  {
+    path: 'cabinets/Base Channel Cabinets',
+    canActivate: [fromGuards.CatalogGuard, fromGuards.BCCabinetsGuard ],
+    component: fromContainers.ItemViewComponent,
+  },
+  {
+    path: 'cabinets/Base Cabinets',
+    canActivate: [fromGuards.CatalogGuard, fromGuards.BCabinetsGuard ],
+    component: fromContainers.ItemViewComponent,
+  },
+  {
+    path: 'cabinets/c/:Id',
+    canActivate: [fromGuards.CatalogGuard ],
+    component: fromContainers.ItemViewComponent,
+  }
 ];
 
 @NgModule({
