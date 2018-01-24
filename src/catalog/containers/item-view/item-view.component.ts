@@ -1,5 +1,4 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -36,26 +35,14 @@ export class ItemViewComponent implements OnInit {
   categories$: Observable<Catalog[]>;
   cat$: Observable<any>;
   category$: Observable<any[]>;
-  boo$: any;
-  robj: any;
 
   constructor(
-    private store: Store<fromStore.ProductsState>,
-    private route: ActivatedRoute
+    private store: Store<fromStore.ProductsState>
   ) {
-    this.robj = this.route.snapshot.parent.children['0'].parent.pathFromRoot[1].children['0'].url[1].path;
   }
 
   ngOnInit() {
     this.cat$ = this.store.select(fromStore.getSelectedCategory);
-    this.category$ = this.switchCases(this.robj);
-  }
-
-
-  switchCases(id) {
-    switch (id) {
-      case 'Base Cabinets': return this.store.select(fromStore.getBCabinets);
-      case 'Base Channel Cabinets': return this.store.select(fromStore.getBCCabinets);
-    }
+    this.category$ = this.store.select(fromStore.getCabinets).take(1);
   }
 }

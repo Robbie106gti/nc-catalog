@@ -1,2 +1,2 @@
 export * from './catalog.selectors';
-export * from './bcabinets.selectors';
+export * from './cabinets.selectors';

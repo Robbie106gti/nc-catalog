@@ -1,11 +1,9 @@
 // import component from ''
 import { CatalogGuard } from './catalog.guard';
-import { BCCabinetsGuard } from './bccabinets.guard';
-import { BCabinetsGuard } from './bcabinets.guard';
+import { CabinetsGuard } from './cabinets.guard';
 
-export const guards: any[] = [ CatalogGuard, BCCabinetsGuard, BCabinetsGuard ];
+export const guards: any[] = [ CatalogGuard, CabinetsGuard ];
 
 // export * from ''
 export * from './catalog.guard';
-export * from './bccabinets.guard';
-export * from './bcabinets.guard';
+export * from './cabinets.guard';

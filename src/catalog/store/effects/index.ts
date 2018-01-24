@@ -1,9 +1,7 @@
 import { CatalogEffects } from './catalog.effect';
-import { BCCabinetsEffects } from './bccabinets.effect';
-import { BCabinetsEffects } from './bcabinets.effect';
+import { CabinetsEffects } from './cabinets.effect';
 
-export const effects: any[] = [CatalogEffects, BCCabinetsEffects, BCabinetsEffects];
+export const effects: any[] = [CatalogEffects, CabinetsEffects];
 
 export * from './catalog.effect';
-export * from './bccabinets.effect';
-export * from './bcabinets.effect';
+export * from './cabinets.effect';

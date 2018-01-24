@@ -5,24 +5,27 @@ import { of } from 'rxjs/observable/of';
 import { map, switchMap, catchError } from 'rxjs/operators';
 
 import * as fromRoot from '../../../app/store';
-import * as bccabinetsActions from '../actions/bccabinets.action';
+import * as cabinetsActions from '../actions/cabinets.action';
 import * as fromServices from '../../services';
+import { tap } from 'rxjs/operators/tap';
 
 @Injectable()
-export class BCCabinetsEffects {
+export class CabinetsEffects {
   constructor(
     private actions$: Actions,
     private firestoreService: fromServices.FirestoreService
   ) {}
 
   @Effect()
-  loadBCCabinets$ = this.actions$.ofType(bccabinetsActions.LOAD_BC_CABINETS).pipe(
-    switchMap(() => {
+  loadCabinets$ = this.actions$.ofType(
+      cabinetsActions.LOAD_CABINETS,
+    ).pipe(
+    switchMap(cabinets => {
       return this.firestoreService
-        .colWithIds$('structure/cabinets/base channel cabinets')
+        .colWithIds$(`structure/cabinets/${cabinets['payload'].toLowerCase()}`)
         .pipe(
-          map(base => new bccabinetsActions.LoadBCCabinetsSuccess(base)),
-          catchError(error => of(new bccabinetsActions.LoadBCCabinetsFail(error)))
+          map(base => new cabinetsActions.LoadCabinetsSuccess(base)),
+          catchError(error => of(new cabinetsActions.LoadCabinetsFail(error)))
         );
     })
   );

@@ -44,18 +44,8 @@ export const ROUTES: Routes = [
     component: fromContainers.ItemViewComponent,
   },
   {
-    path: 'cabinets/Base Channel Cabinets',
-    canActivate: [fromGuards.CatalogGuard, fromGuards.BCCabinetsGuard ],
-    component: fromContainers.ItemViewComponent,
-  },
-  {
-    path: 'cabinets/Base Cabinets',
-    canActivate: [fromGuards.CatalogGuard, fromGuards.BCabinetsGuard ],
-    component: fromContainers.ItemViewComponent,
-  },
-  {
-    path: 'cabinets/c/:Id',
-    canActivate: [fromGuards.CatalogGuard ],
+    path: 'cabinets/:Id',
+    canActivate: [fromGuards.CatalogGuard, fromGuards.CabinetsGuard ],
     component: fromContainers.ItemViewComponent,
   }
 ];
