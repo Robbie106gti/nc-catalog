@@ -33,7 +33,7 @@ export class CabinetsGuard implements CanActivate {
     return this.store.select(fromRoot.getRouterState).pipe(
         tap(router => router),
         switchMap(router => {
-            console.log(router);
+            // console.log(router);
             return this.store.select(fromStore.getCabinetsLoaded).pipe(
                 tap(loaded => {
                   if (!loaded) {

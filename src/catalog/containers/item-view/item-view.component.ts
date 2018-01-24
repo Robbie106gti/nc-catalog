@@ -8,9 +8,10 @@ import { Cabinets } from '../../models/cabinets.model';
 import { tap, filter, take } from 'rxjs/operators';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'category',
   // styleUrls: ['products.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="section no-pad-bot" id="index-banner">
       <div class="card" id="top">

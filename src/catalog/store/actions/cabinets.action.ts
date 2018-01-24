@@ -9,7 +9,7 @@ export const LOAD_CABINETS_SUCCESS = '[Cabinets] Load Cabinets setup Success';
 export class LoadCabinets implements Action {
   readonly type = LOAD_CABINETS;
   constructor(public payload: string) {
-    console.log(payload);
+    // console.log(payload);
   }
 }
 

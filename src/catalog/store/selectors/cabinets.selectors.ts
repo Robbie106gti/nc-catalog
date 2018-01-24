@@ -15,7 +15,7 @@ export const getCabinetsLineState = createSelector(
     getCabinetsState,
     fromRoot.getRouterState,
     (cabinets, router) => {
-        console.log(cabinets, router);
+        // console.log(cabinets, router);
         return cabinets[router.state.params.Id];
     }
 );
