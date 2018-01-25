@@ -10,6 +10,7 @@ import { Catalog } from '../../models/catalog.model';
   // styleUrls: ['products.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
+  <login-view></login-view>
     <div class="section no-pad-bot" id="index-banner">
       <div class="row grid" id="catalog">
         <div *ngIf="!((categories$ | async)?.length)">

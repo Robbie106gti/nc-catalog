@@ -113,6 +113,11 @@ body {
     width: 100%;
     padding: 0.5em;
   }
+
+  .stop-scrolling {
+      height: 80%;
+      overflow: hidden;
+    }
   
   @supports(display: grid){
     .detail-card {
