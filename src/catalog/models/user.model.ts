@@ -1,14 +1,17 @@
 export interface User {
-    class: string;
-    dealerName: string;
-    displayName: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    fullName: string;
-    username: string;
-    roles: Roles;
-    login: LastloginWQ;
+    wqData?: WQUser;
+    class?: string;
+    dealerName?: string;
+    displayName?: string;
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    fullName?: string;
+    username?: string;
+    dealerID?: string;
+    roles?: Roles;
+    login?: LastloginWQ;
+    address?: Address;
 }
 
 export interface Roles {
@@ -16,6 +19,13 @@ export interface Roles {
     nickels: boolean;
     reader: boolean;
     writer: boolean;
+}
+
+export interface Address {
+    street: boolean;
+    city: boolean;
+    state: boolean;
+    postcode: boolean;
 }
 
 export interface LastloginWQ {
@@ -40,6 +50,7 @@ export interface Valid {
     FirstName: string;
     LastName: string;
     UserName: string;
+    Email: string;
 }
 
 ///// Example get from Webquoin
@@ -58,4 +69,15 @@ FirstName: "Robert                        "
 LastName: "Leeuwerink                    "
 UserName: "ROBERT  "
 }
+
+class:"NICKELSM"
+dealerName:"NICKELS CABINETS (MANUFACTURER)"
+displayName:"Robert "
+email:"rob@nickelscabinets.com"
+firstName:"Robert "
+fullName:"Robert Leeuwerink "
+lastName:"Leeuwerink "
+▶roles:{} 4 keys
+username:"ROBERT "
+
 */

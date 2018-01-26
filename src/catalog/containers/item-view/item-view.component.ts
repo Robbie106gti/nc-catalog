@@ -37,10 +37,7 @@ export class ItemViewComponent implements OnInit {
   cat$: Observable<any>;
   category$: Observable<any[]>;
 
-  constructor(
-    private store: Store<fromStore.ProductsState>
-  ) {
-  }
+  constructor(private store: Store<fromStore.ProductsState>) { }
 
   ngOnInit() {
     this.cat$ = this.store.select(fromStore.getSelectedCategory);

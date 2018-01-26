@@ -11,29 +11,16 @@ export const getUserState = createSelector(
   (state: fromFeature.ProductsState) => state.user
 );
 
-export const getCatalogEntities = createSelector(
-    getUserState,
+export const getUserData = createSelector(
+  getUserState,
   fromLogin.getUserData
 );
 
-export const getSelectedCategory = createSelector(
-  getCatalogEntities,
-  fromRoot.getRouterState,
-  (entities, router): User => {
-    const Id = router.state.params.Id ? router.state.params.Id : router.state.url.split('/').pop().replace('%20', ' ');
-    return router.state && entities[Id];
-  }
-);
-
-export const getCatalogBase = createSelector(getCatalogEntities, entities => {
-  return Object.keys(entities).map(id => entities[id]);
-});
-
-export const getCatalogLoaded = createSelector(
+export const getUserLoaded = createSelector(
   getUserState,
-  fromLogin.getCatalogLoaded
+  fromLogin.getUserLoaded
 );
-export const getCatalogLoading = createSelector(
+export const getUserLoading = createSelector(
   getUserState,
-  fromLogin.getCatalogLoading
+  fromLogin.getUserLoading
 );

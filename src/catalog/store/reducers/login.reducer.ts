@@ -9,7 +9,7 @@ export interface UserState {
 }
 
 export const initialState: UserState = {
-  data: {},
+  data: null,
   loaded: false,
   loading: false,
 };
@@ -29,23 +29,44 @@ export function reducer(
 
     case fromLogin.LOAD_LOGIN_SUCCESS: {
       const wqUser = action.payload;
-
-      const data = wqUser.reduce(
-        // tslint:disable-next-line:no-shadowed-variable
-      (data: User, cat: WQUser) => {
-        return { ...data, [cat.title]: { ...cat} };
-      },
-      { ...state.data, });
+      const data: User = {
+        wqData: wqUser,
+        email: wqUser.valid.Email
+      };
 
       return {
         ...state,
-        loading: false,
-        loaded: true,
         data,
       };
     }
 
     case fromLogin.LOAD_LOGIN_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+      };
+    }
+
+    case fromLogin.LOAD_LOGIN_FB: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
+    case fromLogin.LOAD_LOGIN_FB_SUCCESS: {
+      const user = action.payload;
+
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        data: user,
+      };
+    }
+
+    case fromLogin.LOAD_LOGIN_FB_FAIL: {
       return {
         ...state,
         loading: false,
@@ -58,5 +79,5 @@ export function reducer(
 }
 
 export const getUserData = (state: UserState) => state.data;
-export const getCatalogLoading = (state: UserState) => state.loading;
-export const getCatalogLoaded = (state: UserState) => state.loaded;
+export const getUserLoading = (state: UserState) => state.loading;
+export const getUserLoaded = (state: UserState) => state.loaded;

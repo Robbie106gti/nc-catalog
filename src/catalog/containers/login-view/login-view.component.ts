@@ -4,11 +4,12 @@ import * as Materialize from 'materialize-css/dist/js/materialize.min.js';
 import { FormsModule } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
-import { tap, filter, take } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 import { Login } from '../../models/login.model';
+import { tap, filter, take, share, map } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { WQUser } from '../../models/user.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -16,13 +17,13 @@ import { Login } from '../../models/login.model';
   styleUrls: ['login-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <div class="cover" *ngIf="!login$">
+  <div class="cover" *ngIf="!loaded">
     <div class="row login card">
         <p class="grey-text center-align"><small><i>Use webquoin login for access to Catalog.</i></small></p>
         <div class="col m4 l2 hide-on-small-only"><div class="valign-wrapper">
             <h2 class="center-align"><i class="large material-icons">account_box</i></h2>
         </div></div>
-        <div class="col m8 add-margin" *ngIf="!spinner; else spinner">
+        <div class="col m8 add-margin" *ngIf="!loading; else spinner">
             <div class="input-field">
                 <input id="first_name" type="text" class="validate" [(ngModel)]="login.username" required>
                 <label for="first_name" data-error="wrong" data-success="right">Username</label>
@@ -93,30 +94,36 @@ import { Login } from '../../models/login.model';
   `,
 })
 export class LoginViewComponent implements OnInit {
-    login$: Observable<boolean> | false;
-    login: Login = new Login();
-    spinner: Observable<boolean> | false;
+  login: Login = new Login();
+  loaded: boolean;
+  loading: boolean;
+  ib: any;
 
   constructor(
       private store: Store<fromStore.ProductsState>
     ) {}
 
   ngOnInit() {
-      // this.login$ = of(true);
-      if (!this.login$) {
-            const ib = document.getElementById('body');
-            ib.classList.add('stop-scrolling');
-      }
-      $(document).ready(function() {
-        Materialize.updateTextFields();
+    this.ib = document.getElementById('body');
+      this.store.select(fromStore.getUserLoaded).subscribe(loaded => {
+        this.matNquery(loaded);
+        this.loaded = loaded;
       });
+      this.store.select(fromStore.getUserLoading).subscribe(loading => this.loading = loading);
   }
 
   loginWQ() {
-      const data = { Username: this.login.username, password: this.login.password };
-      console.log(data);
+      const data: Login = { username: this.login.username, password: this.login.password };
       this.login = new Login();
-      this.spinner = of(true);
-      // this.store.dispatch(new SkuActions.AddAccessory(value));
+      this.store.dispatch( new fromStore.LoadLogin(data));
+  }
+
+  matNquery(value) {
+      if (value === false) {
+        this.ib.classList.add('stop-scrolling');
+        $(document).ready(function() { Materialize.updateTextFields(); });
+      } else {
+        this.ib.classList.remove('stop-scrolling');
+      }
   }
 }
