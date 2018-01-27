@@ -55,6 +55,13 @@ export function reducer(
       };
     }
 
+    case fromLogin.LOAD_LOGIN_FB_CK: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
     case fromLogin.LOAD_LOGIN_FB_SUCCESS: {
       const user = action.payload;
 

@@ -8,6 +8,7 @@ export const LOAD_LOGIN_FAIL = '[Login] Login Webquoin setup Fail';
 export const LOAD_LOGIN_SUCCESS = '[Login] Login Webquoin setup Success';
 
 export const LOAD_LOGIN_FB = '[Login] Login Firebase setup';
+export const LOAD_LOGIN_FB_CK = '[Login] CK Login Firebase setup';
 export const LOAD_LOGIN_FB_FAIL = '[Login] Login Firebase setup Fail';
 export const LOAD_LOGIN_FB_SUCCESS = '[Login] Login Firebase setup Success';
 
@@ -39,6 +40,10 @@ export class LoadLoginFb implements Action {
   }
 }
 
+export class LoadLoginFbCk implements Action {
+  readonly type = LOAD_LOGIN_FB_CK;
+}
+
 export class LoadLoginFbFail implements Action {
   readonly type = LOAD_LOGIN_FB_FAIL;
   constructor(public payload: any) {
@@ -58,4 +63,4 @@ export class LoadLoginFbSuccess implements Action {
 // delete items
 
 // action types
-export type LoginAction = LoadLogin | LoadLoginFail | LoadLoginSuccess | LoadLoginFb | LoadLoginFbFail | LoadLoginFbSuccess;
+export type LoginAction = LoadLogin | LoadLoginFail | LoadLoginSuccess | LoadLoginFb | LoadLoginFbCk | LoadLoginFbFail | LoadLoginFbSuccess;

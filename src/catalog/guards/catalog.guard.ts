@@ -24,6 +24,7 @@ export class CatalogGuard implements CanActivate {
       tap(loaded => {
         if (!loaded) {
           this.store.dispatch(new fromStore.LoadCatalog());
+          this.store.dispatch(new fromStore.LoadLoginFbCk());
         }
       }),
       filter(loaded => loaded),
