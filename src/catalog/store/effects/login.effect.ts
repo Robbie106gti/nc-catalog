@@ -75,7 +75,7 @@ export class LoginEffects {
     loadLoginFbCookie$ = this.actions$.ofType(loginActions.LOAD_LOGIN_FB_CK).pipe(
       map(() => this.parseCookie()),
       switchMap(res => this.firestoreService
-                        .docWithRefs$(`users/${res['email']}`)
+                        .docWithRefs$(`users/${res.email}`)
                         .pipe(
                             map((userfb: User) => new loginActions.LoadLoginFbSuccess({ ...userfb })),
                             catchError(error => of(new loginActions.LoadLoginFbFail({ ...error, wqData: res })))
@@ -95,7 +95,7 @@ export class LoginEffects {
             fullName: action.payload.wqData.valid.FirstName.trim() + ' ' + action.payload.wqData.valid.LastName.trim(),
             username: action.payload.wqData.valid.UserName.trim()
           };
-        return this.firestoreService.add(`users/${action.payload.wqData.valid.Email}`, data);
+        return this.firestoreService.set(`users/${action.payload.wqData.valid.Email}`, data);
 
       })
   );
@@ -158,10 +158,10 @@ export class LoginEffects {
  }
 
  parseCookie() {
-    let cookie = this.getCookie('username');
-    if (cookie !== '') {
+    const ck = this.getCookie('username');
+    if (ck !== '') {
         /// User logged in
-        cookie = JSON.parse(cookie);
+        const cookie: Res = JSON.parse(ck);
         return cookie;
     } else {
         /// User not logged in
