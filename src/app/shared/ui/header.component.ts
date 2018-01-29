@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
     <div class="nav-wrapper brown darken-3">
       <div class="whiteLine"></div>
       <a href="https://webquoin.com/catalog/build/" class="brand-logo">
-        <img class="imageLogo" src="https://webquoin.com/catalog/build/assets/logoNC.png" alt="Nickels Cabinets"/>
+        <img class="imageLogo" src="https://nickels-catalog.firebaseapp.com/assets/icons/logoNC.png" alt="Nickels Cabinets"/>
         <span class="headingLogo"> <i class="material-icons">collections_bookmark</i> Catalog</span>
       </a>
       <ul class="right hide-on-med-and-down">

@@ -1,0 +1,11 @@
+{
+    "short_name": "NC Catalog",
+    "name": "Nickels cabinets catalog and other utillities",
+    "start_url": "/",
+
+    "theme_color": "#4e342e",
+    "background_color": "#fff",
+
+    "display": "standalone"
+
+}

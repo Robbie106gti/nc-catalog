@@ -12,20 +12,21 @@ export interface User {
     roles?: Roles;
     login?: LastloginWQ;
     address?: Address;
+    status?: string;
 }
 
 export interface Roles {
-    admin: boolean;
-    nickels: boolean;
-    reader: boolean;
-    writer: boolean;
+    admin?: boolean;
+    nickels?: boolean;
+    reader?: boolean;
+    writer?: boolean;
 }
 
 export interface Address {
-    street: boolean;
-    city: boolean;
-    state: boolean;
-    postcode: boolean;
+    street: string;
+    city: string;
+    state: string;
+    postcode: string;
 }
 
 export interface LastloginWQ {

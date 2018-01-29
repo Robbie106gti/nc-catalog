@@ -7,4 +7,5 @@ export interface Catalog {
     title: string;
     crudInfo: CrudInfo;
     tags?: any[];
+    sort?: number;
 }

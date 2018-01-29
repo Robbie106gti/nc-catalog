@@ -28,7 +28,8 @@ export function reducer(
 
     case fromCatalog.LOAD_CATALOG_SUCCESS: {
       const catagories = action.payload;
-
+      // console.log(catagories);
+      catagories.sort((a, b) => a.sort - b.sort);
       const entities = catagories.reduce(
         // tslint:disable-next-line:no-shadowed-variable
       (entities: { [id: string]: Catalog }, cat: Catalog) => {

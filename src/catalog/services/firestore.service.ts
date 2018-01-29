@@ -10,6 +10,8 @@ import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/switchMap';
 import * as firebase from 'firebase/app';
+import { Store } from '@ngrx/store';
+import * as fromStore from '../store';
 
 type CollectionPredicate<T>   = string |  AngularFirestoreCollection<T>;
 type DocPredicate<T>          = string |  AngularFirestoreDocument<T>;
@@ -17,7 +19,7 @@ type DocPredicate<T>          = string |  AngularFirestoreDocument<T>;
 @Injectable()
 export class FirestoreService {
 
-  constructor(public afs: AngularFirestore) { }
+  constructor(public afs: AngularFirestore, private store: Store<fromStore.ProductsState>) { }
 
   /// **************
   /// Get a Reference
@@ -74,6 +76,21 @@ export class FirestoreService {
       updatedAt: this.timestamp
     });
   }
+  setUser<T>(ref: DocPredicate<T>, data: any) {
+    const timestamp = this.timestamp;
+    console.log(ref, data);
+    return this.doc(ref).set({
+      ...data,
+      updatedAt: timestamp,
+      createdAt: timestamp
+    });
+  }
+  updateUser<T>(ref: DocPredicate<T>, data: any) {
+    return this.doc(ref).update({
+      ...data,
+      updatedAt: this.timestamp
+    });
+  }
   delete<T>(ref: DocPredicate<T>) {
     return this.doc(ref).delete();
   }
@@ -90,10 +107,21 @@ export class FirestoreService {
   }
   /// If doc exists update, otherwise set
   upsert<T>(ref: DocPredicate<T>, data: any) {
+    // console.log(ref, data);
     const doc = this.doc(ref).snapshotChanges().take(1).toPromise();
     return doc.then(snap => {
+      console.log(snap.payload);
       return snap.payload.exists ? this.update(ref, data) : this.set(ref, data);
     });
+  }
+  /// If doc exists update, otherwise set
+  upsertUser<T>(ref: DocPredicate<T>, data: any) {
+    // console.log(ref, data);
+    const doc = this.doc(ref).snapshotChanges().take(1).toPromise();
+    return doc.then(snap => {
+      console.log(snap.payload);
+      return snap.payload.exists ? this.updateUser(ref, data) : this.setUser(ref, data);
+    }).then(() => setTimeout(() => location.reload(), 1000));
   }
   /// **************
   /// Inspect Data

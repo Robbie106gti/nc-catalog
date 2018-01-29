@@ -13,6 +13,7 @@ import * as fromServices from '../../services';
 import { User, WQUser } from '../../models/user.model';
 import { Login } from '../../models/login.model';
 import { Observable } from 'rxjs/Observable';
+import { error } from 'selenium-webdriver';
 
 export interface Ap {
     type: string;
@@ -32,8 +33,10 @@ export interface Lg {
     payload: Login;
 }
 export interface Res {
-    email: string;
-    class: string;
+    value: {
+        email: string;
+        class: string;
+    };
 }
 
 @Injectable()
@@ -52,10 +55,11 @@ export class LoginEffects {
   loadLogin$ = this.actions$.ofType(loginActions.LOAD_LOGIN).pipe(
     switchMap((login: Lg) => this.http.post(this.endpoint, login.payload).pipe(
         map((user: WQUser) => {
+            // console.log(user);
             this.setCookie({ email: user.valid.Email, class: user.valid.DealerID }, 30);
             return new loginActions.LoadLoginFb(user);
         }),
-        catchError(error => of(new loginActions.LoadLoginFail(error)))
+        catchError(err => of(new loginActions.LoadLoginFail(err)))
         )
     ));
 
@@ -65,8 +69,8 @@ export class LoginEffects {
         return this.firestoreService
           .docWithRefs$(`users/${action.payload.valid.Email}`)
           .pipe(
-            map((userfb: User) => new loginActions.LoadLoginFbSuccess({...userfb, wqData: action.payload })),
-            catchError(error => of(new loginActions.LoadLoginFbFail({ ...error, wqData: action.payload })))
+            map((userfb: User) => new loginActions.LoadLoginFbSuccess({ ...userfb, wqData: action.payload })),
+            catchError(err => of(new loginActions.LoadLoginFbFail({ ...err, wqData: action.payload })))
           );
       })
     );
@@ -74,29 +78,48 @@ export class LoginEffects {
     @Effect()
     loadLoginFbCookie$ = this.actions$.ofType(loginActions.LOAD_LOGIN_FB_CK).pipe(
       map(() => this.parseCookie()),
-      switchMap(res => this.firestoreService
-                        .docWithRefs$(`users/${res.email}`)
-                        .pipe(
-                            map((userfb: User) => new loginActions.LoadLoginFbSuccess({ ...userfb })),
-                            catchError(error => of(new loginActions.LoadLoginFbFail({ ...error, wqData: res })))
-                        ))
+      switchMap((res: Observable<Res>) => {
+          // console.log(res);
+          if (res['value'] !== null) {
+            return this.firestoreService
+            .docWithRefs$(`users/${res['value'].email}`)
+            .pipe(
+                map((userfb: User) => new loginActions.LoadLoginFbSuccess(userfb)),
+                catchError(err => of(new loginActions.LoadLoginFail({ ...err, wqData: res })))
+            );
+        }
+      }),
+      catchError(err => of(new loginActions.LoadLoginFail({ ...err, cookie: 'No Cookie'})))
     );
 
   @Effect()
   createLoginFb$ = this.actions$.ofType(loginActions.LOAD_LOGIN_FB_FAIL).pipe(
       switchMap((action: Ap2) => {
-          const data: User = {
-            class: action.payload.wqData.valid.DealerID.trim(),
-            dealerName: action.payload.wqData.valid.DealerName.trim(),
-            displayName: action.payload.wqData.valid.DisplayName.trim(),
-            email: action.payload.wqData.valid.Email.trim(),
-            firstName: action.payload.wqData.valid.FirstName.trim(),
-            lastName: action.payload.wqData.valid.LastName.trim(),
-            fullName: action.payload.wqData.valid.FirstName.trim() + ' ' + action.payload.wqData.valid.LastName.trim(),
-            username: action.payload.wqData.valid.UserName.trim()
-          };
-        return this.firestoreService.set(`users/${action.payload.wqData.valid.Email}`, data);
+        console.log(action.payload.wqData);
+        const fname = this.trimit(action.payload.wqData.valid.FirstName);
+        const lname = this.trimit(action.payload.wqData.valid.LastName);
 
+          const data: User = {
+            class: this.trimit(action.payload.wqData.valid.DealerID),
+            dealerName: this.trimit(action.payload.wqData.valid.DealerName),
+            displayName: this.trimit(action.payload.wqData.valid.DisplayName),
+            email: this.trimit(action.payload.wqData.valid.Email),
+            firstName: fname,
+            lastName: lname,
+            fullName: fname + ' ' + lname,
+            username: this.trimit(action.payload.wqData.valid.UserName),
+            roles: {
+              reader: true
+            },
+            status: 'online',
+            address: {
+                street: this.trimit(action.payload.wqData.valid.DealerAddress1),
+                city: this.trimit(action.payload.wqData.valid.DealerAddress2),
+                state: this.trimit(action.payload.wqData.valid.DealerAddress3),
+                postcode: this.trimit(action.payload.wqData.valid.DealerPostalCode)
+            }
+          };
+        return this.firestoreService.upsertUser(`users/${action.payload.wqData.valid.Email}`, data);
       })
   );
 
@@ -127,8 +150,7 @@ export class LoginEffects {
  }
 
  trimit(str) {
-   str = str.trim();
-   return str;
+   return str ? str.trim() : null;
  }
 
  setCookie(data, exdays) {
@@ -139,7 +161,7 @@ export class LoginEffects {
      class: data.class,
      email: data.email
    });
-   document.cookie = 'username=' + cookie + ';' + expires + ';path=/';
+   document.cookie = 'nc-catalog=' + cookie + ';' + expires + ';path=/';
  }
 
  getCookie(cname) {
@@ -158,79 +180,18 @@ export class LoginEffects {
  }
 
  parseCookie() {
-    const ck = this.getCookie('username');
-    if (ck !== '') {
-        /// User logged in
-        const cookie: Res = JSON.parse(ck);
-        return cookie;
-    } else {
+    const ck = this.getCookie('nc-catalog');
+    let cookie: Observable<Res>;
+    // console.log(ck + 'just hanging out');
+    if (ck === '') {
         /// User not logged in
-        return null;
+        // console.log(ck + 'null');
+        return of(cookie = null);
+    } else {
+        /// User logged in
+        // console.log(ck + 'im a live');
+        cookie = JSON.parse(ck);
+        return of(cookie);
     }
  }
-
-  compare(user, wq) {
-    wq.valid.DisplayName = wq.valid.DisplayName.trim();
-    wq.valid.FirstName = wq.valid.FirstName.trim();
-    wq.valid.LastName = wq.valid.LastName.trim();
-    wq.valid.UserName = wq.valid.UserName.trim();
-    let firstName;
-    let lastName;
-    let fullName;
-    let displayName;
-    let dealerID;
-    let dealerName;
-    let email;
-    let street;
-    let city;
-    let state;
-    let postcode;
-    if (user.firstName === wq.valid.FirstName) {
-      console.log(user.firstName, wq.valid.FirstName);
-      firstName = wq.valid.FirstName;
-      fullName = wq.valid.FirstName + ' ' + wq.valid.LastName;
-    }
-    if (user.lastName === wq.valid.LastName) {
-      console.log(user.lastName, wq.valid.LastName);
-      lastName = wq.valid.LastName;
-      fullName = wq.valid.FirstName + ' ' + wq.valid.LastName;
-    }
-    if (user.displayName === wq.valid.DisplayName) {
-      console.log(user.displayName, wq.valid.DisplayName);
-      displayName = wq.valid.DisplayName;
-    }
-    if (user.dealerID === wq.valid.DealerID) {
-      console.log(user.dealerID, wq.valid.DealerID);
-      dealerID = wq.valid.DealerID;
-    }
-    if (user.dealerName === wq.valid.DealerName) {
-      console.log(user.dealerName, wq.valid.DealerName);
-      dealerName = wq.valid.DealerName;
-    }
-    if (user.dealerName === wq.valid.DealerName) {
-      console.log(user.dealerName, wq.valid.DealerName);
-      dealerName = wq.valid.DealerName;
-    }
-    if (user.email === wq.valid.Email) {
-      console.log(user.dealerName, wq.valid.Email);
-      email = wq.valid.Email;
-    }
-    if (user.address.street === wq.valid.DealerAddress1) {
-      console.log(wq.valid.DealerAddress1);
-      street = wq.valid.DealerAddress1;
-    }
-    if (user.address.city === wq.valid.DealerAddress2) {
-      console.log(wq.valid.DealerAddress2);
-      city = wq.valid.DealerAddress2;
-    }
-    if (user.address.state === wq.valid.DealerAddress3) {
-      console.log(wq.valid.DealerAddress3);
-      state = wq.valid.DealerAddress3;
-    }
-    if (user.address.postcode === wq.valid.DealerPostalCode) {
-      console.log(wq.valid.DealerPostalCode);
-      postcode = wq.valid.DealerPostalCode;
-    }
-  }
-
 }
