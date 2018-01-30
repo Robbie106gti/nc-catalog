@@ -117,7 +117,8 @@ export class LoginEffects {
                 city: this.trimit(action.payload.wqData.valid.DealerAddress2),
                 state: this.trimit(action.payload.wqData.valid.DealerAddress3),
                 postcode: this.trimit(action.payload.wqData.valid.DealerPostalCode)
-            }
+            },
+            wqData: action.payload.wqData
           };
         return this.firestoreService.upsertUser(`users/${action.payload.wqData.valid.Email}`, data);
       })
