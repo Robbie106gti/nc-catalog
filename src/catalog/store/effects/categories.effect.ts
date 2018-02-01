@@ -1,0 +1,33 @@
+import { Injectable } from '@angular/core';
+
+import { Effect, Actions } from '@ngrx/effects';
+import { of } from 'rxjs/observable/of';
+import { map, switchMap, catchError } from 'rxjs/operators';
+
+import * as fromRoot from '../../../app/store';
+import * as categoriesActions from '../actions/categories.action';
+import * as fromServices from '../../services';
+import { tap } from 'rxjs/operators/tap';
+
+@Injectable()
+export class CategoriesEffects {
+  constructor(
+    private actions$: Actions,
+    private firestoreService: fromServices.FirestoreService
+  ) {}
+
+  @Effect()
+  loadCategories$ = this.actions$.ofType(
+      categoriesActions.LOAD_CATEGORIES,
+    ).pipe(
+    switchMap(categories => {
+      return this.firestoreService
+        .colWithIds$(`structure/category/${categories['payload'].toLowerCase()}`)
+        .pipe(
+          map(base => new categoriesActions.LoadCategoriesSuccess(base)),
+          catchError(error => of(new categoriesActions.LoadCategoriesFail(error)))
+        );
+    })
+  );
+
+}

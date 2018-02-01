@@ -41,13 +41,13 @@ export const ROUTES: Routes = [
   },
   {
     path: 'category/:Id',
-    canActivate: [fromGuards.CatalogGuard],
-    component: fromContainers.ItemViewComponent,
+    canActivate: [fromGuards.CatalogGuard, fromGuards.CategoriesGuard ],
+    component: fromContainers.CatViewComponent,
   },
   {
     path: 'cabinets/:Id',
     canActivate: [fromGuards.CatalogGuard, fromGuards.CabinetsGuard ],
-    component: fromContainers.ItemViewComponent,
+    component: fromContainers.CabViewComponent,
   }
 ];
 
