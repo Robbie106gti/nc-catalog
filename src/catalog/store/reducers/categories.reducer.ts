@@ -2,12 +2,14 @@ import * as fromCategories from '../actions/categories.action';
 import { Categories } from '../../models/categories.model';
 
 export interface CategoriesState {
-    'General Information': CategoriesLine;
     'Accessories': CategoriesLine;
+    'Counters': CategoriesLine;
+    'Columns': CategoriesLine;
     'Customization Charges': CategoriesLine;
     'Doors': CategoriesLine;
+    'Finished Sides': CategoriesLine;
+    'General Information': CategoriesLine;
     'Materials and Finishes': CategoriesLine;
-    'Counters': CategoriesLine;
     'Trims and Moldings': CategoriesLine;
     load?: string;
     lastload?: string;
@@ -20,12 +22,17 @@ export interface CategoriesState {
   }
 
 export const initialState: CategoriesState = {
-    'General Information': {
+    'Accessories': {
         entities: {},
         loaded: false,
         loading: false
     },
-    'Accessories': {
+    'Columns': {
+        entities: {},
+        loaded: false,
+        loading: false
+    },
+    'Counters': {
         entities: {},
         loaded: false,
         loading: false
@@ -40,12 +47,17 @@ export const initialState: CategoriesState = {
         loaded: false,
         loading: false
     },
-    'Materials and Finishes': {
+    'Finished Sides': {
         entities: {},
         loaded: false,
         loading: false
     },
-    'Counters': {
+    'General Information': {
+        entities: {},
+        loaded: false,
+        loading: false
+    },
+    'Materials and Finishes': {
         entities: {},
         loaded: false,
         loading: false
