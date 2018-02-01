@@ -98,7 +98,7 @@ function authenticate(username, password) {
     headers: 
       { 'Postman-Token': '45e802d5-3a2a-4a0c-33db-536f0012f472',
         'Cache-Control': 'no-cache',
-        Authorization: 'Basic Um9iZXJ0OnJvYjJuaWNrZWxz',
+        'Authorization': 'Basic Um9iZXJ0OnJvYjJuaWNrZWxz',
         'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' },
       formData: { Username: username, Pwd: password } };
 
