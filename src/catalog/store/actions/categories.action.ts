@@ -6,6 +6,10 @@ export const LOAD_CATEGORIES = '[Categories] Load Categories setup';
 export const LOAD_CATEGORIES_FAIL = '[Categories] Load Categories setup Fail';
 export const LOAD_CATEGORIES_SUCCESS = '[Categories] Load Categories setup Success';
 
+export const UPDATE_CATEGORY_ACTIVE = '[Category] Update Category to active';
+export const UPDATE_CATEGORY_UNACTIVE = '[Category] Update Category to un-active';
+export const UPDATE_CATEGORY_FAIL = '[Category] Update Category Fail';
+
 export class LoadCategories implements Action {
   readonly type = LOAD_CATEGORIES;
   constructor(public payload: string) {
@@ -32,4 +36,6 @@ export class LoadCategoriesSuccess implements Action {
 // delete items
 
 // action types
-export type CategoriesAction = LoadCategories | LoadCategoriesFail | LoadCategoriesSuccess;
+export type CategoriesAction = LoadCategories
+| LoadCategoriesFail
+| LoadCategoriesSuccess;

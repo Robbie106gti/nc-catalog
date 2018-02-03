@@ -115,9 +115,17 @@ body {
   }
 
   .stop-scrolling {
-      height: 80%;
-      overflow: hidden;
-    }
+    height: 80%;
+    overflow: hidden;
+  }
+
+  .tool-item {
+    position: absolute;
+    right: 0.3rem;
+    top: 0.3rem;
+    z-index: 99;
+    cursor: pointer;
+  }
   
   @supports(display: grid){
     .detail-card {

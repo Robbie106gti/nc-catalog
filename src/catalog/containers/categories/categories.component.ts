@@ -4,13 +4,14 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
 import { Catalog } from '../../models/catalog.model';
+import { User } from '../../models/user.model';
+import * as fromServices from '../../services';
 
 @Component({
   selector: 'categories',
-  // styleUrls: ['products.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <login-view></login-view>
+    <login-view></login-view>
     <div class="section no-pad-bot" id="index-banner">
       <div class="row grid" id="catalog">
         <div *ngIf="!((categories$ | async)?.length)">
@@ -18,7 +19,12 @@ import { Catalog } from '../../models/catalog.model';
         </div>
         <category-item
           *ngFor="let category of (categories$ | async)"
-          [category]="category" class="card">
+          [category]="category" [user]="(user$ | async)"
+          class="card"
+          (add)="BookmarkIt($event)"
+          (remove)="UnbookmarkIt($event)"
+          (turnOn)="Active($event)"
+          (turnOff)="Unactive($event)">
         </category-item>
       </div>
     </div>
@@ -26,10 +32,17 @@ import { Catalog } from '../../models/catalog.model';
 })
 export class CategoriesComponent implements OnInit {
   categories$: Observable<Catalog[]>;
+  user$: Observable<User>;
 
-  constructor(private store: Store<fromStore.ProductsState>) {}
+  constructor(private store: Store<fromStore.ProductsState>, private firestore: fromServices.FirestoreService) {}
 
   ngOnInit() {
     this.categories$ = this.store.select(fromStore.getCatalogBase);
+    this.user$ = this.store.select(fromStore.getUserData);
   }
+
+  BookmarkIt(event)   { this.firestore.upsert(`users/${event.user.email}/favorites/${event.cat.id}`, { name: event.cat.title, id: event.cat.id }); }
+  UnbookmarkIt(event) { this.firestore.delete(`users/${event.user.email}/favorites/${event.cat.id}`); }
+  Active(event)       { this.firestore.update(`categories/${event.cat.id}`, { active: true, updatedBy: event.user.fullName }); }
+  Unactive(event)     { this.firestore.update(`categories/${event.cat.id}`, { active: false, updatedBy: event.user.fullName }); }
 }

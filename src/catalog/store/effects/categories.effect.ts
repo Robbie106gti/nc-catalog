@@ -9,6 +9,11 @@ import * as categoriesActions from '../actions/categories.action';
 import * as fromServices from '../../services';
 import { tap } from 'rxjs/operators/tap';
 
+export interface Ac {
+    type: string;
+    payload: any;
+  }
+
 @Injectable()
 export class CategoriesEffects {
   constructor(
@@ -20,9 +25,9 @@ export class CategoriesEffects {
   loadCategories$ = this.actions$.ofType(
       categoriesActions.LOAD_CATEGORIES,
     ).pipe(
-    switchMap(categories => {
+    switchMap((categories: Ac) => {
       return this.firestoreService
-        .colWithIds$(`structure/category/${categories['payload'].toLowerCase()}`)
+        .colWithIds$(`structure/category/${categories.payload.toLowerCase()}`)
         .pipe(
           map(base => new categoriesActions.LoadCategoriesSuccess(base)),
           catchError(error => of(new categoriesActions.LoadCategoriesFail(error)))
