@@ -1,17 +1,21 @@
 import * as fromLogin from '../actions/login.action';
 import { Login } from '../../models/login.model';
-import { User, WQUser } from '../../models/user.model';
+import { User, WQUser, Favorites, Notes } from '../../models/user.model';
 
 export interface UserState {
   data: User;
   loaded: boolean;
   loading: boolean;
+  favorites: Favorites[];
+  notes: Notes[];
 }
 
 export const initialState: UserState = {
   data: null,
   loaded: false,
   loading: false,
+  favorites: new Array(),
+  notes: new Array()
 };
 
 export function reducer(
@@ -79,6 +83,22 @@ export function reducer(
         loaded: false,
       };
     }
+
+    case fromLogin.LOAD_FAVORITES_SUCCESS: {
+      const favorites = action.payload;
+      state = {
+        ...state,
+        favorites
+      };
+
+      return state;
+    }
+
+    case fromLogin.LOAD_FAVORITES_FAIL: {
+      return {
+        ...state
+      };
+    }
   }
 
   return state;
@@ -87,3 +107,5 @@ export function reducer(
 export const getUserData = (state: UserState) => state.data;
 export const getUserLoading = (state: UserState) => state.loading;
 export const getUserLoaded = (state: UserState) => state.loaded;
+export const getUserFav = (state: UserState) => state.favorites;
+export const getUserNotes = (state: UserState) => state.notes;

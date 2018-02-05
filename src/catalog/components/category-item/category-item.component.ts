@@ -10,9 +10,10 @@ import {
     selector: 'category-item',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-    <tool-item 
+    <tool-item  *ngIf="user"
         [category]="category" 
         [user]="user" 
+        [userFavs]="userFavs"
         (add)="BookmarkIt($event)" 
         (remove)="UnbookmarkIt($event)" 
         (turnOn)="Active($event)" 
@@ -43,6 +44,7 @@ import {
   export class CategoryItemComponent {
     @Input() category: any;
     @Input() user: any;
+    @Input() userFavs: any;
     @Output() add = new EventEmitter<any>();
     @Output() remove = new EventEmitter<any>();
     @Output() turnOn = new EventEmitter<any>();

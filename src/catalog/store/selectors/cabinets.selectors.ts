@@ -55,3 +55,10 @@ export const getCabinetsLoading = createSelector(
     getCabinetsLineState,
     fromCabinets.getCabinetsLoading,
 );
+
+export const getSelectedRoute = createSelector(
+  fromRoot.getRouterState,
+  (router) => {
+    return router.state.params.Id ? router.state.params.Id : router.state.url.split('/').pop().replace('%20', ' ');
+  }
+);

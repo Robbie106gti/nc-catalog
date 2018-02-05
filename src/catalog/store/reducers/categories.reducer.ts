@@ -90,13 +90,13 @@ export function reducer(
       (entities: { [id: string]: Categories }, cat: Categories) => {
         return { ...entities, [cat.title]: {...cat}};
       },
-      { ...state[state.load].entities, });
+      { ...state[category[0].sub].entities, });
 
       return {
         ...state,
         load: '',
-        lastload: state.load,
-        [state.load]: { entities, loaded: true, loading: false },
+        lastload: category[0].sub,
+        [category[0].sub]: { entities, loaded: true, loading: false },
       };
     }
 

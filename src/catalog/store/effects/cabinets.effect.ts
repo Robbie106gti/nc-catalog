@@ -24,7 +24,12 @@ export class CabinetsEffects {
       return this.firestoreService
         .colWithIds$(`structure/cabinets/${cabinets['payload'].toLowerCase()}`)
         .pipe(
-          map(base => new cabinetsActions.LoadCabinetsSuccess(base)),
+          map(bases => {
+            const base = bases.map(b => {
+              return {...b, 'sub': cabinets['payload'], 'cabinet': true };
+            });
+            return new cabinetsActions.LoadCabinetsSuccess(base);
+          }),
           catchError(error => of(new cabinetsActions.LoadCabinetsFail(error)))
         );
     })

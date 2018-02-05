@@ -94,15 +94,15 @@ export function reducer(
       const entities = category.reduce(
         // tslint:disable-next-line:no-shadowed-variable
       (entities: { [id: string]: Cabinets }, cat: Cabinets) => {
-        return { ...entities, [cat.title]: {...cat}};
+        return { ...entities, [cat.title]: {...cat }};
       },
-      { ...state[state.load].entities, });
+      { ...state[category[0].sub].entities, });
 
       return {
         ...state,
         load: '',
-        lastload: state.load,
-        [state.load]: { entities, loaded: true, loading: false },
+        lastload: category[0].sub,
+        [category[0].sub]: { entities, loaded: true, loading: false },
       };
     }
 
@@ -118,6 +118,8 @@ export function reducer(
 
   return state;
 }
+
+
 
 export const getCabinetsBaseEntities = (state: CabinetsState) => state['Base Cabinets'].entities;
 export const getCabinetsBaseLoading = (state: CabinetsState) => state['Base Cabinets'].loading;

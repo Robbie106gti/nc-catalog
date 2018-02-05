@@ -22,8 +22,8 @@ export class LoadCabinetsFail implements Action {
 
 export class LoadCabinetsSuccess implements Action {
   readonly type = LOAD_CABINETS_SUCCESS;
-  constructor(public payload: Cabinets[]) {
-    // console.log(payload);
+  constructor(public payload: any) {
+   // console.log(payload);
   }
 }
 

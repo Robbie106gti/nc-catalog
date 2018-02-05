@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, SimpleChanges, OnChanges } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
@@ -13,20 +13,24 @@ declare var Materialize: any;
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<login-item [loaded]="loaded$ | async" [loading]="loading$ | async" (login)="loginWQ($event)"></login-item>`,
 })
-export class LoginViewComponent implements OnInit {
+
+export class LoginViewComponent implements OnChanges {
   ib: HTMLElement;
   loaded$: Observable<boolean>;
   loading$: Observable<boolean>;
 
   constructor(
       private store: Store<fromStore.ProductsState>
-    ) {}
+    ) {
+        this.ib = document.getElementById('body');
+        this.loaded$ = this.store.select(fromStore.getUserLoaded);
+        this.loading$ = this.store.select(fromStore.getUserLoading);
+    }
 
-  ngOnInit() {
-    this.ib = document.getElementById('body');
-    this.loaded$ = this.store.select(fromStore.getUserLoaded);
-    this.loading$ = this.store.select(fromStore.getUserLoading);
-    this.loaded$.subscribe(loaded => this.matNquery(loaded));
+  ngOnChanges(changes: SimpleChanges) {
+      if (changes['loaded$']) {
+          this.matNquery(this.loaded$);
+      }
   }
 
     loginWQ(event) {

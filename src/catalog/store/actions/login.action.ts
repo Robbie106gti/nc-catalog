@@ -1,8 +1,8 @@
 import { Action } from '@ngrx/store';
 import { Login } from '../../models/login.model';
-import { User, WQUser } from '../../models/user.model';
+import { User, WQUser, Favorites } from '../../models/user.model';
 
-// load catalog
+// load login
 export const LOAD_LOGIN = '[Login] Login Webquoin setup';
 export const LOAD_LOGIN_FAIL = '[Login] Login Webquoin setup Fail';
 export const LOAD_LOGIN_SUCCESS = '[Login] Login Webquoin setup Success';
@@ -11,6 +11,11 @@ export const LOAD_LOGIN_FB = '[Login] Login Firebase setup';
 export const LOAD_LOGIN_FB_CK = '[Login] CK Login Firebase setup';
 export const LOAD_LOGIN_FB_FAIL = '[Login] Login Firebase setup Fail';
 export const LOAD_LOGIN_FB_SUCCESS = '[Login] Login Firebase setup Success';
+
+// load favorites
+export const LOAD_FAVORITES = '[User] Get Favorites';
+export const LOAD_FAVORITES_FAIL = '[User] Get Favorites Fail';
+export const LOAD_FAVORITES_SUCCESS = '[User] Get Favorites Success';
 
 export class LoadLogin implements Action {
   readonly type = LOAD_LOGIN;
@@ -58,9 +63,36 @@ export class LoadLoginFbSuccess implements Action {
   }
 }
 
+export class UserFavorites implements Action {
+  readonly type = LOAD_FAVORITES;
+}
+
+export class UserFavoritesFail implements Action {
+  readonly type = LOAD_FAVORITES_FAIL;
+  constructor(public payload: any) {
+    // console.log(payload);
+  }
+}
+
+export class UserFavoritesSuccess implements Action {
+  readonly type = LOAD_FAVORITES_SUCCESS;
+  constructor(public payload: Favorites[]) {
+    // console.log(payload);
+  }
+}
+
 // create items
 // update items
 // delete items
 
 // action types
-export type LoginAction = LoadLogin | LoadLoginFail | LoadLoginSuccess | LoadLoginFb | LoadLoginFbCk | LoadLoginFbFail | LoadLoginFbSuccess;
+export type LoginAction = LoadLogin 
+| LoadLoginFail 
+| LoadLoginSuccess 
+| LoadLoginFb 
+| LoadLoginFbCk 
+| LoadLoginFbFail 
+| LoadLoginFbSuccess
+| UserFavorites 
+| UserFavoritesFail 
+| UserFavoritesSuccess;

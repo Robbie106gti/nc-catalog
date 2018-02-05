@@ -20,7 +20,18 @@ export const getUserLoaded = createSelector(
   getUserState,
   fromLogin.getUserLoaded
 );
+
 export const getUserLoading = createSelector(
   getUserState,
   fromLogin.getUserLoading
+);
+
+export const getUserFavs = createSelector(
+  getUserState,
+  fromLogin.getUserFav
+);
+
+export const getUserNotes = createSelector(
+  getUserState,
+  fromLogin.getUserNotes
 );

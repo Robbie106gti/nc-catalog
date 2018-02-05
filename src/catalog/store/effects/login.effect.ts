@@ -10,14 +10,14 @@ import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import * as fromRoot from '../../../app/store';
 import * as loginActions from '../actions/login.action';
 import * as fromServices from '../../services';
-import { User, WQUser } from '../../models/user.model';
+import { User, WQUser, Favorites } from '../../models/user.model';
 import { Login } from '../../models/login.model';
 import { Observable } from 'rxjs/Observable';
 import { error } from 'selenium-webdriver';
 
 export interface Ap {
     type: string;
-    payload: WQUser;
+    payload: any;
   }
 export interface Ap2 {
   type: string;
@@ -90,6 +90,19 @@ export class LoginEffects {
         }
       }),
       catchError(err => of(new loginActions.LoadLoginFail({ ...err, cookie: 'No Cookie'})))
+    );
+
+    @Effect()
+    UserFavorites$ = this.actions$.ofType(loginActions.LOAD_LOGIN_FB_SUCCESS).pipe(
+      switchMap((action: Ap) => {
+        // console.log(action);
+        return this.firestoreService
+          .col$(`users/${action.payload.email}/favorites`)
+          .pipe(
+            map((fav: Favorites[]) => new loginActions.UserFavoritesSuccess(fav)),
+            catchError(err => of(new loginActions.UserFavoritesFail(err)))
+          );
+      })
     );
 
   @Effect()

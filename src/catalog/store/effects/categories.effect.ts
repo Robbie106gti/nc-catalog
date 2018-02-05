@@ -29,7 +29,12 @@ export class CategoriesEffects {
       return this.firestoreService
         .colWithIds$(`structure/category/${categories.payload.toLowerCase()}`)
         .pipe(
-          map(base => new categoriesActions.LoadCategoriesSuccess(base)),
+          map(bases => {
+            const base = bases.map(b => {
+              return {...b, 'sub': categories['payload'] };
+            });
+            return new categoriesActions.LoadCategoriesSuccess(base);
+          }),
           catchError(error => of(new categoriesActions.LoadCategoriesFail(error)))
         );
     })
