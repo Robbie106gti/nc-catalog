@@ -20,7 +20,7 @@ export const getSelectedCategory = createSelector(
   getCatalogEntities,
   fromRoot.getRouterState,
   (entities, router): Catalog => {
-    const Id = router.state.params.Id ? router.state.params.Id : router.state.url.split('/').pop().replace('%20', ' ');
+    const Id = router.state.params.Cat;
     return router.state && entities[Id];
   }
 );

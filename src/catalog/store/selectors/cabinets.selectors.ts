@@ -16,14 +16,8 @@ export const getCabinetsLineState = createSelector(
     fromRoot.getRouterState,
     (cabinets, router) => {
         // console.log(cabinets, router);
-        return cabinets[router.state.params.Id];
+        return cabinets[router.state.params.Cat];
     }
-);
-
-export const getBCabinetsState = createSelector(
-  fromFeature.getProductsState,
-  fromRoot.getRouterState,
-  (state: fromFeature.ProductsState, router) => state.cabinets['Base Cabinets']
 );
 
 export const getCabinetsEntities = createSelector(
@@ -35,7 +29,7 @@ export const getSelectedCabinetLine = createSelector(
   getCabinetsEntities,
   fromRoot.getRouterState,
   (entities, router): Cabinets => {
-    const Id = router.state.params.Id ? router.state.params.Id : router.state.url.split('/').pop().replace('%20', ' ');
+    const Id = router.state.params.Cat;
     return router.state && entities[Id];
   }
 );
@@ -56,9 +50,28 @@ export const getCabinetsLoading = createSelector(
     fromCabinets.getCabinetsLoading,
 );
 
-export const getSelectedRoute = createSelector(
+export const getSelectedRouteCat = createSelector(
   fromRoot.getRouterState,
   (router) => {
-    return router.state.params.Id ? router.state.params.Id : router.state.url.split('/').pop().replace('%20', ' ');
+    return router.state.params.Cat;
+  }
+);
+
+export const getSelectedRouteItem = createSelector(
+  fromRoot.getRouterState,
+  (router) => {
+    return router.state.params.Item;
+  }
+);
+
+export const getSelectedCabinetItem = createSelector(
+  getCabinets,
+  fromRoot.getRouterState,
+  (entities, router) => {
+    let entity;
+    entities.map(en => {
+      if (en.title === router.state.params.Item) { return entity = en; }
+    });
+    return entity;
   }
 );

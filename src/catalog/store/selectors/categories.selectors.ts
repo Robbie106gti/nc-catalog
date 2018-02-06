@@ -16,7 +16,7 @@ export const getCategoriesLineState = createSelector(
     fromRoot.getRouterState,
     (categories, router) => {
         // console.log(categories, router);
-        return categories[router.state.params.Id];
+        return categories[router.state.params.Cat];
     }
 );
 
@@ -29,7 +29,7 @@ export const getSelectedCategoryLine = createSelector(
   getCategoriesEntities,
   fromRoot.getRouterState,
   (entities, router): Categories => {
-    const Id = router.state.params.Id ? router.state.params.Id : router.state.url.split('/').pop().replace('%20', ' ');
+    const Id = router.state.params.Cat;
     return router.state && entities[Id];
   }
 );
@@ -48,4 +48,16 @@ export const getCategoriesLoaded = createSelector(
 export const getCategoriesLoading = createSelector(
     getCategoriesLineState,
     fromCategories.getCategoriesLoading,
+);
+
+export const getSelectedCategoryItem = createSelector(
+  getCategories,
+  fromRoot.getRouterState,
+  (entities, router) => {
+    let entity;
+    entities.map(en => {
+      if (en.title === router.state.params.Item) { return entity = en; }
+    });
+    return entity;
+  }
 );

@@ -16,7 +16,7 @@ export class CategoriesGuard implements CanActivate {
   id$: Observable<string>;
   constructor(private store: Store<fromStore.ProductsState>) {
       this.store.select(fromRoot.getRouterState).pipe(
-          tap(router => this.id$ = router.state.params.Id),
+          tap(router => this.id$ = router.state.params.Cat),
           take(1)
       );
   }
@@ -37,7 +37,7 @@ export class CategoriesGuard implements CanActivate {
             return this.store.select(fromStore.getCategoriesLoaded).pipe(
                 tap(loaded => {
                   if (!loaded) {
-                    this.store.dispatch(new fromStore.LoadCategories(router.state.params.Id));
+                    this.store.dispatch(new fromStore.LoadCategories(router.state.params.Cat));
                   }
                 }),
                 filter(loaded => loaded),

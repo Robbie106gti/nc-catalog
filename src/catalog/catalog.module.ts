@@ -40,14 +40,24 @@ export const ROUTES: Routes = [
    // component: fromContainers.ProductItemComponent,
   },
   {
-    path: 'category/:Id',
+    path: 'category/:Cat',
     canActivate: [fromGuards.CatalogGuard, fromGuards.CategoriesGuard ],
     component: fromContainers.CatViewComponent,
   },
   {
-    path: 'cabinets/:Id',
+    path: 'category/:Cat/:Item',
+    canActivate: [fromGuards.CatalogGuard, fromGuards.CategoriesGuard ],
+    component: fromContainers.SpecCatComponent,
+  },
+  {
+    path: 'cabinets/:Cat',
     canActivate: [fromGuards.CatalogGuard, fromGuards.CabinetsGuard ],
     component: fromContainers.CabViewComponent,
+  },
+  {
+    path: 'cabinets/:Cat/:Item',
+    canActivate: [fromGuards.CatalogGuard, fromGuards.CabinetsGuard ],
+    component: fromContainers.SpecCabComponent,
   }
 ];
 

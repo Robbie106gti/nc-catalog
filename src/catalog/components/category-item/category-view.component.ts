@@ -23,7 +23,7 @@ import * as fromStore from '../../store';
         (remove)="UnbookmarkIt($event)" 
         (turnOn)="Active($event)" 
         (turnOff)="Unactive($event)"></tool-item>
-    <a [routerLink]="['./item', item.id]">
+    <a [routerLink]="[item.title]">
         <div class="card-image waves-effect waves-block waves-light">
             <img class="image20 activator" src="{{ item.image }}">
         </div>
