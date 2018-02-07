@@ -9,6 +9,7 @@ import {
   } from '@angular/core';
 
   @Component({
+    // tslint:disable-next-line:component-selector
     selector: 'tool-item',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `

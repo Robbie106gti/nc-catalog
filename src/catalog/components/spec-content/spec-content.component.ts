@@ -7,6 +7,7 @@ import {
   } from '@angular/core';
 
   @Component({
+    // tslint:disable-next-line:component-selector
     selector: 'spec-content',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `

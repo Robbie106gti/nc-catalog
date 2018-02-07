@@ -29,6 +29,14 @@ import { tap, filter, take } from 'rxjs/operators';
         <div class="col s12 m6">
             <description-card [content]="content"></description-card>
             <spec-content [content]="content"></spec-content>
+            <note-item></note-item>
+        </div>
+        <div class="col s12 m6">
+          <slider-images></slider-images>
+          <add-custom></add-custom>
+        </div>
+        <div class="col s12 m6">
+          <table-item></table-item>
         </div>
       </div>
     </div>
