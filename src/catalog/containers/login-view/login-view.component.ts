@@ -11,7 +11,7 @@ declare var Materialize: any;
   // tslint:disable-next-line:component-selector
   selector: 'login-view',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<login-item [loaded]="loaded$ | async" [loading]="loading$ | async" (login)="loginWQ($event)"></login-item>`,
+  template: `<login-item [loaded]="loaded$ | async" [loading]="(loading$ | async)" (login)="loginWQ($event)"></login-item>`,
 })
 
 export class LoginViewComponent implements OnChanges {
