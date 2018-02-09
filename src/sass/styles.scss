@@ -141,6 +141,9 @@ body {
           background-color: rgb(155, 155, 155) !important;
           color: rgb(150, 150, 150) !important;
       }
+  .modal.bottom-sheet {
+    max-height: 70%;
+  }
   
   @supports(display: grid){
     .detail-card {

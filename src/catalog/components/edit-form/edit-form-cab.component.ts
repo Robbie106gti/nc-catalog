@@ -11,12 +11,12 @@ import { Observable } from 'rxjs/Observable';
 
   @Component({
     // tslint:disable-next-line:component-selector
-    selector: 'edit-modal-bar',
+    selector: 'edit-form-cab',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
     <div id="modal1" class="modal bottom-sheet" >
         <form *ngIf="edit">
-            <div class="modal-content row">
+            <div class="modal-content row"><i class="material-icons tool-item medium" (click)="Closed()">close</i>
                 <h4>Update {{edit.content.title}}
                     <div class="switch">
                         <label>
@@ -101,51 +101,51 @@ import { Observable } from 'rxjs/Observable';
     <ng-template #inactive><input type="checkbox"></ng-template>
     `,
   })
-  export class EditModalBarComponent {
+  export class EditFormCabComponent {
     @Input() edit: any;
     @Input() user: any;
+    @Output() close = new EventEmitter<boolean>();
 
     constructor () {
-        $(document).ready(function(){
-          // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-          $('.modal').modal();
-        });
-        console.log(this.edit, this.user);
-        // this.Edit(this.edit);
+        this.ToEdit();
     }
 
-    Edit() {
-        if (this.edit.user.roles.admin) {
-            $('#modal1').modal('open');
-        }
+    ToEdit() {
         $(document).ready(function(){
-            $('input.autocompleteSpec').autocomplete({
-                data: {
-                  'Apple': null,
-                  'Microsoft': null,
-                  'Google': 'https://placehold.it/250x250'
-                },
-                limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-                onAutocomplete: function(val) {
-                  // Callback function when value is autcompleted.
-                  console.log(val);
-                },
-                minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-              });
-              $('input.autocompleteNote').autocomplete({
-                data: {
-                  'Apple': null,
-                  'Microsoft': null,
-                  'Google': 'https://placehold.it/250x250'
-                },
-                limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-                onAutocomplete: function(val) {
-                  // Callback function when value is autcompleted.
-                  console.log(val);
-                },
-                minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-              });
-        });
+            // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+            $('.modal').modal({dismissible: false });
+            $('#modal1').modal('open');
+          });
+          $(document).ready(function(){
+              $('input.autocompleteSpec').autocomplete({
+                  data: {
+                    'Apple': null,
+                    'Microsoft': null,
+                    'Google': 'https://placehold.it/250x250'
+                  },
+                  limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+                  onAutocomplete: function(val) {
+                    // Callback function when value is autcompleted.
+                    console.log(val);
+                  },
+                  minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+                });
+                $('input.autocompleteNote').autocomplete({
+                  data: {
+                    'Apple': null,
+                    'Microsoft': null,
+                    'Google': 'https://placehold.it/250x250'
+                  },
+                  limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+                  onAutocomplete: function(val) {
+                    // Callback function when value is autcompleted.
+                    console.log(val);
+                  },
+                  minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+                });
+          });
     }
+
+    Closed() { this.close.emit(true); $('#modal1').modal('close'); }
 
   }

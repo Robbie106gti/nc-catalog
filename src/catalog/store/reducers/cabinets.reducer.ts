@@ -1,5 +1,6 @@
 import * as fromCabinets from '../actions/cabinets.action';
 import { Cabinets } from '../../models/cabinets.model';
+import { EditCab } from '../../models/edit-cab.model';
 
 export interface CabinetsState {
     'Base Cabinets': CabinetsLine;
@@ -12,6 +13,7 @@ export interface CabinetsState {
     'Wall Cabinets': CabinetsLine;
     'Wall Channel Cabinets': CabinetsLine;
     'Wardrobe Cabinets': CabinetsLine;
+    'To Edit'?: EditCab;
     load?: string;
     lastload?: string;
   }
@@ -114,16 +116,25 @@ export function reducer(
         [state.load]: { loaded: false, loading: false },
       };
     }
+
+    case fromCabinets.CREATE_EDIT_CAB: {
+      const toEdit = action.payload;
+      return {
+        ...state,
+        'To Edit': toEdit,
+      };
+    }
+
+    case fromCabinets.CREATE_EDIT_CAB: {
+      return {
+        ...state,
+        'To Edit': null,
+      };
+    }
   }
 
   return state;
 }
-
-
-
-export const getCabinetsBaseEntities = (state: CabinetsState) => state['Base Cabinets'].entities;
-export const getCabinetsBaseLoading = (state: CabinetsState) => state['Base Cabinets'].loading;
-export const getCabinetsBaseLoaded = (state: CabinetsState) => state['Base Cabinets'].loaded;
 
 export const getCabinetsEntities = (state: CabinetsLine) => state.entities;
 export const getCabinetsLoading = (state: CabinetsLine) => state.loading;

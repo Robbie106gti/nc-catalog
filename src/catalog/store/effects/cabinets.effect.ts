@@ -9,6 +9,11 @@ import * as cabinetsActions from '../actions/cabinets.action';
 import * as fromServices from '../../services';
 import { tap } from 'rxjs/operators/tap';
 
+interface Ap {
+    type: string;
+    payload: any;
+  }
+
 @Injectable()
 export class CabinetsEffects {
   constructor(

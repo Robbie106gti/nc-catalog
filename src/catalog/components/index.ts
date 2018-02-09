@@ -13,11 +13,12 @@ import { AddCustomComponent } from './add-custom/add-custom.component';
 import { VersionsBarComponent } from './versions-bar/versions-bar.component';
 import { ImageBarComponent } from './versions-bar/image-bar.component';
 import { EditModalBarComponent } from './versions-bar/edit-modal-bar.component';
+import { EditFormCabComponent } from './edit-form/edit-form-cab.component';
 
 export const components: any[] = [
     CategoryItemComponent, CategoryViewComponent, ChipComponent, LoginItemComponent, ToolItemComponent, SpecContentComponent,
     DescriptionComponent, NoteItemComponent, TableItemComponent, SliderImagesComponent, AddCustomComponent, VersionsBarComponent,
-    ImageBarComponent, EditModalBarComponent
+    ImageBarComponent, EditModalBarComponent, EditFormCabComponent
 ];
 
 // export * from ''
@@ -35,3 +36,4 @@ export * from './add-custom/add-custom.component';
 export * from './versions-bar/versions-bar.component';
 export * from './versions-bar/image-bar.component';
 export * from './versions-bar/edit-modal-bar.component';
+export * from './edit-form/edit-form-cab.component';

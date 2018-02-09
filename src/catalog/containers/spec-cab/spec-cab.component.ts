@@ -15,6 +15,7 @@ import { User } from '../../models/user.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <login-view></login-view>
+  <form-cab *ngIf="editing" [user]="(user$ | async)" (close)="Close($event)"></form-cab>
     <div class="section no-pad-bot" id="index-banner" *ngIf="(content$ | async) as content">
       <div class="card" id="top">
         <div class="container">
@@ -25,9 +26,8 @@ import { User } from '../../models/user.model';
             </div>
         </div>
       </div>
-
       <div class="row" id="catalog">
-        <versions-bar class="row" [content]="content" [user]="(user$ | async)"></versions-bar>
+        <versions-bar class="row" [content]="content" [user]="(user$ | async)" (edit)="Edit($event)"></versions-bar>
         <div class="row">
           <div class="col s12 m6">
             <description-card [content]="content"></description-card>
@@ -49,11 +49,21 @@ import { User } from '../../models/user.model';
 export class SpecCabComponent implements OnInit {
   content$: Observable<any>;
   user$: Observable<User>;
+  editing: Boolean;
 
   constructor(private store: Store<fromStore.ProductsState>) { }
 
   ngOnInit() {
     this.content$ = this.store.select(fromStore.getSelectedCabinetItem);
     this.user$ = this.store.select(fromStore.getUserData);
+   }
+
+   Edit(event) {
+     this.store.dispatch({type: fromStore.CREATE_EDIT_CAB, payload: event});
+     this.editing = true;
+   }
+
+   Close(event) {
+     this.editing = false;
    }
 }

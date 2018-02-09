@@ -75,3 +75,10 @@ export const getSelectedCabinetItem = createSelector(
     return entity;
   }
 );
+
+export const getToEditCabinet = createSelector(
+  getCabinetsState,
+  (cabinets) => {
+    return cabinets['To Edit'];
+  }
+);

@@ -6,9 +6,11 @@ import { ItemViewComponent } from './item-view/item-view.component';
 import { LoginViewComponent } from './login-view/login-view.component';
 import { SpecCabComponent } from './spec-cab/spec-cab.component';
 import { SpecCatComponent } from './spec-cat/spec-cat.component';
+import { FormCabComponent } from './spec-cab/form-cab.component';
 
 export const containers: any[] = [
-    CategoriesComponent, CabViewComponent, CatViewComponent, ItemViewComponent, LoginViewComponent, SpecCabComponent, SpecCatComponent
+    CategoriesComponent, CabViewComponent, CatViewComponent, ItemViewComponent, LoginViewComponent, SpecCabComponent, SpecCatComponent,
+    FormCabComponent
 ];
 
 // export * from ''
@@ -19,3 +21,4 @@ export * from './item-view/item-view.component';
 export * from './login-view/login-view.component';
 export * from './spec-cab/spec-cab.component';
 export * from './spec-cat/spec-cat.component';
+export * from './spec-cab/form-cab.component';

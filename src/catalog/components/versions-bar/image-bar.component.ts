@@ -26,12 +26,12 @@ import {
     `,
   })
   export class ImageBarComponent {
-    editing: boolean;
     @Input() version: any;
     @Input() content: any;
     @Input() user: any;
     @Output() select = new EventEmitter<any>();
     @Output() edit = new EventEmitter<any>();
+
     Selected() { this.select.emit({ version: this.version, content: this.content }); }
     Edit() { this.edit.emit({ version: this.version, content: this.content }); }
   }
