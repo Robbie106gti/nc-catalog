@@ -6,6 +6,7 @@ import * as fromStore from '../../store';
 import { Catalog } from '../../models/catalog.model';
 import { Cabinets } from '../../models/cabinets.model';
 import { tap, filter, take } from 'rxjs/operators';
+import { User } from '../../models/user.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -26,28 +27,33 @@ import { tap, filter, take } from 'rxjs/operators';
       </div>
 
       <div class="row" id="catalog">
-        <div class="col s12 m6">
+        <versions-bar class="row" [content]="content" [user]="(user$ | async)"></versions-bar>
+        <div class="row">
+          <div class="col s12 m6">
             <description-card [content]="content"></description-card>
             <spec-content [content]="content"></spec-content>
-            <note-item></note-item>
-        </div>
-        <div class="col s12 m6">
-          <slider-images></slider-images>
-          <add-custom></add-custom>
-        </div>
-        <div class="col s12 m6">
-          <table-item></table-item>
+            <note-item [content]="content"></note-item>
+          </div>
+          <div class="col s12 m6">
+            <slider-images [content]="content"></slider-images>
+          </div>
+          <div class="col s12 m6">
+            <add-custom [content]="content"></add-custom>
+            <table-item [content]="content"></table-item>
+          </div>
         </div>
       </div>
     </div>
   `,
 })
 export class SpecCabComponent implements OnInit {
-    content$: Observable<any>;
+  content$: Observable<any>;
+  user$: Observable<User>;
 
   constructor(private store: Store<fromStore.ProductsState>) { }
 
   ngOnInit() {
     this.content$ = this.store.select(fromStore.getSelectedCabinetItem);
+    this.user$ = this.store.select(fromStore.getUserData);
    }
 }

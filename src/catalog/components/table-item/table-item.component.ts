@@ -11,7 +11,7 @@ import {
     selector: 'table-item',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-    <div class="card padding">
+    <div class="card padding unset">
         <table class="striped highlight centered">
             <thead>
             <tr>

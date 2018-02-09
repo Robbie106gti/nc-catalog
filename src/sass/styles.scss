@@ -127,6 +127,20 @@ body {
     z-index: 99;
     cursor: pointer;
   }
+
+  .unset {
+    position: unset !important;
+  }
+
+  .indicator-item {
+          background-color:  rgb(59, 58, 58) !important;
+          color: rgb(59, 58, 58) !important;
+      }
+
+  .indicator-item.active {
+          background-color: rgb(155, 155, 155) !important;
+          color: rgb(150, 150, 150) !important;
+      }
   
   @supports(display: grid){
     .detail-card {

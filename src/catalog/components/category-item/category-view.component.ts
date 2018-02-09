@@ -12,16 +12,17 @@ import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
 
   @Component({
+    // tslint:disable-next-line:component-selector
     selector: 'category-view',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
     <tool-item  *ngIf="(user$ | async) as user"
-        [category]="item" 
-        [user]="user" 
+        [category]="item"
+        [user]="user"
         [userFavs]="(userFavs$ | async)"
-        (add)="BookmarkIt($event)" 
-        (remove)="UnbookmarkIt($event)" 
-        (turnOn)="Active($event)" 
+        (add)="BookmarkIt($event)"
+        (remove)="UnbookmarkIt($event)"
+        (turnOn)="Active($event)"
         (turnOff)="Unactive($event)"></tool-item>
     <a [routerLink]="[item.title]">
         <div class="card-image waves-effect waves-block waves-light">

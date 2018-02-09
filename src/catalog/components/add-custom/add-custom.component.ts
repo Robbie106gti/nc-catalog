@@ -13,7 +13,7 @@ import {
     selector: 'add-custom',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-    <div class="card padding">
+    <div class="card padding unset">
         <h4>Addional Customizations:</h4>
         <ul class="collapsible popout" data-collapsible="accordion">
             <li>
@@ -24,7 +24,7 @@ import {
             </li>
             <li>
                 <div class="collapsible-header"><i class="material-icons">add_to_photos</i>Roll-out</div>
-                <div class="collapsible-body"><span><b>Roll-out </b> Melamine Dado Joint MOVENTO Rollout shelves</span></div>
+                <div class="collapsible-body"><span><b>Roll-out</b> Melamine Dado Joint MOVENTO Rollout shelves</span></div>
             </li>
         </ul>
    </div>

@@ -8,6 +8,7 @@ import { User, Favorites, Notes } from '../../models/user.model';
 import * as fromServices from '../../services';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'categories',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
@@ -45,7 +46,9 @@ export class CategoriesComponent implements OnInit {
     this.userNotes$ = this.store.select(fromStore.getUserNotes);
   }
 
-  BookmarkIt(event)   { this.firestore.upsert(`users/${event.user.email}/favorites/${event.cat.id}`, { name: event.cat.title, id: event.cat.id }); }
+  BookmarkIt(event)   {
+    this.firestore.upsert(`users/${event.user.email}/favorites/${event.cat.id}`, { name: event.cat.title, id: event.cat.id });
+  }
   UnbookmarkIt(event) { this.firestore.delete(`users/${event.user.email}/favorites/${event.cat.id}`); }
   Active(event)       { this.firestore.update(`categories/${event.cat.id}`, { active: true, updatedBy: event.user.fullName }); }
   Unactive(event)     { this.firestore.update(`categories/${event.cat.id}`, { active: false, updatedBy: event.user.fullName }); }
