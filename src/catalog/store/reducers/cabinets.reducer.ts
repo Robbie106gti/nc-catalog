@@ -131,6 +131,27 @@ export function reducer(
         'To Edit': null,
       };
     }
+
+    case fromCabinets.UPDATE_CABINET: {
+      return {
+        ...state,
+        ['To Edit'.updated]: true,
+      };
+    }
+
+    case fromCabinets.UPDATE_CABINET_FAIL: {
+      return {
+        ...state,
+        ['To Edit'.fail]: true,
+      };
+    }
+
+    case fromCabinets.UPDATE_CABINET_SUCCESS: {
+      return {
+        ...state,
+        ['To Edit'.success]: true,
+      };
+    }
   }
 
   return state;

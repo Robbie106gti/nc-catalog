@@ -3,6 +3,9 @@ import { Cabinets } from './cabinets.model';
 export interface EditCab {
     version: Version;
     content: Cabinets;
+    updated?: boolean;
+    fail?: boolean;
+    success?: boolean;
 }
 
 

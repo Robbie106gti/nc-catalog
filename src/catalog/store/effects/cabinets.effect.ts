@@ -39,5 +39,19 @@ export class CabinetsEffects {
         );
     })
   );
+  
+  @Effect()
+  updateCabinet$ = this.actions$.ofType(cabinetsActions.UPDATE_CABINET)
+  .pipe(
+    switchMap(cab => {
+    // tslint:disable-next-line:max-line-length
+    return this.firestoreService.update(`structure/cabinets/${cab['payload'].item.content.sub.toLowerCase()}/${cab['payload'].item.content.id}`, { image: cab['payload'].path, updatedBy: cab['payload'].user.fullName})
+    .pipe(
+      map(updated => new cabinetsActions.UpdateEditCabSuccess(updated)),
+      catchError(error => of(new cabinetsActions.UpdateEditCabFail(error)))
+      );
+    }
+    )
+  );
 
 }

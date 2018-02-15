@@ -1,0 +1,64 @@
+<div id="modal1" class="modal bottom-sheet" >
+    <form *ngIf="edit" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="modal-content row"><i class="material-icons tool-item medium" (click)="Closed()">close</i>
+            <h4>Update {{edit.content.title}}
+                <div class="switch">
+                    <label>
+                        Off
+                        <input type="checkbox" *ngIf="edit.content.active; else inactive" checked>
+                        <span class="lever"></span>
+                        On
+                    </label>
+                </div>
+            </h4>
+            <div class="col s6 m6">
+                <upload-input [edit]="edit" [user]="user" [title]="edit.content.title" [button]="'image'" [pct]="pct"
+                (file)="imageUpload($event)"></upload-input>
+                <div class="input-field col s12">
+                    <textarea id="description" class="materialize-textarea"></textarea>
+                    <label for="description">Description</label>
+                </div>
+            </div>
+            <div class="col s6 m6 input-field">
+                <i class="material-icons prefix">textsms</i>
+                <input type="text" id="autocomplete-specg" class="autocompleteSpec">
+                <label for="autocomplete-specg">Specifications</label>
+            </div>
+            <div class="col s6 m6 input-field">
+                <i class="material-icons prefix">textsms</i>
+                <input type="text" id="autocomplete-noteg" class="autocompleteNote">
+                <label for="autocomplete-noteg">Notes</label>
+            </div>
+        </div>
+        <div class="modal-content row">
+            <h4>Update {{edit.content.title}} {{ edit.version.height }}{{ edit.version.version || '" high'}}
+                <div class="switch">
+                    <label>
+                        Off
+                        <input type="checkbox" *ngIf="edit.version.active; else inactive" checked>
+                        <span class="lever"></span>
+                        On
+                    </label>
+                </div>
+            </h4>
+            <div class="col s6 m6">
+            <upload-input [edit]="edit" [user]="user" [title]="edit.version.height" [button]="'image'"
+            (file)="imageUpload($event)"></upload-input>
+            <upload-input [edit]="edit" [user]="user" [title]="edit.version.height" [button]="'spec'"
+            (file)="imageUpload($event)"></upload-input>
+            </div>
+            <div class="col s6 m6 input-field">
+                <i class="material-icons prefix">textsms</i>
+                <input type="text" id="autocomplete-spec" class="autocompleteSpec">
+                <label for="autocomplete-spec">Specifications</label>
+            </div>
+            <div class="col s6 m6 input-field">
+                <i class="material-icons prefix">textsms</i>
+                <input type="text" id="autocomplete-note" class="autocompleteNote">
+                <label for="autocomplete-note">Notes</label>
+            </div>
+        </div>
+    </form>
+</div>
+
+<ng-template #inactive><input type="checkbox"></ng-template>

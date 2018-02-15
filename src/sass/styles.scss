@@ -145,6 +145,10 @@ body {
     max-height: 70%;
   }
   
+  progress::-webkit-progress-value {
+    transition: width 0.1s ease;
+}
+  
   @supports(display: grid){
     .detail-card {
       width: 50%;

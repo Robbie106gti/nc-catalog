@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 import { FirestoreService } from './services/firestore.service';
 
 import { StoreModule } from '@ngrx/store';
@@ -26,6 +27,9 @@ import * as fromGuards from './guards';
 
 // services
 import * as fromServices from './services';
+
+// services
+import * as fromPipes from './pipes';
 
 // routes
 export const ROUTES: Routes = [
@@ -71,10 +75,11 @@ export const ROUTES: Routes = [
     StoreModule.forFeature('products', reducers),
     EffectsModule.forFeature(effects),
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireStorageModule
   ],
   providers: [...fromServices.services, ...fromGuards.guards],
-  declarations: [...fromContainers.containers, ...fromComponents.components],
+  declarations: [...fromContainers.containers, ...fromComponents.components, ...fromPipes.pipes],
   exports: [...fromContainers.containers, ...fromComponents.components],
 })
 export class CatalogModule {}

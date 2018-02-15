@@ -14,11 +14,14 @@ import { VersionsBarComponent } from './versions-bar/versions-bar.component';
 import { ImageBarComponent } from './versions-bar/image-bar.component';
 import { EditModalBarComponent } from './versions-bar/edit-modal-bar.component';
 import { EditFormCabComponent } from './edit-form/edit-form-cab.component';
+import { DropZoneDirective } from './upload-dir/upload-dir.directive';
+import { UploadInputComponent } from './upload-dir/upload-input.component';
+import { LoaderComponent } from './loader/loader.component';
 
 export const components: any[] = [
     CategoryItemComponent, CategoryViewComponent, ChipComponent, LoginItemComponent, ToolItemComponent, SpecContentComponent,
     DescriptionComponent, NoteItemComponent, TableItemComponent, SliderImagesComponent, AddCustomComponent, VersionsBarComponent,
-    ImageBarComponent, EditModalBarComponent, EditFormCabComponent
+    ImageBarComponent, EditModalBarComponent, EditFormCabComponent, DropZoneDirective, UploadInputComponent, LoaderComponent
 ];
 
 // export * from ''
@@ -37,3 +40,6 @@ export * from './versions-bar/versions-bar.component';
 export * from './versions-bar/image-bar.component';
 export * from './versions-bar/edit-modal-bar.component';
 export * from './edit-form/edit-form-cab.component';
+export * from './upload-dir/upload-dir.directive';
+export * from './upload-dir/upload-input.component';
+export * from './loader/loader.component';
