@@ -18,7 +18,8 @@ interface Ap {
 export class CabinetsEffects {
   constructor(
     private actions$: Actions,
-    private firestoreService: fromServices.FirestoreService
+    private firestoreService: fromServices.FirestoreService,
+    private storageService: fromServices.StorageService
   ) {}
 
   @Effect()
@@ -46,12 +47,23 @@ export class CabinetsEffects {
     switchMap(cab => {
     // tslint:disable-next-line:max-line-length
     return this.firestoreService.update(`structure/cabinets/${cab['payload'].item.content.sub.toLowerCase()}/${cab['payload'].item.content.id}`, { image: cab['payload'].path, updatedBy: cab['payload'].user.fullName})
-    .pipe(
-      map(updated => new cabinetsActions.UpdateEditCabSuccess(updated)),
-      catchError(error => of(new cabinetsActions.UpdateEditCabFail(error)))
-      );
+     
     }
     )
+  );
+
+  @Effect()
+  uploadCabImage$ = this.actions$.ofType(cabinetsActions.UPLOAD_CABINET).pipe(
+    switchMap(event => {
+      return this.storageService.uploadCab(event['payload'])
+        .pipe(
+          map(snap =>{ 
+            console.log(snap);
+            return new cabinetsActions.UploadCabSuccess(snap)}
+          ),
+          catchError(error => of(new cabinetsActions.UploadCabFail(error)))
+        );
+    })
   );
 
 }

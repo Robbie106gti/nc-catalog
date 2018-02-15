@@ -82,3 +82,35 @@ export const getToEditCabinet = createSelector(
     return cabinets['To Edit'];
   }
 );
+
+export const getUpload = createSelector(
+  getCabinetsState,
+  (cabinets) => {
+    return cabinets['Upload'];
+  }
+);
+
+export const getUploadStatus = createSelector(
+  getUpload,
+  (upload) => {
+    return upload.status;
+  }
+);
+
+export const getUploadPct = createSelector(
+  getUpload,
+  (upload) => {
+    const pct = (upload.status.bytesTransferred / (upload.status.totalBytes / 100));
+    // console.log(pct);
+    return Number(pct);
+  }
+);
+
+export const getUploadUrl = createSelector(
+  getUpload,
+  (upload) => {
+    const url = upload.status.downloadURL;
+    console.log(url);
+    return url;
+  }
+);

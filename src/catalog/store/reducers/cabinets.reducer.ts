@@ -14,6 +14,7 @@ export interface CabinetsState {
     'Wall Channel Cabinets': CabinetsLine;
     'Wardrobe Cabinets': CabinetsLine;
     'To Edit'?: EditCab;
+    'Upload'?: any;
     load?: string;
     lastload?: string;
   }
@@ -132,24 +133,26 @@ export function reducer(
       };
     }
 
-    case fromCabinets.UPDATE_CABINET: {
+    case fromCabinets.UPLOAD_CABINET: {
+      const upload = action.payload;
       return {
         ...state,
-        ['To Edit'.updated]: true,
+        'Upload': {...upload, status: { bytesTransferred: 0,  totalBytes: 100}}
       };
     }
 
-    case fromCabinets.UPDATE_CABINET_FAIL: {
+    case fromCabinets.UPLOAD_CABINET_FAIL: {
+      const uploadErr = action.payload;
       return {
         ...state,
-        ['To Edit'.fail]: true,
+        'Upload': { ...state.Upload, error: uploadErr }
       };
     }
 
-    case fromCabinets.UPDATE_CABINET_SUCCESS: {
+    case fromCabinets.UPLOAD_CABINET_SUCCESS: {
       return {
         ...state,
-        ['To Edit'.success]: true,
+        'Upload': {...state.Upload, status: action.payload }
       };
     }
   }

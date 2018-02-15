@@ -12,7 +12,7 @@
                 </div>
             </h4>
             <div class="col s6 m6">
-                <upload-input [edit]="edit" [user]="user" [title]="edit.content.title" [button]="'image'" [pct]="pct"
+                <upload-input [edit]="edit" [user]="user" [title]="edit.content.title" [button]="'image'" [pct]="pct" [url]="url" [pctfile]="pctfile"
                 (file)="imageUpload($event)"></upload-input>
                 <div class="input-field col s12">
                     <textarea id="description" class="materialize-textarea"></textarea>
@@ -42,9 +42,9 @@
                 </div>
             </h4>
             <div class="col s6 m6">
-            <upload-input [edit]="edit" [user]="user" [title]="edit.version.height" [button]="'image'"
+            <upload-input [edit]="edit" [user]="user" [title]="edit.version.height" [button]="'image'" [pct]="pct" [url]="url" [pctfile]="pctfile"
             (file)="imageUpload($event)"></upload-input>
-            <upload-input [edit]="edit" [user]="user" [title]="edit.version.height" [button]="'spec'"
+            <upload-input [edit]="edit" [user]="user" [title]="edit.version.height" [button]="'spec'" [pct]="pct" [url]="url" [pctfile]="pctfile"
             (file)="imageUpload($event)"></upload-input>
             </div>
             <div class="col s6 m6 input-field">

@@ -12,16 +12,20 @@ import {
     selector: 'upload-input',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
+<div class="chip" *ngIf="pct >= 99 && pctfile === name" >
+  <img *ngIf="url && pctfile === name" [src]="url" [alt]="title">
+    <i class="close material-icons teal-text text-darken-4">done</i> {{ name }}
+</div>
 <div class="file-field input-field"
 dropZone
 (dropped)="startUpload($event)">
+
     <div class="btn">
         <span>{{button}}</span>
         <input type="file"
         (change)="startUpload($event.target.files)">
     </div>
     <div class="file-path-wrapper">
-        <i *ngIf="pct === 100" class="material-icons prefix teal-text text-darken-4">done</i>
         <input class="file-path validate"
         type="text" placeholder="Upload a image for {{ title }}">
     </div>
@@ -33,12 +37,16 @@ export class UploadInputComponent {
   @Input() title: string;
   @Input() button: string;
   @Input() pct: number;
+  @Input() pctfile: string;
+  @Input() url: string;
   @Output() file = new EventEmitter<any>();
+  name: string;
 
   startUpload(event: FileList) {
     // The File object
     const file = event.item(0);
-    // Client-side validation example
+    this.name = file.name;
+    // Client-side validation example 
     if (file.type.split('/')[0] !== 'image') {
       console.error('unsupported file type :( ');
       return;

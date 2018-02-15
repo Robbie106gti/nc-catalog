@@ -22,6 +22,7 @@ import { Observable } from 'rxjs/Observable';
     @Input() edit: any;
     @Input() user: any;
     @Input() pct: number;
+    @Input() pctfile: string;
     @Input() url: string;
     @Output() close = new EventEmitter<boolean>();
     @Output() file = new EventEmitter<any>();
