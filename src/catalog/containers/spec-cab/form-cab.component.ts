@@ -45,7 +45,6 @@ export class FormCabComponent {
    this.store.dispatch(new fromStore.UploadCab(event));
    this.pctfile = of(event.file.name);
    this.pct = this.store.select(fromStore.getUploadPct);
-   this.pct.subscribe(pct => console.log(pct));
    this.downloadURL = this.store.select(fromStore.getUploadUrl);
    this.downloadURL.subscribe(url => console.log(url));
    // const file = event.file;

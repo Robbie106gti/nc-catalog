@@ -58,7 +58,7 @@ export class CabinetsEffects {
       return this.storageService.uploadCab(event['payload'])
         .pipe(
           map(snap =>{ 
-            console.log(snap);
+            // console.log(snap);
             return new cabinetsActions.UploadCabSuccess(snap)}
           ),
           catchError(error => of(new cabinetsActions.UploadCabFail(error)))

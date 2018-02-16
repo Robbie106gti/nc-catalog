@@ -25,7 +25,7 @@ export class StorageService {
   constructor(public afs: AngularFirestore, private store: Store<fromStore.ProductsState>, private storage: AngularFireStorage) { }
 
   uploadCab (event) {
-      console.log(event);
+      // console.log(event);
     const file = event.file;
     const cat = event.item.content.cabinet ? 'cabinets' : 'category';
     // The storage path
