@@ -2,20 +2,18 @@ import {
     Component,
     Input,
     Output,
-    EventEmitter,
-    ChangeDetectionStrategy,
-    OnInit
+    EventEmitter
   } from '@angular/core';
 
   @Component({
     // tslint:disable-next-line:component-selector
     selector: 'upload-input',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
 <div class="chip" *ngIf="pct >= 99 && pctfile === name" >
   <img *ngIf="url && pctfile === name" [src]="url" [alt]="title">
     <i class="close material-icons teal-text text-darken-4">done</i> {{ name }}
 </div>
+<loader *ngIf="pct >= 1 && pct <= 99 && pctfile === name" [pct]="pct"></loader>
 <div class="file-field input-field"
 dropZone
 (dropped)="startUpload($event)">

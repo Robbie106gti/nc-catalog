@@ -13,6 +13,9 @@ import 'rxjs/add/operator/switchMap';
 import * as firebase from 'firebase/app';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../store';
+import { switchMap } from 'rxjs/operator/switchMap';
+import { catchError, combineLatest } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
 
 type CollectionPredicate<T>   = string |  AngularFirestoreCollection<T>;
 type DocPredicate<T>          = string |  AngularFirestoreDocument<T>;
@@ -20,7 +23,6 @@ type DocPredicate<T>          = string |  AngularFirestoreDocument<T>;
 @Injectable()
 export class StorageService {
     task: AngularFireUploadTask;
-    snapshot: Observable<any>;
 
   constructor(public afs: AngularFirestore, private store: Store<fromStore.ProductsState>, private storage: AngularFireStorage) { }
 
@@ -37,7 +39,9 @@ export class StorageService {
     // The main task
     this.task = this.storage.upload(path, file, { customMetadata });
     // Progress monitoring
-    this.snapshot = this.task.snapshotChanges();
-    return this.snapshot;
+    const snap = this.task.snapshotChanges();
+    this.task.downloadURL().take(1).subscribe(url => this.store.dispatch({ type: fromStore.DOWNLOAD_URL, payload: url}));
+    return snap; 
   }
+
 }

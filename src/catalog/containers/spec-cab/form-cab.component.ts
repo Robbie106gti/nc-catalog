@@ -12,12 +12,12 @@ import { StorageService } from '../../services';
   // tslint:disable-next-line:component-selector
   selector: 'form-cab',
   // styleUrls: ['products.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <edit-form-cab
   *ngIf="(toEdit$ | async) as edit"
   [user]="user" [edit]="edit" [pct]="(pct | async)" [pctfile]="(pctfile | async)" [url]="(downloadURL | async)"
-  (close)="Close($event)" (file)="UploadFile($event)">
+  (close)="Close($event)" (file)="UploadFile($event)" (update)="Update($event)">
   </edit-form-cab>
   `,
 })
@@ -38,33 +38,16 @@ export class FormCabComponent {
   Close(event) { this.close.emit(true); this.store.dispatch({type: fromStore.CREATE_EDIT_CAB_DEL}); }
 
   UploadFile(event) {
-   // console.log(event);
-/*    this.snapshot = this.storage.uploadCab(event);
-   
-   this.snapshot.subscribe(snap => this.pct = snap.percentageChanges()); */
    this.store.dispatch(new fromStore.UploadCab(event));
    this.pctfile = of(event.file.name);
    this.pct = this.store.select(fromStore.getUploadPct);
-   this.downloadURL = this.store.select(fromStore.getUploadUrl);
-   this.downloadURL.subscribe(url => console.log(url));
-   // const file = event.file;
-   // The storage path
-   // const path = `cabinets/${event.item.content.sub}/${event.item.content.title}/${new Date().getTime()}_${event.type}_${file.name}`;
-   // Totally optional metadata
-/*    const customMetadata = {
-     uploadBy: event.user.fullName, title: event.title, cat: 'cabinets', subcategory: event.item.content.sub, type: event.type
-    }; */
-   // The main task
-   // this.task = this.storage.upload(path, file, { customMetadata });
-   // this.store.dispatch(new fromStore.UploadCab(event));
-/*    // Progress monitoring
-   this.pct = this.task.percentageChanges();
-   
-   this.snapshot = this.task.snapshotChanges();
-   // The file's download URL
-   this.downloadURL = this.task.downloadURL();
-   this.snapshot.subscribe(url => console.log(url)); */
-   // this.store.dispatch({type: fromStore.UPDATE_CABINET, payload: { ...event, path }});
+   this.snapshot = this.store.select(fromStore.getUploadStatus);
+   this.downloadURL = this.store.select(fromStore.getDownloadUrl);
+   this.snapshot.subscribe(snap => console.log(snap))
+  }
+
+  Update(event) {
+    console.log(event);
   }
 
 }

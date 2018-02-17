@@ -15,6 +15,7 @@ export interface CabinetsState {
     'Wardrobe Cabinets': CabinetsLine;
     'To Edit'?: EditCab;
     'Upload'?: any;
+    'Download'?: any;
     load?: string;
     lastload?: string;
   }
@@ -153,6 +154,14 @@ export function reducer(
       return {
         ...state,
         'Upload': {...state.Upload, status: action.payload }
+      };
+    }
+
+    case fromCabinets.DOWNLOAD_URL: {
+      const url = action.payload;
+      return {
+        ...state,
+        'Download': url
       };
     }
   }

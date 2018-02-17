@@ -3,8 +3,7 @@ import {
     Input,
     Output,
     EventEmitter,
-    ChangeDetectionStrategy,
-    ElementRef, ViewChild
+    ChangeDetectionStrategy
   } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
@@ -26,6 +25,7 @@ import { Observable } from 'rxjs/Observable';
     @Input() url: string;
     @Output() close = new EventEmitter<boolean>();
     @Output() file = new EventEmitter<any>();
+    @Output() update = new EventEmitter<any>();
 
     constructor (private fb: FormBuilder) {
         this.ToEdit();
@@ -34,8 +34,11 @@ import { Observable } from 'rxjs/Observable';
 
     createForm() {
       this.form = this.fb.group({
-        name: ['', Validators.required],
-        avatar: null
+        description: [''],
+        spec: [''],
+        note: [''],
+        specV: [''],
+        noteV: [''],
       });
     }
 
@@ -79,8 +82,29 @@ import { Observable } from 'rxjs/Observable';
           });
     }
 
-    onSubmit() {
-        console.log('hello world');
+    onDes(event) {
+      const up = { key: 'description', value: this.form.controls.description.value, version: 'item' }
+      this.update.emit({ update: up, user: this.user, edit: this.edit });
+    }
+
+    onSpec(event) {
+      const up = { key: 'specifications', value: this.form.controls.spec.value, version: 'item' }
+      this.update.emit({ update: up, user: this.user, edit: this.edit });
+    }
+
+    onNote(event) {
+      const up = { key: 'notes', value: this.form.controls.note.value, version: 'item' }
+      this.update.emit({ update: up, user: this.user, edit: this.edit });
+    }
+
+    onSpecV(event) {
+      const up = { key: 'specifications', value: this.form.controls.spec.value, version: 'version' }
+      this.update.emit({ update: up, user: this.user, edit: this.edit });
+    }
+
+    onNoteV(event) {
+      const up = { key: 'notes', value: this.form.controls.note.value, version: 'version' }
+      this.update.emit({ update: up, user: this.user, edit: this.edit });
     }
 
     Closed() { this.close.emit(true); $('#modal1').modal('close'); }

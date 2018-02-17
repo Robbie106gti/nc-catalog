@@ -17,6 +17,10 @@ export const UPLOAD_CABINET = '[Cabinets] Upload image Cabinets setup';
 export const UPLOAD_CABINET_FAIL = '[Cabinets] Upload image Cabinets setup Fail';
 export const UPLOAD_CABINET_SUCCESS = '[Cabinets] Upload image Cabinets setup Success';
 
+export const DOWNLOAD_URL = '[Cabinets] Download image url';
+export const DOWNLOAD_URL_FAIL = '[Cabinets] Download image url Fail';
+export const DOWNLOAD_URL_SUCCESS = '[Cabinets] Download image url Success';
+
 export class LoadCabinets implements Action {
   readonly type = LOAD_CABINETS;
   constructor(public payload: string) {
@@ -41,6 +45,13 @@ export class LoadCabinetsSuccess implements Action {
 // create items
 export class CreateEditCab implements Action {
   readonly type = CREATE_EDIT_CAB;
+  constructor(public payload: any) {
+    console.log(payload);
+  }
+}
+
+export class CreateDownloadUrl implements Action {
+  readonly type = DOWNLOAD_URL;
   constructor(public payload: any) {
     console.log(payload);
   }
@@ -89,6 +100,20 @@ export class UploadCabSuccess implements Action {
   }
 }
 
+export class DownloadUrlSuccess implements Action {
+  readonly type = DOWNLOAD_URL_SUCCESS;
+  constructor(public payload: any) {
+    // console.log(payload);
+  }
+}
+
+export class DownloadUrlFail implements Action {
+  readonly type = DOWNLOAD_URL_FAIL;
+  constructor(public payload: any) {
+    // console.log(payload);
+  }
+}
+
 
 // delete items
 export class CreateEditCabDel implements Action {
@@ -100,4 +125,5 @@ export class CreateEditCabDel implements Action {
 
 // action types
 export type CabinetsAction = LoadCabinets | LoadCabinetsFail | LoadCabinetsSuccess |
-CreateEditCab | CreateEditCabDel | UpdateEditCab | UpdateEditCabFail | UpdateEditCabSuccess | UploadCab | UploadCabFail | UploadCabSuccess;
+CreateEditCab | CreateEditCabDel | UpdateEditCab | UpdateEditCabFail | UpdateEditCabSuccess | UploadCab | UploadCabFail | UploadCabSuccess | 
+CreateDownloadUrl | DownloadUrlFail | DownloadUrlSuccess;

@@ -100,8 +100,8 @@ export const getUploadStatus = createSelector(
 export const getUploadPct = createSelector(
   getUpload,
   (upload) => {
-    const pct = (upload.status.bytesTransferred / (upload.status.totalBytes / 100));
-    return Number(pct);
+    const pct = (upload.status.bytesTransferred / (upload.status.totalBytes / 100)).toFixed(0);
+    return pct;
   }
 );
 
@@ -110,5 +110,12 @@ export const getUploadUrl = createSelector(
   (upload) => {
     const url = upload.status.downloadURL;
     return url;
+  }
+);
+
+export const getDownloadUrl = createSelector(
+  getCabinetsState,
+  (cabinets) => {
+    return cabinets['Download'];
   }
 );

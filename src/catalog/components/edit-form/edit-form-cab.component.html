@@ -1,5 +1,5 @@
 <div id="modal1" class="modal bottom-sheet" >
-    <form *ngIf="edit" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form *ngIf="edit" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
         <div class="modal-content row"><i class="material-icons tool-item medium" (click)="Closed()">close</i>
             <h4>Update {{edit.content.title}}
                 <div class="switch">
@@ -15,18 +15,18 @@
                 <upload-input [edit]="edit" [user]="user" [title]="edit.content.title" [button]="'image'" [pct]="pct" [url]="url" [pctfile]="pctfile"
                 (file)="imageUpload($event)"></upload-input>
                 <div class="input-field col s12">
-                    <textarea id="description" class="materialize-textarea"></textarea>
+                    <textarea id="description" class="materialize-textarea" (keydown.enter)="onDes($event)" formControlName="description"></textarea>
                     <label for="description">Description</label>
                 </div>
             </div>
             <div class="col s6 m6 input-field">
                 <i class="material-icons prefix">textsms</i>
-                <input type="text" id="autocomplete-specg" class="autocompleteSpec">
+                <input type="text" id="autocomplete-specg" class="autocompleteSpec" formControlName="spec" (keydown.enter)="onSpec($event)">
                 <label for="autocomplete-specg">Specifications</label>
             </div>
             <div class="col s6 m6 input-field">
                 <i class="material-icons prefix">textsms</i>
-                <input type="text" id="autocomplete-noteg" class="autocompleteNote">
+                <input type="text" id="autocomplete-noteg" class="autocompleteNote" formControlName="note" (keydown.enter)="onNote($event)">
                 <label for="autocomplete-noteg">Notes</label>
             </div>
         </div>
@@ -49,12 +49,12 @@
             </div>
             <div class="col s6 m6 input-field">
                 <i class="material-icons prefix">textsms</i>
-                <input type="text" id="autocomplete-spec" class="autocompleteSpec">
+                <input type="text" id="autocomplete-spec" class="autocompleteSpec" formControlName="specV" (keydown.enter)="onSpecV($event)">
                 <label for="autocomplete-spec">Specifications</label>
             </div>
             <div class="col s6 m6 input-field">
                 <i class="material-icons prefix">textsms</i>
-                <input type="text" id="autocomplete-note" class="autocompleteNote">
+                <input type="text" id="autocomplete-note" class="autocompleteNote" formControlName="noteV" (keydown.enter)="onNoteV($event)">
                 <label for="autocomplete-note">Notes</label>
             </div>
         </div>
