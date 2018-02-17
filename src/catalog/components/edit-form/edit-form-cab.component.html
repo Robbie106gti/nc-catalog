@@ -1,5 +1,5 @@
 <div id="modal1" class="modal bottom-sheet" >
-    <form *ngIf="edit" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <form *ngIf="edit" [formGroup]="form" novalidate>
         <div class="modal-content row"><i class="material-icons tool-item medium" (click)="Closed()">close</i>
             <h4>Update {{edit.content.title}}
                 <div class="switch">
