@@ -18,7 +18,7 @@ import {
         <div class="divider"></div>
         <ul class="flow-text">
             <li id="dim">
-                <ul><b>Dimensional adjustments</b>:
+                <ul><b>Dimensional adjustments</b>
                     <li class="second"><i class="material-icons">tune</i> Increments - 1/8"</li>
                     <li class="second"><i class="material-icons">tune</i> Widths - 6" - 39"</li>
                     <li class="second"><i class="material-icons">tune</i> Heights - 12" - 18"</li>

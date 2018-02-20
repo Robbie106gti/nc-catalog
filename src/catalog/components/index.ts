@@ -17,11 +17,13 @@ import { EditFormCabComponent } from './edit-form/edit-form-cab.component';
 import { DropZoneDirective } from './upload-dir/upload-dir.directive';
 import { UploadInputComponent } from './upload-dir/upload-input.component';
 import { LoaderComponent } from './loader/loader.component';
+import { CatContentComponent } from './cat-content/cat-content.component';
+import { GenInfoComponent } from './cat-content/gen-info.component';
 
 export const components: any[] = [
     CategoryItemComponent, CategoryViewComponent, ChipComponent, LoginItemComponent, ToolItemComponent, SpecContentComponent,
     DescriptionComponent, NoteItemComponent, TableItemComponent, SliderImagesComponent, AddCustomComponent, VersionsBarComponent,
-    ImageBarComponent, EditModalBarComponent, EditFormCabComponent, DropZoneDirective, UploadInputComponent, LoaderComponent
+    ImageBarComponent, EditModalBarComponent, EditFormCabComponent, DropZoneDirective, UploadInputComponent, LoaderComponent, CatContentComponent, GenInfoComponent
 ];
 
 // export * from ''
@@ -43,3 +45,5 @@ export * from './edit-form/edit-form-cab.component';
 export * from './upload-dir/upload-dir.directive';
 export * from './upload-dir/upload-input.component';
 export * from './loader/loader.component';
+export * from './cat-content/cat-content.component';
+export * from './cat-content/gen-info.component';

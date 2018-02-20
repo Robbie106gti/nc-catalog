@@ -20,12 +20,13 @@ import { tap, filter, take } from 'rxjs/operators';
             <div id="topic">
                 <h3 id="topic">Category: {{ content.sub }}</h3>
                 <h4 id="topic">Item: {{ content.title }}</h4><br>
+                <i><small>Updated: {{ content.updatedBy }} - {{ content.updatedAt }}</small></i>
             </div>
         </div>
       </div>
 
-      <div class="row grid" id="catalog">
-        <spec-content [content]="content"></spec-content>
+      <div class="row" id="catalog">
+        <cat-content [content]="content"></cat-content>
       </div>
     </div>
   `,

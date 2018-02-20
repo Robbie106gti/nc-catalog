@@ -6,7 +6,8 @@ import * as fromStore from '../../store';
 import { User } from '../../models/user.model';
 import { tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-import { StorageService } from '../../services';
+import { StorageService, FirestoreService } from '../../services';
+import { AngularFirestoreCollection } from 'angularfire2/firestore';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -25,13 +26,15 @@ export class FormCabComponent {
   toEdit$: Observable<any>;
   @Input() user: any;
   @Output() close = new EventEmitter<boolean>();
+  move: Observable<any>
+  items: Observable<any>
   // Main task
   pct: Observable<any>;
   pctfile: Observable<string>;
   snapshot: Observable<any>;
   downloadURL: Observable<string>;
 
-  constructor(private store: Store<fromStore.ProductsState>, private storage: StorageService) {
+  constructor(private store: Store<fromStore.ProductsState>, private fb: FirestoreService) {
     this.toEdit$ = this.store.select(fromStore.getToEditCabinet);
   }
 

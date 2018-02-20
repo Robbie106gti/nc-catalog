@@ -1,6 +1,7 @@
 <div id="modal1" class="modal bottom-sheet" >
     <form *ngIf="edit" [formGroup]="form" novalidate>
-        <div class="modal-content row"><i class="material-icons tool-item medium" (click)="Closed()">close</i>
+        <div class="modal-content row">
+                <i class="material-icons tool-item medium" (click)="Closed()">close</i>
             <h4>Update {{edit.content.title}}
                 <div class="switch">
                     <label>
@@ -32,6 +33,7 @@
         </div>
         <div class="modal-content row">
             <h4>Update {{edit.content.title}} {{ edit.version.height }}{{ edit.version.version || '" high'}}
+                    
                 <div class="switch">
                     <label>
                         Off
