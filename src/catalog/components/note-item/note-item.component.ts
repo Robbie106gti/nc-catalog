@@ -11,14 +11,14 @@ import {
     selector: 'note-item',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-    <div class="card orange lighten-4">
+    <div class="card orange lighten-4" *ngFor="let note of notes">
         <p class="note flow-text">
             <i class="material-icons">announcement</i>
-            <b>Movento slides</b>, due to the size of Movento hardware, drawerboxes below 8 3/8" wide will use Tandem not Movento slides.
+            <b>{{note.title}}</b>, {{note.content}} <span *ngIf="note.link"><a href="{{note.link}}">{{note.lcontent}}</a></span>{{note.content2}} 
         </p>
     </div>
     `,
   })
   export class NoteItemComponent {
-    @Input() content: any;
+    @Input() notes: any;
   }

@@ -16,22 +16,18 @@ import {
     <div class="card padding unset">
         <h4>Addional Customizations:</h4>
         <ul class="collapsible popout" data-collapsible="accordion">
-            <li>
-                <div class="collapsible-header"><i class="material-icons">extension</i>Reconfigures (CC-D6)</div>
+            <li *ngFor="let addon of addons">
+                <div class="collapsible-header"><i class="material-icons">{{ addon.icon }}</i>{{ addon.title }}</div>
                 <div class="collapsible-body">
-                    <span><b>Reconfigures (CC-D6)</b> any standard item. For example, a door/drawer setup.</span>
+                    <span><b>{{ addon.title}}</b> {{ addon.content }}</span>
                 </div>
-            </li>
-            <li>
-                <div class="collapsible-header"><i class="material-icons">add_to_photos</i>Roll-out</div>
-                <div class="collapsible-body"><span><b>Roll-out</b> Melamine Dado Joint MOVENTO Rollout shelves</span></div>
             </li>
         </ul>
    </div>
     `,
   })
   export class AddCustomComponent {
-    @Input() content: any;
+    @Input() addons: any;
 
     constructor () {
         $(document).ready(function(){

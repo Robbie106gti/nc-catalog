@@ -15,9 +15,11 @@ import {
         <div class="tool-item" *ngIf="user.roles.admin">
             <i class="material-icons indigo-text text-darken-1" (click)="Edit()">edit</i>
         </div>
-        <img *ngIf="version.image; else icon" src="{{ version.image }}"
-            class="responsive-img materialboxed" alt="{{ content.title }}" (click)="Selected()" >
-        <p>{{ content.title }} {{ version.height }}{{ version.version || '" hight'}}</p>
+        <a [routerLink]="[version.height || version.version]" >
+            <img *ngIf="content.versions[version.height || version.version].images.image; else icon" [src]="content.versions[version.height || version.version].images.image.image"
+                class="responsive-img" alt="{{ content.title }}" (click)="Selected()" >
+            <p>{{ content.title }} {{ version.height }}{{ version.version || '" high'}}</p>
+        </a>
     </div>
 
     <ng-template #icon>

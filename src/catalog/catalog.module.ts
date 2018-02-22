@@ -62,6 +62,11 @@ export const ROUTES: Routes = [
     path: 'cabinets/:Cat/:Item',
     canActivate: [fromGuards.CatalogGuard, fromGuards.CabinetsGuard ],
     component: fromContainers.SpecCabComponent,
+  },
+  {
+    path: 'cabinets/:Cat/:Item/:Version',
+    canActivate: [fromGuards.CatalogGuard, fromGuards.CabinetsGuard ],
+    component: fromContainers.SpecCabComponent,
   }
 ];
 

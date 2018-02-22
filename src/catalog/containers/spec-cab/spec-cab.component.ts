@@ -14,6 +14,7 @@ import { User } from '../../models/user.model';
   // styleUrls: ['products.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
+  <div *ngIf="(param$ | async)as param">
   <login-view></login-view>
   <form-cab *ngIf="editing" [user]="(user$ | async)" (close)="Close($event)"></form-cab>
     <div class="section no-pad-bot" id="index-banner" *ngIf="(content$ | async) as content">
@@ -27,35 +28,46 @@ import { User } from '../../models/user.model';
         </div>
       </div>
       <div class="row" id="catalog">
-        <versions-bar class="row" [content]="content" [user]="(user$ | async)" (edit)="Edit($event)"></versions-bar>
+        <versions-bar *ngIf="!param.Version" class="row" [content]="content" [user]="user$ | async" (edit)="Edit($event)"></versions-bar>
         <div class="row">
           <div class="col s12 m6">
             <description-card [content]="content"></description-card>
-            <spec-content [content]="content"></spec-content>
-            <note-item [content]="content"></note-item>
+            <spec-content [specs]="specs" [iwhd]="iwhd"></spec-content>
+            <note-item *ngIf="notes[0]" [notes]="notes"></note-item>
           </div>
           <div class="col s12 m6">
-            <slider-images [content]="content"></slider-images>
+            <slider-images [content]="content" [param]="param"></slider-images>
           </div>
           <div class="col s12 m6">
-            <add-custom [content]="content"></add-custom>
+            <add-custom [addons]="addons"></add-custom>
             <table-item [content]="content"></table-item>
           </div>
         </div>
       </div>
     </div>
+  </div>
   `,
 })
 export class SpecCabComponent implements OnInit {
   content$: Observable<any>;
+  specs: any;
+  iwhd: any;
+  notes: any;
+  addons: any;
   user$: Observable<User>;
+  param$: Observable<any>;
   editing: Boolean;
 
   constructor(private store: Store<fromStore.ProductsState>) { }
 
   ngOnInit() {
     this.content$ = this.store.select(fromStore.getSelectedCabinetItem);
+    this.store.select(fromStore.getCabSpecs).take(1).subscribe(s => this.specs = s);
+    this.store.select(fromStore.getCabIWHDs).take(1).subscribe(i => this.iwhd = i);
+    this.store.select(fromStore.getCabNotes).take(1).subscribe(n => this.notes = n);
+    this.store.select(fromStore.getCabAddons).take(1).subscribe(a => this.addons = a);
     this.user$ = this.store.select(fromStore.getUserData);
+    this.param$ = this.store.select(fromStore.getRouterParams);
    }
 
    Edit(event) {

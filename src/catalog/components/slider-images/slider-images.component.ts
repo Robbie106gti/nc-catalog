@@ -13,20 +13,32 @@ import {
     selector: 'slider-images',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-    <div class="card">
+    <div class="card" *ngIf="param.Version; else cover">
         <div class="carousel carousel-slider" data-indicators="true">
             <div class="carousel-item">
-                <h2 class="padding">Base Full Door 18" high</h2>
-                <img src="https://webquoin.com/catalog/images/BFD__18.jpg" alt='Base Full Door 18" high'
-                        class="responsive-img materialboxed" data-caption='Base Full Door 18" high'>
+                <h2 class="padding">Spec {{ content.title}} {{ content.versions[param.Version].title }}</h2>
+                <img [src]="content.versions[param.Version].images.spec.image" [alt]="content.versions[param.Version].images.spec.image"
+                        class="responsive-img materialboxed">
             </div>
             <div class="carousel-item">
-                <h2 class="padding">Drawing Base Full Door 18" high</h2>
-                <img src="https://webquoin.com/catalog/images/GIFs/Custom/Base/BFD__18.gif" alt='Drawing Base Full Door 18" high'
-                    class="responsive-img materialboxed" data-caption='Drawing Base Full Door 18" high'>
+                <h2 class="padding">{{ content.title}} {{ content.versions[param.Version].title }}</h2>
+                <img [src]="content.versions[param.Version].images.image.image" [alt]="content.versions[param.Version].images.image.image"
+                    class="responsive-img materialboxed" >
             </div>
         </div>
     </div>
+
+    <ng-template #cover>
+    <div class="card">
+        <div class="carousel carousel-slider" data-indicators="true">
+            <div class="carousel-item">
+                <h2 class="padding">{{ content.title }}</h2>
+                <img [src]="content.image" [alt]="content.title"
+                    class="responsive-img materialboxed" >
+            </div>
+        </div>
+    </div>
+    </ng-template>
     `,
     styles: [`
     .carousel .indicators .indicator-item {
@@ -37,6 +49,7 @@ import {
   })
   export class SliderImagesComponent {
     @Input() content: any;
+    @Input() param: any;
 
     constructor () {
         $(document).ready(function(){

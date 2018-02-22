@@ -5,6 +5,7 @@ import {
     EventEmitter,
     ChangeDetectionStrategy,
   } from '@angular/core';
+  import { Observable } from 'rxjs/Observable';
 
   @Component({
     // tslint:disable-next-line:component-selector
@@ -19,19 +20,15 @@ import {
         <ul class="flow-text">
             <li id="dim">
                 <ul><b>Dimensional adjustments</b>
-                    <li class="second"><i class="material-icons">tune</i> Increments - 1/8"</li>
-                    <li class="second"><i class="material-icons">tune</i> Widths - 6" - 39"</li>
-                    <li class="second"><i class="material-icons">tune</i> Heights - 12" - 18"</li>
-                    <li class="second"><i class="material-icons">tune</i> Depths - 12" - 36"</li>
+                    <li class="second" *ngFor="let i of iwhd"><i class="material-icons">tune</i> {{i.title}} - {{i.content}}</li>
                 </ul>
             </li>
-            <li><b>Hinging</b>: Specify hinging L (left) or R (right) when applicable.</li>
-            <li><b>Doors</b>: Units wider than 24" will have a pair of doors.</li>
-            <li><b>Shelves</b>: No adjustable shelves will be added by default for this height.</li>
+            <li *ngFor="let spec of specs"><b>{{spec?.title}}</b>: {{ spec?.content }}</li>
         </ul>
     </div>
     `,
   })
   export class SpecContentComponent {
-    @Input() content: any;
+    @Input() iwhd: any;
+    @Input() specs: any;
   }
