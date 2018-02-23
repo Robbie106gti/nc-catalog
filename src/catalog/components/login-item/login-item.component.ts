@@ -34,7 +34,7 @@ import { Login } from '../../models/login.model';
             </div>
             <div class="input-field">
                 <input id="password" type="password" class="validate" formControlName="password"
-                onkeydown = "if (event.keyCode == 13) document.getElementById('loginWQ').click()" autocomplete="current-password">
+                (keyup.enter)="loginWQ(form)" autocomplete="current-password">
                 <label for="password">Password</label>
             </div><br>
             <button id="loginWQ" class="btn-floating halfway-fab waves-effect waves-light blogin"

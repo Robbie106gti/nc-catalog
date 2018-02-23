@@ -6,6 +6,8 @@ import {
     ChangeDetectionStrategy,
   } from '@angular/core';
   import { Observable } from 'rxjs/Observable';
+  declare var $: any;
+  declare var Materialize: any;
 
   @Component({
     // tslint:disable-next-line:component-selector
@@ -14,6 +16,7 @@ import {
     template: `
     <div class="card-panel grey lighten-3 bullet">
         <span class="card-title">
+            <i *ngIf="user.roles.admin" class="material-icons right pointer" (click)="Edit()">build</i>
             <h4>Specifications</h4>
         </span>
         <div class="divider"></div>
@@ -26,9 +29,15 @@ import {
             <li *ngFor="let spec of specs"><b>{{spec?.title}}</b>: {{ spec?.content }}</li>
         </ul>
     </div>
+    <spec-form [iwhd]="iwhd" [specs]="specs" [user]="user"></spec-form>
     `,
   })
   export class SpecContentComponent {
     @Input() iwhd: any;
     @Input() specs: any;
+    @Input() user: any;
+
+    Edit() {
+        $('#modal1').modal('open');
+    }
   }

@@ -139,10 +139,11 @@ export const getCabSpecs = createSelector(
     fromRoot.getRouterState,
     fromStore.getSelectedCabinetItem,
     (specs, router, cab) => {
-        let specifications = cab.specifications;
+        let specifications = cab.specifications ? cab.specifications : [];
         if (router.state.params.Version && cab.versions[router.state.params.Version].specifications) { 
             specifications = specifications.concat(cab.versions[router.state.params.Version].specifications);
         }
+        if(specifications.length == undefined) { return []; }
         return specifications.map(cabSpec => specs[cabSpec]);
     }
 );
@@ -154,21 +155,27 @@ export const getCabIWHDs = createSelector(
     fromRoot.getRouterState,
     fromStore.getSelectedCabinetItem,
     (iwhds, router, cab) => {
-        let array;
-        if (router.state.params.Version) {
-            const width2 = cab.versions[router.state.params.Version].widths ? cab.versions[router.state.params.Version].widths : cab.iwhd.widths;
-            const height2 = cab.versions[router.state.params.Version].heights ? cab.versions[router.state.params.Version].heights :cab.iwhd.heights;
-            const depth2 = cab.versions[router.state.params.Version].depths ? cab.versions[router.state.params.Version].depths : cab.iwhd.depths;
-            const incre2 = cab.versions[router.state.params.Version].increments ? cab.versions[router.state.params.Version].increments : cab.iwhd.increments;
-            array = [ incre2, width2, height2, depth2];
-        } else {
-            const width = cab.iwhd.widths;
-            const height = cab.iwhd.heights;
-            const depth = cab.iwhd.depths;
-            const incre = cab.iwhd.increments;
-            array = [ incre, width, height, depth];
+        let fish = new Array();
+        let width = 'default';
+        let height = 'default';
+        let depth = 'default';
+        let incre = 'SKR683fyZIN2ndh9C1as';
+        if(cab.iwhd) {
+            width = cab.iwhd.widths ? cab.iwhd.widths : width;
+            height = cab.iwhd.heights ? cab.iwhd.heights : height;
+            depth = cab.iwhd.depths ? cab.iwhd.depths : depth;
+            incre = cab.iwhd.increments ? cab.iwhd.increments : incre;
         }
-        return array.map(i => iwhds[i]);
+        if (router.state.params.Version && cab.versions[router.state.params.Version].iwhd) {
+            width = cab.versions[router.state.params.Version].iwhd.widths ? cab.versions[router.state.params.Version].iwhd.widths : width;
+            height = cab.versions[router.state.params.Version].iwhd.heights ? cab.versions[router.state.params.Version].iwhd.heights :height;
+            depth = cab.versions[router.state.params.Version].iwhd.depths ? cab.versions[router.state.params.Version].iwhd.depths : depth;
+            incre = cab.versions[router.state.params.Version].iwhd.increments ? cab.versions[router.state.params.Version].iwhd.increments : incre;
+        } 
+        const array = [ incre, depth, height, width ];
+        if(array.length === 0) { return []; }
+        array.map(i => i !== 'default' ? fish.push(iwhds[i]) : null);
+        return fish;
     }
 );
 
@@ -181,7 +188,7 @@ export const getCabNotes = createSelector(
         if (router.state.params.Version && cab.versions[router.state.params.Version].notes) { 
             note = note.concat(cab.versions[router.state.params.Version].notes);
         }
-        if(note.length === 0) { return; }
+        if(note.length == undefined) { return []; }
         return note.map(n => notes[n]);
     }
 );
@@ -191,10 +198,11 @@ export const getCabAddons = createSelector(
     fromRoot.getRouterState,
     fromStore.getSelectedCabinetItem,
     (addons, router, cab) => {
-        let addon = cab.addons;
+        let addon = cab.addons ? cab.addons : [];
         if (router.state.params.Version && cab.versions[router.state.params.Version].addons) { 
             addon = addon.concat(cab.versions[router.state.params.Version].addons);
         }
+        if(addon.length == undefined) { return []; }
         return addon.map(n => addons[n]);
     }
 );

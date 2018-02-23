@@ -13,7 +13,7 @@ import {
     selector: 'add-custom',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-    <div class="card padding unset">
+    <div class="card padding unset" *ngIf="addons.length">
         <h4>Addional Customizations:</h4>
         <ul class="collapsible popout" data-collapsible="accordion">
             <li *ngFor="let addon of addons">

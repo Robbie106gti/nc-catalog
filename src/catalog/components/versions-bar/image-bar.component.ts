@@ -15,15 +15,24 @@ import {
         <div class="tool-item" *ngIf="user.roles.admin">
             <i class="material-icons indigo-text text-darken-1" (click)="Edit()">edit</i>
         </div>
-        <a [routerLink]="[version.height || version.version]" >
-            <img *ngIf="content.versions[version.height || version.version].images.image; else icon" [src]="content.versions[version.height || version.version].images.image.image"
-                class="responsive-img" alt="{{ content.title }}" (click)="Selected()" >
-            <p>{{ content.title }} {{ version.height }}{{ version.version || '" high'}}</p>
-        </a>
+        <div *ngIf="content.versions; else backup">
+            <a [routerLink]="[version.height]" >
+                <img *ngIf="content.versions[version.height].images.image; else icon" [src]="content.versions[version.height].images.image.image"
+                    class="responsive-img" alt="{{ content.title }}" (click)="Selected()" >
+                <p>{{ content.title }} {{ version.height }}{{ version.version || '" high'}}</p>
+            </a>
+        </div>
     </div>
 
     <ng-template #icon>
-        <i class="material-icons large">image</i>
+        <i class="material-icons large" (click)="Selected()" >image</i>
+    </ng-template>
+
+    <ng-template #backup>
+    <a [routerLink]="[version.height]" >
+        <i class="material-icons large" (click)="Selected()" >image</i>
+        <p>{{ content.title }} {{ version.height }}{{ version.version || '" high'}}</p>
+    </a>
     </ng-template>
     `,
   })

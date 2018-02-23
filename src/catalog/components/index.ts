@@ -19,11 +19,13 @@ import { UploadInputComponent } from './upload-dir/upload-input.component';
 import { LoaderComponent } from './loader/loader.component';
 import { CatContentComponent } from './cat-content/cat-content.component';
 import { GenInfoComponent } from './cat-content/gen-info.component';
+import { SpecFormComponent } from './spec-content/spec-form.component';
 
 export const components: any[] = [
     CategoryItemComponent, CategoryViewComponent, ChipComponent, LoginItemComponent, ToolItemComponent, SpecContentComponent,
     DescriptionComponent, NoteItemComponent, TableItemComponent, SliderImagesComponent, AddCustomComponent, VersionsBarComponent,
-    ImageBarComponent, EditModalBarComponent, EditFormCabComponent, DropZoneDirective, UploadInputComponent, LoaderComponent, CatContentComponent, GenInfoComponent
+    ImageBarComponent, EditModalBarComponent, EditFormCabComponent, DropZoneDirective, UploadInputComponent, LoaderComponent, CatContentComponent,
+    GenInfoComponent, SpecFormComponent
 ];
 
 // export * from ''
@@ -47,3 +49,4 @@ export * from './upload-dir/upload-input.component';
 export * from './loader/loader.component';
 export * from './cat-content/cat-content.component';
 export * from './cat-content/gen-info.component';
+export * from './spec-content/spec-form.component';

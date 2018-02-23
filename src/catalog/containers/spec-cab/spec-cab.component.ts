@@ -32,7 +32,7 @@ import { User } from '../../models/user.model';
         <div class="row">
           <div class="col s12 m6">
             <description-card [content]="content"></description-card>
-            <spec-content [specs]="specs" [iwhd]="iwhd"></spec-content>
+            <spec-content [specs]="specs" [iwhd]="iwhd" [user]="user$ | async"></spec-content>
             <note-item *ngIf="notes[0]" [notes]="notes"></note-item>
           </div>
           <div class="col s12 m6">
@@ -40,7 +40,7 @@ import { User } from '../../models/user.model';
           </div>
           <div class="col s12 m6">
             <add-custom [addons]="addons"></add-custom>
-            <table-item [content]="content"></table-item>
+            <table-item *ngIf="content.table" [content]="content"></table-item>
           </div>
         </div>
       </div>
