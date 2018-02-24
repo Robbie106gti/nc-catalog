@@ -32,7 +32,7 @@ import { User } from '../../models/user.model';
         <div class="row">
           <div class="col s12 m6">
             <description-card [content]="content"></description-card>
-            <spec-content [specs]="specs" [iwhd]="iwhd" [user]="user$ | async"></spec-content>
+            <spec-content [specs]="specs" [iwhd]="iwhd" [user]="user$ | async" [results$]="results$" (search)="Search($event)" (update)="Update($event)"></spec-content>
             <note-item *ngIf="notes[0]" [notes]="notes"></note-item>
           </div>
           <div class="col s12 m6">
@@ -57,17 +57,16 @@ export class SpecCabComponent implements OnInit {
   user$: Observable<User>;
   param$: Observable<any>;
   editing: Boolean;
+  results$: Observable<any>;
 
   constructor(private store: Store<fromStore.ProductsState>) { }
 
   ngOnInit() {
     this.content$ = this.store.select(fromStore.getSelectedCabinetItem);
-    this.store.select(fromStore.getCabSpecs).take(1).subscribe(s => this.specs = s);
-    this.store.select(fromStore.getCabIWHDs).take(1).subscribe(i => this.iwhd = i);
-    this.store.select(fromStore.getCabNotes).take(1).subscribe(n => this.notes = n);
-    this.store.select(fromStore.getCabAddons).take(1).subscribe(a => this.addons = a);
     this.user$ = this.store.select(fromStore.getUserData);
     this.param$ = this.store.select(fromStore.getRouterParams);
+    this.results$ = this.store.select(fromStore.getSearchResults);
+    this.Take();
    }
 
    Edit(event) {
@@ -77,5 +76,21 @@ export class SpecCabComponent implements OnInit {
 
    Close(event) {
      this.editing = false;
+   }
+
+   Search(event) {
+    this.store.dispatch({ type: fromStore.SEARCH, payload: event });
+   }
+
+   Update(event) {
+     this.store.dispatch({ type: fromStore.UPDATE_CABINET, payload: event });
+     this.Take();
+   }
+
+   Take() {
+    this.store.select(fromStore.getCabSpecs).take(1).subscribe(s => this.specs = s);
+    this.store.select(fromStore.getCabIWHDs).take(1).subscribe(i => this.iwhd = i);
+    this.store.select(fromStore.getCabNotes).take(1).subscribe(n => this.notes = n);
+    this.store.select(fromStore.getCabAddons).take(1).subscribe(a => this.addons = a);
    }
 }
