@@ -30,6 +30,9 @@ import { Observable } from 'rxjs/Observable';
     constructor (private fb: FormBuilder) {
         this.ToEdit();
         this.createForm();
+        $(document).ready(function(){
+          $('ul.tabs').tabs();
+        });
     }
 
     createForm() {
@@ -83,27 +86,27 @@ import { Observable } from 'rxjs/Observable';
     }
 
     onDes(event) {
-      const up = { key: 'description', value: this.form.controls.description.value, version: 'item' }
-      this.update.emit({ update: up, user: this.user, edit: this.edit });
+      const up = { sub: 'Description', value: this.form.controls.description.value, version: 'item' };
+      this.update.emit({ ...up, user: this.user, edit: this.edit });
     }
 
     onSpec(event) {
-      const up = { key: 'specifications', value: this.form.controls.spec.value, version: 'item' }
+      const up = { key: 'specifications', value: this.form.controls.spec.value, version: 'item' };
       this.update.emit({ update: up, user: this.user, edit: this.edit });
     }
 
     onNote(event) {
-      const up = { key: 'notes', value: this.form.controls.note.value, version: 'item' }
+      const up = { key: 'notes', value: this.form.controls.note.value, version: 'item' };
       this.update.emit({ update: up, user: this.user, edit: this.edit });
     }
 
     onSpecV(event) {
-      const up = { key: 'specifications', value: this.form.controls.spec.value, version: 'version' }
+      const up = { key: 'specifications', value: this.form.controls.spec.value, version: 'version' };
       this.update.emit({ update: up, user: this.user, edit: this.edit });
     }
 
     onNoteV(event) {
-      const up = { key: 'notes', value: this.form.controls.note.value, version: 'version' }
+      const up = { key: 'notes', value: this.form.controls.note.value, version: 'version' };
       this.update.emit({ update: up, user: this.user, edit: this.edit });
     }
 

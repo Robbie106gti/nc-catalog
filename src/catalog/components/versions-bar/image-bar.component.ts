@@ -17,8 +17,11 @@ import {
         </div>
         <div *ngIf="content.versions; else backup">
             <a [routerLink]="[version.height]" >
-                <img *ngIf="content.versions[version.height].images.image; else icon" [src]="content.versions[version.height].images.image.image"
+                <span *ngIf="content.versions[version.height].images; else icon">
+                    <img *ngIf="content.versions[version.height].images.image; else icon"
+                    [src]="content.versions[version.height].images.image.image"
                     class="responsive-img" alt="{{ content.title }}" (click)="Selected()" >
+                </span>
                 <p>{{ content.title }} {{ version.height }}{{ version.version || '" high'}}</p>
             </a>
         </div>

@@ -26,8 +26,8 @@ export class FormCabComponent {
   toEdit$: Observable<any>;
   @Input() user: any;
   @Output() close = new EventEmitter<boolean>();
-  move: Observable<any>
-  items: Observable<any>
+  move: Observable<any>;
+  items: Observable<any>;
   // Main task
   pct: Observable<any>;
   pctfile: Observable<string>;
@@ -46,11 +46,14 @@ export class FormCabComponent {
    this.pct = this.store.select(fromStore.getUploadPct);
    this.snapshot = this.store.select(fromStore.getUploadStatus);
    this.downloadURL = this.store.select(fromStore.getDownloadUrl);
-   this.snapshot.subscribe(snap => console.log(snap))
+   this.snapshot.subscribe(snap => console.log(snap));
   }
 
   Update(event) {
     console.log(event);
+    if (event.sub === 'Description') {
+      this.store.dispatch({ type: fromStore.UPDATE_CABINET, payload: event });
+    }
   }
 
 }

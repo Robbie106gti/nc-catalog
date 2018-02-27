@@ -39,7 +39,7 @@ export class SearchEffects {
                 break;
             }
         }
-        
+
       return  this.store.select(fromStore[helper])
         .pipe(
           map(search => new searchActions.SearchSuccess(search)),

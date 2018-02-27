@@ -29,7 +29,8 @@ import {
             <li *ngFor="let spec of specs"><b>{{spec?.title}}</b>: {{ spec?.content }}</li>
         </ul>
     </div>
-    <spec-form [iwhd]="iwhd" [specs]="specs" [results$]="results$" (search)="Search($event)" (update)="Update($event)"></spec-form>
+    <spec-form [iwhd]="iwhd" [specs]="specs" [results$]="results$"
+    (search)="Search($event)" (update)="Update($event)" (remove)="Remove($event)"></spec-form>
     `,
   })
   export class SpecContentComponent {
@@ -39,6 +40,7 @@ import {
     @Input() results$: any;
     @Output() search = new EventEmitter<any>();
     @Output() update = new EventEmitter<any>();
+    @Output() remove = new EventEmitter<any>();
 
     Edit() {
         $('#modal1').modal('open');
@@ -50,5 +52,9 @@ import {
 
     Update(event) {
         this.update.emit(event);
+    }
+
+    Remove(event) {
+        this.remove.emit(event);
     }
   }

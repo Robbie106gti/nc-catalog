@@ -32,7 +32,8 @@ import { User } from '../../models/user.model';
         <div class="row">
           <div class="col s12 m6">
             <description-card [content]="content"></description-card>
-            <spec-content [specs]="specs" [iwhd]="iwhd" [user]="user$ | async" [results$]="results$" (search)="Search($event)" (update)="Update($event)"></spec-content>
+            <spec-content [specs]="specs" [iwhd]="iwhd" [user]="user$ | async" [results$]="results$"
+            (search)="Search($event)" (update)="Update($event)" (remove)="Remove($event)"></spec-content>
             <note-item *ngIf="notes[0]" [notes]="notes"></note-item>
           </div>
           <div class="col s12 m6">
@@ -84,7 +85,12 @@ export class SpecCabComponent implements OnInit {
 
    Update(event) {
      this.store.dispatch({ type: fromStore.UPDATE_CABINET, payload: event });
-     this.Take();
+     setTimeout(this.Take(), 1500);
+   }
+
+   Remove(event) {
+     this.store.dispatch({ type: fromStore.REMOVE_FROM_CABINET, payload: event });
+     setTimeout(this.Take(), 1500);
    }
 
    Take() {

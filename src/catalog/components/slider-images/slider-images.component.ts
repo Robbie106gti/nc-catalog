@@ -17,13 +17,19 @@ import {
         <div class="carousel carousel-slider" data-indicators="true">
             <div class="carousel-item">
                 <h2 class="padding">Spec {{ content.title}} {{ content.versions[param.Version].title }}</h2>
-                <img [src]="content.versions[param.Version].images.spec.image" [alt]="content.versions[param.Version].images.spec.image"
-                        class="responsive-img materialboxed">
+                <span *ngIf="content.versions[param.Version].images; else icon">
+                    <img [src]="content.versions[param.Version].images.spec.image"
+                    [alt]="content.versions[param.Version].images.spec.image"
+                    class="responsive-img materialboxed">
+                </span>
             </div>
             <div class="carousel-item">
                 <h2 class="padding">{{ content.title}} {{ content.versions[param.Version].title }}</h2>
-                <img [src]="content.versions[param.Version].images.image.image" [alt]="content.versions[param.Version].images.image.image"
+                <span *ngIf="content.versions[param.Version].images; else icon">
+                    <img [src]="content.versions[param.Version].images.image.image"
+                    [alt]="content.versions[param.Version].images.image.image"
                     class="responsive-img materialboxed" >
+                </span>
             </div>
         </div>
     </div>
@@ -38,6 +44,10 @@ import {
             </div>
         </div>
     </div>
+    </ng-template>
+
+    <ng-template #icon>
+        <i class="material-icons large">image</i>
     </ng-template>
     `,
     styles: [`

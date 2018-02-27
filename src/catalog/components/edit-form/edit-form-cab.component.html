@@ -1,66 +1,59 @@
 <div id="modal1" class="modal bottom-sheet" >
     <form *ngIf="edit" [formGroup]="form" novalidate>
-        <div class="modal-content row">
-                <i class="material-icons tool-item medium" (click)="Closed()">close</i>
-            <h4>Update {{edit.content.title}}
-                <div class="switch">
-                    <label>
-                        Off
-                        <input type="checkbox" *ngIf="edit.content.active; else inactive" checked>
-                        <span class="lever"></span>
-                        On
-                    </label>
+        <div class="row">
+             <div class="col s12">
+                <ul class="tabs flow-text tab-demo z-depth-1">
+                    <li class="tab col"><a class="active btn btn-large" href="#main">{{edit.content.title}}</a></li>
+                    <li class="tab col" *ngFor="let v of edit.content.heights"><a href="#version{{ v.id }}" class="btn btn-large">{{ v.title }}{{ v.version || "\""}}</a></li>
+                </ul>
+                <i class="material-icons tool-item small" (click)="Closed()">close</i>
+            </div>
+            <div class="col s12"><br></div>
+            <div id="main" class="col s12 section">
+                <h4>Update {{edit.content.title}}              
+                    <on-off [active]="edit.content.active" [edit]="edit"></on-off>
+                </h4>
+                <div class="col s6 m6">
+                    <upload-input [edit]="edit" [user]="user" [title]="edit.content.title" [button]="'image'" [pct]="pct" [url]="url" [pctfile]="pctfile"
+                    (file)="imageUpload($event)"></upload-input>
+                    <div class="input-field col s12">
+                        <textarea id="description" class="materialize-textarea" (keydown.enter)="onDes($event)" formControlName="description" [(ngModel)]="edit.content.description"></textarea>
+                        <label for="description">Description</label>
+                    </div>
                 </div>
-            </h4>
-            <div class="col s6 m6">
-                <upload-input [edit]="edit" [user]="user" [title]="edit.content.title" [button]="'image'" [pct]="pct" [url]="url" [pctfile]="pctfile"
+                <div class="col s6 m6 input-field">
+                    <i class="material-icons prefix">textsms</i>
+                    <input type="text" id="autocomplete-specg" class="autocompleteSpec" formControlName="spec" (keydown.enter)="onSpec($event)">
+                    <label for="autocomplete-specg">Addons</label>
+                </div>
+                <div class="col s6 m6 input-field">
+                    <i class="material-icons prefix">textsms</i>
+                    <input type="text" id="autocomplete-noteg" class="autocompleteNote" formControlName="note" (keydown.enter)="onNote($event)">
+                    <label for="autocomplete-noteg">Notes</label>
+                </div>
+            </div>
+
+            <div *ngFor="let v of edit.content.heights" id="version{{v.id}}" class="col s12 section">
+                <h4>Update {{edit.content.title}} {{ edit.content.versions[v.id].title }}{{ v.version || '" high'}}                
+                    <on-off [active]="edit.content.versions[v.id].active" [edit]="edit"></on-off>
+                </h4>
+                <div class="col s6 m6">
+                <upload-input [edit]="edit" [user]="user" [title]="v.id" [button]="'image'" [pct]="pct" [url]="url" [pctfile]="pctfile"
                 (file)="imageUpload($event)"></upload-input>
-                <div class="input-field col s12">
-                    <textarea id="description" class="materialize-textarea" (keydown.enter)="onDes($event)" formControlName="description"></textarea>
-                    <label for="description">Description</label>
+                <upload-input [edit]="edit" [user]="user" [title]="v.id" [button]="'spec'" [pct]="pct" [url]="url" [pctfile]="pctfile"
+                (file)="imageUpload($event)"></upload-input>
                 </div>
-            </div>
-            <div class="col s6 m6 input-field">
-                <i class="material-icons prefix">textsms</i>
-                <input type="text" id="autocomplete-specg" class="autocompleteSpec" formControlName="spec" (keydown.enter)="onSpec($event)">
-                <label for="autocomplete-specg">Specifications</label>
-            </div>
-            <div class="col s6 m6 input-field">
-                <i class="material-icons prefix">textsms</i>
-                <input type="text" id="autocomplete-noteg" class="autocompleteNote" formControlName="note" (keydown.enter)="onNote($event)">
-                <label for="autocomplete-noteg">Notes</label>
-            </div>
-        </div>
-        <div class="modal-content row">
-            <h4>Update {{edit.content.title}} {{ edit.version.height }}{{ edit.version.version || '" high'}}
-                    
-                <div class="switch">
-                    <label>
-                        Off
-                        <input type="checkbox" *ngIf="edit.version.active; else inactive" checked>
-                        <span class="lever"></span>
-                        On
-                    </label>
+                <div class="col s6 m6 input-field">
+                    <i class="material-icons prefix">textsms</i>
+                    <input type="text" id="autocomplete-spec" class="autocompleteSpec" formControlName="specV" (keydown.enter)="onSpecV($event)">
+                    <label for="autocomplete-spec">Addons</label>
                 </div>
-            </h4>
-            <div class="col s6 m6">
-            <upload-input [edit]="edit" [user]="user" [title]="edit.version.height" [button]="'image'" [pct]="pct" [url]="url" [pctfile]="pctfile"
-            (file)="imageUpload($event)"></upload-input>
-            <upload-input [edit]="edit" [user]="user" [title]="edit.version.height" [button]="'spec'" [pct]="pct" [url]="url" [pctfile]="pctfile"
-            (file)="imageUpload($event)"></upload-input>
-            </div>
-            <div class="col s6 m6 input-field">
-                <i class="material-icons prefix">textsms</i>
-                <input type="text" id="autocomplete-spec" class="autocompleteSpec" formControlName="specV" (keydown.enter)="onSpecV($event)">
-                <label for="autocomplete-spec">Specifications</label>
-            </div>
-            <div class="col s6 m6 input-field">
-                <i class="material-icons prefix">textsms</i>
-                <input type="text" id="autocomplete-note" class="autocompleteNote" formControlName="noteV" (keydown.enter)="onNoteV($event)">
-                <label for="autocomplete-note">Notes</label>
+                <div class="col s6 m6 input-field">
+                    <i class="material-icons prefix">textsms</i>
+                    <input type="text" id="autocomplete-note" class="autocompleteNote" formControlName="noteV" (keydown.enter)="onNoteV($event)">
+                    <label for="autocomplete-note">Notes</label>
+                </div>
             </div>
         </div>
     </form>
 </div>
-
-<ng-template #inactive><input type="checkbox"></ng-template>

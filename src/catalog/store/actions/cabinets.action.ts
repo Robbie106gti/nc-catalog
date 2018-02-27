@@ -13,6 +13,10 @@ export const UPDATE_CABINET = '[Cabinets] Update Cabinets setup';
 export const UPDATE_CABINET_FAIL = '[Cabinets] Update Cabinets setup Fail';
 export const UPDATE_CABINET_SUCCESS = '[Cabinets] Update Cabinets setup Success';
 
+export const REMOVE_FROM_CABINET = '[Cabinets] Remove item from Cabinets';
+export const REMOVE_FROM_CABINET_FAIL = '[Cabinets] Remove item from Cabinets Fail';
+export const REMOVE_FROM_CABINET_SUCCESS = '[Cabinets] Remove item from Cabinets Success';
+
 export const UPLOAD_CABINET = '[Cabinets] Upload image Cabinets setup';
 export const UPLOAD_CABINET_FAIL = '[Cabinets] Upload image Cabinets setup Fail';
 export const UPLOAD_CABINET_SUCCESS = '[Cabinets] Upload image Cabinets setup Success';
@@ -61,7 +65,7 @@ export class CreateDownloadUrl implements Action {
 export class UpdateEditCab implements Action {
   readonly type = UPDATE_CABINET;
   constructor(public payload: any) {
-    console.log(payload);
+    // console.log(payload);
   }
 }
 
@@ -75,7 +79,7 @@ export class UpdateEditCabFail implements Action {
 export class UpdateEditCabSuccess implements Action {
   readonly type = UPDATE_CABINET_SUCCESS;
   constructor(public payload: any) {
-    console.log(payload);
+    // console.log(payload);
   }
 }
 
@@ -122,8 +126,28 @@ export class CreateEditCabDel implements Action {
     console.log(payload);
   }
 }
+export class RemoveFromCab implements Action {
+  readonly type = REMOVE_FROM_CABINET;
+  constructor(public payload: any) {
+    console.log(payload);
+  }
+}
+
+export class RemoveFromCabFail implements Action {
+  readonly type = REMOVE_FROM_CABINET_FAIL;
+  constructor(public payload: any) {
+    console.log(payload);
+  }
+}
+
+export class RemoveFromCabSuccess implements Action {
+  readonly type = REMOVE_FROM_CABINET_SUCCESS;
+  constructor(public payload: any) {
+    console.log(payload);
+  }
+}
 
 // action types
 export type CabinetsAction = LoadCabinets | LoadCabinetsFail | LoadCabinetsSuccess |
-CreateEditCab | CreateEditCabDel | UpdateEditCab | UpdateEditCabFail | UpdateEditCabSuccess | UploadCab | UploadCabFail | UploadCabSuccess | 
-CreateDownloadUrl | DownloadUrlFail | DownloadUrlSuccess;
+CreateEditCab | CreateEditCabDel | UpdateEditCab | UpdateEditCabFail | UpdateEditCabSuccess | UploadCab | UploadCabFail | UploadCabSuccess |
+CreateDownloadUrl | DownloadUrlFail | DownloadUrlSuccess | RemoveFromCab | RemoveFromCabFail | RemoveFromCabSuccess;
