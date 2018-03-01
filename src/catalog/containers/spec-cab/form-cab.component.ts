@@ -1,59 +1,32 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import * as fromStore from '../../store';
-import { User } from '../../models/user.model';
-import { tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import { StorageService, FirestoreService } from '../../services';
-import { AngularFirestoreCollection } from 'angularfire2/firestore';
 
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'form-cab',
-  // styleUrls: ['products.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <edit-form-cab
-  *ngIf="(toEdit$ | async) as edit"
-  [user]="user" [edit]="edit" [pct]="(pct | async)" [pctfile]="(pctfile | async)" [url]="(downloadURL | async)"
-  (close)="Close($event)" (file)="UploadFile($event)" (update)="Update($event)">
-  </edit-form-cab>
+  *ngIf="edit"
+  [user]="user" [edit]="edit" [pct]="pct" [pctfile]="pctfile" [url]="downloadURL" [results$]="results$"
+  (close)="Close($event)" (file)="UploadFile($event)" (update)="Update($event)" (search)="Search($event)"
+  ></edit-form-cab>
   `,
 })
 export class FormCabComponent {
-  toEdit$: Observable<any>;
+  @Input() edit: any;
   @Input() user: any;
+  @Input() pct: any;
+  @Input() pctfile: any;
+  @Input() downloadURL: string;
+  @Input() results$: Observable<any>;
+
   @Output() close = new EventEmitter<boolean>();
-  move: Observable<any>;
-  items: Observable<any>;
-  // Main task
-  pct: Observable<any>;
-  pctfile: Observable<string>;
-  snapshot: Observable<any>;
-  downloadURL: Observable<string>;
+  @Output() update = new EventEmitter<any>();
+  @Output() upload = new EventEmitter<any>();
+  @Output() search = new EventEmitter<any>();
 
-  constructor(private store: Store<fromStore.ProductsState>, private fb: FirestoreService) {
-    this.toEdit$ = this.store.select(fromStore.getToEditCabinet);
-  }
-
-  Close(event) { this.close.emit(true); this.store.dispatch({type: fromStore.CREATE_EDIT_CAB_DEL}); }
-
-  UploadFile(event) {
-   this.store.dispatch(new fromStore.UploadCab(event));
-   this.pctfile = of(event.file.name);
-   this.pct = this.store.select(fromStore.getUploadPct);
-   this.snapshot = this.store.select(fromStore.getUploadStatus);
-   this.downloadURL = this.store.select(fromStore.getDownloadUrl);
-   this.snapshot.subscribe(snap => console.log(snap));
-  }
-
-  Update(event) {
-    console.log(event);
-    if (event.sub === 'Description') {
-      this.store.dispatch({ type: fromStore.UPDATE_CABINET, payload: event });
-    }
-  }
-
+  Close(event) { this.close.emit(true); }
+  UploadFile(event) { this.upload.emit({...event, item: this.edit }); }
+  Update(event) { this.update.emit({...event, item: this.edit }); }
+  Search(event) { this.search.emit(event); }
 }

@@ -85,7 +85,7 @@ export class CabinetsEffects {
   updateCabinet$ = this.actions$.ofType(cabinetsActions.UPDATE_CABINET)
   .pipe(
     switchMap(updates => {
-      console.log(updates);
+      // console.log(updates);
       return this.store.select(fromStore.getSelectedCabinetItem)
         .pipe(
           take(1),
@@ -97,7 +97,7 @@ export class CabinetsEffects {
               case 'specifications': {
                 cab.specifications = cab.specifications ? cab.specifications : [];
                 cab.specifications.push(update.id);
-                value = cab.specifications;
+                value = { [cat]: cab.specifications};
                 break;
               }
               case 'iwhd': {
@@ -110,16 +110,27 @@ export class CabinetsEffects {
                 // tslint:disable-next-line:triple-equals
                 if (key == 'depth') { key = 'depths'; }
                 cab.iwhd[key] = update.id;
-                value = cab.iwhd;
+                value = { [cat]: cab.iwhd };
                 break;
               }
               case 'description': {
-                value = update.value;
+                value = { [cat]: update.value };
+                break;
+              }
+              case 'onoff': {
+                if (update.id === 'none') {
+                  value = { active: update.value };
+                } else {
+                  const versions = cab.versions;
+                  versions[update.id].active = update.value;
+                  value =  {versions};
+                }
+                break;
               }
             }
-            console.log({[cat]: value, cab, update});
-            // this.firestoreService.update(`structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`, { [cat]: value });
-            return new cabinetsActions.UpdateEditCabSuccess({...cab, update, 'Updated': { 'key': cat, value }});
+            // console.log({[cat]: value, cab, update});
+            this.firestoreService.update(`structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`, { ...value, updatedBy: update.user.fullName });
+            return new cabinetsActions.UpdateEditCabSuccess({...cab, update, 'Updated': { ...value, updatedBy: update.user.fullName} });
           }),
           catchError(error => of(new cabinetsActions.UpdateEditCabFail(error)))
         );

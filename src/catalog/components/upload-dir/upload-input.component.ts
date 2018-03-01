@@ -6,7 +6,6 @@ import {
   } from '@angular/core';
 
   @Component({
-    // tslint:disable-next-line:component-selector
     selector: 'upload-input',
     template: `
 <div class="chip" *ngIf="pct >= 99 && pctfile === name" >
@@ -17,7 +16,6 @@ import {
 <div class="file-field input-field"
 dropZone
 (dropped)="startUpload($event)">
-
     <div class="btn">
         <span>{{button}}</span>
         <input type="file"
@@ -30,8 +28,6 @@ dropZone
 </div>`,
 })
 export class UploadInputComponent {
-  @Input() edit: any;
-  @Input() user: any;
   @Input() title: string;
   @Input() button: string;
   @Input() pct: number;
@@ -44,11 +40,11 @@ export class UploadInputComponent {
     // The File object
     const file = event.item(0);
     this.name = file.name;
-    // Client-side validation example 
+    // Client-side validation example
     if (file.type.split('/')[0] !== 'image') {
       console.error('unsupported file type :( ');
       return;
     }
-    this.file.emit({ file, user: this.user, title: this.title, item: this.edit, type: this.button });
+    this.file.emit({ file, title: this.title, type: this.button });
   }
 }

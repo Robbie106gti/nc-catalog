@@ -32,11 +32,13 @@ export function reducer(
     case fromSearch.SEARCH_SUCCESS: {
       const search = Object.values(action.payload);
       const query = state.query;
+      // tslint:disable-next-line:no-inferrable-types
       let max: number = 10;
-      let results = new Array(); 
+      const results = new Array();
       search.forEach(el => {
           const str = el.code + el.title + el.content;
-          if (max == 0) { return }
+          // tslint:disable-next-line:triple-equals
+          if (max == 0) { return; }
           if (str.toLowerCase().includes(query.value.toLowerCase())) { results.push(el); max--; }
       });
 

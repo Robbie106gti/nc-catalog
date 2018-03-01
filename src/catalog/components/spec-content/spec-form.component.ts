@@ -93,11 +93,13 @@ import {
     }
 
     Update(r) {
+        if (r.sub === 'iwhd') { this.iwhd.push(r); } else { this.specs.push(r); }
         this.update.emit(r);
     }
 
-    Remove(item) {
-        this.remove.emit({ ...item, 'toDo': 'remove' });
+    Remove(r) {
+        if (r.sub === 'iwhd') { this.iwhd = this.iwhd.filter(item => item.id !== r.id); } else { this.specs = this.specs.filter(item => item.id !== r.id); }
+        this.remove.emit({ ...r, 'toDo': 'remove' });
     }
     Close() { $('#modal1').modal('close'); }
 

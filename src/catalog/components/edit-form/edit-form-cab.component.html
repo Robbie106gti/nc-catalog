@@ -1,5 +1,5 @@
-<div id="modal1" class="modal bottom-sheet" >
-    <form *ngIf="edit" [formGroup]="form" novalidate>
+<div id="modal1" class="modal bottom-sheet" *ngIf="(results$ | async) as results">
+    <form *ngIf="edit" [formGroup]="form" novalidate >
         <div class="row">
              <div class="col s12">
                 <ul class="tabs flow-text tab-demo z-depth-1">
@@ -11,49 +11,65 @@
             <div class="col s12"><br></div>
             <div id="main" class="col s12 section">
                 <h4>Update {{edit.content.title}}              
-                    <on-off [active]="edit.content.active" [edit]="edit"></on-off>
+                    <on-off [active]="edit.content.active" [id]="'none'" (offOn)="OffOn($event)"></on-off>
                 </h4>
-                <div class="col s6 m6">
-                    <upload-input [edit]="edit" [user]="user" [title]="edit.content.title" [button]="'image'" [pct]="pct" [url]="url" [pctfile]="pctfile"
+                <div class="col s12 m6 l4">
+                    <upload-input [title]="edit.content.title" [button]="'image'" [pct]="pct" [url]="url" [pctfile]="pctfile"
                     (file)="imageUpload($event)"></upload-input>
                     <div class="input-field col s12">
                         <textarea id="description" class="materialize-textarea" (keydown.enter)="onDes($event)" formControlName="description" [(ngModel)]="edit.content.description"></textarea>
                         <label for="description">Description</label>
                     </div>
                 </div>
-                <div class="col s6 m6 input-field">
-                    <i class="material-icons prefix">textsms</i>
-                    <input type="text" id="autocomplete-specg" class="autocompleteSpec" formControlName="spec" (keydown.enter)="onSpec($event)">
-                    <label for="autocomplete-specg">Addons</label>
+                <div class="col s6 m6 l4">
+                    <div class="input-field">
+                        <i class="material-icons prefix">textsms</i>
+                        <input type="text" formControlName="spec"  #addon (keyup)="Search(addon.value, 'addons')">
+                        <label for="autocomplete-specg">Addons</label>
+                    </div>
+                    <div class="input-field">
+                        <i class="material-icons prefix">textsms</i>
+                        <input type="text" formControlName="note"  #note (keyup)="Search(note.value, 'notes')">
+                        <label for="autocomplete-noteg">Notes</label>
+                    </div>
                 </div>
-                <div class="col s6 m6 input-field">
-                    <i class="material-icons prefix">textsms</i>
-                    <input type="text" id="autocomplete-noteg" class="autocompleteNote" formControlName="note" (keydown.enter)="onNote($event)">
-                    <label for="autocomplete-noteg">Notes</label>
+                <div class="col s6 l4 m6">
+                    <ul *ngIf="results.length > 0">
+                        <li *ngFor="let r of results"><i class="material-icons prefix">announcement</i>{{r.content}}</li>
+                    </ul>
                 </div>
             </div>
 
             <div *ngFor="let v of edit.content.heights" id="version{{v.id}}" class="col s12 section">
                 <h4>Update {{edit.content.title}} {{ edit.content.versions[v.id].title }}{{ v.version || '" high'}}                
-                    <on-off [active]="edit.content.versions[v.id].active" [edit]="edit"></on-off>
+                    <on-off [active]="edit.content.versions[v.id].active" [id]="v.id" (offOn)="OffOn($event)"></on-off>
                 </h4>
-                <div class="col s6 m6">
-                <upload-input [edit]="edit" [user]="user" [title]="v.id" [button]="'image'" [pct]="pct" [url]="url" [pctfile]="pctfile"
+                <div class="col s12 l4 m6">
+                <upload-input [title]="v.id" [button]="'image'" [pct]="pct" [url]="url" [pctfile]="pctfile"
                 (file)="imageUpload($event)"></upload-input>
-                <upload-input [edit]="edit" [user]="user" [title]="v.id" [button]="'spec'" [pct]="pct" [url]="url" [pctfile]="pctfile"
+                <upload-input [title]="v.id" [button]="'spec'" [pct]="pct" [url]="url" [pctfile]="pctfile"
                 (file)="imageUpload($event)"></upload-input>
                 </div>
-                <div class="col s6 m6 input-field">
-                    <i class="material-icons prefix">textsms</i>
-                    <input type="text" id="autocomplete-spec" class="autocompleteSpec" formControlName="specV" (keydown.enter)="onSpecV($event)">
-                    <label for="autocomplete-spec">Addons</label>
+                <div class="col s6 l4 m6">
+                    <div class="input-field">
+                        <i class="material-icons prefix">textsms</i>
+                        <input type="text" formControlName="specV" #addonv (keyup)="Search(addonv.value, 'addons')">
+                        <label for="autocomplete-spec">Addons</label>
+                    </div>
+                    <div class="input-field">
+                        <i class="material-icons prefix">textsms</i>
+                        <input type="text" formControlName="noteV" #notev (keyup)="Search(notev.value, 'notes')">
+                        <label for="autocomplete-note">Notes</label>
+                    </div>
                 </div>
-                <div class="col s6 m6 input-field">
-                    <i class="material-icons prefix">textsms</i>
-                    <input type="text" id="autocomplete-note" class="autocompleteNote" formControlName="noteV" (keydown.enter)="onNoteV($event)">
-                    <label for="autocomplete-note">Notes</label>
+                <div class="col s6 l4 m6">
+                    <ul *ngIf="results.length > 0">
+                        <li *ngFor="let r of results"><i class="material-icons prefix">announcement</i>{{r.content}}</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </form>
 </div>
+
+<!-- (keydown.enter)="onAddonV($event, v.id)" (keydown.enter)="onNoteV($event, v.id)" -->

@@ -13,16 +13,21 @@ import {
   <div class="switch">
     <label>
       Off
-      <input type="checkbox" *ngIf="active; else inactive" checked>
+      <input type="checkbox" [checked]="active" (click)="Update(active)">
       <span class="lever"></span>
       On
     </label>
   </div>
-
-  <ng-template #inactive><input type="checkbox"></ng-template>
   `,
 })
 export class OnOffComponent {
-  @Input() edit: any;
   @Input() active: any;
+  @Input() id: any;
+  @Output() offOn = new EventEmitter<any>();
+
+  Update(active) {
+    const off = active === true ? false : true;
+    this.active = off;
+    this.offOn.emit({ value: off, id: this.id });
+  }
 }

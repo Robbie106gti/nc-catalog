@@ -7,16 +7,19 @@ import { Catalog } from '../../models/catalog.model';
 import { Cabinets } from '../../models/cabinets.model';
 import { tap, filter, take } from 'rxjs/operators';
 import { User } from '../../models/user.model';
+import { of } from 'rxjs/observable/of';
 
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'spec-cab',
-  // styleUrls: ['products.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <div *ngIf="(param$ | async)as param">
+  <div *ngIf="(user$ | async) as user">
   <login-view></login-view>
-  <form-cab *ngIf="editing" [user]="(user$ | async)" (close)="Close($event)"></form-cab>
+  <form-cab *ngIf="editing"
+    [edit]="(toEdit$ | async)" [user]="user" [pct]="(pct | async)" [pctfile]="(pctfile | async)" [downloadURL]="(downloadURL | async)" [results$]="results$"
+    (close)="Close($event)" (update)="Update($event, user)" (upload)="UploadFile($event, user)" (search)="Search($event)"
+  ></form-cab>
     <div class="section no-pad-bot" id="index-banner" *ngIf="(content$ | async) as content">
       <div class="card" id="top">
         <div class="container">
@@ -28,12 +31,12 @@ import { User } from '../../models/user.model';
         </div>
       </div>
       <div class="row" id="catalog">
-        <versions-bar *ngIf="!param.Version" class="row" [content]="content" [user]="user$ | async" (edit)="Edit($event)"></versions-bar>
+        <versions-bar *ngIf="!param.Version" class="row" [content]="content" [user]="user" (edit)="Edit($event)"></versions-bar>
         <div class="row">
           <div class="col s12 m6">
             <description-card [content]="content"></description-card>
-            <spec-content [specs]="specs" [iwhd]="iwhd" [user]="user$ | async" [results$]="results$"
-            (search)="Search($event)" (update)="Update($event)" (remove)="Remove($event)"></spec-content>
+            <spec-content [specs]="specs" [iwhd]="iwhd" [user]="user" [results$]="results$"
+            (search)="Search($event)" (update)="Update($event, user)" (remove)="Remove($event, user)"></spec-content>
             <note-item *ngIf="notes[0]" [notes]="notes"></note-item>
           </div>
           <div class="col s12 m6">
@@ -47,10 +50,12 @@ import { User } from '../../models/user.model';
       </div>
     </div>
   </div>
+  </div>
   `,
 })
 export class SpecCabComponent implements OnInit {
   content$: Observable<any>;
+  toEdit$: Observable<any>;
   specs: any;
   iwhd: any;
   notes: any;
@@ -60,10 +65,16 @@ export class SpecCabComponent implements OnInit {
   editing: Boolean;
   results$: Observable<any>;
 
+  pct: Observable<any>;
+  pctfile: Observable<string>;
+  snapshot: Observable<any>;
+  downloadURL: Observable<string>;
+
   constructor(private store: Store<fromStore.ProductsState>) { }
 
   ngOnInit() {
     this.content$ = this.store.select(fromStore.getSelectedCabinetItem);
+    this.toEdit$ = this.store.select(fromStore.getToEditCabinet);
     this.user$ = this.store.select(fromStore.getUserData);
     this.param$ = this.store.select(fromStore.getRouterParams);
     this.results$ = this.store.select(fromStore.getSearchResults);
@@ -77,18 +88,22 @@ export class SpecCabComponent implements OnInit {
 
    Close(event) {
      this.editing = false;
+     this.store.dispatch({type: fromStore.CREATE_EDIT_CAB_DEL});
    }
 
    Search(event) {
     this.store.dispatch({ type: fromStore.SEARCH, payload: event });
    }
 
-   Update(event) {
-     this.store.dispatch({ type: fromStore.UPDATE_CABINET, payload: event });
+   Update(event, user) {
+     // console.log(event);
+    event = { ...event, user };
+    if (event.sub === 'specifications' || event.sub === 'iwhd' || event.sub === 'OnOff' || event.sub === 'Description') { this.store.dispatch({ type: fromStore.UPDATE_CABINET, payload: event }); }
      setTimeout(this.Take(), 1500);
    }
 
-   Remove(event) {
+   Remove(event, user) {
+    event = {...event, user };
      this.store.dispatch({ type: fromStore.REMOVE_FROM_CABINET, payload: event });
      setTimeout(this.Take(), 1500);
    }
@@ -98,5 +113,15 @@ export class SpecCabComponent implements OnInit {
     this.store.select(fromStore.getCabIWHDs).take(1).subscribe(i => this.iwhd = i);
     this.store.select(fromStore.getCabNotes).take(1).subscribe(n => this.notes = n);
     this.store.select(fromStore.getCabAddons).take(1).subscribe(a => this.addons = a);
+   }
+
+   UploadFile(event, user) {
+    event = {...event, user };
+    this.store.dispatch(new fromStore.UploadCab(event));
+    this.pctfile = of(event.file.name);
+    this.pct = this.store.select(fromStore.getUploadPct);
+    this.snapshot = this.store.select(fromStore.getUploadStatus);
+    this.downloadURL = this.store.select(fromStore.getDownloadUrl);
+    this.snapshot.subscribe(snap => console.log(snap));
    }
 }
