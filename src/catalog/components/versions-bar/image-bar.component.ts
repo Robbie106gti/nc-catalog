@@ -22,7 +22,7 @@ import {
                     [src]="content.versions[version.height].images.image.image"
                     class="responsive-img" alt="{{ content.title }}" (click)="Selected()" >
                 </span>
-                <p>{{ content.title }} {{ version.height }}{{ version.version || '" high'}}</p>
+                <p>{{ version.title }}<span *ngIf="!version.version">{{ '" high'}}</span></p>
             </a>
         </div>
     </div>
@@ -34,7 +34,7 @@ import {
     <ng-template #backup>
     <a [routerLink]="[version.height]" >
         <i class="material-icons large" (click)="Selected()" >image</i>
-        <p>{{ content.title }} {{ version.height }}{{ version.version || '" high'}}</p>
+        <p>{{ version.height }}{{ version.version || '" high'}}</p>
     </a>
     </ng-template>
     `,

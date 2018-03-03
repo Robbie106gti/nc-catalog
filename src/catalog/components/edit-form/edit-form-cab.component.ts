@@ -30,6 +30,8 @@ import { Observable } from 'rxjs/Observable';
     @Output() update = new EventEmitter<any>();
     @Output() search = new EventEmitter<any>();
 
+    cat: string;
+
     constructor (private fb: FormBuilder) {
         this.ToEdit();
         this.createForm();
@@ -50,6 +52,7 @@ import { Observable } from 'rxjs/Observable';
 
     Search(value: string, str: string) {
       if (value.length > 1) {
+        this.cat = str;
         this.search.emit({ category: str, value: value });
       }
     }
@@ -71,24 +74,8 @@ import { Observable } from 'rxjs/Observable';
       this.update.emit({ ...up });
     }
 
-    onAddon(event) {
-      const up = { sub: 'Addons', value: this.form.controls.spec.value, version: 'item' };
-      this.update.emit({ update: up });
-    }
-
-    onNote(event) {
-      const up = { sub: 'Notes', value: this.form.controls.note.value, version: 'item' };
-      this.update.emit({ update: up });
-    }
-
-    onAddonV(event, id) {
-      const up = { sub: 'Addons', value: this.form.controls.spec.value, version: 'version', id };
-      this.update.emit({ update: up });
-    }
-
-    onNoteV(event, id) {
-      const up = { sub: 'Notes', value: this.form.controls.note.value, version: 'version', id };
-      this.update.emit({ update: up });
+    Add(event, version) {
+      this.update.emit({ sub: this.cat, value: event, version });
     }
 
     Closed() { this.close.emit(true); $('#modal1').modal('close'); }

@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '../../store';
 import * as fromRoot from '../../../app/store';
-import * as searchActions from '../actions'
+import * as searchActions from '../actions';
 
 @Injectable()
 export class SearchEffects {

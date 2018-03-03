@@ -16,64 +16,19 @@ import {
     @Component({
     // tslint:disable-next-line:component-selector
     selector: 'spec-form',
-    template: `
-    <div id="modal1" class="modal modal-fixed-footer" *ngIf="(results$ | async) as results">
-        <div class="modal-content">
-            <div class="row"><a (click)="Close()" class="secondary-content"><i class="material-icons small grey-text pointer">clear</i></a>
-                <div class="col s12 m6">
-                    <h4>Update Dimentions</h4>
-                    <div class="input-field">
-                        <input id="email" type="text" #dim (keyup)="Search(dim.value, 'iwhd')">
-                        <label for="email" data-error="wrong" data-success="right">Add one, start typing...</label>
-                    </div>
-                    <div >
-                        <ul *ngIf="results.length > 0 && cat == 'iwhd'" class="collection"><li class="collection-item" *ngFor="let r of results">
-                            <div>{{r.title}} - {{r.content}}
-                            <a (click)="Update(r)" class="secondary-content"><i class="material-icons pointer">send</i></a></div>
-                        </li></ul>
-                    </div>
-                </div>
-                <div class="col s12 m6">
-                    <ul><b>Dimensional adjustments</b>
-                        <li class="second" *ngFor="let i of iwhd"><i class="material-icons">tune</i> {{i.title}} - {{i.content}}
-                        <a (click)="Remove(i)" class="secondary-content"><i class="material-icons red-text pointer tiny">clear</i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12 m6">
-                    <h4>Update Specifications</h4>
-                    <div class="input-field">
-                        <input id="email" type="text" #spec (keyup)="Search(spec.value, 'specifications')">
-                        <label for="email" data-error="wrong" data-success="right">Add one, start typing...</label>
-                    </div>
-                    <div >
-                        <ul *ngIf="results.length > 0 && cat == 'specifications'" class="collection"><li class="collection-item" *ngFor="let r of results">
-                            <div>{{r.title}} - {{r.content}}
-                            <a (click)="Update(r)" class="secondary-content"><i class="material-icons pointer">send</i></a></div>
-                        </li></ul>
-                    </div>
-                </div>
-                <div class="col s12 m6">
-                    <ul><b>Specifications</b>
-                        <li *ngFor="let spec of specs"><b>{{spec?.title}}</b>: {{ spec?.content }}
-                        <a (click)="Remove(spec)" class="secondary-content"><i class="material-icons red-text pointer tiny">clear</i></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    `,
+    templateUrl: './spec-form.component.html',
     })
     export class SpecFormComponent {
     @Input() iwhd: any;
     @Input() specs: any;
+    @Input() content: any;
     @Input() results$: Observable<any>;
     @Output() search = new EventEmitter<any>();
     @Output() update = new EventEmitter<any>();
     @Output() remove = new EventEmitter<any>();
 
     cat: string;
+    id: string;
 
   constructor(private store: Store<fromStore.ProductsState>) {
         $(document).ready(function() {
@@ -82,23 +37,30 @@ import {
                 startingTop: '4%',
                 endingTop: '10%',
             });
+            $('ul.tabs').tabs();
         });
+        this.id = 'main';
     }
 
-    Search(value: string, str: string) {
+    setId(id: string) {
+        this.id = id;
+    }
+
+    Search(value: string, str: string, id: string) {
         if (value.length > 1) {
             this.cat = str;
+            this.id = id;
             this.search.emit({ category: str, value: value });
         }
     }
 
     Update(r) {
-        if (r.sub === 'iwhd') { this.iwhd.push(r); } else { this.specs.push(r); }
-        this.update.emit(r);
+        if (r.sub === 'iwhd') { this.iwhd[this.id].push(r); } else { this.specs[this.id].push(r); }
+        this.update.emit({...r, version: this.id });
     }
 
     Remove(r) {
-        if (r.sub === 'iwhd') { this.iwhd = this.iwhd.filter(item => item.id !== r.id); } else { this.specs = this.specs.filter(item => item.id !== r.id); }
+        if (r.sub === 'iwhd') { this.iwhd[this.id] = this.iwhd[this.id].filter(item => item.id !== r.id); } else { this.specs[this.id] = this.specs[this.id].filter(item => item.id !== r.id); }
         this.remove.emit({ ...r, 'toDo': 'remove' });
     }
     Close() { $('#modal1').modal('close'); }

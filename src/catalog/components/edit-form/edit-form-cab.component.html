@@ -34,8 +34,11 @@
                     </div>
                 </div>
                 <div class="col s6 l4 m6">
-                    <ul *ngIf="results.length > 0">
-                        <li *ngFor="let r of results"><i class="material-icons prefix">announcement</i>{{r.content}}</li>
+                    <ul *ngIf="results.length > 0" class="collection">
+                        <li *ngFor="let r of results" class="collection-item">
+                            <a class="secondary-content pointer" (click)="Add(r, 'main')"><i class="material-icons">send</i></a>
+                            <span class="limit"><i class="material-icons prefix">announcement</i>{{r.title}} - {{r.content}}</span>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -63,13 +66,14 @@
                     </div>
                 </div>
                 <div class="col s6 l4 m6">
-                    <ul *ngIf="results.length > 0">
-                        <li *ngFor="let r of results"><i class="material-icons prefix">announcement</i>{{r.content}}</li>
+                    <ul *ngIf="results.length > 0" class="collection">
+                        <li *ngFor="let r of results" class="collection-item">
+                            <a class="secondary-content pointer" (click)="Add(r, v.id)"><i class="material-icons">send</i></a>
+                            <span class="limit"><i class="material-icons prefix">announcement</i>{{r.title}} - {{r.content}}</span>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
     </form>
 </div>
-
-<!-- (keydown.enter)="onAddonV($event, v.id)" (keydown.enter)="onNoteV($event, v.id)" -->

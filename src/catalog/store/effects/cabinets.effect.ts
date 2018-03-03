@@ -44,43 +44,6 @@ export class CabinetsEffects {
     })
   );
 
-/*   @Effect()
-  batchEditSection$ = this.actions$.ofType(cabinetsActions.LOAD_CABINETS_SUCCESS).pipe(
-    take(1),
-    map(cabs => {
-      console.log(cabs);
-      let id = 1;
-      cabs['payload'].map(cab => {
-        const update = cab;
-        const versions = update.versions ? update.versions : {};
-        const heights = update.heights.map(h => {
-          const title = h.version ? h.version : h.height;
-          const base = { 'active': true, title, 'id': title };
-          versions[title] = versions[title] ? {...versions[title], ...base } : { ...base };
-          return { ...h, title, 'id': title };
-        });
-        update.heights = heights;
-        update.versions = versions;
-        const increments = 'SKR683fyZIN2ndh9C1as';
-        const iwhd = { increments };
-        if (update.iwhd) {
-          if (update.iwhd.increments) { iwhd.increments = update.iwhd.increments ? update.iwhd.increments : increments; }
-          if (update.iwhd.widths) { iwhd['widths'] = update.iwhd.widths; }
-          if (update.iwhd.heights) { iwhd['heights'] = update.iwhd.heights; }
-          if (update.iwhd.depths) { iwhd['depths'] = update.iwhd.depths; }
-        }
-        update.iwhd = iwhd;
-        update.active = true;
-        delete update.crudInfo;
-        delete update.updatedAt;
-        console.log(update);
-        console.log(`${id} of ${cabs['payload'].length}`);
-        id++;
-         // this.firestoreService.update(`structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`, update);
-      });
-    })
-  ); */
-
   @Effect()
   updateCabinet$ = this.actions$.ofType(cabinetsActions.UPDATE_CABINET)
   .pipe(
@@ -91,44 +54,90 @@ export class CabinetsEffects {
           take(1),
           map(cab => {
             const update = updates['payload'];
+            // console.log(update);
             const cat = update.sub.toLowerCase();
+            const versions = cab.versions;
             let value;
             switch (cat) {
               case 'specifications': {
+                if (update.version === 'main') {
                 cab.specifications = cab.specifications ? cab.specifications : [];
                 cab.specifications.push(update.id);
                 value = { [cat]: cab.specifications};
+                } else {
+                  const spec = versions[update.version].specifications ? versions[update.version].specifications : [];
+                  spec.push(update.id);
+                  versions[update.version].specifications = spec;
+                  value = { versions };
+                }
                 break;
               }
               case 'iwhd': {
-                cab.iwhd = cab.iwhd ? cab.iwhd : {};
                 let key = update.title.toLowerCase();
-                // tslint:disable-next-line:triple-equals
-                if (key == 'height') { key = 'heights'; }
-                // tslint:disable-next-line:triple-equals
-                if (key == 'width') { key = 'widths'; }
-                // tslint:disable-next-line:triple-equals
-                if (key == 'depth') { key = 'depths'; }
-                cab.iwhd[key] = update.id;
-                value = { [cat]: cab.iwhd };
+                if (update.version === 'main') {
+                  cab.iwhd = cab.iwhd ? cab.iwhd : {};
+                  // tslint:disable-next-line:triple-equals
+                  if (key == 'height') { key = 'heights'; }
+                  // tslint:disable-next-line:triple-equals
+                  if (key == 'width') { key = 'widths'; }
+                  // tslint:disable-next-line:triple-equals
+                  if (key == 'depth') { key = 'depths'; }
+                  cab.iwhd[key] = update.id;
+                  value = { [cat]: cab.iwhd };
+                } else {
+                  const iwhd = versions[update.version].iwhd ? versions[update.version].iwhd : {};
+                  // tslint:disable-next-line:triple-equals
+                  if (key == 'height') { key = 'heights'; }
+                  // tslint:disable-next-line:triple-equals
+                  if (key == 'width') { key = 'widths'; }
+                  // tslint:disable-next-line:triple-equals
+                  if (key == 'depth') { key = 'depths'; }
+                  iwhd[key] = update.id;
+                  versions[update.version].iwhd = iwhd;
+                  value = { versions };
+                }
                 break;
               }
               case 'description': {
                 value = { [cat]: update.value };
                 break;
               }
+              case 'notes': {
+                if (update.version === 'main') {
+                  cab.notes = cab.notes ? cab.notes : [];
+                  cab.notes.push(update.value.id);
+                  value = { [cat]: cab.notes };
+                } else {
+                  const notes = versions[update.version].notes ? versions[update.version].notes : [];
+                  notes.push(update.value.id);
+                  versions[update.version].notes = notes;
+                  value = {versions};
+                }
+                break;
+              }
+              case 'addons': {
+                if (update.version === 'main') {
+                  cab.addons = cab.addons ? cab.addons : [];
+                  cab.addons.push(update.value.id);
+                  value = { [cat]: cab.addons };
+                } else {
+                  const addons = versions[update.version].addons ? versions[update.version].addons : [];
+                  addons.push(update.value.id);
+                  versions[update.version].addons = addons;
+                  value =  {versions};
+                }
+                break;
+              }
               case 'onoff': {
                 if (update.id === 'none') {
                   value = { active: update.value };
                 } else {
-                  const versions = cab.versions;
                   versions[update.id].active = update.value;
                   value =  {versions};
                 }
                 break;
               }
             }
-            // console.log({[cat]: value, cab, update});
             this.firestoreService.update(`structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`, { ...value, updatedBy: update.user.fullName });
             return new cabinetsActions.UpdateEditCabSuccess({...cab, update, 'Updated': { ...value, updatedBy: update.user.fullName} });
           }),
@@ -189,4 +198,41 @@ export class CabinetsEffects {
     })
   );
 
+
+/*   @Effect()
+  batchEditSection$ = this.actions$.ofType(cabinetsActions.LOAD_CABINETS_SUCCESS).pipe(
+    take(1),
+    map(cabs => {
+      console.log(cabs);
+      let id = 1;
+      cabs['payload'].map(cab => {
+        const update = cab;
+        const versions = update.versions ? update.versions : {};
+        const heights = update.heights.map(h => {
+          const title = h.version ? h.version : h.height;
+          const base = { 'active': true, title, 'id': title };
+          versions[title] = versions[title] ? {...versions[title], ...base } : { ...base };
+          return { ...h, title, 'id': title };
+        });
+        update.heights = heights;
+        update.versions = versions;
+        const increments = 'SKR683fyZIN2ndh9C1as';
+        const iwhd = { increments };
+        if (update.iwhd) {
+          if (update.iwhd.increments) { iwhd.increments = update.iwhd.increments ? update.iwhd.increments : increments; }
+          if (update.iwhd.widths) { iwhd['widths'] = update.iwhd.widths; }
+          if (update.iwhd.heights) { iwhd['heights'] = update.iwhd.heights; }
+          if (update.iwhd.depths) { iwhd['depths'] = update.iwhd.depths; }
+        }
+        update.iwhd = iwhd;
+        update.active = true;
+        delete update.crudInfo;
+        delete update.updatedAt;
+        console.log(update);
+        console.log(`${id} of ${cabs['payload'].length}`);
+        id++;
+         // this.firestoreService.update(`structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`, update);
+      });
+    })
+  ); */
 }

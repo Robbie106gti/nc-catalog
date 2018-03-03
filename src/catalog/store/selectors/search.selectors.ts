@@ -2,7 +2,7 @@ import { createSelector } from '@ngrx/store';
 
 import * as fromRoot from '../../../app/store';
 import * as fromFeature from '../reducers';
-import * as fromSearch from '../reducers/search.reducer'
+import * as fromSearch from '../reducers/search.reducer';
 
 export const getSearchState = createSelector(
   fromFeature.getProductsState,
