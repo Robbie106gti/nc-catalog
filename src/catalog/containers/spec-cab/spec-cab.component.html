@@ -29,7 +29,7 @@
           </div>
           <div class="col s12 m6">
             <add-custom [addons]="addons"></add-custom>
-            <table-item *ngIf="content.table" [content]="content"></table-item>
+            <table-item *ngIf="content.code && param.Version" [iwhd]="iwhd" [content]="content" [version]="param.Version"></table-item>
           </div>
         </div>
       </div>

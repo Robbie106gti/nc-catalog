@@ -3,8 +3,8 @@
         <div class="row">
              <div class="col s12">
                 <ul class="tabs flow-text tab-demo z-depth-1">
-                    <li class="tab col"><a class="active btn btn-large" href="#main">{{edit.content.title}}</a></li>
-                    <li class="tab col" *ngFor="let v of edit.content.heights"><a href="#version{{ v.id }}" class="btn btn-large">{{ v.title }}{{ v.version || "\""}}</a></li>
+                    <li class="tab col"><a class="active btn btn-large" href="#main" (click)="setId('main')">{{edit.content.title}}</a></li>
+                    <li class="tab col" *ngFor="let v of edit.content.heights"><a href="#version{{ v.id }}" (click)="setId(v.id)" class="btn btn-large">{{ v.title }}{{ v.version || "\""}}</a></li>
                 </ul>
                 <i class="material-icons tool-item small" (click)="Closed()">close</i>
             </div>

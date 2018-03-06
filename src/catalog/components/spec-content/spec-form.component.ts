@@ -4,11 +4,7 @@ import {
     Output,
     EventEmitter,
     } from '@angular/core';
-
-    import { Store } from '@ngrx/store';
     import { Observable } from 'rxjs/Observable';
-    import { tap, filter, take } from 'rxjs/operators';
-    import * as fromStore from '../../store';
 
     declare var $: any;
     declare var Materialize: any;
@@ -28,9 +24,10 @@ import {
     @Output() remove = new EventEmitter<any>();
 
     cat: string;
-    id: string;
+    id: string; // tab id
+    sId: string; // search id
 
-  constructor(private store: Store<fromStore.ProductsState>) {
+  constructor() {
         $(document).ready(function() {
             $('select').material_select();
             $('.modal').modal({
@@ -49,19 +46,20 @@ import {
     Search(value: string, str: string, id: string) {
         if (value.length > 1) {
             this.cat = str;
-            this.id = id;
+            this.sId = id;
             this.search.emit({ category: str, value: value });
         }
     }
 
     Update(r) {
-        if (r.sub === 'iwhd') { this.iwhd[this.id].push(r); } else { this.specs[this.id].push(r); }
-        this.update.emit({...r, version: this.id });
+        if (!this.iwhd[this.sId] || !this.specs[this.sId]) { this.specs = { ...this.specs, [this.sId]: [] }; this.iwhd = { ...this.iwhd, [this.sId]: [] }; }
+        if (r.sub === 'iwhd') { this.iwhd[this.sId].push(r); } else { this.specs[this.sId].push(r); }
+        this.update.emit({...r, version: this.sId });
     }
 
     Remove(r) {
-        if (r.sub === 'iwhd') { this.iwhd[this.id] = this.iwhd[this.id].filter(item => item.id !== r.id); } else { this.specs[this.id] = this.specs[this.id].filter(item => item.id !== r.id); }
-        this.remove.emit({ ...r, 'toDo': 'remove' });
+        if (r.sub === 'iwhd') { this.iwhd[this.sId] = this.iwhd[this.sId].filter(item => item.id !== r.id); } else { this.specs[this.sId] = this.specs[this.sId].filter(item => item.id !== r.id); }
+        this.remove.emit({ ...r, 'toDo': 'remove', version: this.sId });
     }
     Close() { $('#modal1').modal('close'); }
 

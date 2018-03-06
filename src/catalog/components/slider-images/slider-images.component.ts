@@ -9,14 +9,13 @@ import {
   declare var Materialize: any;
 
   @Component({
-    // tslint:disable-next-line:component-selector
     selector: 'slider-images',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-    <div class="card" *ngIf="param.Version; else cover">
+    <div class="card large" *ngIf="param.Version; else cover">
         <div class="carousel carousel-slider" data-indicators="true">
             <div class="carousel-item">
-                <h2 class="padding">Spec {{ content.title}} {{ content.versions[param.Version].title }}</h2>
+            <h2 class="padding">Spec {{ content.title}} {{ content.versions[param.Version].title }}</h2>
                 <span *ngIf="content.versions[param.Version].images; else icon">
                     <img [src]="content.versions[param.Version].images.spec.image"
                     [alt]="content.versions[param.Version].images.spec.image"
@@ -24,7 +23,7 @@ import {
                 </span>
             </div>
             <div class="carousel-item">
-                <h2 class="padding">{{ content.title}} {{ content.versions[param.Version].title }}</h2>
+            <h2 class="padding">{{ content.title}} {{ content.versions[param.Version].title }}</h2>
                 <span *ngIf="content.versions[param.Version].images; else icon">
                     <img [src]="content.versions[param.Version].images.image.image"
                     [alt]="content.versions[param.Version].images.image.image"
@@ -63,7 +62,7 @@ import {
 
     constructor () {
         $(document).ready(function(){
-            $('.carousel.carousel-slider').carousel({fullWidth: true});
+            $('.carousel.carousel-slider').carousel();
             $('.materialboxed').materialbox();
           });
     }

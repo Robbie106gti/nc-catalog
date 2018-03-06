@@ -6,6 +6,8 @@ import * as fromStore from '../../store';
 import { User } from '../../models/user.model';
 import { of } from 'rxjs/observable/of';
 
+import { StorageService } from '../../services/storage.service';
+
 @Component({
   selector: 'spec-cab',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,7 +30,7 @@ export class SpecCabComponent implements OnInit {
   snapshot: Observable<any>;
   downloadURL: Observable<string>;
 
-  constructor(private store: Store<fromStore.ProductsState>) { }
+  constructor(private store: Store<fromStore.ProductsState>, private storage: StorageService) { }
 
   ngOnInit() {
     this.content$ = this.store.select(fromStore.getSelectedCabinetItem);
@@ -79,10 +81,11 @@ export class SpecCabComponent implements OnInit {
    UploadFile(event, user) {
     event = {...event, user };
     this.store.dispatch(new fromStore.UploadCab(event));
+    // this.storage.uploadCab(event);
     this.pctfile = of(event.file.name);
     this.pct = this.store.select(fromStore.getUploadPct);
     this.snapshot = this.store.select(fromStore.getUploadStatus);
     this.downloadURL = this.store.select(fromStore.getDownloadUrl);
-    this.snapshot.subscribe(snap => console.log(snap));
+    // this.snapshot.subscribe(snap => console.log(snap));
    }
 }

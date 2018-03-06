@@ -158,7 +158,7 @@ export function reducer(
     }
 
     case fromCabinets.DOWNLOAD_URL: {
-      const url = action.payload;
+      const url = action.payload.url;
       return {
         ...state,
         'Download': url

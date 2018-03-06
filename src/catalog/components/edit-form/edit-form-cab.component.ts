@@ -31,6 +31,7 @@ import { Observable } from 'rxjs/Observable';
     @Output() search = new EventEmitter<any>();
 
     cat: string;
+    version: string;
 
     constructor (private fb: FormBuilder) {
         this.ToEdit();
@@ -38,6 +39,11 @@ import { Observable } from 'rxjs/Observable';
         $(document).ready(function(){
           $('ul.tabs').tabs();
         });
+        this.version = 'main';
+    }
+
+    setId(id) {
+      this.version = id;
     }
 
     createForm() {
@@ -58,7 +64,7 @@ import { Observable } from 'rxjs/Observable';
     }
 
     imageUpload(event) {
-     this.file.emit(event);
+     this.file.emit({ ...event, version: this.version });
     }
 
     ToEdit() {

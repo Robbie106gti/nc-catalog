@@ -30,7 +30,7 @@
               <label for="email" data-error="wrong" data-success="right">Add one, start typing...</label>
             </div>
             <div>
-              <ul *ngIf="results.length > 0 && cat == 'iwhd' && id === 'main'" class="collection">
+              <ul *ngIf="(results.length > 0 && cat === 'iwhd' && sId === 'main')" class="collection">
                 <li class="collection-item" *ngFor="let r of results">
                   <div>{{r.title}} - {{r.content}}
                     <a (click)="Update(r)" class="secondary-content">
@@ -61,7 +61,7 @@
               <label for="email" data-error="wrong" data-success="right">Add one, start typing...</label>
             </div>
             <div>
-              <ul *ngIf="results.length > 0 && cat == 'specifications' && id === 'main'" class="collection">
+              <ul *ngIf="(results.length > 0 && cat === 'specifications' && sId === 'main')" class="collection">
                 <li class="collection-item" *ngFor="let r of results">
                   <div>{{r.title}} - {{r.content}}
                     <a (click)="Update(r)" class="secondary-content">
@@ -96,7 +96,7 @@
                 <label for="email" data-error="wrong" data-success="right">Add one, start typing...</label>
               </div>
               <div>
-                <ul *ngIf="results.length > 0 && cat == 'iwhd' && id === v.id" class="collection">
+                <ul *ngIf="(results.length > 0 && cat === 'iwhd' && sId === v.id)" class="collection">
                   <li class="collection-item" *ngFor="let r of results">
                     <div>{{r.title}} - {{r.content}}
                       <a (click)="Update(r)" class="secondary-content">
@@ -132,7 +132,7 @@
                 <label for="email" data-error="wrong" data-success="right">Add one, start typing...</label>
               </div>
               <div>
-                <ul *ngIf="results.length > 0 && cat == 'specifications' && id === v.id" class="collection">
+                <ul *ngIf="(results.length > 0 && cat === 'specifications' && sId === v.id)" class="collection">
                   <li class="collection-item" *ngFor="let r of results">
                     <div>{{r.title}} - {{r.content}}
                       <a (click)="Update(r)" class="secondary-content">

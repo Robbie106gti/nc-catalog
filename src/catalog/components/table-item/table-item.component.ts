@@ -11,7 +11,8 @@ import {
     selector: 'table-item',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-    <div class="card padding unset">
+<div *ngFor="let i of iwhd['main']">
+    <div class="card padding unset" *ngIf="i.codes">
         <table class="striped highlight centered">
             <thead>
             <tr>
@@ -20,14 +21,15 @@ import {
             </tr>
             </thead>
             <tbody id="tbody">
-                <tr><td>09"</td><td><ul><li><span class="ordercode" cart="">BFD0918</span></li></ul></td></tr>
-                <tr><td>12"</td><td><ul><li><span class="ordercode" cart="">BFD1218</span></li></ul></td></tr>
-                <tr><td>15"</td><td><ul><li><span class="ordercode" cart="">BFD1518</span></li></ul></td></tr>
+                <tr *ngFor="let code of i.codes"><td>{{code}}"</td><td><ul><li><span class="ordercode" cart="">{{ content.code }}{{code}}{{ version }}</span></li></ul></td></tr>
             </tbody>
         </table>
     </div>
+</div>
     `,
   })
   export class TableItemComponent {
     @Input() content: any;
+    @Input() iwhd: any;
+    @Input() version: any;
   }
