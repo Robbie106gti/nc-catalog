@@ -7,13 +7,11 @@ import { Effect, Actions } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
 
-import * as fromRoot from '../../../app/store';
 import * as loginActions from '../actions/login.action';
 import * as fromServices from '../../services';
 import { User, WQUser, Favorites } from '../../models/user.model';
 import { Login } from '../../models/login.model';
 import { Observable } from 'rxjs/Observable';
-import { error } from 'selenium-webdriver';
 
 export interface Ap {
     type: string;
@@ -47,7 +45,7 @@ export class LoginEffects {
   constructor(
     private actions$: Actions,
     private firestoreService: fromServices.FirestoreService,
-    private store: Store<fromStore.ProductsState>,
+    private store: Store<fromStore.State>,
     private http: HttpClient
   ) {}
 

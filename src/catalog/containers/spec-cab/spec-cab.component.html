@@ -1,6 +1,5 @@
 <div *ngIf="(param$ | async)as param">
   <div *ngIf="(user$ | async) as user">
-    <login-view></login-view>
     <form-cab *ngIf="editing" [edit]="(toEdit$ | async)" [user]="user" [pct]="(pct | async)" [pctfile]="(pctfile | async)" [downloadURL]="(downloadURL | async)" [results$]="results$" (close)="Close($event)"
       (update)="Update($event, user)" (upload)="UploadFile($event, user)" (search)="Search($event)"></form-cab>
     <div class="section no-pad-bot" id="index-banner" *ngIf="(content$ | async) as content">

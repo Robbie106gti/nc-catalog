@@ -15,7 +15,7 @@ export interface UserState {
 export const initialState: UserState = {
   data: null,
   loaded: false,
-  loading: false,
+  loading: true,
   favorites: new Array(),
   notes: new Array(),
   fails: -1
@@ -30,7 +30,7 @@ export function reducer(
     case fromLogin.LOAD_LOGIN: {
       return {
         ...state,
-        loading: true,
+        loading: true
       };
     }
 

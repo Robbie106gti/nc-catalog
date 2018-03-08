@@ -15,13 +15,12 @@ import {
 import { Login } from '../../models/login.model';
 
 @Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'login-item',
-  styleUrls: ['login-item.component.scss'],
+  selector: 'login-form',
+  styleUrls: ['login-form.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './login-item.html',
+  templateUrl: './login-form.html',
 })
-export class LoginItemComponent {
+export class LoginFormComponent {
   @Input() loaded: boolean;
   @Input() loading: boolean;
   @Input() status: string;

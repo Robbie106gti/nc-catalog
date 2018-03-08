@@ -4,14 +4,7 @@ import { AngularFirestore,
   AngularFirestoreDocument
 } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/switchMap';
 import * as firebase from 'firebase/app';
-import { Store } from '@ngrx/store';
-import * as fromStore from '../store';
 
 type CollectionPredicate<T>   = string |  AngularFirestoreCollection<T>;
 type DocPredicate<T>          = string |  AngularFirestoreDocument<T>;
@@ -19,7 +12,7 @@ type DocPredicate<T>          = string |  AngularFirestoreDocument<T>;
 @Injectable()
 export class FirestoreService {
 
-  constructor(public afs: AngularFirestore, private store: Store<fromStore.SopsState>) { }
+  constructor(public afs: AngularFirestore) { }
 
   /// **************
   /// Get a Reference

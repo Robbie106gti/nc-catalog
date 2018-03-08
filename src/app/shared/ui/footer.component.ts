@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-footer',
   template: `
   <footer class="page-footer brown darken-3">
-  <!--     <div class="container">
+  <!-- <div class="container">
         <div class="row">
           <div class="col l6 s12">
             <h5 class="white-text">Footer Content</h5>
@@ -24,7 +24,7 @@ import { Component } from '@angular/core';
       <div class="footer-copyright">
         <div class="container">
         © 2017 Copyright Nickels Cabinets
-        <a class="grey-text text-lighten-4 right" href="https://webquoin.com/catalog/build/">Start Catalog</a>
+        <a class="grey-text text-lighten-4 right" href="https://nickels-catalog.firebaseapp.com/">Start Catalog</a>
         </div>
       </div>
       <a id="BottomPage"></a>

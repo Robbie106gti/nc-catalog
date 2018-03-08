@@ -1,37 +1,35 @@
 import { createSelector } from '@ngrx/store';
-
-import * as fromRoot from '../../../app/store';
-
-import { User } from '../../models/user.model';
+import * as fromRoot from '../reducers';
+import * as fromLogin from '../reducers/login.reducer';
 
 export const getUserState = createSelector(
   fromRoot.getUser,
-  (user) => user
+  (user: fromLogin.UserState) => user
 );
 
 export const getUserData = createSelector(
   getUserState,
-  user => user.data
+  fromLogin.getUserData
 );
 
 export const getUserLoaded = createSelector(
   getUserState,
-  user => user.loading
+  fromLogin.getUserLoaded
 );
 
 export const getUserLoading = createSelector(
   getUserState,
-  user => user.loading
+  fromLogin.getUserLoading
 );
 
 export const getUserFavs = createSelector(
   getUserState,
-  user => user.favorites
+  fromLogin.getUserFav
 );
 
 export const getUserNotes = createSelector(
   getUserState,
-  user => user.notes
+  fromLogin.getUserNotes
 );
 
 export const getUserFails = createSelector(

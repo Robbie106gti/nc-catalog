@@ -12,7 +12,6 @@ import { tap, filter, take } from 'rxjs/operators';
   // styleUrls: ['products.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <login-view></login-view>
     <div class="section no-pad-bot" id="index-banner">
       <div class="card" id="top">
         <div class="container">
