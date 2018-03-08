@@ -86,13 +86,13 @@ export class UserFavoritesSuccess implements Action {
 // delete items
 
 // action types
-export type LoginAction = LoadLogin 
-| LoadLoginFail 
-| LoadLoginSuccess 
-| LoadLoginFb 
-| LoadLoginFbCk 
-| LoadLoginFbFail 
+export type LoginAction = LoadLogin
+| LoadLoginFail
+| LoadLoginSuccess
+| LoadLoginFb
+| LoadLoginFbCk
+| LoadLoginFbFail
 | LoadLoginFbSuccess
-| UserFavorites 
-| UserFavoritesFail 
+| UserFavorites
+| UserFavoritesFail
 | UserFavoritesSuccess;

@@ -55,9 +55,13 @@ export class LoginEffects {
   loadLogin$ = this.actions$.ofType(loginActions.LOAD_LOGIN).pipe(
     switchMap((login: Lg) => this.http.post(this.endpoint, login.payload).pipe(
         map((user: WQUser) => {
-            // console.log(user);
-            this.setCookie({ email: user.valid.Email, class: user.valid.DealerID }, 30);
-            return new loginActions.LoadLoginFb(user);
+            console.log(user);
+            if (user.valid.Error) {
+              return new loginActions.LoadLoginFail(user.valid.Error);
+            } else {
+              this.setCookie({ email: user.valid.Email, class: user.valid.DealerID }, 30);
+              return new loginActions.LoadLoginFb(user);
+            }
         }),
         catchError(err => of(new loginActions.LoadLoginFail(err)))
         )

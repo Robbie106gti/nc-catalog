@@ -8,6 +8,8 @@ export interface UserState {
   loading: boolean;
   favorites: Favorites[];
   notes: Notes[];
+  fails: number;
+  status?: string;
 }
 
 export const initialState: UserState = {
@@ -15,7 +17,8 @@ export const initialState: UserState = {
   loaded: false,
   loading: false,
   favorites: new Array(),
-  notes: new Array()
+  notes: new Array(),
+  fails: -1
 };
 
 export function reducer(
@@ -49,6 +52,8 @@ export function reducer(
         ...state,
         loading: false,
         loaded: false,
+        status: action.payload,
+        fails: state.fails + 1
       };
     }
 

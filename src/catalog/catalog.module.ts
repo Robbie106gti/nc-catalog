@@ -28,7 +28,7 @@ import * as fromGuards from './guards';
 // services
 import * as fromServices from './services';
 
-// services
+// pipes
 import * as fromPipes from './pipes';
 
 // routes

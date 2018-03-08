@@ -11,13 +11,15 @@ declare var Materialize: any;
   // tslint:disable-next-line:component-selector
   selector: 'login-view',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<login-item [loaded]="loaded$ | async" [loading]="(loading$ | async)" (login)="loginWQ($event)"></login-item>`,
+  template: `<login-item [loaded]="loaded$ | async" [loading]="(loading$ | async)" [status]="(status$ | async)" [fails]="(fails$ | async)" (login)="loginWQ($event)"></login-item>`,
 })
 
 export class LoginViewComponent implements OnChanges {
   ib: HTMLElement;
   loaded$: Observable<boolean>;
   loading$: Observable<boolean>;
+  status$: Observable<string>;
+  fails$: Observable<number>;
 
   constructor(
       private store: Store<fromStore.ProductsState>
@@ -25,6 +27,8 @@ export class LoginViewComponent implements OnChanges {
         this.ib = document.getElementById('body');
         this.loaded$ = this.store.select(fromStore.getUserLoaded);
         this.loading$ = this.store.select(fromStore.getUserLoading);
+        this.status$ = this.store.select(fromStore.getUserStatus);
+        this.fails$ = this.store.select(fromStore.getUserFails);
     }
 
   ngOnChanges(changes: SimpleChanges) {

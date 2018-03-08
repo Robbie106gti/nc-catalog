@@ -35,3 +35,13 @@ export const getUserNotes = createSelector(
   getUserState,
   fromLogin.getUserNotes
 );
+
+export const getUserFails = createSelector(
+  getUserState,
+  user => user.fails
+);
+
+export const getUserStatus = createSelector(
+  getUserState,
+  user => user.status
+);
