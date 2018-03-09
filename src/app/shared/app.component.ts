@@ -19,7 +19,7 @@ declare var Materialize: any;
   (login)="loginWQ($event)"
   ></login-form>
 
-  <app-header [user]="(user$ | async)"></app-header>
+  <app-header [user$]="user$"></app-header>
   <router-outlet *ngIf="(loaded$ | async); else notLoggedin"></router-outlet>
   <app-footer></app-footer>
 

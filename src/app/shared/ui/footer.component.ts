@@ -23,7 +23,7 @@ import { Component } from '@angular/core';
       </div> -->
       <div class="footer-copyright">
         <div class="container">
-        © 2017 Copyright Nickels Cabinets
+        © 2018 Copyright Nickels Cabinets
         <a class="grey-text text-lighten-4 right" href="https://nickels-catalog.firebaseapp.com/">Start Catalog</a>
         </div>
       </div>
