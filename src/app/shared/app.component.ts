@@ -19,7 +19,7 @@ declare var Materialize: any;
   (login)="loginWQ($event)"
   ></login-form>
 
-  <app-header [user$]="user$"></app-header>
+  <app-header [user$]="user$" [router$]="router$"></app-header>
   <router-outlet *ngIf="(loaded$ | async); else notLoggedin"></router-outlet>
   <app-footer></app-footer>
 
@@ -61,6 +61,7 @@ export class AppComponent implements OnInit, OnChanges {
   status$: Observable<string>;
   fails$: Observable<number>;
   user$: Observable<any>;
+  router$: Observable<any>;
 
   constructor(
       private store: Store<fromStore.State>
@@ -70,6 +71,7 @@ export class AppComponent implements OnInit, OnChanges {
         $('.slider').slider();
       });
         this.ib = document.getElementById('body');
+        this.router$ = this.store.select(fromStore.getRouterState);
         this.store.dispatch(new fromStore.LoadLoginFbCk());
     }
   ngOnInit () {

@@ -16,6 +16,8 @@ import { StorageService } from '../../services/storage.service';
 export class SpecCabComponent implements OnInit {
   content$: Observable<any>;
   toEdit$: Observable<any>;
+  content: any;
+  toEdit: any;
   specs: any;
   iwhd: any;
   notes: any;
@@ -33,8 +35,6 @@ export class SpecCabComponent implements OnInit {
   constructor(private store: Store<fromStore.ProductsState>, private storage: StorageService) { }
 
   ngOnInit() {
-    this.content$ = this.store.select(fromStore.getSelectedCabinetItem);
-    this.toEdit$ = this.store.select(fromStore.getToEditCabinet);
     this.user$ = this.store.select(fromStore.getUserData);
     this.param$ = this.store.select(fromStore.getRouterParams);
     this.results$ = this.store.select(fromStore.getSearchResults);
@@ -72,10 +72,12 @@ export class SpecCabComponent implements OnInit {
    }
 
    Take(count) {
-      this.store.select(fromStore.getCabSpecs).take(count).subscribe(s => this.specs = s);
-      this.store.select(fromStore.getCabIWHDs).take(count).subscribe(i => this.iwhd = i);
-      this.store.select(fromStore.getCabNotes).take(count).subscribe(n => this.notes = n);
-      this.store.select(fromStore.getCabAddons).take(count).subscribe(a => this.addons = a);
+    this.store.select(fromStore.getSelectedCabinetItem).take(count).subscribe(c => this.content = c);
+    this.store.select(fromStore.getToEditCabinet).take(count).subscribe(e => this.toEdit = e);
+    this.store.select(fromStore.getCabSpecs).take(count).subscribe(s => this.specs = s);
+    this.store.select(fromStore.getCabIWHDs).take(count).subscribe(i => this.iwhd = i);
+    this.store.select(fromStore.getCabNotes).take(count).subscribe(n => this.notes = n);
+    this.store.select(fromStore.getCabAddons).take(count).subscribe(a => this.addons = a);
    }
 
    UploadFile(event, user) {

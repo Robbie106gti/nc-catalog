@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-home',
   template: `
   <div class="row">
-    <div class="col s4 m4"><a [routerLink]="['./catalog']">
+    <div class="col s4 m4"><a [routerLink]="['./catalog', { root: 'Catalog'}]">
       <div class="card small blue-grey darken-1">
         <div class="card-image">
           <img src="../../../assets/images/nc.jpg" class="responsive-img">
@@ -14,7 +14,7 @@ import { Component } from '@angular/core';
         </div>
       </div></a>
     </div>
-    <div class="col s4 m4"><a [routerLink]="['./sop']">
+    <div class="col s4 m4"><a [routerLink]="['./sop', { root: 'SOP'}]">
       <div class="card small red darken-3">
         <div class="card-image">
           <img src="../../../assets/images/SOP.jpg" class="responsive-img">
@@ -24,7 +24,7 @@ import { Component } from '@angular/core';
         </div>
       </div></a>
     </div>
-    <div class="col s4 m4"><a [routerLink]="['./mds']">
+    <div class="col s4 m4"><a [routerLink]="['./mds', { root: 'MDS'}]">
       <div class="card small orange darken-3">
         <div class="card-image">
           <img src="../../../assets/images/mds.jpg" class="responsive-img">
