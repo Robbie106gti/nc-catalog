@@ -28,13 +28,23 @@ styles: [`
 })
 export class ModalComponent {
   @Input() modal: { title: string, action: string };
+  @Input() url: string;
+  @Input() pct: string;
   @Output() close = new EventEmitter<boolean>();
+  @Output() add = new EventEmitter<any>();
+  @Output() file = new EventEmitter<any>();
+  newCatagory: string;
 
+  File(event) { this.file.emit(event); }
   Add() {
-    console.log('hello');
+    this.add.emit({ title: this.newCatagory, image: this.url });
   }
 
   Close() {
     this.close.emit(false);
+  }
+
+  Name(event) {
+    this.newCatagory = event;
   }
 }

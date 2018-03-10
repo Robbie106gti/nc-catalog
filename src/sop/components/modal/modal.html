@@ -5,11 +5,11 @@
       <h4>{{ modal.title }}</h4>
       <hr>
       <div class="row">
-        <input-add [title]="modal.action" [size]="'s8'"></input-add>
-        <image-upload [size]="'s8'" [title]="'Upload image'"></image-upload>
+        <input-add [title]="modal.action" [size]="'s8'" (name)="Name($event)"></input-add>
+        <image-upload [size]="'s8'" [title]="'Upload image'" [url]="url" [pct]="pct" (file)="File($event)"></image-upload>
       </div>
     </div>
     <div class="modal-footer">
-      <a class="waves-effect waves-green btn red right" (click)="Add()"><i class="material-icons left">add</i>Add</a>
+      <button class="waves-effect waves-green btn red right" (click)="Add()" [disabled]="!url"><i class="material-icons left">add</i>Add</button>
     </div>
   </div>
