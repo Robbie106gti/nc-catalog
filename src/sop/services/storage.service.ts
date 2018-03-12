@@ -15,14 +15,14 @@ export class StorageService {
   constructor(public afs: AngularFirestore, private store: Store<fromStore.SopsState>, private storage: AngularFireStorage) { }
 
   upload (event) {
-    // console.log(event);
+    console.log(event);
     const file = event.file;
     const newFileName = `${new Date().getTime()}_${file.name}`;
     // The storage path
     const path = `sop${event.dir}/${newFileName}`;
     // Totally optional metadata
     const customMetadata = {
-      uploadBy: event.user.fullName, title: event.item.content.title
+      uploadBy: event.fullName, title: file.name, newTitle: newFileName
      };
     // The main task
     this.task = this.storage.upload(path, file, { customMetadata });

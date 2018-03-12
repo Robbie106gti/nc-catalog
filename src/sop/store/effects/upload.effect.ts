@@ -21,7 +21,6 @@ export class UploadEffects {
   @Effect()
   upload$ = this.actions$.ofType(uploadActions.UPLOAD).pipe(
     switchMap(action => {
-      console.log(action);
       return this.storage.upload(action['payload'])
       .pipe(
         map(snap => new fromStore.UploadSuccess(snap)),

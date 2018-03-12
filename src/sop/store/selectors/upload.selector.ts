@@ -24,3 +24,11 @@ export const getUploadFail = createSelector(
   getUploadState,
   upload => upload.fail
 );
+
+export const getUploadPercentage = createSelector(
+  getUploadFile,
+  upload => {
+    const pct = (upload['bytesTransferred'] / (upload['totalBytes'] / 100)).toFixed(0);
+    return pct;
+  }
+);

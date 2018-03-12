@@ -14,7 +14,7 @@ import {
     <chip-image *ngIf="pct >= 99 && url" [url]="url" [size]="'s12'" [fileName]="fileName" ></chip-image>
     <loader *ngIf="pct <= 99 && pct >= 0" [pct]="pct"></loader>
     <div class="btn">
-      <span>File</span>
+      <span>Image</span>
       <input type="file" (change)="startUpload($event.target.files)">
     </div>
     <div class="file-path-wrapper">

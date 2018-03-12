@@ -18,6 +18,9 @@ import * as fromContainers from './containers';
 // services
 import * as fromServices from './services';
 
+// guards
+import * as fromGuards from './guards';
+
 // pipes
 // import * as fromPipes from './pipes';
 
@@ -25,6 +28,7 @@ import * as fromServices from './services';
 export const ROUTES: Routes = [
   {
     path: '',
+    canActivate: [ fromGuards.SopGuard ],
     component: fromContainers.MainComponent,
   },
   {
@@ -46,7 +50,7 @@ export const ROUTES: Routes = [
     StoreModule.forFeature('sops', reducers),
     EffectsModule.forFeature(effects)
   ],
-  providers: [...fromServices.services ],
+  providers: [...fromServices.services, ...fromGuards.guards ],
   declarations: [...fromContainers.containers, ...fromComponents.components ],
   exports: [...fromContainers.containers, ...fromComponents.components],
 })

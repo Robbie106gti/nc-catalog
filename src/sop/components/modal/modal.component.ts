@@ -30,14 +30,15 @@ export class ModalComponent {
   @Input() modal: { title: string, action: string };
   @Input() url: string;
   @Input() pct: string;
+  @Input() user: string;
   @Output() close = new EventEmitter<boolean>();
   @Output() add = new EventEmitter<any>();
   @Output() file = new EventEmitter<any>();
   newCatagory: string;
 
-  File(event) { this.file.emit(event); }
+  File(event) { this.file.emit({file: event, fullName: this.user }); }
   Add() {
-    this.add.emit({ title: this.newCatagory, image: this.url });
+    this.add.emit({ title: this.newCatagory, image: this.url, fullName: this.user });
   }
 
   Close() {

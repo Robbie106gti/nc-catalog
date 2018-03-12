@@ -17,8 +17,10 @@ export function reducer(
   switch (action.type) {
 
     case fromUpload.UPLOAD: {
+      const file = { bytesTransferred: 0,  totalBytes: 100 };
       return {
         ...state,
+        file
       };
     }
 
@@ -44,7 +46,7 @@ export function reducer(
     }
 
     case fromUpload.UPLOAD_URL_SUCCESS: {
-      const url = action.payload;
+      const url = action.payload.url;
 
       return {
         ...state,
