@@ -11,8 +11,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <div class="input-field col {{ size }}" >
-    <input id="title" type="text" class="validate" #cat (blur)="Name(cat.value)" (keyup.enter)="Name(cat.value)">
-    <label for="title">{{ title }}</label>
+    <input id="title" type="text" class="validate" #cat [(ngModel)]="title" (blur)="Name(cat.value)" (keyup.enter)="Name(cat.value)">
+    <label for="title">{{ title || 'Category name' }}</label>
   </div>`,
 })
 export class InputAddComponent {
@@ -23,5 +23,4 @@ export class InputAddComponent {
   Name(event) {
     this.name.emit(event);
   }
-
 }

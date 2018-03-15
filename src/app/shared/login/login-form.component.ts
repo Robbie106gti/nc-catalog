@@ -11,6 +11,8 @@ import {
   FormBuilder,
   Validators,
 } from '@angular/forms';
+declare var $: any;
+declare var Materialize: any;
 
 import { Login } from '../../models/login.model';
 
@@ -32,7 +34,11 @@ export class LoginFormComponent {
     password: ['', Validators.required && Validators.minLength(3)],
   });
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {
+    $(document).ready(function() {
+      Materialize.updateTextFields();
+    });
+  }
 
   get formTouched() {
     return this.form.untouched && this.form.pristine as Boolean;

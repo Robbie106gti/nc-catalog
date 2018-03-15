@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
 import * as uploadActions from '../actions';
 import * as fromServices from '../../services';
+import { Payload } from '../../models/payload.model';
 
 @Injectable()
 export class UploadEffects {
@@ -20,8 +21,8 @@ export class UploadEffects {
 
   @Effect()
   upload$ = this.actions$.ofType(uploadActions.UPLOAD).pipe(
-    switchMap(action => {
-      return this.storage.upload(action['payload'])
+    switchMap((action: Payload) => {
+      return this.storage.upload(action.payload)
       .pipe(
         map(snap => new fromStore.UploadSuccess(snap)),
         catchError(error => of(new fromStore.UploadFail(error)))

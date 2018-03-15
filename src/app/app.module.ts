@@ -28,6 +28,7 @@ import { AppComponent } from './shared/app.component';
 import { LoginFormComponent } from './shared/login/login-form.component';
 import { HeaderComponent } from './shared/ui/header.component';
 import { FooterComponent } from './shared/ui/footer.component';
+import { SliderComponent } from './shared/ui/slider.component';
 import { HomeComponent } from './shared/ui/home.component';
 
 // services
@@ -62,9 +63,10 @@ export const ROUTES: Routes = [
   declarations: [
     AppComponent,
     LoginFormComponent,
-    HomeComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    SliderComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

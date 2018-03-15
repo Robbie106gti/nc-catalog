@@ -4,15 +4,15 @@ import { CanActivate } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { tap, filter, take, switchMap, catchError } from 'rxjs/operators';
+import { tap, filter, switchMap, catchError, skipWhile } from 'rxjs/operators';
 
 import * as fromStore from '../store';
 import * as fromRoot from '../../app/store';
 import { map } from 'rxjs/operator/map';
 
 @Injectable()
-export class SopGuard implements CanActivate {
-  constructor(private store: Store<fromStore.SopsState>) {}
+export class SopsGuard implements CanActivate {
+  constructor(private store: Store<fromStore.SopsState>) { }
 
   canActivate(): Observable<boolean> {
     return this.checkStore().pipe(
@@ -22,14 +22,16 @@ export class SopGuard implements CanActivate {
   }
 
   checkStore(): Observable<boolean> {
-    return this.store.select(fromStore.getCatLoaded).pipe(
-      tap(loaded => {
+    let loaded;
+    return this.store.select(fromStore.getSelectedCat).pipe(
+      skipWhile(load => !load),
+      tap(load => {
         if (!loaded) {
-          this.store.dispatch(new fromStore.LoadCat());
+          this.store.dispatch({ type: fromStore.LOAD_SOPS, payload: load});
+          loaded = true;
         }
       }),
-      filter(loaded => loaded),
-      take(1)
+      filter(load => load)
     );
   }
 }

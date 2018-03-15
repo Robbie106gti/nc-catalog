@@ -11,8 +11,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <div class="file-field input-field col {{ size }}" dragNdrop>
-    <chip-image *ngIf="pct >= 99 && url" [url]="url" [size]="'s12'" [fileName]="fileName" ></chip-image>
-    <loader *ngIf="pct <= 99 && pct >= 0" [pct]="pct"></loader>
+    <chip-image *ngIf="pct >= 99 && url && fileName" [url]="url" [size]="'s12'" [fileName]="fileName" ></chip-image>
+    <loader *ngIf="pct <= 99 && pct >= 1" [pct]="pct"></loader>
     <div class="btn">
       <span>Image</span>
       <input type="file" (change)="startUpload($event.target.files)">
@@ -25,10 +25,11 @@ import {
 export class ImageUploadComponent {
   @Input() title: string;
   @Input() size: string;
-  fileName = 'some weird name.jpg';
   @Input() pct: number;
   @Input() url: string;
   @Output() file = new EventEmitter<any>();
+
+  @Input() fileName: string;
 
   startUpload(event: FileList) {
     // The File object

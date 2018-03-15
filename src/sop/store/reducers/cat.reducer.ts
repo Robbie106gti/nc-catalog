@@ -1,7 +1,7 @@
 import * as fromCat from '../actions/cat.action';
 
 export interface CatState {
-  entities: {};
+  entities: { [id: string]: any};
   loaded: boolean;
   loading: boolean;
 }
@@ -52,6 +52,49 @@ export function reducer(
     }
 
     case fromCat.ADD_CAT_SUCCESS: {
+      return {
+        ...state,
+      };
+    }
+
+    case fromCat.UPDATE_CAT_LOADED: {
+      const item = action.payload;
+      state.entities[item.title].loading = false;
+      state.entities[item.title].loaded = true;
+      return {
+        ...state,
+      };
+    }
+
+    case fromCat.UPDATE_CAT_LOADING: {
+      const item = action.payload;
+      state.entities[item.title].loading = true;
+      return {
+        ...state,
+      };
+    }
+
+    case fromCat.UPDATE_CAT_TI: {
+      return {
+        ...state,
+      };
+    }
+
+    case fromCat.UPDATE_CAT_TI_FAIL: {
+      return {
+        ...state,
+      };
+    }
+
+    case fromCat.UPDATE_CAT_TI_SUCCESS: {
+      const item = action.payload;
+      const newItem = action.payload.edit;
+      newItem.title = item.title;
+      newItem.image = item.image;
+      newItem.updatedBy = item.updatedBy;
+        delete state.entities[item.edit.titleOld];
+        delete newItem.titleOld;
+        state.entities = {...state.entities, [newItem.title]: newItem };
       return {
         ...state,
       };

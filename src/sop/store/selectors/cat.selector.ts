@@ -16,8 +16,7 @@ export const getCatEntities = createSelector(
 
 export const getCats = createSelector(
   getCatEntities,
-  entities => { console.log(Object.keys(entities).map(id => entities[id]));
-    return Object.keys(entities).map(id => entities[id]); }
+  entities => Object.keys(entities).map(id => entities[id])
 );
 
 export const getCatLoaded = createSelector(
@@ -28,4 +27,13 @@ export const getCatLoaded = createSelector(
 export const getCatLoading = createSelector(
   getCatState,
   fromCat.getCatLoading
+);
+
+export const getSelectedCat = createSelector(
+  getCatEntities,
+  fromRoot.getRouterState,
+  (entities, router) => {
+    const Id = router.state.params.Sop;
+    return entities[Id];
+  }
 );

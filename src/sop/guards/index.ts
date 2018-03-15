@@ -1,7 +1,9 @@
 // import component from ''
-import { SopGuard } from './sop.guard';
+import { CatGuard } from './cat.guard';
+import { SopsGuard } from './sops.guard';
 
-export const guards: any[] = [ SopGuard ];
+export const guards: any[] = [ CatGuard, SopsGuard ];
 
 // export * from ''
-export * from './sop.guard';
+export * from './cat.guard';
+export * from './sops.guard';

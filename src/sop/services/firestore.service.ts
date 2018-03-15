@@ -45,7 +45,7 @@ export class FirestoreService {
   }
   /// with Ids
   colWithIds$<T>(ref: CollectionPredicate<T>, queryFn?): Observable<any[]> {
-    // console.log(ref);
+   // console.log(ref);
     return this.col(ref, queryFn).snapshotChanges().map(actions => {
       return actions.map(a => {
         const data = a.payload.doc.data();
@@ -63,7 +63,7 @@ export class FirestoreService {
   }
   set<T>(ref: DocPredicate<T>, data: any) {
     const timestamp = this.timestamp;
-    console.log(ref, data);
+   // console.log(ref, data);
     return this.doc(ref).set({
       ...data,
       updatedAt: timestamp,
@@ -79,7 +79,7 @@ export class FirestoreService {
   }
   setUser<T>(ref: DocPredicate<T>, data: any) {
     const timestamp = this.timestamp;
-    console.log(ref, data);
+    // console.log(ref, data);
     return this.doc(ref).set({
       ...data,
       updatedAt: timestamp,
@@ -111,7 +111,7 @@ export class FirestoreService {
     // console.log(ref, data);
     const doc = this.doc(ref).snapshotChanges().take(1).toPromise();
     return doc.then(snap => {
-      console.log(snap.payload);
+      // console.log(snap.payload);
       return snap.payload.exists ? this.update(ref, data) : this.set(ref, data);
     });
   }

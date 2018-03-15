@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
 import * as fromServices from '../../services';
 import * as catActions from '../actions';
+import { Payload } from '../../models/payload.model';
 
 @Injectable()
 export class CatEffects {
@@ -20,7 +21,7 @@ export class CatEffects {
 
   @Effect()
   load_cat$ = this.actions$.ofType(catActions.LOAD_CAT).pipe(
-    switchMap(action => {
+    switchMap((action: Payload) => {
       return this.firestore.colWithIds$('sops')
       .pipe(
         map(entities => {
@@ -36,10 +37,37 @@ export class CatEffects {
 
   @Effect()
   add_cat$ = this.actions$.ofType(catActions.ADD_CAT_SUCCESS).pipe(
-    switchMap(action => {
-      console.log(action['payload']);
-      // return this.firestore.add('sops', action['payload']);
-      return of(null);
+    switchMap((action: Payload) => {
+      console.log(action.payload);
+      const cat = {
+        title: action.payload.title,
+        createdBy: action.payload.fullName,
+        updatedBy: action.payload.fullName,
+        image: action.payload.image,
+        active: true,
+        sort: 100
+      };
+      return this.firestore.add('sops', cat);
+    })
+  );
+
+  @Effect()
+  update_cat_ti$ = this.actions$.ofType(catActions.UPDATE_CAT_TI).pipe(
+    switchMap((action: Payload) => {
+      return this.store.select(fromStore.getUploadUrl).pipe(
+        take(1),
+        map(url => {
+          console.log(action.payload, url);
+          const cat = {
+            title: action.payload.titleNew,
+            updatedBy: action.payload.fullName,
+            image: action.payload.imageNew
+          };
+          this.firestore.update(`sops/${action.payload.edit.id}`, cat);
+          return new fromStore.UpdateCatTIsuccess({...cat, edit: action.payload.edit });
+        }),
+        catchError(error => of(new fromStore.UpdateCatTIfail(error)))
+      );
     })
   );
 }

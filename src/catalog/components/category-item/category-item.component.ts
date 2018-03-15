@@ -11,12 +11,12 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
     <tool-item  *ngIf="user"
-        [category]="category" 
-        [user]="user" 
+        [category]="category"
+        [user]="user"
         [userFavs]="userFavs"
-        (add)="BookmarkIt($event)" 
-        (remove)="UnbookmarkIt($event)" 
-        (turnOn)="Active($event)" 
+        (add)="BookmarkIt($event)"
+        (remove)="UnbookmarkIt($event)"
+        (turnOn)="Active($event)"
         (turnOff)="Unactive($event)"></tool-item>
     <a *ngIf="!category.cabinet; else cabinet" [routerLink]="['./category', category.title]">
         <div class="card-image waves-effect waves-block waves-light">

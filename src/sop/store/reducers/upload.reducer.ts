@@ -17,7 +17,7 @@ export function reducer(
   switch (action.type) {
 
     case fromUpload.UPLOAD: {
-      const file = { bytesTransferred: 0,  totalBytes: 100 };
+      const file = { bytesTransferred: 0,  totalBytes: 1000 };
       return {
         ...state,
         file

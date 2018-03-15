@@ -1,15 +1,19 @@
-  <!-- Modal Structure -->
-  <div class="card new">
-    <div class="modal-content">
-      <i (click)="Close()" class="material-icons left right pointer">close</i>
-      <h4>{{ modal.title }}</h4>
-      <hr>
-      <div class="row">
-        <input-add [title]="modal.action" [size]="'s8'" (name)="Name($event)"></input-add>
-        <image-upload [size]="'s8'" [title]="'Upload image'" [url]="url" [pct]="pct" (file)="File($event)"></image-upload>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="waves-effect waves-green btn red right" (click)="Add()" [disabled]="!url"><i class="material-icons left">add</i>Add</button>
+<!-- Modal Structure -->
+<div class="card new">
+  <div class="modal-content">
+    <i (click)="Close()" class="material-icons left right pointer">close</i>
+    <h4>{{ modal.title }}</h4>
+    <hr>
+    <div class="row">
+      <input-add [title]="modal.action" [size]="'s8'" (name)="Name($event)"></input-add>
+      <image-upload [size]="'s8'" [fileName]="'replace'" [title]="'Upload image'" [url]="url" [pct]="pct" (file)="File($event)"></image-upload>
     </div>
   </div>
+  <div class="modal-footer">
+    <button *ngIf="!modal.action; else edit" class="waves-effect waves-green btn red right" (click)="Add()" [disabled]="!url"><i class="material-icons left">add</i>Add</button>
+  </div>
+</div>
+
+<ng-template #edit>
+  <button  class="waves-effect waves-green btn red right" (click)="Edit()" [disabled]="!url"><i class="material-icons left">edit</i>Edit</button>
+</ng-template>

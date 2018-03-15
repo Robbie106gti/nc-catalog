@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '../../store';
 import * as searchActions from '../actions';
+import { Payload } from '../../models/payload.model';
 
 @Injectable()
 export class SearchEffects {
@@ -18,7 +19,7 @@ export class SearchEffects {
 
   @Effect()
   search$ = this.actions$.ofType(searchActions.SEARCH).pipe(
-    switchMap(action => {
+    switchMap((action: Payload) => {
       return of(null);
     })
   );
