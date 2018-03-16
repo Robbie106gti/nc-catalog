@@ -17,11 +17,11 @@ template: `
     <i class="large material-icons">add</i>
   </a>
   <ul>
-    <li (click)="Menu('image')"><a class="btn-floating red tooltipped" data-position="top" data-tooltip="Add a image"><i class="material-icons">camera</i></a></li>
-    <li (click)="Menu('description')"><a class="btn-floating yellow darken-1 tooltipped" data-position="top" data-tooltip="Add a description"><i class="material-icons">format_quote</i></a></li>
-    <li (click)="Menu('list')"><a class="btn-floating green tooltipped" data-position="top" data-tooltip="Add a bullet list"><i class="material-icons">list</i></a></li>
-    <li (click)="Menu('attach')"><a class="btn-floating blue tooltipped" data-position="top" data-tooltip="Attach a webquoin code"><i class="material-icons">widgets</i></a></li>
-    <li (click)="Menu('note')"><a class="btn-floating orange tooltipped" data-position="top" data-tooltip="Add a note"><i class="material-icons">announcement</i></a></li>
+    <li (click)="Menu('Image')"><a class="btn-floating red tooltipped" data-position="top" data-tooltip="Add a image"><i class="material-icons">camera</i></a></li>
+    <li (click)="Menu('Description')"><a class="btn-floating yellow darken-1 tooltipped" data-position="top" data-tooltip="Add a description"><i class="material-icons">format_quote</i></a></li>
+    <li (click)="Menu('List')"><a class="btn-floating green tooltipped" data-position="top" data-tooltip="Add a bullet list"><i class="material-icons">list</i></a></li>
+    <li (click)="Menu('Attach')"><a class="btn-floating blue tooltipped" data-position="top" data-tooltip="Attach a webquoin code"><i class="material-icons">widgets</i></a></li>
+    <li (click)="Menu('Note')"><a class="btn-floating orange tooltipped" data-position="top" data-tooltip="Add a note"><i class="material-icons">announcement</i></a></li>
   </ul>
 </div>
 `,

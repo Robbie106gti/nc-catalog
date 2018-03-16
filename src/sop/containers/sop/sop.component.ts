@@ -15,6 +15,10 @@ selector: 'sop',
 changeDetection: ChangeDetectionStrategy.OnPush,
 template: `
 <div *ngIf="(sop$ | async) as sop">
+
+<sop-modal *ngIf="add === true" [modal]="modal" [user]="(user$ | async)"
+(close)="Close($event)" (add)="Add($event)"></sop-modal>
+
   <div class="section no-pad-bot" id="index-banner">
     <div class="card" id="top">
       <div class="container">
@@ -25,19 +29,36 @@ template: `
     </div>
   </div>
   <code>{{ sop | json }}</code>
-  <menu-btn (menu)="Menu($event)"></menu-btn>
+  <div class="row">
+    <description-card *ngIf="sop.description" class="col s12 m6" [content]="sop.description"></description-card>
+    <div class="col s12 m6"></div>
+    <menu-btn (menu)="Menu($event)"></menu-btn>
+  </div>
 </div>
-
 `,
 })
 export class SopComponent {
   sop$: Observable<any>;
+  modal: { title: string, action: string, edit?: any, newTitle?: string };
+  add: boolean;
+  user$: Observable<string>;
 
   constructor(private store: Store<fromStore.SopsState>) {
+    this.user$ = this.store.select(fromStore.getUserName);
     this.sop$ = this.store.select(fromStore.getSelectedSop);
   }
 
   Menu(event) {
-    console.log(event);
+    // console.log(event);
+    this.modal = { title: `Add a ${event}`, action: event };
+    this.add = true;
+  }
+
+  Close(event) {
+    this.add = false;
+  }
+
+  Add(event) {
+    this.store.dispatch({type: fromStore.ADD_TO_SOP, payload: event });
   }
 }

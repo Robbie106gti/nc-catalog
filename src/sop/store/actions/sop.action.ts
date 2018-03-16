@@ -38,6 +38,23 @@ export class AddSopFail implements Action {
   constructor(public payload: any) {}
 }
 
+export const ADD_TO_SOP = '[SOP] Add item to SOP';
+export const ADD_TO_SOP_FAIL = '[SOP] Add item to SOP Fail';
+export const ADD_TO_SOP_SUCCESS = '[SOP] Add item to SOP Success';
+
+export class AddToSop implements Action {
+  readonly type = ADD_TO_SOP;
+  constructor(public payload: any) {}
+}
+export class AddToSopSuccess implements Action {
+  readonly type = ADD_TO_SOP_SUCCESS;
+  constructor(public payload: any) {}
+}
+export class AddToSopFail implements Action {
+  readonly type = ADD_TO_SOP_FAIL;
+  constructor(public payload: any) {}
+}
+
 // update items
 export const UPDATE_SOP_TI = '[SOP] Update SOP title & image';
 export const UPDATE_SOP_TI_FAIL = '[SOP] Update SOP title & image fail';

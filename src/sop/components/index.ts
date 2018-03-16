@@ -10,10 +10,14 @@ import { ChipImageComponent } from './chip-image/chip-image.component';
 import { DragNDropDirective } from './image-upload/dragNdrop.directive';
 import { EditBtnComponent } from './edit-btn/edit-btn.component';
 import { MenuBtnComponent } from './menu-btn/menu-btn.component';
+import { DescriptionCardComponent } from './card/description-card.component';
+import { SopModalComponent } from './modal/sop-modal.component';
+import { DesTextareaComponent } from './textarea/des-textarea.component';
+import { InputTitleComponent } from './input-add/input-title.component';
 
 export const components: any[] = [
     EditBtnComponent, CardComponent, ChipComponent, ActionBtnComponent, AddBtnComponent, ModalComponent, LoaderComponent, InputAddComponent, ImageUploadComponent, ChipImageComponent,
-    DragNDropDirective, MenuBtnComponent
+    DragNDropDirective, MenuBtnComponent, DescriptionCardComponent, SopModalComponent, DesTextareaComponent, InputTitleComponent
 ];
 
 // export * from ''
@@ -29,3 +33,7 @@ export * from './chip-image/chip-image.component';
 export * from './image-upload/dragNdrop.directive';
 export * from './edit-btn/edit-btn.component';
 export * from './menu-btn/menu-btn.component';
+export * from './card/description-card.component';
+export * from './modal/sop-modal.component';
+export * from './textarea/des-textarea.component';
+export * from './input-add/input-title.component';

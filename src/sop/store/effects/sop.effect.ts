@@ -79,4 +79,33 @@ export class SopEffects {
       );
     })
   );
+
+  @Effect()
+  add_to_sop$ = this.actions$.ofType(sopActions.ADD_TO_SOP).pipe(
+    switchMap((action: Payload) => {
+      return this.store.select(fromStore.getSelectedSop).pipe(
+        take(1),
+        map(sop => {
+          // console.log(action.payload, sop);
+          let value;
+          let key;
+          const user = action.payload.fullName;
+          switch (action.payload.action) {
+            case 'Description': {
+              key = action.payload.action.toLowerCase();
+              value = { [key]: action.payload.edit, title: action.payload.newTitle };
+              break;
+            }
+            case 'List': {
+              break;
+            }
+          }
+          this.firestore.update(`sops/${sop.idCat}/entities/${sop.id}`, { [key]: value, updatedBy: user });
+          return new fromStore.AddToSopSuccess({[key]: value, edit: sop, user });
+        }),
+        catchError(error => of(new fromStore.AddToSopFail(error)))
+      );
+    })
+  );
+
 }
