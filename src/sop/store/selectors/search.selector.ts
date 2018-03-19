@@ -23,3 +23,8 @@ export const getSearchLoading = createSelector(
     getSearchState,
   fromSearch.getSearchLoading
 );
+
+export const getIcons = createSelector(
+  fromRoot.getIcons,
+  icons => Object.keys(icons).map(id => icons[id])
+);

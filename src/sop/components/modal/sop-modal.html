@@ -1,0 +1,27 @@
+<!-- Modal Structure -->
+<div class="card new">
+  <div class="modal-content">
+    <i (click)="Close()" class="material-icons left right pointer">close</i>
+    <h4>{{ modal.title }}</h4>
+    <hr>
+    <div class="row" *ngIf="modal.action != 'Note'">
+      <input-title [title]="'Title ' + modal.action" [placeholder]="modal.sop.title" [size]="'s10'" (name)="Title($event)"></input-title>
+    </div>
+    <div class="row" *ngIf="modal.action === 'Description'">
+      <des-textarea [title]="modal.action" [size]="'s8'" [textarea]="modal.sop.value" (des)="Des($event)"></des-textarea>
+    </div>
+    <div class="row" *ngIf="modal.action === 'Note'">
+      <div>Notes</div>
+    </div>
+    <div class="row" *ngIf="modal.action === 'List'">
+      <list-edit [list]="modal.sop.value" [icons]="icons"></list-edit>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="waves-effect waves-green btn red right" (click)="Add()" [disabled]="!modal.edit">
+      <span *ngIf="!modal.sop.title"><i class="material-icons left">add</i>Add</span>
+      <span *ngIf="modal.sop.title"><i class="material-icons left">edit</i>Update</span>
+    </button>
+  </div>
+</div>
+{{ icons | json }}

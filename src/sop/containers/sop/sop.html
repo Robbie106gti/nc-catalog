@@ -1,0 +1,27 @@
+
+<div *ngIf="(sop$ | async) as sop">
+
+  <sop-modal *ngIf="add === true" [modal]="modal" [user]="(user$ | async)"
+  (close)="Close($event)" (add)="Add($event)" [sop]="sop" [icons]="(icons$ | async)"></sop-modal>
+  
+    <div class="section no-pad-bot" id="index-banner">
+      <div class="card" id="top">
+        <div class="container">
+            <a routerLink="../" class="right"><i class="small material-icons">arrow_back</i></a>
+            <div id="topic"><h1>{{ sop.title }}</h1></div>
+            <span class="right"><i><small>Updated by:{{ sop.updatedBy }} - on: {{ sop.updatedAt }}</small></i></span><br>
+        </div>
+      </div>
+    </div>
+    <code>{{ sop | json }}</code>
+    <div class="row">
+      <div class="col s12 m6">
+        <description-card *ngIf="sop.description" [content]="sop.description"></description-card>
+        <list-card *ngIf="sop.list" [list]="sop.list" [listTitle]="sop.listTitle"></list-card>
+      </div>
+      <image-card *ngIf="sop.image" class="col s12 m6" [card]="{title: sop.title, image: sop.image, size: 'medium' }"></image-card>
+      <image-card *ngFor="let image of sop.images" class="col s4 m3 l2" [card]="image"></image-card>
+      <div class="col s12 m6"></div>
+      <menu-btn (menu)="Menu($event, sop)"></menu-btn>
+    </div>
+  </div>

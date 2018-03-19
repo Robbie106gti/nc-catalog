@@ -14,10 +14,13 @@ import { DescriptionCardComponent } from './card/description-card.component';
 import { SopModalComponent } from './modal/sop-modal.component';
 import { DesTextareaComponent } from './textarea/des-textarea.component';
 import { InputTitleComponent } from './input-add/input-title.component';
+import { ImageCardComponent } from './card/image-card.component';
+import { ListCardComponent } from './list/list.component';
+import { ListEditComponent } from './list/list-edit.component';
 
 export const components: any[] = [
-    EditBtnComponent, CardComponent, ChipComponent, ActionBtnComponent, AddBtnComponent, ModalComponent, LoaderComponent, InputAddComponent, ImageUploadComponent, ChipImageComponent,
-    DragNDropDirective, MenuBtnComponent, DescriptionCardComponent, SopModalComponent, DesTextareaComponent, InputTitleComponent
+    EditBtnComponent, SopModalComponent, CardComponent, ChipComponent, ActionBtnComponent, AddBtnComponent, ModalComponent, LoaderComponent, InputAddComponent, ImageUploadComponent,
+    ChipImageComponent, DragNDropDirective, MenuBtnComponent, DescriptionCardComponent, DesTextareaComponent, InputTitleComponent, ImageCardComponent, ListCardComponent, ListEditComponent
 ];
 
 // export * from ''
@@ -37,3 +40,6 @@ export * from './card/description-card.component';
 export * from './modal/sop-modal.component';
 export * from './textarea/des-textarea.component';
 export * from './input-add/input-title.component';
+export * from './card/image-card.component';
+export * from './list/list.component';
+export * from './list/list-edit.component';

@@ -13,45 +13,47 @@ import { of } from 'rxjs/observable/of';
 @Component({
 selector: 'sop',
 changeDetection: ChangeDetectionStrategy.OnPush,
-template: `
-<div *ngIf="(sop$ | async) as sop">
-
-<sop-modal *ngIf="add === true" [modal]="modal" [user]="(user$ | async)"
-(close)="Close($event)" (add)="Add($event)"></sop-modal>
-
-  <div class="section no-pad-bot" id="index-banner">
-    <div class="card" id="top">
-      <div class="container">
-          <a routerLink="../" class="right"><i class="small material-icons">arrow_back</i></a>
-          <div id="topic"><h1>{{ sop.title }}</h1></div>
-          <span class="right"><i><small>Updated by:{{ sop.updatedBy }} - on: {{ sop.updatedAt }}</small></i></span><br>
-      </div>
-    </div>
-  </div>
-  <code>{{ sop | json }}</code>
-  <div class="row">
-    <description-card *ngIf="sop.description" class="col s12 m6" [content]="sop.description"></description-card>
-    <div class="col s12 m6"></div>
-    <menu-btn (menu)="Menu($event)"></menu-btn>
-  </div>
-</div>
-`,
+templateUrl: './sop.html',
 })
 export class SopComponent {
   sop$: Observable<any>;
-  modal: { title: string, action: string, edit?: any, newTitle?: string };
+  modal: { title: string, action: string, sop: any, edit?: any, newTitle?: string };
   add: boolean;
   user$: Observable<string>;
+  icons$: Observable<any>;
 
   constructor(private store: Store<fromStore.SopsState>) {
     this.user$ = this.store.select(fromStore.getUserName);
     this.sop$ = this.store.select(fromStore.getSelectedSop);
+    this.icons$ = this.store.select(fromStore.getIcons);
   }
 
-  Menu(event) {
-    // console.log(event);
-    this.modal = { title: `Add a ${event}`, action: event };
+  Menu(event, sop) {
+    let edit;
+    switch (event) {
+      case 'Description': {
+        sop.description = sop.description ? sop.description : { title: '', description: ''};
+        edit = { title: sop.description.title, value: sop.description.description };
+        break;
+      }
+      case 'Note': {
+        sop.notes = sop.notes ? sop.notes : [];
+        edit = { title: '', value: sop.notes };
+        break;
+      }
+      case 'List': {
+        sop.listTitle = sop.listTitle ? sop.listTitle : '';
+        sop.list = sop.list ? sop.list : [];
+        edit = { title: sop.listTitle, value: sop.list };
+        break;
+      }
+      default: {
+        edit = { title: '', value: '' };
+      }
+    }
+    this.modal = { title: `Add a ${event}`, action: event, sop: edit };
     this.add = true;
+    console.log(this.modal);
   }
 
   Close(event) {
