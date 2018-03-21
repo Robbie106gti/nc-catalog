@@ -4,7 +4,6 @@ declare var Materialize: any;
 
 @Component({
 selector: 'list-edit',
-changeDetection: ChangeDetectionStrategy.OnPush,
 template: `
 <ul>
   <li class="padding right-align"><small><i>Add a item to the list</i></small><i class="material-icons right pointer" (click)="Add()">add</i></li>
@@ -22,21 +21,26 @@ template: `
   </li>
 </ul>
 
-<div *ngIf="edit" class="card">
-  <div class="input-field col s12">
-    <input id="nameitem" [(ngModel)]="edit.title">
-    <label for="nameitem">Title</label>
-  </div>
-  <div class="input-field col s12">
-    <textarea id="textarea1" class="materialize-textarea" [(ngModel)]="edit.text"></textarea>
-    <label for="textarea1">Textarea</label>
-  </div>
-  <div class="input-field col s8">
-    <select>
-      <option value="" disabled selected>Choose your option</option>
-      <option *ngFor="let icon of icons" [value]="icon.icon">{{ icon.icon }} <i class="material-icons right">{{ icon.icon }}</i></option>
-    </select>
-    <label>Materialize Select</label>
+<div *ngIf="edit" class="card padding deep-orange lighten-5">
+  <div class="row">
+    <div class="input-field col s12">
+      <input id="nameitem" [(ngModel)]="edit.title">
+      <label for="nameitem">Title</label>
+    </div>
+    <div class="input-field col s12">
+      <textarea id="textarea1" class="materialize-textarea" [(ngModel)]="edit.text"></textarea>
+      <label for="textarea1">Text</label>
+    </div>
+    <div class="input-field col s8">
+      <select type="text" [(ngModel)]="iconNew">
+        <option *ngFor="let i of icons" [ngValue]="i.icon">{{i.icon}}</option>
+      </select>
+      <label>Choose a icon</label>
+    </div>
+    <div class="col s4">
+      <button class="btn right"><i class="material-icons" (click)="New(edit)">add</i></button>
+    </div>
+    <div class="col s12">{{ edit | json }} - {{ iconNew | json }}</div>
   </div>
 </div>
 `,
@@ -45,16 +49,30 @@ export class ListEditComponent {
   @Input() list: any;
   @Input() icons: any;
   edit: any;
+  iconNew: any;
 
   constructor () {
     this.textfields();
   }
 
-  Add() { this.list.push({ title: '', text: '' }); }
+  Add() {
+    this.edit = { title: '', text: '' };
+    setTimeout(this.textfields(), 1000);
+  }
   Remove(li) { this.list = this.list.filter(item => item !== li); }
   Edit(li) {
     this.edit = li; console.log(this.edit);
+    this.list = this.list.filter(item => item !== li);
     setTimeout(this.textfields(), 1000);
+  }
+  Icon(icon) {
+    console.log(icon);
+    this.iconNew = icon;
+  }
+  New(li) {
+    this.edit = { ...this.edit, icon: this.iconNew };
+    console.log(this.edit);
+    this.list.push(li);
   }
 
   textfields() {

@@ -26,5 +26,5 @@ export const getSearchLoading = createSelector(
 
 export const getIcons = createSelector(
   fromRoot.getIcons,
-  icons => Object.keys(icons).map(id => icons[id])
+  icons => icons['icons']
 );
