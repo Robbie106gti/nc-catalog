@@ -1,0 +1,40 @@
+<ul>
+  <li class="padding right-align"><small><i>Add a item to the list</i></small><i class="material-icons right pointer" (click)="Add()">add</i></li>
+  <li class="divider"></li>
+
+  <li class="" *ngFor="let li of list">
+    <i class="material-icons">{{ li.icon || 'label' }}</i>
+    <b>{{ li.title }} :</b>
+    <span>{{ li.text }}</span>
+    <span class="right">
+      <i class="material-icons pointer" (click)="Edit(li)">edit</i>
+      <i class="material-icons pointer" (click)="Remove(li)">remove_circle_outline</i>
+    </span>
+  </li>
+</ul>
+
+<div *ngIf="edit" class="card padding blue-grey lighten-4">
+  <div class="row">
+    <div class="input-field col s12">
+      <input id="first_name2" [(ngModel)]="edit.title" class="validate" type="text">
+      <label for="first_name2">Title</label>
+    </div>
+    <div class="input-field col s12">
+      <textarea id="textarea1" class="materialize-textarea" [(ngModel)]="edit.text"></textarea>
+      <label for="textarea1">Text</label>
+    </div>
+    <div class="input-field col s8">
+        <div class="ddIcon btn">
+          <span><i class="material-icons left" >{{ edit.icon || 'label' }}</i> {{ edit.icon || 'Choose a Icon' }}</span>
+          <div class="ddIcon-content grey-text text-darken-3">
+          <p *ngFor="let i of icons" (click)="Icon(i)">
+            {{ i.icon }} <i class="material-icons left">{{ i.icon }}</i>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col s4">
+      <button class="btn right" [disabled]="(!edit.title && !edit.text)"><i class="material-icons" (click)="New()">add</i></button>
+    </div>
+  </div>
+</div>

@@ -97,6 +97,18 @@ export class SopEffects {
               break;
             }
             case 'List': {
+              key = action.payload.action.toLowerCase();
+              value = action.payload.list;
+              break;
+            }
+            case 'ListTitle': {
+              key = 'listTitle';
+              value = action.payload.listTitle;
+              break;
+            }
+            case 'Notes': {
+              key = action.payload.action.toLowerCase();
+              value = action.payload.notes;
               break;
             }
           }

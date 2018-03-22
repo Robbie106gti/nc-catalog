@@ -4,6 +4,9 @@
     <i (click)="Close()" class="material-icons left right pointer">close</i>
     <h4>{{ modal.title }}</h4>
     <hr>
+    <div class="row" *ngIf="modal.action === 'Image'">
+        <man-image [images]="modal.sop.value"></man-image>
+    </div>
     <div class="row" *ngIf="modal.action != 'Note'">
       <input-title [title]="'Title ' + modal.action" [placeholder]="modal.sop.title" [size]="'s10'" (name)="Title($event)"></input-title>
     </div>
@@ -11,10 +14,13 @@
       <des-textarea [title]="modal.action" [size]="'s8'" [textarea]="modal.sop.value" (des)="Des($event)"></des-textarea>
     </div>
     <div class="row" *ngIf="modal.action === 'Note'">
-      <div>Notes</div>
+      <edit-note [notes]="modal.sop.value" (newNotes)="Notes($event)"></edit-note>
     </div>
     <div class="row" *ngIf="modal.action === 'List'">
-      <list-edit [list]="modal.sop.value" [icons]="icons"></list-edit>
+      <list-edit [list]="modal.sop.value" [icons]="icons" (newList)="NewList($event)"></list-edit>
+    </div>
+    <div class="row" *ngIf="modal.action === 'Image'">
+        <image-upload [size]="'s8'" [fileName]="'replace'" [title]="'Upload image'" [url]="url" [pct]="pct" (file)="File($event)"></image-upload>
     </div>
   </div>
   <div class="modal-footer">

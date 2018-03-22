@@ -17,10 +17,14 @@ import { InputTitleComponent } from './input-add/input-title.component';
 import { ImageCardComponent } from './card/image-card.component';
 import { ListCardComponent } from './list/list.component';
 import { ListEditComponent } from './list/list-edit.component';
+import { NoteComponent } from './notes/note.component';
+import { EditNoteComponent } from './notes/edit-note.component';
+import { ManImageComponent } from './image-upload/man-image.component';
 
 export const components: any[] = [
     EditBtnComponent, SopModalComponent, CardComponent, ChipComponent, ActionBtnComponent, AddBtnComponent, ModalComponent, LoaderComponent, InputAddComponent, ImageUploadComponent,
-    ChipImageComponent, DragNDropDirective, MenuBtnComponent, DescriptionCardComponent, DesTextareaComponent, InputTitleComponent, ImageCardComponent, ListCardComponent, ListEditComponent
+    ChipImageComponent, DragNDropDirective, MenuBtnComponent, DescriptionCardComponent, DesTextareaComponent, InputTitleComponent, ImageCardComponent, ListCardComponent, ListEditComponent,
+    NoteComponent, EditNoteComponent, ManImageComponent
 ];
 
 // export * from ''
@@ -43,3 +47,6 @@ export * from './input-add/input-title.component';
 export * from './card/image-card.component';
 export * from './list/list.component';
 export * from './list/list-edit.component';
+export * from './notes/note.component';
+export * from './notes/edit-note.component';
+export * from './image-upload/man-image.component';

@@ -1,85 +1,83 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
 declare var $: any;
 declare var Materialize: any;
 
 @Component({
 selector: 'list-edit',
-template: `
-<ul>
-  <li class="padding right-align"><small><i>Add a item to the list</i></small><i class="material-icons right pointer" (click)="Add()">add</i></li>
-  <li class="divider"></li>
+templateUrl: 'list-edit.html',
+changeDetection: ChangeDetectionStrategy.OnPush,
+styles: [`
+.ddIcon {
+  position: relative;
+  display: inline-block;
+  min-width: 10em;
+}
 
-  <li class="" *ngFor="let li of list">
-    <i *ngIf="li.icon" class="material-icons">{{ li.icon }}</i>
-    <i *ngIf="!li.icon" class="material-icons">label</i>
-    <b>{{ li.title }} :</b>
-    <span>{{ li.text }}</span>
-    <span class="right">
-      <i class="material-icons pointer" (click)="Edit(li)">edit</i>
-      <i class="material-icons pointer" (click)="Remove(li)">remove_circle_outline</i>
-    </span>
-  </li>
-</ul>
+.ddIcon-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 20em;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding-top:.5em;
+  padding-bottom:.5em;
+  z-index: 999;
+  margin-left: 8rem;
+  margin-top: -40rem;
+}
+.ddIcon-content > p {
+  padding-left: 1rem;
+  margin-left: 1rem;
+  text-align: left;
+}
 
-<div *ngIf="edit" class="card padding deep-orange lighten-5">
-  <div class="row">
-    <div class="input-field col s12">
-      <input id="nameitem" [(ngModel)]="edit.title">
-      <label for="nameitem">Title</label>
-    </div>
-    <div class="input-field col s12">
-      <textarea id="textarea1" class="materialize-textarea" [(ngModel)]="edit.text"></textarea>
-      <label for="textarea1">Text</label>
-    </div>
-    <div class="input-field col s8">
-      <select type="text" [(ngModel)]="iconNew">
-        <option *ngFor="let i of icons" [ngValue]="i.icon">{{i.icon}}</option>
-      </select>
-      <label>Choose a icon</label>
-    </div>
-    <div class="col s4">
-      <button class="btn right"><i class="material-icons" (click)="New(edit)">add</i></button>
-    </div>
-    <div class="col s12">{{ edit | json }} - {{ iconNew | json }}</div>
-  </div>
-</div>
-`,
+.ddIcon:hover .ddIcon-content {
+  display: block;
+}
+
+.ddIcon-content > p:hover {
+  background-color: #455a64;
+  color: #fff;
+}
+`]
 })
 export class ListEditComponent {
   @Input() list: any;
   @Input() icons: any;
+  @Output() newList = new EventEmitter<any>();
   edit: any;
-  iconNew: any;
 
   constructor () {
     this.textfields();
   }
 
   Add() {
-    this.edit = { title: '', text: '' };
+    this.edit = new Object;
     setTimeout(this.textfields(), 1000);
   }
-  Remove(li) { this.list = this.list.filter(item => item !== li); }
+  Remove(li) { this.list = this.list.filter(item => item !== li); this.newList.emit(this.list); }
   Edit(li) {
     this.edit = li; console.log(this.edit);
     this.list = this.list.filter(item => item !== li);
     setTimeout(this.textfields(), 1000);
   }
-  Icon(icon) {
-    console.log(icon);
-    this.iconNew = icon;
-  }
-  New(li) {
-    this.edit = { ...this.edit, icon: this.iconNew };
-    console.log(this.edit);
-    this.list.push(li);
+  Icon(ic) { this.edit.icon = ic.icon; }
+  New() {
+    this.list.push(this.edit);
+    this.newList.emit(this.list);
+    this.edit = null;
   }
 
   textfields() {
     $(document).ready(function() {
       Materialize.updateTextFields();
       $('#textarea1').trigger('autoresize');
-      $('select').material_select();
     });
   }
 }

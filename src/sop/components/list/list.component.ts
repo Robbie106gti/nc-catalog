@@ -10,8 +10,7 @@ template: `
   <ul class="collection with-header">
     <li class="collection-header"><h4>{{ listTitle }}</h4></li>
     <li class="collection-item avatar" *ngFor="let li of list">
-      <i *ngIf="li.icon" class="material-icons circle">{{li.icon}}</i>
-      <i *ngIf="!li.icon" class="material-icons circle">label</i>
+      <i class="material-icons circle">{{ li.icon || 'label' }}</i>
       <span class="title"><b>{{ li.title }}:</b></span>
       <p>{{ li.text }}</p>
     </li>
@@ -27,7 +26,4 @@ styles: [`
 export class ListCardComponent {
   @Input() list: any;
   @Input() listTitle: string;
-
-  constructor () {
-  }
 }

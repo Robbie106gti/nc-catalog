@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
 import { of } from 'rxjs/observable/of';
+import { ADD_TO_SOP } from '../../store';
 
 @Component({
 selector: 'sop',
@@ -21,11 +22,16 @@ export class SopComponent {
   add: boolean;
   user$: Observable<string>;
   icons$: Observable<any>;
+  url$: Observable<string>;
+  pct$: Observable<any>;
+  file: any;
 
   constructor(private store: Store<fromStore.SopsState>) {
     this.user$ = this.store.select(fromStore.getUserName);
     this.sop$ = this.store.select(fromStore.getSelectedSop);
     this.icons$ = this.store.select(fromStore.getIcons);
+    this.url$ = this.store.select(fromStore.getUploadUrl);
+    this.pct$ = this.store.select(fromStore.getUploadPercentage);
   }
 
   Menu(event, sop) {
@@ -47,6 +53,11 @@ export class SopComponent {
         edit = { title: sop.listTitle, value: sop.list };
         break;
       }
+      case 'Image': {
+        sop.images = sop.images ? sop.images : [];
+        edit = { title: '', value: sop.images };
+        break;
+      }
       default: {
         edit = { title: '', value: '' };
       }
@@ -54,6 +65,18 @@ export class SopComponent {
     this.modal = { title: `Add a ${event}`, action: event, sop: edit };
     this.add = true;
     console.log(this.modal);
+  }
+
+  NewList(event) {
+    this.store.dispatch({type: ADD_TO_SOP, payload: { ...event, action: 'List'} });
+  }
+  NewTitle(event) {
+    console.log(event);
+    this.store.dispatch({type: ADD_TO_SOP, payload: { ...event, action: 'ListTitle'} });
+  }
+  Notes(event) {
+    console.log(event);
+    this.store.dispatch({type: ADD_TO_SOP, payload: event });
   }
 
   Close(event) {
