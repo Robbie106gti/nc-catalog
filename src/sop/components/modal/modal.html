@@ -10,10 +10,18 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button *ngIf="!modal.action; else edit" class="waves-effect waves-green btn red right" (click)="Add()" [disabled]="!url"><i class="material-icons left">add</i>Add</button>
+    <button *ngIf="!modal.action; else edit" class="waves-effect waves-green btn red right" (click)="Add()" [disabled]="!url">
+      <i class="material-icons left">add</i>Add</button>
   </div>
 </div>
 
 <ng-template #edit>
-  <button  class="waves-effect waves-green btn red right" (click)="Edit()" [disabled]="!url"><i class="material-icons left">edit</i>Edit</button>
+  <button class="waves-effect waves-green btn deep-orange darken-4 tooltipped"
+    (click)="Remove()"
+    data-position="bottom" data-tooltip="This will remove the item or catagory with everything attached!">
+    <i class="material-icons left">delete_forever</i>Remove
+  </button>
+  <button class="waves-effect waves-green btn red right" (click)="Edit()" [disabled]="!url">
+    <i class="material-icons left">edit</i>Edit
+  </button>
 </ng-template>

@@ -5,28 +5,35 @@
     <h4>{{ modal.title }}</h4>
     <hr>
     <div class="row" *ngIf="modal.action === 'Image'">
-        <man-image [images]="modal.sop.value"></man-image>
-    </div>
-    <div class="row" *ngIf="modal.action != 'Note'">
-      <input-title [title]="'Title ' + modal.action" [placeholder]="modal.sop.title" [size]="'s10'" (name)="Title($event)"></input-title>
+      <man-image [images]="modal.sop.value" (newImages)="NewImages($event)"></man-image>
+      <input-title [title]="'Title ' + modal.action" [placeholder]="modal.sop.title" [size]="'s10'" (name)="TitleImage($event)"></input-title>
+      <image-upload [size]="'s8'" [fileName]="'replace'" [title]="'Upload image'" [url]="url" [pct]="pct" (file)="File($event)"></image-upload>
+      <div class="col s12">
+        <button class="waves-effect waves-green btn red right" (click)="AddImage()" [disabled]="!url"><i class="material-icons left">add</i>Add</button>
+      </div>
     </div>
     <div class="row" *ngIf="modal.action === 'Description'">
+      <input-title [title]="'Title ' + modal.action" [placeholder]="modal.sop.title" [size]="'s10'" (name)="Title($event)"></input-title>
       <des-textarea [title]="modal.action" [size]="'s8'" [textarea]="modal.sop.value" (des)="Des($event)"></des-textarea>
     </div>
     <div class="row" *ngIf="modal.action === 'Note'">
-      <edit-note [notes]="modal.sop.value" (newNotes)="Notes($event)"></edit-note>
+      <edit-note class="col s12" [notes]="modal.sop.value" (newNotes)="Notes($event)"></edit-note>
     </div>
     <div class="row" *ngIf="modal.action === 'List'">
-      <list-edit [list]="modal.sop.value" [icons]="icons" (newList)="NewList($event)"></list-edit>
-    </div>
-    <div class="row" *ngIf="modal.action === 'Image'">
-        <image-upload [size]="'s8'" [fileName]="'replace'" [title]="'Upload image'" [url]="url" [pct]="pct" (file)="File($event)"></image-upload>
+      <input-title [title]="'Title ' + modal.action" [placeholder]="modal.sop.title" [size]="'s10'" (name)="Title($event)"></input-title>
+      <list-edit class="col s12" [list]="modal.sop.value" [icons]="icons" (newList)="NewList($event)"></list-edit>
     </div>
   </div>
-  <div class="modal-footer">
+  <div class="modal-footer" *ngIf="modal.action === 'Description'">
     <button class="waves-effect waves-green btn red right" (click)="Add()" [disabled]="!modal.edit">
-      <span *ngIf="!modal.sop.title"><i class="material-icons left">add</i>Add</span>
-      <span *ngIf="modal.sop.title"><i class="material-icons left">edit</i>Update</span>
+      <span *ngIf="!modal.sop.title">
+        <i class="material-icons left">add</i>
+        Add
+      </span>
+      <span *ngIf="modal.sop.title">
+        <i class="material-icons left">edit</i>
+        Update
+      </span>
     </button>
   </div>
 </div>

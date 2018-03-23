@@ -9,7 +9,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
 import { of } from 'rxjs/observable/of';
-import { ADD_TO_SOP } from '../../store';
 
 @Component({
 selector: 'sop',
@@ -64,19 +63,25 @@ export class SopComponent {
     }
     this.modal = { title: `Add a ${event}`, action: event, sop: edit };
     this.add = true;
-    console.log(this.modal);
+    // console.log(this.modal);
+  }
+
+  Images(event) {
+    this.store.dispatch({type: fromStore.ADD_TO_SOP, payload: { ...event, action: 'Images'} });
   }
 
   NewList(event) {
-    this.store.dispatch({type: ADD_TO_SOP, payload: { ...event, action: 'List'} });
+    this.store.dispatch({type: fromStore.ADD_TO_SOP, payload: { ...event, action: 'List'} });
   }
+
   NewTitle(event) {
     console.log(event);
-    this.store.dispatch({type: ADD_TO_SOP, payload: { ...event, action: 'ListTitle'} });
+    this.store.dispatch({type: fromStore.ADD_TO_SOP, payload: { ...event, action: 'ListTitle'} });
   }
+
   Notes(event) {
     console.log(event);
-    this.store.dispatch({type: ADD_TO_SOP, payload: event });
+    this.store.dispatch({type: fromStore.ADD_TO_SOP, payload: event });
   }
 
   Close(event) {
@@ -85,5 +90,10 @@ export class SopComponent {
 
   Add(event) {
     this.store.dispatch({type: fromStore.ADD_TO_SOP, payload: event });
+  }
+
+  File(event) {
+    this.file = event.file;
+    this.store.dispatch(new fromStore.Upload(event));
   }
 }

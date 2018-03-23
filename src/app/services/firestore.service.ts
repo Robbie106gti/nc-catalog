@@ -5,6 +5,13 @@ import { AngularFirestore,
 } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
+import { WQUser, User } from '../models/user.model';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/switchMap';
+import { of } from 'rxjs/observable/of';
 
 type CollectionPredicate<T>   = string |  AngularFirestoreCollection<T>;
 type DocPredicate<T>          = string |  AngularFirestoreDocument<T>;
@@ -56,7 +63,7 @@ export class FirestoreService {
   }
   set<T>(ref: DocPredicate<T>, data: any) {
     const timestamp = this.timestamp;
-    console.log(ref, data);
+    // console.log(ref, data);
     return this.doc(ref).set({
       ...data,
       updatedAt: timestamp,
@@ -65,21 +72,6 @@ export class FirestoreService {
   }
   update<T>(ref: DocPredicate<T>, data: any) {
     // console.log(ref, data);
-    return this.doc(ref).update({
-      ...data,
-      updatedAt: this.timestamp
-    });
-  }
-  setUser<T>(ref: DocPredicate<T>, data: any) {
-    const timestamp = this.timestamp;
-    console.log(ref, data);
-    return this.doc(ref).set({
-      ...data,
-      updatedAt: timestamp,
-      createdAt: timestamp
-    });
-  }
-  updateUser<T>(ref: DocPredicate<T>, data: any) {
     return this.doc(ref).update({
       ...data,
       updatedAt: this.timestamp
@@ -104,18 +96,18 @@ export class FirestoreService {
     // console.log(ref, data);
     const doc = this.doc(ref).snapshotChanges().take(1).toPromise();
     return doc.then(snap => {
-      console.log(snap.payload);
+      // console.log(snap.payload);
       return snap.payload.exists ? this.update(ref, data) : this.set(ref, data);
     });
   }
   /// If doc exists update, otherwise set
-  upsertUser<T>(ref: DocPredicate<T>, data: any) {
+  exists<T>(ref: DocPredicate<T>) {
     // console.log(ref, data);
-    const doc = this.doc(ref).snapshotChanges().take(1).toPromise();
-    return doc.then(snap => {
-      console.log(snap.payload);
-      return snap.payload.exists ? this.updateUser(ref, data) : this.setUser(ref, data);
-    }).then(() => setTimeout(() => location.reload(), 1000));
+    return this.doc(ref).snapshotChanges();
+  }
+
+  trimit(str) {
+    return str ? str.trim() : null;
   }
   /// **************
   /// Inspect Data

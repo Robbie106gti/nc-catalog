@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
 import { Effect, Actions } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
-import { map, switchMap, catchError, tap } from 'rxjs/operators';
+import { map, switchMap, catchError, tap, delay, retry, retryWhen, skipWhile } from 'rxjs/operators';
 
 import * as loginActions from '../actions/login.action';
 import * as fromServices from '../../services';
@@ -53,7 +53,7 @@ export class LoginEffects {
   loadLogin$ = this.actions$.ofType(loginActions.LOAD_LOGIN).pipe(
     switchMap((login: Lg) => this.http.post(this.endpoint, login.payload).pipe(
         map((user: WQUser) => {
-            console.log(user);
+            // console.log(user);
             if (user.valid.Error) {
               return new loginActions.LoadLoginFail(user.valid.Error);
             } else {
@@ -65,15 +65,87 @@ export class LoginEffects {
         )
     ));
 
+/*     @Effect()
+    loadLoginFb$ = this.actions$.ofType(loginActions.LOAD_LOGIN_FB).pipe(
+      switchMap((action: Ap) => {
+        return this.firestoreService.docWithRefs$(`users/${action.payload.valid.Email}`).pipe(
+          map((userfb: User) => {
+            return new loginActions.LoadLoginFbSuccess({ ...userfb, wqData: action.payload });
+          }),
+          catchError(err => of(new loginActions.CreateFBLogin(action.payload)))
+        );
+      })
+    ); */
+
     @Effect()
     loadLoginFb$ = this.actions$.ofType(loginActions.LOAD_LOGIN_FB).pipe(
       switchMap((action: Ap) => {
-        return this.firestoreService
-          .docWithRefs$(`users/${action.payload.valid.Email}`)
-          .pipe(
-            map((userfb: User) => new loginActions.LoadLoginFbSuccess({ ...userfb, wqData: action.payload })),
-            catchError(err => of(new loginActions.LoadLoginFbFail({ ...err, wqData: action.payload })))
-          );
+        return this.firestoreService.exists(`users/${action.payload.Email}`).pipe(
+          map(snap => {
+            // console.log(snap);
+            if (snap.payload.exists === true) {
+              // this.firestoreService.update(`users/${action.payload.valid.Email}`, data);
+              return this.firestoreService.docWithRefs$(`users/${action.payload.valid.Email}`).pipe(
+                map((userfb: User) => {
+                  return new loginActions.LoadLoginFbSuccess({ ...userfb, wqData: action.payload });
+                }),
+                catchError(err => of(new loginActions.LoadLoginFbFail({ error: err, wqData: action.payload})))
+              );
+            } else {
+              return new loginActions.CreateFBLogin(action.payload);
+            }
+          }),
+          catchError(err => of(console.log(err)))
+        );
+      })
+    );
+
+    @Effect()
+    createLoginFb$ = this.actions$.ofType(loginActions.CREATE_FB_LOGIN).pipe(
+      switchMap((action: Ap) => {
+        const fname = this.trimit(action.payload.valid.FirstName);
+        const lname = this.trimit(action.payload.valid.LastName);
+        const email = this.trimit(action.payload.valid.Email);
+        const user = {
+          class: this.trimit(action.payload.valid.DealerID),
+          dealerName: this.trimit(action.payload.valid.DealerName),
+          displayName: this.trimit(action.payload.valid.DisplayName),
+          email: this.trimit(action.payload.valid.Email),
+          firstName: fname,
+          lastName: lname,
+          fullName: fname + ' ' + lname,
+          username: this.trimit(action.payload.valid.UserName),
+          roles: {
+            reader: true
+          },
+          status: 'online',
+          address: {
+              street: this.trimit(action.payload.valid.DealerAddress1),
+              city: this.trimit(action.payload.valid.DealerAddress2),
+              state: this.trimit(action.payload.valid.DealerAddress3),
+              postcode: this.trimit(action.payload.valid.DealerPostalCode)
+          },
+          wqData: action.payload
+        };
+        return this.firestoreService.set(`users/${action.payload.valid.Email}`, user).then(() => location.reload());
+        /* return this.firestoreService.set(`users/${action.payload.valid.Email}`, user).then(
+          () => new loginActions.CreateFBLoginSuccess(action.payload)
+        ); */
+      })
+    );
+
+    @Effect()
+    createLoginFbSuccess$ = this.actions$.ofType(loginActions.CREATE_FB_LOGIN_SUCCESS).pipe(
+      switchMap((action: Ap) => {
+        console.log(action);
+        return this.firestoreService.docWithRefs$(`users/${action.payload.Email}`).pipe(
+          tap((userfb: User) =>  {
+            if (userfb) {
+              console.log(userfb);
+              return new loginActions.LoadLoginFbSuccess({ ...userfb, wqData: action.payload });
+            }
+          })
+        );
       })
     );
 
@@ -106,38 +178,6 @@ export class LoginEffects {
           );
       })
     );
-
-  @Effect()
-  createLoginFb$ = this.actions$.ofType(loginActions.LOAD_LOGIN_FB_FAIL).pipe(
-      switchMap((action: Ap2) => {
-        console.log(action.payload.wqData);
-        const fname = this.trimit(action.payload.wqData.valid.FirstName);
-        const lname = this.trimit(action.payload.wqData.valid.LastName);
-
-          const data: User = {
-            class: this.trimit(action.payload.wqData.valid.DealerID),
-            dealerName: this.trimit(action.payload.wqData.valid.DealerName),
-            displayName: this.trimit(action.payload.wqData.valid.DisplayName),
-            email: this.trimit(action.payload.wqData.valid.Email),
-            firstName: fname,
-            lastName: lname,
-            fullName: fname + ' ' + lname,
-            username: this.trimit(action.payload.wqData.valid.UserName),
-            roles: {
-              reader: true
-            },
-            status: 'online',
-            address: {
-                street: this.trimit(action.payload.wqData.valid.DealerAddress1),
-                city: this.trimit(action.payload.wqData.valid.DealerAddress2),
-                state: this.trimit(action.payload.wqData.valid.DealerAddress3),
-                postcode: this.trimit(action.payload.wqData.valid.DealerPostalCode)
-            },
-            wqData: action.payload.wqData
-          };
-        return this.firestoreService.upsertUser(`users/${action.payload.wqData.valid.Email}`, data);
-      })
-  );
 
   webquoin(userlogin) {
     const webq = this.http.post(this.endpoint, userlogin)
@@ -196,18 +236,18 @@ export class LoginEffects {
  }
 
  parseCookie() {
-    const ck = this.getCookie('nc-catalog');
-    let cookie: Observable<Res>;
-    // console.log(ck + 'just hanging out');
-    if (ck === '') {
-        /// User not logged in
-        // console.log(ck + 'null');
-        return of(cookie = null);
-    } else {
-        /// User logged in
-        // console.log(ck + 'im a live');
-        cookie = JSON.parse(ck);
-        return of(cookie);
-    }
+  const ck = this.getCookie('nc-catalog');
+  let cookie: Observable<Res>;
+  // console.log(ck + 'just hanging out');
+  if (ck === '') {
+    /// User not logged in
+    // console.log(ck + 'null');
+    return of(cookie = null);
+  } else {
+    /// User logged in
+    // console.log(ck + 'im a live');
+    cookie = JSON.parse(ck);
+    return of(cookie);
+  }
  }
 }

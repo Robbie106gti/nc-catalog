@@ -1,15 +1,16 @@
 <ul>
   <li class="padding right-align"><small><i>Add a item to the list</i></small><i class="material-icons right pointer" (click)="Add()">add</i></li>
   <li class="divider"></li>
+  <li class="padding"></li>
 
-  <li class="" *ngFor="let li of list">
+  <li class="" *ngFor="let li of list" class="limit">
     <i class="material-icons">{{ li.icon || 'label' }}</i>
-    <b>{{ li.title }} :</b>
-    <span>{{ li.text }}</span>
     <span class="right">
       <i class="material-icons pointer" (click)="Edit(li)">edit</i>
       <i class="material-icons pointer" (click)="Remove(li)">remove_circle_outline</i>
     </span>
+    <b>{{ li.title }} :</b>
+    <span>{{ li.text }}</span>
   </li>
 </ul>
 

@@ -36,9 +36,12 @@ export class SopModalComponent {
   @Output() close = new EventEmitter<boolean>();
   @Output() add = new EventEmitter<any>();
   @Output() newList = new EventEmitter<any>();
+  @Output() newImages = new EventEmitter<any>();
   @Output() newTitle = new EventEmitter<any>();
   @Output() notes = new EventEmitter<any>();
   @Output() file = new EventEmitter<any>();
+
+  titleImage: string;
 
   // Add() { this.add.emit({ title: this.modal.title, fullName: this.user }); }
   Close() { this.close.emit(false); }
@@ -49,9 +52,21 @@ export class SopModalComponent {
     }
   }
   Des(event) { this.modal.edit = event; }
-  File(event) { this.file.emit({file: event, fullName: this.user }); }
+  File(event) { this.file.emit({ file: event, fullName: this.user, dir: `/${this.sop.sub}/${this.sop.title}` }); }
 
   Add() { this.add.emit({ ...this.modal, fullName: this.user }); this.close.emit(false); }
   NewList(event) { this.newList.emit({ list: event, fullName: this.user, sop: this.sop }); }
+  NewImages(event) { this.newImages.emit({ images: event, fullName: this.user, sop: this.sop }); }
   Notes(event) { this.notes.emit({ notes: event, fullName: this.user, sop: this.sop, action: 'Notes' }); }
+  AddImage() {
+    if (this.titleImage) {
+      const image = { title: this.titleImage, image: this.url };
+      const images = this.sop.images;
+      images.push(image);
+      this.newImages.emit({ images, fullName: this.user, sop: this.sop });
+    } else {
+      alert('Please add a TITLE to the image.');
+    }
+  }
+  TitleImage(event) { this.titleImage = event; }
 }

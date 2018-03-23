@@ -16,6 +16,7 @@ declare var Materialize: any;
     <ul >
       <li class="padding right-align"><small><i>Add a note</i></small><i class="material-icons right pointer" (click)="Add()">add</i></li>
       <li class="divider"></li>
+      <li class="padding"></li>
       <li *ngFor="let note of notes" class="limit">
         <i class="material-icons">announcement</i>
         <span class="right">

@@ -67,12 +67,18 @@ export class SopEffects {
         take(1),
         map(url => {
           console.log(action.payload, url);
-          const cat = {
-            title: action.payload.titleNew,
-            updatedBy: action.payload.fullName,
-            image: action.payload.imageNew
-          };
-          this.firestore.update(`sops/${action.payload.edit.idCat}/entities/${action.payload.edit.id}`, cat);
+          let cat;
+           if (action.payload.remove) {
+             this.firestore.delete(`sops/${action.payload.edit.idCat}/entities/${action.payload.edit.id}`);
+             cat = 'removed';
+           } else {
+             cat = {
+              title: action.payload.titleNew,
+              updatedBy: action.payload.fullName,
+              image: action.payload.imageNew
+            };
+            this.firestore.update(`sops/${action.payload.edit.idCat}/entities/${action.payload.edit.id}`, cat);
+          }
           return new fromStore.UpdateSopTIsuccess({...cat, edit: action.payload.edit });
         }),
         catchError(error => of(new fromStore.UpdateSopTIfail(error)))
@@ -109,6 +115,11 @@ export class SopEffects {
             case 'Notes': {
               key = action.payload.action.toLowerCase();
               value = action.payload.notes;
+              break;
+            }
+            case 'Images': {
+              key = action.payload.action.toLowerCase();
+              value = action.payload.images;
               break;
             }
           }

@@ -81,7 +81,31 @@ export class UserFavoritesSuccess implements Action {
   }
 }
 
-// create items
+// create user
+export const CREATE_FB_LOGIN = '[Firebase] Create Login setup';
+export const CREATE_FB_LOGIN_FAIL = '[Firebase] Create Login setup Fail';
+export const CREATE_FB_LOGIN_SUCCESS = '[Firebase] Create Login setup Success';
+
+export class CreateFBLogin implements Action {
+  readonly type = CREATE_FB_LOGIN;
+  constructor(public payload: any) {
+    // console.log(payload);
+  }
+}
+
+export class CreateFBLoginFail implements Action {
+  readonly type = CREATE_FB_LOGIN_FAIL;
+  constructor(public payload: any) {
+    // console.log(payload);
+  }
+}
+
+export class CreateFBLoginSuccess implements Action {
+  readonly type = CREATE_FB_LOGIN_SUCCESS;
+  constructor(public payload: Favorites[]) {
+    // console.log(payload);
+  }
+}
 // update items
 // delete items
 
@@ -95,4 +119,7 @@ export type LoginAction = LoadLogin
 | LoadLoginFbSuccess
 | UserFavorites
 | UserFavoritesFail
-| UserFavoritesSuccess;
+| UserFavoritesSuccess
+| CreateFBLogin
+| CreateFBLoginFail
+| CreateFBLoginSuccess;
