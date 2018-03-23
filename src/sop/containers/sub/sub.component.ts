@@ -85,7 +85,7 @@ export class SubComponent {
   }
 
   Image(event) {
-    event = { ...event, dir: '/main'};
+    event = { ...event, dir: `${event.edit.sub}/${event.edit.title}`};
     this.file = event.file;
     this.store.dispatch(new fromStore.Upload(event));
   }
