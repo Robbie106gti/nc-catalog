@@ -32,7 +32,7 @@ template: `
   <card class="col s4 m3 l2" *ngFor="let card of cards" [card]="card" (edit)="Edit($event)"></card>
 </div>
 
-<add-btn (add)="Add($event)"></add-btn>
+<add-btn (add)="Add($event, cat)"></add-btn>
 </div>
 `,
 })
@@ -68,8 +68,8 @@ export class SubComponent {
     this.add = false;
   }
 
-  Add(event) {
-    this.modal = { title: 'Add a Category', action: '' };
+  Add(event, cat) {
+    this.modal = { title: 'Add a Category', action: '', edit: cat };
     this.add = event;
   }
 
@@ -85,7 +85,8 @@ export class SubComponent {
   }
 
   Image(event) {
-    event = { ...event, dir: `${event.edit.sub}/${event.edit.title}`};
+    console.log(event);
+    event = { ...event, dir: `/${event.edit.title}`};
     this.file = event.file;
     this.store.dispatch(new fromStore.Upload(event));
   }

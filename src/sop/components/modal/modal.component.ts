@@ -42,7 +42,7 @@ export class ModalComponent {
     $('.tooltipped').tooltip();
   });
   }
-  File(event) { this.file.emit({ edit: this.modal.edit, file: event, fullName: this.user }); }
+  File(event) { console.log(this.modal); this.file.emit({ edit: this.modal.edit, file: event, fullName: this.user }); }
   Add() { this.add.emit({ title: this.newCatagory, image: this.url, fullName: this.user }); }
   Edit() { this.edited.emit({ edit: this.modal.edit, fullName: this.user, titleNew: (this.newCatagory ? this.newCatagory : this.modal.edit.title), imageNew: this.url }); }
   Close() { this.close.emit(false); }
