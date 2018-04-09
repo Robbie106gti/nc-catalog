@@ -29,7 +29,7 @@
       <list-card *ngIf="sop.list" [list]="sop.list" [listTitle]="sop.listTitle"></list-card>
       <note *ngIf="sop.notes" [notes]="sop.notes"></note>
     </div>
-    <image-card *ngIf="sop.image" class="col s12 m6" [card]="{title: sop.title, image: sop.image, size: 'medium' }"></image-card>
+    <image-card *ngIf="sop.image" class="col s12 m6" [card]="{title: sop.title, image: sop.image, size: '' }"></image-card>
     <image-card *ngFor="let image of sop.images" class="col s4 m3 l2" [card]="image"></image-card>
     <div class="col s12 m6"></div>
     <menu-btn (menu)="Menu($event, sop)"></menu-btn>

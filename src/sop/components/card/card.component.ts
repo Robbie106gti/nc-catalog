@@ -4,17 +4,15 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 selector: 'card',
 changeDetection: ChangeDetectionStrategy.OnPush,
 template: `
-<div class="card">
   <edit-btn class="tool-item" (edit)="Edit($event)"></edit-btn>
   <a [routerLink]="[card.title]">
-  <div class="card-image">
-      <img [src]="card.image" [alt]="card.title" class="responsive-img">
+  <div class="card-image of-hidden">
+      <img [src]="card.image" [alt]="card.title" class="responsive-img image20 activator">
   </div>
   <div class="card-content">
       <span class="card-title">{{ card.title }}</span>
   </div>
   </a>
-</div>
 `
 })
 export class CardComponent {

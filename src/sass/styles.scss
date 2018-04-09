@@ -124,7 +124,7 @@ body {
     position: absolute;
     right: 0.3rem;
     top: 0.3rem;
-    z-index: 99;
+    z-index: 2;
     cursor: pointer;
   }
 
@@ -166,6 +166,7 @@ body {
       width: 50%;
       display: -ms-grid;
       display: grid;
+      grid-gap: 1em;
       -ms-grid-columns: (minmax(2em, 1fr))[auto-fit];
           grid-template-columns: repeat(auto-fit, minmax(2em, 1fr));
     }
@@ -197,6 +198,11 @@ body {
       margin: auto;
   }
   
+  .card20 {
+      max-height: 20vw;
+      overflow: hidden;
+  }
+  
   .card .card-image img {
     width: auto !important;
   }
@@ -206,8 +212,8 @@ body {
     max-width: 100%;
   }
   
-  .card .card-image {
-    max-height: 15vw !important;
+  .of-hidden {
+    overflow:  hidden !important;
   }
   
   .inactive {

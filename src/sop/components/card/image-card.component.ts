@@ -6,7 +6,7 @@ declare var Materialize: any;
 selector: 'image-card',
 changeDetection: ChangeDetectionStrategy.OnPush,
 template: `
-<div class="card" [ngClass]="card.size || 'small'">
+<div class="card" [ngClass]="card.size || ''">
   <div class="card-image">
     <img [src]="card.image" [alt]="card.title" class="responsive-img materialboxed">
   </div>

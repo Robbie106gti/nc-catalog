@@ -28,8 +28,8 @@ template: `
   </div>
 </div>
 
-<div class="row" *ngIf="(cats$ | async) as cards">
-  <card class="col s4 m3 l2" *ngFor="let card of cards" [card]="card" (edit)="Edit($event)"></card>
+<div class="row grid" *ngIf="(cats$ | async) as cards">
+  <card class="card" *ngFor="let card of cards" [card]="card" (edit)="Edit($event)"></card>
 </div>
 
 <add-btn (add)="Add($event, cat)"></add-btn>
