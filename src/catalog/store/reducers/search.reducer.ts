@@ -2,7 +2,7 @@ import * as fromSearch from '../actions/search.action';
 
 export interface SearchState {
   results: { [id: string]: any };
-  query: { value: string, category: string };
+  query: { value: string; category: string };
   loaded: boolean;
   loading: boolean;
 }
@@ -11,7 +11,7 @@ export const initialState: SearchState = {
   results: {},
   query: { value: null, category: null },
   loaded: false,
-  loading: false,
+  loading: false
 };
 
 export function reducer(
@@ -19,8 +19,8 @@ export function reducer(
   action: fromSearch.SearchAction
 ): SearchState {
   switch (action.type) {
-
     case fromSearch.SEARCH: {
+      // console.log(action);
       const query = action.payload;
       return {
         ...state,
@@ -36,17 +36,22 @@ export function reducer(
       let max: number = 10;
       const results = new Array();
       search.forEach(el => {
-          const str = el.code + el.title + el.content;
-          // tslint:disable-next-line:triple-equals
-          if (max == 0) { return; }
-          if (str.toLowerCase().includes(query.value.toLowerCase())) { results.push(el); max--; }
+        const str = el.code + el.title + el.content;
+        // tslint:disable-next-line:triple-equals
+        if (max == 0) {
+          return;
+        }
+        if (str.toLowerCase().includes(query.value.toLowerCase())) {
+          results.push(el);
+          max--;
+        }
       });
 
       return {
         ...state,
         loading: false,
         loaded: true,
-        results,
+        results
       };
     }
 
@@ -54,7 +59,7 @@ export function reducer(
       return {
         ...state,
         loading: false,
-        loaded: false,
+        loaded: false
       };
     }
   }

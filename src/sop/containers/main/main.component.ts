@@ -14,15 +14,12 @@ import { of } from 'rxjs/observable/of';
 selector: 'main',
 changeDetection: ChangeDetectionStrategy.OnPush,
 template: `
-<modal *ngIf="add === true" [modal]="modal"
-[url]="(url$ | async)" [pct]="(pct$ | async)" [user]="(user$ | async)"
-(close)="Close($event)" (add)="New($event)" (file)="Image($event)" (edited)="Edited($event)"></modal>
-
+<modal *ngIf="add === true" [modal]="modal" [url]="(url$ | async)" [pct]="(pct$ | async)" [user]="(user$ | async)" (close)="Close($event)" (add)="New($event)" (file)="Image($event)" (edited)="Edited($event)"></modal>
 <div class="row grid" *ngIf="(cats$ | async) as cards">
   <card class="card" *ngFor="let card of cards" [card]="card" (edit)="Edit($event)"></card>
 </div>
-
 <add-btn (add)="Add($event)"></add-btn>
+
 `,
 })
 export class MainComponent {

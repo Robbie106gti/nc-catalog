@@ -115,9 +115,6 @@ export class LoginEffects {
           lastName: lname,
           fullName: fname + ' ' + lname,
           username: this.trimit(action.payload.valid.UserName),
-          roles: {
-            reader: true
-          },
           status: 'online',
           address: {
               street: this.trimit(action.payload.valid.DealerAddress1),
@@ -196,9 +193,6 @@ export class LoginEffects {
           email: email,
           fullName: fname + ' ' + lname,
           username: this.trimit(Response['valid'].UserName),
-          roles: {
-            reader: true
-          }
         };
         this.setCookie(obj, 7);
         // this.userCheck(obj);

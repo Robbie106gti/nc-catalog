@@ -1,13 +1,15 @@
 import { Action } from '@ngrx/store';
 
 // load catalog
-export const SEARCH = '[Search] Load setup';
-export const SEARCH_FAIL = '[Search] Load setup Fail';
-export const SEARCH_SUCCESS = '[Search] Load setup Success';
+export const SEARCH = '[Search] Load search';
+export const SEARCH_FAIL = '[Search] Search Fail';
+export const SEARCH_SUCCESS = '[Search] Search Success';
 
 export class Search implements Action {
   readonly type = SEARCH;
-  constructor(public payload: any) {}
+  constructor(public payload: any) {
+    console.log(payload);
+  }
 }
 
 export class SearchFail implements Action {
@@ -17,7 +19,7 @@ export class SearchFail implements Action {
 
 export class SearchSuccess implements Action {
   readonly type = SEARCH_SUCCESS;
-  constructor(public payload: {[id: string]: any}) {}
+  constructor(public payload: { [id: string]: any }) {}
 }
 
 // create items

@@ -8,11 +8,11 @@
         </a>
         <ul class="tabs flow-text tab-demo z-depth-1">
           <li class="tab col">
-            <a class="active" href="#main" (click)="setId('main')" class="btn btn-large">{{ content.title }}</a>
+            <a class="active" (click)="setId('main')" class="btn btn-large">{{ content.title }}</a>
           </li>
           <li class="tab col" *ngFor="let v of content.heights">
-            <a href="#version{{v.id}}" (click)="setId(v.id)" class="btn btn-large">{{ v.title }}
-              <span *ngIf="!v.version">{{ '"' }}</span>
+            <a (click)="setId(v.id)" class="btn btn-large">{{ v.title }}
+              <span *ngIf="!v.version">"</span>
             </a>
           </li>
         </ul>
