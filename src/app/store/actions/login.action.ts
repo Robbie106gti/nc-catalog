@@ -34,7 +34,7 @@ export class LoadLoginFail implements Action {
 export class LoadLoginSuccess implements Action {
   readonly type = LOAD_LOGIN_SUCCESS;
   constructor(public payload: WQUser) {
-    console.log(payload);
+    // console.log(payload);
   }
 }
 

@@ -65,7 +65,7 @@ export class LoginEffects {
     switchMap((login: Lg) =>
       this.http.post(this.endpoint, login.payload).pipe(
         map((user: WQUser) => {
-          console.log(user);
+          // console.log(user);
           if (user.valid.Error) {
             return new loginActions.LoadLoginFail(user.valid.Error);
           } else {
@@ -88,13 +88,13 @@ export class LoginEffects {
   @Effect()
   loadLoginFb$ = this.actions$.ofType(loginActions.LOAD_LOGIN_SUCCESS).pipe(
     switchMap((action: Ap) => {
-      console.log(action);
+      // console.log(action);
       return this.firestoreService
         .exists(`users/${action.payload.valid.Email}`)
         .pipe(
           skipWhile(snap => !snap.payload.exists),
           switchMap(() => {
-            console.log('Hello');
+            // console.log('Hello');
             return this.firestoreService
               .docWithRefs$(`users/${action.payload.valid.Email}`)
               .pipe(

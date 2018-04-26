@@ -7,14 +7,16 @@ export const getUserState = createSelector(
   (user: fromLogin.UserState) => user
 );
 
-export const getUserData = createSelector(
-  getUserState,
-  fromLogin.getUserData
-);
+export const getUserData = createSelector(getUserState, fromLogin.getUserData);
 
 export const getUserLoaded = createSelector(
   getUserState,
   fromLogin.getUserLoaded
+);
+
+export const getUserFirestore = createSelector(
+  getUserState,
+  fromLogin.getUserStore
 );
 
 export const getUserLoading = createSelector(
@@ -22,22 +24,13 @@ export const getUserLoading = createSelector(
   fromLogin.getUserLoading
 );
 
-export const getUserFavs = createSelector(
-  getUserState,
-  fromLogin.getUserFav
-);
+export const getUserFavs = createSelector(getUserState, fromLogin.getUserFav);
 
 export const getUserNotes = createSelector(
   getUserState,
   fromLogin.getUserNotes
 );
 
-export const getUserFails = createSelector(
-  getUserState,
-  user => user.fails
-);
+export const getUserFails = createSelector(getUserState, user => user.fails);
 
-export const getUserStatus = createSelector(
-  getUserState,
-  user => user.status
-);
+export const getUserStatus = createSelector(getUserState, user => user.status);

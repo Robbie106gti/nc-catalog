@@ -36,7 +36,7 @@ export function reducer(
     }
 
     case fromLogin.LOAD_LOGIN_SUCCESS: {
-      console.log(action.payload);
+      // console.log(action.payload);
       const data = action.payload.user;
       const roles = {
         admin: false,
@@ -122,5 +122,6 @@ export function reducer(
 export const getUserData = (state: UserState) => state.data;
 export const getUserLoading = (state: UserState) => state.loading;
 export const getUserLoaded = (state: UserState) => state.loaded;
+export const getUserStore = (state: UserState) => state.firestore;
 export const getUserFav = (state: UserState) => state.favorites;
 export const getUserNotes = (state: UserState) => state.notes;
