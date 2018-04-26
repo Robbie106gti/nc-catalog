@@ -6,6 +6,7 @@ export interface UserState {
   data: User;
   loaded: boolean;
   loading: boolean;
+  firestore: boolean;
   favorites: Favorites[];
   notes: Notes[];
   fails: number;
@@ -15,6 +16,7 @@ export interface UserState {
 export const initialState: UserState = {
   data: null,
   loaded: false,
+  firestore: false,
   loading: true,
   favorites: new Array(),
   notes: new Array(),
@@ -26,7 +28,6 @@ export function reducer(
   action: fromLogin.LoginAction
 ): UserState {
   switch (action.type) {
-
     case fromLogin.LOAD_LOGIN: {
       return {
         ...state,
@@ -35,15 +36,23 @@ export function reducer(
     }
 
     case fromLogin.LOAD_LOGIN_SUCCESS: {
-      const wqUser = action.payload;
-      const data: User = {
-        wqData: wqUser,
-        email: wqUser.valid.Email
+      console.log(action.payload);
+      const data = action.payload.user;
+      const roles = {
+        admin: false,
+        reader: true,
+        dealer: true,
+        sop: false,
+        nickels: false,
+        editor: false
       };
+      data['roles'] = roles;
 
       return {
         ...state,
-        data,
+        loading: true,
+        loaded: true,
+        data
       };
     }
 
@@ -60,13 +69,13 @@ export function reducer(
     case fromLogin.LOAD_LOGIN_FB: {
       return {
         ...state,
-        loading: true,
+        loading: true
       };
     }
 
     case fromLogin.LOAD_LOGIN_FB_CK: {
       return {
-        ...state,
+        ...state
       };
     }
 
@@ -77,7 +86,8 @@ export function reducer(
         ...state,
         loading: false,
         loaded: true,
-        data: user,
+        firestore: true,
+        data: user
       };
     }
 
@@ -85,7 +95,7 @@ export function reducer(
       return {
         ...state,
         loading: false,
-        loaded: false,
+        loaded: false
       };
     }
 

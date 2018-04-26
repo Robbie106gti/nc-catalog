@@ -20,7 +20,7 @@ export const LOAD_FAVORITES_SUCCESS = '[User] Get Favorites Success';
 export class LoadLogin implements Action {
   readonly type = LOAD_LOGIN;
   constructor(public payload: Login) {
-    // console.log(payload);
+    console.log(payload);
   }
 }
 
@@ -34,7 +34,7 @@ export class LoadLoginFail implements Action {
 export class LoadLoginSuccess implements Action {
   readonly type = LOAD_LOGIN_SUCCESS;
   constructor(public payload: WQUser) {
-    // console.log(payload);
+    console.log(payload);
   }
 }
 
@@ -110,16 +110,17 @@ export class CreateFBLoginSuccess implements Action {
 // delete items
 
 // action types
-export type LoginAction = LoadLogin
-| LoadLoginFail
-| LoadLoginSuccess
-| LoadLoginFb
-| LoadLoginFbCk
-| LoadLoginFbFail
-| LoadLoginFbSuccess
-| UserFavorites
-| UserFavoritesFail
-| UserFavoritesSuccess
-| CreateFBLogin
-| CreateFBLoginFail
-| CreateFBLoginSuccess;
+export type LoginAction =
+  | LoadLogin
+  | LoadLoginFail
+  | LoadLoginSuccess
+  | LoadLoginFb
+  | LoadLoginFbCk
+  | LoadLoginFbFail
+  | LoadLoginFbSuccess
+  | UserFavorites
+  | UserFavoritesFail
+  | UserFavoritesSuccess
+  | CreateFBLogin
+  | CreateFBLoginFail
+  | CreateFBLoginSuccess;

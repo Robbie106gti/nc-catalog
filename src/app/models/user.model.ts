@@ -20,6 +20,9 @@ export interface Roles {
   nickels?: boolean;
   reader?: boolean;
   writer?: boolean;
+  dealer?: boolean;
+  sop?: boolean;
+  editor?: boolean;
 }
 
 export interface Address {
@@ -38,6 +41,7 @@ export interface LastloginWQ {
 export interface WQUser {
   token: string;
   valid: Valid;
+  user: User;
 }
 
 export interface Valid {
