@@ -12,6 +12,10 @@ export const LOAD_LOGIN_FB_CK = '[Login] CK Login Firebase setup';
 export const LOAD_LOGIN_FB_FAIL = '[Login] Login Firebase setup Fail';
 export const LOAD_LOGIN_FB_SUCCESS = '[Login] Login Firebase setup Success';
 
+export const LOAD_LOGIN_HB = '[Login] HB Login Header Bearer setup';
+export const LOAD_LOGIN_HB_SUCCESS =
+  '[Login] HB Login Header Bearer setup Success';
+
 // load favorites
 export const LOAD_FAVORITES = '[User] Get Favorites';
 export const LOAD_FAVORITES_FAIL = '[User] Get Favorites Fail';
@@ -20,7 +24,7 @@ export const LOAD_FAVORITES_SUCCESS = '[User] Get Favorites Success';
 export class LoadLogin implements Action {
   readonly type = LOAD_LOGIN;
   constructor(public payload: Login) {
-    console.log(payload);
+    // console.log(payload);
   }
 }
 
@@ -47,6 +51,9 @@ export class LoadLoginFb implements Action {
 
 export class LoadLoginFbCk implements Action {
   readonly type = LOAD_LOGIN_FB_CK;
+  constructor(public payload: any) {
+    // console.log(payload);
+  }
 }
 
 export class LoadLoginFbFail implements Action {
@@ -59,6 +66,17 @@ export class LoadLoginFbFail implements Action {
 export class LoadLoginFbSuccess implements Action {
   readonly type = LOAD_LOGIN_FB_SUCCESS;
   constructor(public payload: User) {
+    // console.log(payload);
+  }
+}
+
+export class LoadLoginHeader implements Action {
+  readonly type = LOAD_LOGIN_HB;
+}
+
+export class LoadLoginHeaderSuccess implements Action {
+  readonly type = LOAD_LOGIN_HB_SUCCESS;
+  constructor(public payload: any) {
     // console.log(payload);
   }
 }
@@ -123,4 +141,6 @@ export type LoginAction =
   | UserFavoritesSuccess
   | CreateFBLogin
   | CreateFBLoginFail
-  | CreateFBLoginSuccess;
+  | CreateFBLoginSuccess
+  | LoadLoginHeader
+  | LoadLoginHeaderSuccess;

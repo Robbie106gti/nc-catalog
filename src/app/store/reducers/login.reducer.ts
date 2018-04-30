@@ -79,6 +79,12 @@ export function reducer(
       };
     }
 
+    case fromLogin.LOAD_LOGIN_HB: {
+      return {
+        ...state
+      };
+    }
+
     case fromLogin.LOAD_LOGIN_FB_SUCCESS: {
       const user = action.payload;
 

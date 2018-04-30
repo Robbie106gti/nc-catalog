@@ -22,6 +22,7 @@ import * as fromServices from '../../services';
 import { User, WQUser, Favorites } from '../../models/user.model';
 import { Login } from '../../models/login.model';
 import { Observable } from 'rxjs/Observable';
+import { base64Encode, base64Decode } from '@firebase/util';
 
 export interface Ap {
   type: string;
@@ -70,7 +71,11 @@ export class LoginEffects {
             return new loginActions.LoadLoginFail(user.valid.Error);
           } else {
             this.setCookie(
-              { email: user.valid.Email, class: user.valid.DealerID },
+              {
+                email: user.valid.Email,
+                class: user.valid.DealerID,
+                username: user.valid.UserName
+              },
               30
             );
             this.store.dispatch({
@@ -103,29 +108,59 @@ export class LoginEffects {
                 )
               );
           })
-          // return this.firestoreService
-          //  .docWithRefs$(`users/${action.payload.valid.Email}`)
-          //  .pipe(
-          //    map((userfb: User) => new loginActions.LoadLoginFbSuccess(userfb))
-          //  );
         );
     })
   );
 
   @Effect()
-  loadLoginFbCookie$ = this.actions$.ofType(loginActions.LOAD_LOGIN_FB_CK).pipe(
+  LoadLoginFbCk$ = this.actions$.ofType(loginActions.LOAD_LOGIN_FB_CK).pipe(
+    switchMap((cookie: Ap) => {
+      // console.log(cookie);
+      if (cookie !== null) {
+        // console.log(cookie.payload.email);
+        return this.firestoreService
+          .docWithRefs$(`users/${cookie.payload.email}`)
+          .pipe(
+            map((userfb: User) => new loginActions.LoadLoginFbSuccess(userfb)),
+            catchError(err =>
+              of(
+                new loginActions.LoadLoginFail({
+                  ...err,
+                  wqData: cookie.payload
+                })
+              )
+            )
+          );
+      } else {
+        console.log('I have gotten lost');
+      }
+    }),
+    catchError(err =>
+      of(new loginActions.LoadLoginFail({ ...err, cookie: 'No Cookie' }))
+    )
+  );
+
+  @Effect()
+  setHeaderBearer$ = this.actions$.ofType(loginActions.LOAD_LOGIN_HB).pipe(
     map(() => this.parseCookie()),
     switchMap(res => {
       // console.log(res);
       if (res['value'] !== null) {
-        return this.firestoreService
-          .docWithRefs$(`users/${res['value'].email}`)
-          .pipe(
-            map((userfb: User) => new loginActions.LoadLoginFbSuccess(userfb)),
-            catchError(err =>
-              of(new loginActions.LoadLoginFail({ ...err, wqData: res }))
-            )
-          );
+        // console.log(action);
+        const cookie = res['value'];
+        return this.http.post(this.endpoint, { ...cookie, cookie: true }).pipe(
+          map(success => {
+            console.log(`Set header: `, success);
+            this.store.dispatch({
+              type: fromStore.LOAD_LOGIN_HB_SUCCESS,
+              payload: success
+            });
+            this.firestoreService.refreshCustomClaims(success);
+            // this.firestoreService.checkCustomClaims();
+            return new loginActions.LoadLoginFbCk(cookie);
+          }),
+          catchError(err => of(console.log(`Header error ${err}`, err)))
+        );
       }
     }),
     catchError(err =>
@@ -139,6 +174,7 @@ export class LoginEffects {
     .pipe(
       switchMap((action: Ap) => {
         // console.log(action);
+        // this.firestoreService.checkCustomClaims();
         return this.firestoreService
           .col$(`users/${action.payload.email}/favorites`)
           .pipe(
@@ -160,9 +196,11 @@ export class LoginEffects {
     const expires = 'expires=' + d.toUTCString();
     const cookie = JSON.stringify({
       class: data.class,
-      email: data.email
+      email: data.email,
+      username: data.username
     });
-    document.cookie = 'nc-catalog=' + cookie + ';' + expires + ';path=/';
+    document.cookie =
+      'nc-catalog=' + base64Encode(cookie) + ';' + expires + ';path=/';
   }
 
   getCookie(cname) {
@@ -186,7 +224,8 @@ export class LoginEffects {
     if (ck === '') {
       return of((cookie = null));
     } else {
-      cookie = JSON.parse(ck);
+      cookie = JSON.parse(base64Decode(ck));
+      // console.log(cookie);
       return of(cookie);
     }
   }

@@ -34,3 +34,5 @@ export const getUserNotes = createSelector(
 export const getUserFails = createSelector(getUserState, user => user.fails);
 
 export const getUserStatus = createSelector(getUserState, user => user.status);
+
+export const getUserRoles = createSelector(getUserData, user => user.roles);

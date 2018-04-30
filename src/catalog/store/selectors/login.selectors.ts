@@ -4,19 +4,15 @@ import * as fromRoot from '../../../app/store';
 
 import { User } from '../../models/user.model';
 
-export const getUserState = createSelector(
-  fromRoot.getUser,
-  (user) => user
-);
+export const getUserState = createSelector(fromRoot.getUser, user => user);
 
-export const getUserData = createSelector(
-  getUserState,
-  user => user.data
-);
+export const getUserData = createSelector(getUserState, user => user.data);
 
-export const getUserLoaded = createSelector(
+export const getUserLoaded = createSelector(getUserState, user => user.loaded);
+
+export const getUserFirestore = createSelector(
   getUserState,
-  user => user.loading
+  user => user.firestore
 );
 
 export const getUserLoading = createSelector(
@@ -24,22 +20,10 @@ export const getUserLoading = createSelector(
   user => user.loading
 );
 
-export const getUserFavs = createSelector(
-  getUserState,
-  user => user.favorites
-);
+export const getUserFavs = createSelector(getUserState, user => user.favorites);
 
-export const getUserNotes = createSelector(
-  getUserState,
-  user => user.notes
-);
+export const getUserNotes = createSelector(getUserState, user => user.notes);
 
-export const getUserFails = createSelector(
-  getUserState,
-  user => user.fails
-);
+export const getUserFails = createSelector(getUserState, user => user.fails);
 
-export const getUserStatus = createSelector(
-  getUserState,
-  user => user.status
-);
+export const getUserStatus = createSelector(getUserState, user => user.status);

@@ -25,9 +25,15 @@ export const getSelectedCategory = createSelector(
   }
 );
 
-export const getCatalogBase = createSelector(getCatalogEntities, entities => {
-  return Object.keys(entities).map(id => entities[id]);
-});
+export const getCatalogBase = createSelector(
+  getCatalogEntities,
+  fromRoot.getUserRoles,
+  (entities, roles) => {
+    let list = Object.keys(entities).map(id => entities[id]);
+    list = roles.dealer ? list.filter(li => li['active']) : list;
+    return list;
+  }
+);
 
 export const getCatalogLoaded = createSelector(
   getCatalogState,

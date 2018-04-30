@@ -1,9 +1,15 @@
-import { Component, OnInit, ChangeDetectionStrategy, SimpleChanges, OnChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  SimpleChanges,
+  OnChanges
+} from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import * as fromStore from '../store';
-import { Login } from '../models/login.model';
 import { Observable } from 'rxjs/Observable';
+import { Login } from '../models/login.model';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +33,6 @@ import { Observable } from 'rxjs/Observable';
   `,
   styleUrls: ['../app.styles.scss']
 })
-
 export class AppComponent implements OnInit, OnChanges {
   ib: HTMLElement;
   loaded$: Observable<boolean>;
@@ -41,10 +46,11 @@ export class AppComponent implements OnInit, OnChanges {
     document.getElementById('splash').style.display = 'none';
     this.ib = document.getElementById('body');
     this.router$ = this.store.select(fromStore.getRouterState);
-    this.store.dispatch(new fromStore.LoadLoginFbCk());
+    // this.store.dispatch(new fromStore.LoadLoginHeader());
   }
 
-  ngOnInit () {
+  ngOnInit() {
+    this.store.dispatch(new fromStore.LoadLoginHeader());
     this.loaded$ = this.store.select(fromStore.getUserLoaded);
     this.loading$ = this.store.select(fromStore.getUserLoading);
     this.status$ = this.store.select(fromStore.getUserStatus);
@@ -54,7 +60,7 @@ export class AppComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['loaded$']) {
-        this.matNquery(this.loaded$);
+      this.matNquery(this.loaded$);
     }
   }
 
@@ -70,5 +76,4 @@ export class AppComponent implements OnInit, OnChanges {
       this.ib.classList.add('stop-scrolling');
     }
   }
-
- }
+}

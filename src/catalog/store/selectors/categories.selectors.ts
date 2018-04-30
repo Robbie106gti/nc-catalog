@@ -12,17 +12,17 @@ export const getCategoriesState = createSelector(
 );
 
 export const getCategoriesLineState = createSelector(
-    getCategoriesState,
-    fromRoot.getRouterState,
-    (categories, router) => {
-        // console.log(categories, router);
-        return categories[router.state.params.Cat];
-    }
+  getCategoriesState,
+  fromRoot.getRouterState,
+  (categories, router) => {
+    // console.log(categories, router);
+    return categories[router.state.params.Cat];
+  }
 );
 
 export const getCategoriesEntities = createSelector(
-    getCategoriesLineState,
-    fromCategories.getCategoriesEntities,
+  getCategoriesLineState,
+  fromCategories.getCategoriesEntities
 );
 
 export const getSelectedCategoryLine = createSelector(
@@ -36,18 +36,22 @@ export const getSelectedCategoryLine = createSelector(
 
 export const getCategories = createSelector(
   getCategoriesEntities,
-  (entities): Categories[] => {
-  return Object.keys(entities).map(id => entities[id]);
-});
+  fromRoot.getUserRoles,
+  (entities, roles): Categories[] => {
+    let list = Object.keys(entities).map(id => entities[id]);
+    list = roles.dealer ? list.filter(li => li['active']) : list;
+    return list;
+  }
+);
 
 export const getCategoriesLoaded = createSelector(
-    getCategoriesLineState,
-    fromCategories.getCategoriesLoaded,
+  getCategoriesLineState,
+  fromCategories.getCategoriesLoaded
 );
 
 export const getCategoriesLoading = createSelector(
-    getCategoriesLineState,
-    fromCategories.getCategoriesLoading,
+  getCategoriesLineState,
+  fromCategories.getCategoriesLoading
 );
 
 export const getSelectedCategoryItem = createSelector(
@@ -56,7 +60,9 @@ export const getSelectedCategoryItem = createSelector(
   (entities, router) => {
     let entity;
     entities.map(en => {
-      if (en.title === router.state.params.Item) { return entity = en; }
+      if (en.title === router.state.params.Item) {
+        return (entity = en);
+      }
     });
     return entity;
   }

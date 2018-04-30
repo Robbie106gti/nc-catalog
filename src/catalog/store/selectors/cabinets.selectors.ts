@@ -12,17 +12,17 @@ export const getCabinetsState = createSelector(
 );
 
 export const getCabinetsLineState = createSelector(
-    getCabinetsState,
-    fromRoot.getRouterState,
-    (cabinets, router) => {
-        // console.log(cabinets, router);
-        return cabinets[router.state.params.Cat];
-    }
+  getCabinetsState,
+  fromRoot.getRouterState,
+  (cabinets, router) => {
+    // console.log(cabinets, router);
+    return cabinets[router.state.params.Cat];
+  }
 );
 
 export const getCabinetsEntities = createSelector(
-    getCabinetsLineState,
-    fromCabinets.getCabinetsEntities,
+  getCabinetsLineState,
+  fromCabinets.getCabinetsEntities
 );
 
 export const getSelectedCabinetLine = createSelector(
@@ -36,30 +36,34 @@ export const getSelectedCabinetLine = createSelector(
 
 export const getCabinets = createSelector(
   getCabinetsEntities,
-  (entities): Cabinets[] => {
-  return Object.keys(entities).map(id => entities[id]);
-});
+  fromRoot.getUserRoles,
+  (entities, roles): Cabinets[] => {
+    let list = Object.keys(entities).map(id => entities[id]);
+    list = roles.dealer ? list.filter(li => li['active']) : list;
+    return list;
+  }
+);
 
 export const getCabinetsLoaded = createSelector(
-    getCabinetsLineState,
-    fromCabinets.getCabinetsLoaded,
+  getCabinetsLineState,
+  fromCabinets.getCabinetsLoaded
 );
 
 export const getCabinetsLoading = createSelector(
-    getCabinetsLineState,
-    fromCabinets.getCabinetsLoading,
+  getCabinetsLineState,
+  fromCabinets.getCabinetsLoading
 );
 
 export const getSelectedRouteCat = createSelector(
   fromRoot.getRouterState,
-  (router) => {
+  router => {
     return router.state.params.Cat;
   }
 );
 
 export const getSelectedRouteItem = createSelector(
   fromRoot.getRouterState,
-  (router) => {
+  router => {
     return router.state.params.Item;
   }
 );
@@ -70,52 +74,39 @@ export const getSelectedCabinetItem = createSelector(
   (entities, router) => {
     let entity;
     entities.map(en => {
-      if (en.title === router.state.params.Item) { return entity = en; }
+      if (en.title === router.state.params.Item) {
+        return (entity = en);
+      }
     });
     return entity;
   }
 );
 
-export const getToEditCabinet = createSelector(
-  getCabinetsState,
-  (cabinets) => {
-    return cabinets['To Edit'];
-  }
-);
+export const getToEditCabinet = createSelector(getCabinetsState, cabinets => {
+  return cabinets['To Edit'];
+});
 
-export const getUpload = createSelector(
-  getCabinetsState,
-  (cabinets) => {
-    return cabinets['Upload'];
-  }
-);
+export const getUpload = createSelector(getCabinetsState, cabinets => {
+  return cabinets['Upload'];
+});
 
-export const getUploadStatus = createSelector(
-  getUpload,
-  (upload) => {
-    return upload.status;
-  }
-);
+export const getUploadStatus = createSelector(getUpload, upload => {
+  return upload.status;
+});
 
-export const getUploadPct = createSelector(
-  getUpload,
-  (upload) => {
-    const pct = (upload.status.bytesTransferred / (upload.status.totalBytes / 100)).toFixed(0);
-    return pct;
-  }
-);
+export const getUploadPct = createSelector(getUpload, upload => {
+  const pct = (
+    upload.status.bytesTransferred /
+    (upload.status.totalBytes / 100)
+  ).toFixed(0);
+  return pct;
+});
 
-export const getUploadUrl = createSelector(
-  getUpload,
-  (upload) => {
-    const url = upload.status.downloadURL;
-    return url;
-  }
-);
+export const getUploadUrl = createSelector(getUpload, upload => {
+  const url = upload.status.downloadURL;
+  return url;
+});
 
-export const getDownloadUrl = createSelector(
-  getCabinetsState,
-  (cabinets) => {
-    return cabinets['Download'];
-  }
-);
+export const getDownloadUrl = createSelector(getCabinetsState, cabinets => {
+  return cabinets['Download'];
+});

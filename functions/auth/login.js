@@ -30,8 +30,14 @@ const basicAuthRequest = require('request');
 //   res.send("Hello from Firebase!");
 //  });
 
+// Sources
+// https://firebase.google.com/docs/auth/admin/create-custom-tokens
+// https://firebase.google.com/docs/auth/admin/custom-claims
+// https://angularfirebase.com/lessons/firestore-security-rules-guide/
+
 // Simple clean up for user
 const cleanUpUser = require('./cleanUpUser');
+const trimit = require('../msc/trimit');
 
 exports.login = functions.https.onRequest((req, res) => {
   const handleError = (username, error) => {
@@ -62,27 +68,55 @@ exports.login = functions.https.onRequest((req, res) => {
     return res.sendStatus(status);
   };
 
-  let username = '';
   try {
     cors(req, res, () => {
+      const username = req.body.username;
       // Authentication requests are POSTed, other requests are forbidden
       if (req.method !== 'POST') {
         return handleResponse(username, 403);
       }
-      username = req.body.username;
-      if (!username) {
-        return handleResponse(username, 400);
-      }
+
+      console.log(req.body);
+      const email = req.body.email ? trimit(req.body.email) : 'empty';
+      const uid = email;
+      const cookie = req.body.cookie ? true : false;
       const password = req.body.password;
+
+      if (cookie === true) {
+        console.log('////// new request below //////' + Date.now());
+        const msg = 'cookies received, me hungry';
+        const customClaims = {
+          username,
+          email
+        };
+
+        return admin
+          .auth()
+          .createCustomToken(uid)
+          .then(function(customToken, customClaims) {
+            // Send token back to client
+            // Update real-time database to notify client to force refresh.
+            const metadataRef = admin.database().ref('metadata/' + username);
+            return handleResponse(username, 200, customToken);
+            // return res.sendStatus(200).json(customClaims);
+          })
+          .catch(function(error) {
+            console.log('Error creating custom token:', error);
+          });
+      }
+      console.log('past cookie');
+      if (!username) {
+        return handleResponse(username, 400, 'line 101');
+      }
       if (!password) {
-        return handleResponse(username, 400);
+        return handleResponse(username, 400, 'line 104');
       }
 
       // TODO(DEVELOPER): In production you'll need to update the `authenticate` function so that it authenticates with your own credentials system.
       authenticate(username, password)
         .then(valid => {
           if (!valid) {
-            return handleResponse(username, 401); // Invalid username/password
+            return handleResponse(username, 401, 'line 111'); // Invalid username/password
           }
           const email = valid.Email ? valid.Email : username;
           const customClaims = {
@@ -90,7 +124,7 @@ exports.login = functions.https.onRequest((req, res) => {
             email
           };
           // Update real-time database to notify client to force refresh.
-          const metadataRef = admin.database().ref('metadata/' + username);
+          // const metadataRef = admin.database().ref('metadata/' + username);
           // console.log(email, customClaims, valid);
           let user = {};
           if (valid.Email) {
@@ -111,11 +145,11 @@ exports.login = functions.https.onRequest((req, res) => {
             });
         })
         .catch(error => {
-          return handleError(username, error);
+          return handleError(username, error, 'line 140');
         });
     });
   } catch (error) {
-    return handleError(username, error);
+    return handleError(username, error, 'line 144');
   }
 });
 

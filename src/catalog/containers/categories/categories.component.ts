@@ -12,14 +12,14 @@ import * as fromServices from '../../services';
   selector: 'categories',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="section no-pad-bot" id="index-banner">
+    <div class="section no-pad-bot" id="index-banner" *ngIf="(user$ | async) as user">
       <div class="row grid" id="catalog">
         <div *ngIf="!((categories$ | async)?.length)">
           No catagories, add one to get started.
         </div>
         <category-item
           *ngFor="let category of (categories$ | async)"
-          [category]="category" [user]="(user$ | async)" [userFavs]="(userFavs$ | async)"
+          [category]="category" [user]="user" [userFavs]="(userFavs$ | async)"
           class="card"
           (add)="BookmarkIt($event)"
           (remove)="UnbookmarkIt($event)"
@@ -28,7 +28,7 @@ import * as fromServices from '../../services';
         </category-item>
       </div>
     </div>
-  `,
+  `
 })
 export class CategoriesComponent implements OnInit {
   categories$: Observable<Catalog[]>;
@@ -36,7 +36,10 @@ export class CategoriesComponent implements OnInit {
   userFavs$: Observable<Favorites[]>;
   userNotes$: Observable<Notes[]>;
 
-  constructor(private store: Store<fromStore.ProductsState>, private firestore: fromServices.FirestoreService) {}
+  constructor(
+    private store: Store<fromStore.ProductsState>,
+    private firestore: fromServices.FirestoreService
+  ) {}
 
   ngOnInit() {
     this.categories$ = this.store.select(fromStore.getCatalogBase);
@@ -45,10 +48,27 @@ export class CategoriesComponent implements OnInit {
     this.userNotes$ = this.store.select(fromStore.getUserNotes);
   }
 
-  BookmarkIt(event)   {
-    this.firestore.upsert(`users/${event.user.email}/favorites/${event.cat.id}`, { name: event.cat.title, id: event.cat.id });
+  BookmarkIt(event) {
+    this.firestore.upsert(
+      `users/${event.user.email}/favorites/${event.cat.id}`,
+      { name: event.cat.title, id: event.cat.id }
+    );
   }
-  UnbookmarkIt(event) { this.firestore.delete(`users/${event.user.email}/favorites/${event.cat.id}`); }
-  Active(event)       { this.firestore.update(`categories/${event.cat.id}`, { active: true, updatedBy: event.user.fullName }); }
-  Unactive(event)     { this.firestore.update(`categories/${event.cat.id}`, { active: false, updatedBy: event.user.fullName }); }
+  UnbookmarkIt(event) {
+    this.firestore.delete(
+      `users/${event.user.email}/favorites/${event.cat.id}`
+    );
+  }
+  Active(event) {
+    this.firestore.update(`categories/${event.cat.id}`, {
+      active: true,
+      updatedBy: event.user.fullName
+    });
+  }
+  Unactive(event) {
+    this.firestore.update(`categories/${event.cat.id}`, {
+      active: false,
+      updatedBy: event.user.fullName
+    });
+  }
 }
