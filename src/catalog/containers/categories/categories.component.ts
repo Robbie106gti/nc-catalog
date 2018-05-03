@@ -8,7 +8,6 @@ import { User, Favorites, Notes } from '../../models/user.model';
 import * as fromServices from '../../services';
 
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'categories',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
@@ -36,28 +35,23 @@ export class CategoriesComponent implements OnInit {
   userFavs$: Observable<Favorites[]>;
   userNotes$: Observable<Notes[]>;
 
-  constructor(
-    private store: Store<fromStore.ProductsState>,
-    private firestore: fromServices.FirestoreService
-  ) {}
+  constructor(private store: Store<fromStore.ProductsState>, private firestore: fromServices.FirestoreService) {}
 
   ngOnInit() {
-    this.categories$ = this.store.select(fromStore.getCatalogBase);
+    this.categories$ = this.store.select(fromStore.getCatalogBase).take(1);
     this.user$ = this.store.select(fromStore.getUserData);
     this.userFavs$ = this.store.select(fromStore.getUserFavs);
     this.userNotes$ = this.store.select(fromStore.getUserNotes);
   }
 
   BookmarkIt(event) {
-    this.firestore.upsert(
-      `users/${event.user.email}/favorites/${event.cat.id}`,
-      { name: event.cat.title, id: event.cat.id }
-    );
+    this.firestore.upsert(`users/${event.user.email}/favorites/${event.cat.id}`, {
+      name: event.cat.title,
+      id: event.cat.id
+    });
   }
   UnbookmarkIt(event) {
-    this.firestore.delete(
-      `users/${event.user.email}/favorites/${event.cat.id}`
-    );
+    this.firestore.delete(`users/${event.user.email}/favorites/${event.cat.id}`);
   }
   Active(event) {
     this.firestore.update(`categories/${event.cat.id}`, {

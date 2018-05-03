@@ -1,18 +1,11 @@
-import {
-    Component,
-    Input,
-    Output,
-    EventEmitter,
-    ChangeDetectionStrategy,
-  } from '@angular/core';
-  declare var $: any;
-  declare var Materialize: any;
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+declare var $: any;
+declare var Materialize: any;
 
-  @Component({
-    // tslint:disable-next-line:component-selector
-    selector: 'gen-info',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+@Component({
+  selector: 'gen-info',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <div class="col m12" *ngFor="let att of content.attached">
         <div class="card-panel grey lighten-3">
             <span class="card-title">
@@ -33,20 +26,22 @@ import {
         </div>
     </div>
     `,
-    styles: [`
+  styles: [
+    `
     .cards-2 {
       display: -ms-grid;
       display: grid;
       -ms--ms-grid-columns: 65% 35%;
         grid-template-columns: 65% 35%;
     }
-    `]
-  })
-  export class GenInfoComponent {
-    @Input() content: any;
-    constructor() {
-        $(document).ready(function(){
-            $('.materialboxed').materialbox();
-          });
-    }
+    `
+  ]
+})
+export class GenInfoComponent {
+  @Input() content: any;
+  constructor() {
+    $(document).ready(function() {
+      $('.materialboxed').materialbox();
+    });
   }
+}

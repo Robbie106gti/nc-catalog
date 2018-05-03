@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-home',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <div class="grid" *ngIf="(roles$ | async) as roles">
     <div class="card blue-grey darken-1" *ngIf="roles.reader">

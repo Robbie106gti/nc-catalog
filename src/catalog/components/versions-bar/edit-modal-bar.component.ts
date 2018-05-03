@@ -1,19 +1,12 @@
-import {
-    Component,
-    Input,
-    Output,
-    EventEmitter,
-    ChangeDetectionStrategy,
-  } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-  declare var $: any;
-  declare var Materialize: any;
+declare var $: any;
+declare var Materialize: any;
 
-  @Component({
-    // tslint:disable-next-line:component-selector
-    selector: 'edit-modal-bar',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+@Component({
+  selector: 'edit-modal-bar',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <div id="modal1" class="modal bottom-sheet" >
         <form *ngIf="edit">
             <div class="modal-content row">
@@ -99,53 +92,52 @@ import { Observable } from 'rxjs/Observable';
     </div>
 
     <ng-template #inactive><input type="checkbox"></ng-template>
-    `,
-  })
-  export class EditModalBarComponent {
-    @Input() edit: any;
-    @Input() user: any;
+    `
+})
+export class EditModalBarComponent {
+  @Input() edit: any;
+  @Input() user: any;
 
-    constructor () {
-        $(document).ready(function(){
-          // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-          $('.modal').modal();
-        });
-        console.log(this.edit, this.user);
-        // this.Edit(this.edit);
-    }
-
-    Edit() {
-        if (this.edit.user.roles.admin) {
-            $('#modal1').modal('open');
-        }
-        $(document).ready(function(){
-            $('input.autocompleteSpec').autocomplete({
-                data: {
-                  'Apple': null,
-                  'Microsoft': null,
-                  'Google': 'https://placehold.it/250x250'
-                },
-                limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-                onAutocomplete: function(val) {
-                  // Callback function when value is autcompleted.
-                  console.log(val);
-                },
-                minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-              });
-              $('input.autocompleteNote').autocomplete({
-                data: {
-                  'Apple': null,
-                  'Microsoft': null,
-                  'Google': 'https://placehold.it/250x250'
-                },
-                limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-                onAutocomplete: function(val) {
-                  // Callback function when value is autcompleted.
-                  console.log(val);
-                },
-                minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-              });
-        });
-    }
-
+  constructor() {
+    $(document).ready(function() {
+      // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+      $('.modal').modal();
+    });
+    console.log(this.edit, this.user);
+    // this.Edit(this.edit);
   }
+
+  Edit() {
+    if (this.edit.user.roles.admin) {
+      $('#modal1').modal('open');
+    }
+    $(document).ready(function() {
+      $('input.autocompleteSpec').autocomplete({
+        data: {
+          Apple: null,
+          Microsoft: null,
+          Google: 'https://placehold.it/250x250'
+        },
+        limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+        onAutocomplete: function(val) {
+          // Callback function when value is autcompleted.
+          console.log(val);
+        },
+        minLength: 1 // The minimum length of the input for the autocomplete to start. Default: 1.
+      });
+      $('input.autocompleteNote').autocomplete({
+        data: {
+          Apple: null,
+          Microsoft: null,
+          Google: 'https://placehold.it/250x250'
+        },
+        limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+        onAutocomplete: function(val) {
+          // Callback function when value is autcompleted.
+          console.log(val);
+        },
+        minLength: 1 // The minimum length of the input for the autocomplete to start. Default: 1.
+      });
+    });
+  }
+}

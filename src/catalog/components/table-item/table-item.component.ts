@@ -1,16 +1,9 @@
-import {
-    Component,
-    Input,
-    Output,
-    EventEmitter,
-    ChangeDetectionStrategy,
-  } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
-  @Component({
-    // tslint:disable-next-line:component-selector
-    selector: 'table-item',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+@Component({
+  selector: 'table-item',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
 <div *ngFor="let i of iwhd['main']">
     <div class="card padding unset" *ngIf="i.codes">
         <table class="striped highlight centered">
@@ -26,10 +19,10 @@ import {
         </table>
     </div>
 </div>
-    `,
-  })
-  export class TableItemComponent {
-    @Input() content: any;
-    @Input() iwhd: any;
-    @Input() version: any;
-  }
+    `
+})
+export class TableItemComponent {
+  @Input() content: any;
+  @Input() iwhd: any;
+  @Input() version: any;
+}

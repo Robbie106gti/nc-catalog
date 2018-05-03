@@ -150,7 +150,7 @@ export class LoginEffects {
         const cookie = res['value'];
         return this.http.post(this.endpoint, { ...cookie, cookie: true }).pipe(
           map(success => {
-            console.log(`Set header: `, success);
+            // console.log(`Set header: `, success);
             this.store.dispatch({
               type: fromStore.LOAD_LOGIN_HB_SUCCESS,
               payload: success

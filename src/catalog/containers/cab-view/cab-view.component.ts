@@ -6,7 +6,6 @@ import * as fromStore from '../../store';
 import { take } from 'rxjs/operators';
 
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'category',
   // styleUrls: ['products.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,16 +28,16 @@ import { take } from 'rxjs/operators';
       </category-view>
       </div>
     </div>
-  `,
+  `
 })
 export class CabViewComponent implements OnInit {
   cat$: Observable<any>;
   category$: Observable<any[]>;
 
-  constructor(private store: Store<fromStore.ProductsState>) { }
+  constructor(private store: Store<fromStore.ProductsState>) {}
 
   ngOnInit() {
-    this.cat$ = this.store.select(fromStore.getSelectedCategory);
+    this.cat$ = this.store.select(fromStore.getSelectedCategory).take(1);
     this.category$ = this.store.select(fromStore.getCabinets).take(1);
   }
 }

@@ -1,18 +1,11 @@
-import {
-    Component,
-    Input,
-    Output,
-    EventEmitter,
-    ChangeDetectionStrategy
-  } from '@angular/core';
-  declare var $: any;
-  declare var Materialize: any;
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+declare var $: any;
+declare var Materialize: any;
 
-  @Component({
-    // tslint:disable-next-line:component-selector
-    selector: 'add-custom',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+@Component({
+  selector: 'add-custom',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <div class="card padding unset" *ngIf="addons.length">
         <h4>Popular Attachments and Applications:</h4>
         <ul class="collapsible popout" data-collapsible="accordion">
@@ -30,14 +23,14 @@ import {
             </li>
         </ul>
    </div>
-    `,
-  })
-  export class AddCustomComponent {
-    @Input() addons: any;
+    `
+})
+export class AddCustomComponent {
+  @Input() addons: any;
 
-    constructor () {
-        $(document).ready(function(){
-            $('.collapsible').collapsible();
-          });
-        }
+  constructor() {
+    $(document).ready(function() {
+      $('.collapsible').collapsible();
+    });
   }
+}

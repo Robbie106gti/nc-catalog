@@ -1,12 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 declare var $: any;
 declare var Materialize: any;
 
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'spec-form',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './spec-form.component.html'
 })
 export class SpecFormComponent {
@@ -61,13 +61,9 @@ export class SpecFormComponent {
 
   Remove(r) {
     if (r.sub === 'iwhd') {
-      this.iwhd[this.sId] = this.iwhd[this.sId].filter(
-        item => item.id !== r.id
-      );
+      this.iwhd[this.sId] = this.iwhd[this.sId].filter(item => item.id !== r.id);
     } else {
-      this.specs[this.sId] = this.specs[this.sId].filter(
-        item => item.id !== r.id
-      );
+      this.specs[this.sId] = this.specs[this.sId].filter(item => item.id !== r.id);
     }
     this.remove.emit({ ...r, toDo: 'remove', version: this.sId });
   }

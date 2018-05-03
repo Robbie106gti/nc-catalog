@@ -19,16 +19,34 @@ import { LoaderComponent } from './loader/loader.component';
 import { CatContentComponent } from './cat-content/cat-content.component';
 import { GenInfoComponent } from './cat-content/gen-info.component';
 import { SpecFormComponent } from './spec-content/spec-form.component';
+import { VersionsDoorsrComponent } from './versions-bar/versions-doors.component';
 
 export const components: any[] = [
-    CategoryItemComponent, CategoryViewComponent, ChipComponent, ToolItemComponent, SpecContentComponent,
-    DescriptionComponent, NoteItemComponent, TableItemComponent, SliderImagesComponent, AddCustomComponent, VersionsBarComponent,
-    ImageBarComponent, EditModalBarComponent, EditFormCabComponent, DropZoneDirective, UploadInputComponent, LoaderComponent, CatContentComponent,
-    GenInfoComponent, SpecFormComponent
+  CategoryItemComponent,
+  CategoryViewComponent,
+  ChipComponent,
+  ToolItemComponent,
+  SpecContentComponent,
+  DescriptionComponent,
+  NoteItemComponent,
+  TableItemComponent,
+  SliderImagesComponent,
+  AddCustomComponent,
+  VersionsBarComponent,
+  ImageBarComponent,
+  EditModalBarComponent,
+  EditFormCabComponent,
+  DropZoneDirective,
+  UploadInputComponent,
+  LoaderComponent,
+  CatContentComponent,
+  GenInfoComponent,
+  SpecFormComponent,
+  VersionsDoorsrComponent
 ];
 
 // export * from ''
-export *  from './category-item/category-item.component';
+export * from './category-item/category-item.component';
 export * from './category-item/category-view.component';
 export * from './chip-item/chip-item.component';
 export * from './tool-item/tool-item.component';
@@ -48,3 +66,4 @@ export * from './loader/loader.component';
 export * from './cat-content/cat-content.component';
 export * from './cat-content/gen-info.component';
 export * from './spec-content/spec-form.component';
+export * from './versions-bar/versions-doors.component';

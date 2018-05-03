@@ -1,16 +1,9 @@
-import {
-    Component,
-    Input,
-    Output,
-    EventEmitter,
-    ChangeDetectionStrategy,
-  } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
-  @Component({
-    // tslint:disable-next-line:component-selector
-    selector: 'image-bar',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+@Component({
+  selector: 'image-bar',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <div class="col s2 m1 card">
         <div class="tool-item" *ngIf="user.roles.admin">
             <i class="material-icons indigo-text text-darken-1" (click)="Edit()">edit</i>
@@ -37,15 +30,19 @@ import {
         <p>{{ version.height }}{{ version.version || '" high'}}</p>
     </a>
     </ng-template>
-    `,
-  })
-  export class ImageBarComponent {
-    @Input() version: any;
-    @Input() content: any;
-    @Input() user: any;
-    @Output() select = new EventEmitter<any>();
-    @Output() edit = new EventEmitter<any>();
+    `
+})
+export class ImageBarComponent {
+  @Input() version: any;
+  @Input() content: any;
+  @Input() user: any;
+  @Output() select = new EventEmitter<any>();
+  @Output() edit = new EventEmitter<any>();
 
-    Selected() { this.select.emit({ version: this.version, content: this.content }); }
-    Edit() { this.edit.emit({ version: this.version, content: this.content }); }
+  Selected() {
+    this.select.emit({ version: this.version, content: this.content });
   }
+  Edit() {
+    this.edit.emit({ version: this.version, content: this.content });
+  }
+}

@@ -3,7 +3,7 @@ import {
   Input,
   Output,
   EventEmitter,
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -11,13 +11,19 @@ import * as fromStore from '../../store';
 import { of } from 'rxjs/observable/of';
 
 @Component({
-selector: 'sop',
-changeDetection: ChangeDetectionStrategy.OnPush,
-templateUrl: './sop.html',
+  selector: 'sop',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './sop.html'
 })
 export class SopComponent {
   sop$: Observable<any>;
-  modal: { title: string, action: string, sop: any, edit?: any, newTitle?: string };
+  modal: {
+    title: string;
+    action: string;
+    sop: any;
+    edit?: any;
+    newTitle?: string;
+  };
   add: boolean;
   user$: Observable<string>;
   icons$: Observable<any>;
@@ -27,7 +33,7 @@ export class SopComponent {
 
   constructor(private store: Store<fromStore.SopsState>) {
     this.user$ = this.store.select(fromStore.getUserName);
-    this.sop$ = this.store.select(fromStore.getSelectedSop);
+    this.sop$ = this.store.select(fromStore.getSelectedSop).take(2);
     this.icons$ = this.store.select(fromStore.getIcons);
     this.url$ = this.store.select(fromStore.getUploadUrl);
     this.pct$ = this.store.select(fromStore.getUploadPercentage);
@@ -37,8 +43,13 @@ export class SopComponent {
     let edit;
     switch (event) {
       case 'Description': {
-        sop.description = sop.description ? sop.description : { title: '', description: ''};
-        edit = { title: sop.description.title, value: sop.description.description };
+        sop.description = sop.description
+          ? sop.description
+          : { title: '', description: '' };
+        edit = {
+          title: sop.description.title,
+          value: sop.description.description
+        };
         break;
       }
       case 'Note': {
@@ -67,21 +78,30 @@ export class SopComponent {
   }
 
   Images(event) {
-    this.store.dispatch({type: fromStore.ADD_TO_SOP, payload: { ...event, action: 'Images'} });
+    this.store.dispatch({
+      type: fromStore.ADD_TO_SOP,
+      payload: { ...event, action: 'Images' }
+    });
   }
 
   NewList(event) {
-    this.store.dispatch({type: fromStore.ADD_TO_SOP, payload: { ...event, action: 'List'} });
+    this.store.dispatch({
+      type: fromStore.ADD_TO_SOP,
+      payload: { ...event, action: 'List' }
+    });
   }
 
   NewTitle(event) {
     console.log(event);
-    this.store.dispatch({type: fromStore.ADD_TO_SOP, payload: { ...event, action: 'ListTitle'} });
+    this.store.dispatch({
+      type: fromStore.ADD_TO_SOP,
+      payload: { ...event, action: 'ListTitle' }
+    });
   }
 
   Notes(event) {
     console.log(event);
-    this.store.dispatch({type: fromStore.ADD_TO_SOP, payload: event });
+    this.store.dispatch({ type: fromStore.ADD_TO_SOP, payload: event });
   }
 
   Close(event) {
@@ -89,7 +109,7 @@ export class SopComponent {
   }
 
   Add(event) {
-    this.store.dispatch({type: fromStore.ADD_TO_SOP, payload: event });
+    this.store.dispatch({ type: fromStore.ADD_TO_SOP, payload: event });
   }
 
   File(event) {

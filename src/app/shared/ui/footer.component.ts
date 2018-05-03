@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <footer class="page-footer brown darken-3">
   <!-- <div class="container">
@@ -32,5 +33,5 @@ import { Component } from '@angular/core';
   `
 })
 export class FooterComponent {
-  constructor() { }
+  constructor() {}
 }

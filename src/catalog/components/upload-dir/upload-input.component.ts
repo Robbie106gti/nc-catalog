@@ -1,13 +1,15 @@
 import {
-    Component,
-    Input,
-    Output,
-    EventEmitter
-  } from '@angular/core';
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
 
-  @Component({
-    selector: 'upload-input',
-    template: `
+@Component({
+  selector: 'upload-input',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
 <div class="chip" *ngIf="pct >= 99 && pctfile === name" >
   <img *ngIf="url && pctfile === name" [src]="url" [alt]="title">
     <i class="close material-icons teal-text text-darken-4">done</i> {{ name }}
@@ -25,7 +27,7 @@ dropZone
         <input class="file-path validate"
         type="text" placeholder="Upload a image for {{ title }}">
     </div>
-</div>`,
+</div>`
 })
 export class UploadInputComponent {
   @Input() title: string;
