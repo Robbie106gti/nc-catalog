@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnChanges, SimpleChanges, Input } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -45,12 +45,21 @@ import * as fromStore from '../../store';
   }`
   ]
 })
-export class DoorsComponent {
+export class DoorsComponent implements OnChanges {
   doorstyle: string = 'slab';
   doors$: Observable<any>;
+  @Input() filtered: Observable<boolean>;
 
   constructor(private store: Store<fromStore.ProductsState>) {
-    this.doors$ = this.store.select(fromStore.getDoorsCategory);
+    this.getDoors();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(this.filtered);
+    this.getDoors();
+  }
+  getDoors() {
+    this.doors$ = this.store.select(fromStore.getDoorsCategory).take(1);
   }
 
   Menu(style) {

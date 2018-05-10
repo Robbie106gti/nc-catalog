@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
 import { Catalog } from '../../models/catalog.model';
 import { tap, filter, take } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'category',
@@ -33,7 +34,7 @@ import { tap, filter, take } from 'rxjs/operators';
     </div>
 
     <ng-template #Doors>
-      <doors></doors>
+      <doors [filtered]="filtered"></doors>
     </ng-template>
   `
 })
@@ -42,6 +43,7 @@ export class CatViewComponent implements OnInit {
   cat$: Observable<any>;
   category$: Observable<any[]>;
   materials: Observable<any[]>;
+  filtered: Observable<any> = of(false);
 
   constructor(private store: Store<fromStore.ProductsState>) {}
 
@@ -52,12 +54,11 @@ export class CatViewComponent implements OnInit {
 
   Filter(event) {
     this.store.dispatch({ type: fromStore.FILTER_MAT, payload: event });
-    let filtered: any = false;
     Object.entries(event).map(([key, value]) => {
       // console.log(key, value);
-      if (value) return (filtered = value);
+      if (value) return (this.filtered = of(value));
     });
-    this.store.dispatch({ type: fromStore.FILTER, payload: filtered });
+    this.store.dispatch({ type: fromStore.FILTER, payload: this.filtered });
     this.materials = event;
   }
 }
