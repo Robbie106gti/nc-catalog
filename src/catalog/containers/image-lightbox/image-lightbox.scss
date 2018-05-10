@@ -1,0 +1,113 @@
+.thumbnails {
+  max-height: 7rem;
+  overflow: hidden;
+}
+
+.thumbnail {
+  display: inline;
+  padding: 0.1rem;
+}
+
+.thumbnail img {
+  max-width: 5rem;
+  max-height: 5rem;
+  cursor: pointer;
+}
+
+.card-content {
+  text-align: center;
+}
+
+.image-modal {
+  height: 100% !important;
+  width: 100% !important;
+  position: fixed !important;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  background-color: rgba(85, 97, 104, 0.6);
+}
+
+.modal-content {
+  position: fixed;
+  left: 5rem;
+  right: 5rem;
+  bottom: 5rem;
+  top: 5rem;
+  text-align: center;
+  border-radius: 0.5rem;
+  border: rgba(85, 97, 104, 0.6) solid 1px;
+  background-color: rgb(192, 197, 204);
+}
+
+.thumb {
+  margin: 0.5rem;
+}
+
+.thumb img {
+  max-width: 7rem;
+  max-height: 7rem;
+  cursor: pointer;
+}
+
+.other-images {
+  position: fixed;
+  bottom: 6rem;
+  left: 1rem;
+  right: 1rem;
+}
+
+.image {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+}
+
+.close {
+  position: absolute;
+  right: 0.3rem;
+  top: 0.3rem;
+  color: rgb(148, 29, 20);
+  cursor: pointer;
+}
+
+/* Next & previous buttons */
+
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: grey;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev {
+  left: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}

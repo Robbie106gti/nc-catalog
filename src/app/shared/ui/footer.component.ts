@@ -4,7 +4,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   selector: 'app-footer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <footer class="page-footer brown darken-3">
+  <footer class="page-footer brown darken-3 no-print">
   <!-- <div class="container">
         <div class="row">
           <div class="col l6 s12">

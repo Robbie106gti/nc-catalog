@@ -10,7 +10,7 @@ import { take } from 'rxjs/operators';
   // styleUrls: ['products.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="section no-pad-bot" id="index-banner">
+    <div class="section no-pad-bot no-pad-top" id="index-banner">
       <div class="card" id="top">
         <div class="container" *ngIf="(cat$ | async) as cat">
             <a routerLink="/catalog" class="right"><i class="small material-icons">arrow_back</i></a>

@@ -11,7 +11,7 @@ import * as fromServices from '../../services';
   selector: 'categories',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="section no-pad-bot" id="index-banner" *ngIf="(user$ | async) as user">
+    <div class="section no-pad-bot no-pad-top" id="index-banner" *ngIf="(user$ | async) as user">
       <div class="row grid" id="catalog">
         <div *ngIf="!((categories$ | async)?.length)">
           No catagories, add one to get started.

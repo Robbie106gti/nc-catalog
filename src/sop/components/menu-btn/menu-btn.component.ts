@@ -1,20 +1,14 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 declare var $: any;
-declare var Materialize: any;
+declare var M: any;
 
 @Component({
-selector: 'menu-btn',
-changeDetection: ChangeDetectionStrategy.OnPush,
-template: `
-<div class="fixed-action-btn horizontal">
+  selector: 'menu-btn',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+  <div class="fixed-action-btn">
   <a class="btn-floating btn-large red">
-    <i class="large material-icons">add</i>
+    <i class="large material-icons">mode_edit</i>
   </a>
   <ul>
     <li (click)="Menu('Image')"><a class="btn-floating red tooltipped" data-position="top" data-tooltip="Add a image"><i class="material-icons">camera</i></a></li>
@@ -24,14 +18,19 @@ template: `
     <li (click)="Menu('Note')"><a class="btn-floating orange tooltipped" data-position="top" data-tooltip="Add a note"><i class="material-icons">announcement</i></a></li>
   </ul>
 </div>
-`,
+`
 })
 export class MenuBtnComponent {
   @Output() menu = new EventEmitter<any>();
 
   constructor() {
-    $(document).ready(function(){
-      $('.tooltipped').tooltip({delay: 50});
+    $(document).ready(function() {
+      const options = {
+        direction: 'left',
+        hoverEnabled: true
+      };
+      $('.fixed-action-btn').floatingActionButton(options);
+      $('.tooltipped').tooltip();
     });
   }
 

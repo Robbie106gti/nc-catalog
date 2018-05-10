@@ -12,14 +12,14 @@ import { User } from '../../models/user.model';
   // styleUrls: ['products.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="section no-pad-bot" id="index-banner" *ngIf="(content$ | async) as content">
+    <div class="section no-pad-bot no-pad-top" id="index-banner" *ngIf="(content$ | async) as content">
       <div class="card" id="top">
         <div class="container">
-            <a routerLink="../" class="right"><i class="small material-icons">arrow_back</i></a>
+            <a routerLink="../" class="right no-print"><i class="small material-icons">arrow_back</i></a>
             <div id="topic">
                 <h3 id="topic">Category: {{ content.sub | titlecase }}</h3>
                 <h4 id="topic">Item: {{ content.title | titlecase }}</h4><br>
-                <i><small>Updated: {{ content.updatedBy }} - {{ content.updatedAt }}</small></i>
+                <i class="timenuser"><small>Updated:  {{ content.updatedAt }} - {{ content.updatedBy }}</small></i>
             </div>
         </div>
       </div>
@@ -28,7 +28,16 @@ import { User } from '../../models/user.model';
         <cat-content [content]="content" [user]="(user$ | async)"></cat-content>
       </div>
     </div>
+  `,
+  styles: [
+    `
+  .timenuser {
+    position: absolute;
+    bottom: 0.3em;
+    right: 3rem;
+  }
   `
+  ]
 })
 export class SpecCatComponent implements OnInit {
   content$: Observable<any>;

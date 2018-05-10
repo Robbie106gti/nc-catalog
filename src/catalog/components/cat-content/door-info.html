@@ -1,0 +1,105 @@
+<div class="row">
+  <div class="col m6 s12">
+    <div class="card-panel">
+      <ul class="collection with-header">
+        <li class="collection-header">
+          <h5>Specifications</h5>
+        </li>
+        <li class="collection-item">
+          <span>
+            <b>Finishing: </b>{{ content.finishing }}</span>
+        </li>
+        <li class="collection-item">
+          <span>
+            <b>Size: </b> W x H</span>
+        </li>
+        <li class="collection-item">
+          <span>
+            <b>Pricing: </b> sq. ft.</span>
+        </li>
+        <li class="collection-item">
+          <span>
+            <b>Construction: </b>{{ content.construction.default }}</span>
+        </li>
+        <li class="collection-item">
+          <span>
+            <b>Options: </b>{{ content.options.default }}</span>
+        </li>
+        <li class="collection-item">
+          <span>
+            <b>Restrictions: </b>{{ content.restrictions.default }}</span>
+        </li>
+      </ul>
+      <div class="doorGrid">
+        <div class="">
+          <ul class="collection with-header">
+            <li class="collection-header">
+              <h5>OUTSIDE DOOR PROFILES</h5>
+            </li>
+            <li class="collection-item">
+              <b>Edges:</b>
+              <span *ngFor="let edge of content.edges; let first = first; let last = last" [ngClass]="{ first: first, last: last }">
+                <span *ngIf="last">& </span>
+                <span>{{ edge | uppercase }}</span>
+                <span *ngIf="!last">, </span>
+              </span>
+            </li>
+            <li class="collection-item">
+              <span>
+                <b>Default edge:</b> SQ</span>
+            </li>
+          </ul>
+        </div>
+        <div class="">
+          <ul class="collection with-header">
+            <li class="collection-header">
+              <h5>DRAWER FACE OPTIONS</h5>
+            </li>
+            <li class="collection-item" *ngFor="let dface of content.dfoptions">
+              <span>{{ dface | uppercase }}</span>
+            </li>
+          </ul>
+        </div>
+        <div class="">
+          <ul class="collection with-header">
+            <li class="collection-header">
+              <h5>STILE & RAIL STANDARDS</h5>
+            </li>
+            <li class="collection-item" *ngFor="let stile of content.srstandard">
+              <span>{{ stile | uppercase }}</span>
+            </li>
+          </ul>
+        </div>
+        <div class="">
+          <ul class="collection with-header">
+            <li class="collection-header">
+              <h5>MINIMUM SIZES</h5>
+            </li>
+            <li class="collection-item">
+              <span>
+                <b>Min width: </b>{{ content.sizes.width }}"</span>
+            </li>
+            <li class="collection-item">
+              <span>
+                <b>Min height: </b>{{ content.sizes.height }}"</span>
+            </li>
+          </ul>
+        </div>
+        <div class="">
+          <ul class="collection with-header">
+            <li class="collection-header">
+              <h5>MULLIONS, TOPLIGHTS & GLASS</h5>
+            </li>
+            <li class="collection-item" *ngFor="let mtg of content.mtg">
+              <span>{{ mtg | titlecase }}
+                <i class="material-icons">done</i>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <image-lightbox class="col m6 s12"></image-lightbox>
+  <note-item class="col s12" [notes]="content.notes"></note-item>
+</div>

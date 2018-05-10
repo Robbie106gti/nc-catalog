@@ -12,7 +12,7 @@ import { tap, filter, take } from 'rxjs/operators';
   // styleUrls: ['products.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="section no-pad-bot" id="index-banner">
+    <div class="section no-pad-bot no-pad-top" id="index-banner">
       <div class="card" id="top">
         <div class="container">
             <a routerLink="/catalog" class="right"><i class="small material-icons">arrow_back</i></a>
@@ -20,13 +20,13 @@ import { tap, filter, take } from 'rxjs/operators';
         </div>
       </div>
       <div class="row grid" id="catalog">
-      <div *ngIf="!((category$ | async)?.length)">
-        No items in category, add one to get started.
-      </div>
-      <category-view
-        *ngFor="let category of (category$ | async)"
-        [item]="category" class="card">
-      </category-view>
+        <div *ngIf="!((category$ | async)?.length)">
+          No items in category, add one to get started.
+        </div>
+        <category-view
+          *ngFor="let category of (category$ | async)"
+          [item]="category" class="card">
+        </category-view>
       </div>
     </div>
   `

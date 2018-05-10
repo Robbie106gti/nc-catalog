@@ -1,18 +1,7 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  Input,
-  Output,
-  EventEmitter
-} from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 declare var $: any;
-declare var Materialize: any;
+declare var M: any;
 
 import { Login } from '../../models/login.model';
 
@@ -20,7 +9,7 @@ import { Login } from '../../models/login.model';
   selector: 'login-form',
   styleUrls: ['login-form.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './login-form.html',
+  templateUrl: './login-form.html'
 })
 export class LoginFormComponent {
   @Input() loaded: boolean;
@@ -31,17 +20,17 @@ export class LoginFormComponent {
 
   form = this.fb.group({
     username: ['', Validators.required && Validators.minLength(3)],
-    password: ['', Validators.required && Validators.minLength(3)],
+    password: ['', Validators.required && Validators.minLength(3)]
   });
 
   constructor(private fb: FormBuilder) {
     $(document).ready(function() {
-      Materialize.updateTextFields();
+      M.updateTextFields();
     });
   }
 
   get formTouched() {
-    return this.form.untouched && this.form.pristine as Boolean;
+    return this.form.untouched && (this.form.pristine as Boolean);
   }
 
   get passwordPristine() {

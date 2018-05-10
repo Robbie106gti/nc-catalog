@@ -20,6 +20,8 @@ import { CatContentComponent } from './cat-content/cat-content.component';
 import { GenInfoComponent } from './cat-content/gen-info.component';
 import { SpecFormComponent } from './spec-content/spec-form.component';
 import { VersionsDoorsrComponent } from './versions-bar/versions-doors.component';
+import { DoorFilterComponent } from './filter/door-filter.component';
+import { DoorInfoComponent } from './cat-content/door-info.comonent';
 
 export const components: any[] = [
   CategoryItemComponent,
@@ -42,7 +44,9 @@ export const components: any[] = [
   CatContentComponent,
   GenInfoComponent,
   SpecFormComponent,
-  VersionsDoorsrComponent
+  VersionsDoorsrComponent,
+  DoorFilterComponent,
+  DoorInfoComponent
 ];
 
 // export * from ''
@@ -67,3 +71,5 @@ export * from './cat-content/cat-content.component';
 export * from './cat-content/gen-info.component';
 export * from './spec-content/spec-form.component';
 export * from './versions-bar/versions-doors.component';
+export * from './filter/door-filter.component';
+export * from './cat-content/door-info.comonent';

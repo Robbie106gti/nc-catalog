@@ -1,13 +1,6 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  Input,
-  OnChanges,
-  SimpleChanges
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-declare var $: any;
-declare var Materialize: any;
+declare var M: any;
 
 @Component({
   selector: 'app-header',
@@ -24,10 +17,10 @@ declare var Materialize: any;
       </a>
 
       <ul class="right hide-on-med-and-down">
-        <li><a class="dropdown-button" href="#!" data-activates="dropdown2"><span>{{ (user$ | async)?.fullName }}</span></a></li>
-        <li><a href="#!"><i class="material-icons">search</i></a></li>
+        <li><a class="dropdown-trigger" href="#" data-target="dropdown2"><span>{{ (user$ | async)?.fullName }}</span></a></li>
+        <li><a href="#"><i class="material-icons">search</i></a></li>
         <!-- Dropdown Trigger -->
-        <li ><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="large material-icons">apps</i></a></li>
+        <li ><a class="dropdown-trigger" href="#" data-target="dropdown1"><i class="large material-icons">apps</i></a></li>
       </ul>
     </div>
     <!-- Dropdown Structure -->
@@ -81,16 +74,29 @@ export class HeaderComponent implements OnChanges {
   @Input() router$: Observable<any>;
 
   constructor() {
-    $('.dropdown-button').dropdown();
-    $(document).ready(function() {
-      $('.tooltipped').tooltip();
+    document.addEventListener('DOMContentLoaded', function() {
+      const options = { hover: true };
+      const elems = document.querySelectorAll('.dropdown-trigger');
+      const instances = M.Dropdown.init(elems, options);
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+      const options = {};
+      const elems = document.querySelectorAll('.tooltipped');
+      const instances = M.Tooltip.init(elems, options);
     });
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['user$']) {
-      $(document).ready(function() {
-        $('.tooltipped').tooltip();
+      document.addEventListener('DOMContentLoaded', function() {
+        const options = { hover: true };
+        const elems = document.querySelectorAll('.dropdown-trigger');
+        const instances = M.Dropdown.init(elems, options);
+      });
+      document.addEventListener('DOMContentLoaded', function() {
+        const options = {};
+        const elems = document.querySelectorAll('.tooltipped');
+        const instances = M.Tooltip.init(elems, options);
       });
     }
   }

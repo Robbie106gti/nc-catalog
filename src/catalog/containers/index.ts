@@ -7,10 +7,22 @@ import { SpecCabComponent } from './spec-cab/spec-cab.component';
 import { SpecCatComponent } from './spec-cat/spec-cat.component';
 import { FormCabComponent } from './spec-cab/form-cab.component';
 import { OnOffComponent } from '../components/buttons/on-off.component';
+import { DoorsComponent } from './doors/doors.component';
+import { DoorMenuComponent } from './doors/door-menu.component';
+import { ImageLightboxComponent } from './image-lightbox/image-lightbox.component';
 
 export const containers: any[] = [
-    CategoriesComponent, CabViewComponent, CatViewComponent, ItemViewComponent, SpecCabComponent, SpecCatComponent,
-    FormCabComponent, OnOffComponent
+  CategoriesComponent,
+  CabViewComponent,
+  CatViewComponent,
+  ItemViewComponent,
+  SpecCabComponent,
+  SpecCatComponent,
+  FormCabComponent,
+  OnOffComponent,
+  DoorsComponent,
+  DoorMenuComponent,
+  ImageLightboxComponent
 ];
 
 // export * from ''
@@ -22,3 +34,6 @@ export * from './spec-cab/spec-cab.component';
 export * from './spec-cat/spec-cat.component';
 export * from './spec-cab/form-cab.component';
 export * from '../components/buttons/on-off.component';
+export * from './doors/doors.component';
+export * from './doors/door-menu.component';
+export * from './image-lightbox/image-lightbox.component';

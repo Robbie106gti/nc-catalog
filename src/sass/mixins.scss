@@ -1,0 +1,369 @@
+// override fonts path to prevent build errors (or use resolve-url loader)
+$roboto-font-path: "../../node_modules/materialize-css/dist/fonts/roboto/";
+body {
+  background-color: rgba(96, 125, 139, 0.5);
+  margin: 0;
+  padding: 0;
+}
+
+.padding {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.imageLogo {
+  margin-top: 0.4em;
+  margin-right: 0.3em;
+  max-height: 1.4em;
+}
+
+.headingLogo {
+  display: inline-block;
+  position: relative;
+  top: -0.15em;
+}
+
+.whiteLine {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: -0.85rem;
+  height: 0.6rem;
+}
+
+.angle {
+  position: relative;
+  width: 0;
+  height: 0;
+  border-bottom: 45px solid #fff;
+  border-left: 45px solid transparent;
+}
+
+.preview>img {
+  height: 10vw;
+  width: auto;
+  overflow: hidden;
+}
+
+.bullet>ul:not(.browser-default)>li {
+  list-style-type: circle;
+  margin-left: 1em;
+}
+
+p>i {
+  position: relative;
+  top: -0.1em;
+  left: -0.4em;
+}
+
+.note {
+  padding: 0.5em;
+  margin: 0.5em;
+}
+
+#top {
+  margin-top: -1.5rem;
+  margin-bottom: 0.1rem;
+  padding-bottom: 0.6em;
+}
+
+#topic {
+  margin-bottom: -0.8rem;
+}
+
+#close {
+  position: absolute;
+  right: 0.3rem;
+  top: 0.3rem;
+}
+
+.detail-image {
+  width: 100%;
+  padding: 0.5em;
+}
+
+.stop-scrolling {
+  height: 80%;
+  overflow: hidden;
+}
+
+.tool-item {
+  position: absolute;
+  right: 0.3rem;
+  top: 0.3rem;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.limit {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  /* number of lines to show */
+}
+
+.unset {
+  position: unset !important;
+}
+
+.indicator-item {
+  background-color: rgb(59, 58, 58) !important;
+  color: rgb(59, 58, 58) !important;
+}
+
+.indicator-item.active {
+  background-color: rgb(155, 155, 155) !important;
+  color: rgb(150, 150, 150) !important;
+}
+
+.modal.bottom-sheet {
+  max-height: 70%;
+}
+
+progress::-webkit-progress-value {
+  transition: width 0.1s ease;
+}
+
+@supports(display: grid) {
+  .detail-card {
+    width: 50%;
+    display: -ms-grid;
+    display: grid;
+    grid-gap: 1em;
+    -ms-grid-columns: (minmax(2em, 1fr))[auto-fit];
+    grid-template-columns: repeat(auto-fit, minmax(2em, 1fr));
+  }
+  .grid {
+    margin: 0 auto;
+    display: -ms-grid;
+    display: grid;
+    grid-gap: 1em;
+    -ms-grid-columns: (minmax(18em, 1fr))[auto-fit];
+    grid-template-columns: repeat(auto-fit, minmax(18em, 1fr));
+  }
+  .grid2 {
+    margin: 0 auto;
+    display: -ms-grid;
+    display: grid;
+    grid-gap: 1em;
+    -ms-grid-columns: (minmax(12em, 1fr))[auto-fit];
+    grid-template-columns: repeat(auto-fit, minmax(18em, 1fr));
+  }
+  .doorGrid {
+    margin: 0 auto;
+    display: -ms-grid;
+    display: grid;
+    grid-gap: 1em;
+    -ms-grid-columns: 2;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.image20 {
+  max-height: 20vw;
+  max-width: 15vw;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.card20 {
+  max-height: 20vw;
+  overflow: hidden;
+}
+
+.card .card-image img {
+  width: auto !important;
+}
+
+.card-empl {
+  max-height: 10vw;
+  max-width: 100%;
+}
+
+.of-hidden {
+  overflow: hidden !important;
+}
+
+.inactive {
+  background-color: #263238;
+}
+
+.bgd1 {
+  background-color: rgba(66, 96, 121, 0.459)
+}
+
+.inactive>.card-image>img {
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+}
+
+.collection .collection-item.active {
+  background-color: #fde0b2 !important;
+}
+
+.materialboxed.active {
+  background-color: #fff;
+  padding: 3em;
+}
+
+.padding {
+  padding: 0.5em;
+}
+
+.padding>material-placeholder {
+  margin-bottom: 1em;
+}
+
+.padding>span {
+  position: relative;
+  margin-top: 1em;
+  background-color: rgba(96, 125, 139, 0.5);
+  padding: 0.2em;
+  left: 1em;
+}
+
+.ordercode {
+  font-weight: bold;
+  color: #800;
+  cursor: pointer;
+}
+
+.second {
+  margin-left: 0.5em;
+}
+
+.bot {
+  position: absolute;
+  right: 2.5em;
+  bottom: 1em;
+}
+
+.hiie {
+  height: 15vw !important;
+}
+
+.hie {
+  height: 8vw !important;
+  overflow: hidden;
+}
+
+.listitem {
+  margin-left: 0.5em;
+  margin-top: -0.1rem;
+  margin-bottom: 0.7rem;
+  line-height: 1.6rem;
+  display: list-item;
+  /* This has to be "list-item"                                               */
+  list-style-type: disc;
+  /* See https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type     */
+  list-style-position: inside;
+  /* See https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-position */
+}
+
+.h5 {
+  font-weight: bold;
+}
+
+.noteitem {
+  background-color: rgb(255, 157, 157);
+  border-radius: 0.2em;
+  border: solid 1px rgb(59, 3, 3);
+}
+
+.nritem {
+  display: list-item;
+  /* This has to be "list-item"                                               */
+  list-style-type: circle;
+  /* See https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type     */
+  list-style-position: inside;
+  /* See https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-position */
+}
+
+.half {
+  width: 50%;
+  display: block;
+}
+
+.full {
+  width: 100%;
+}
+
+@media print {
+  .page-break {
+    page-break-after: always;
+  }
+  .break-page {
+    page-break-before: always;
+  }
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
+  .card,
+  .card-panel,
+  .col {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0px solid #fff !important;
+    background-color: rgba(255, 255, 255, 0) !important;
+    box-shadow: 0px !important;
+  }
+  .z-depth-1,
+  nav,
+  .card-panel,
+  .card,
+  .toast,
+  .btn,
+  .btn-large,
+  .btn-small,
+  .btn-floating,
+  .dropdown-content,
+  .collapsible {
+    box-shadow: none !important;
+  }
+  .half {
+    max-width: 50% !important;
+    max-height: 50% !important;
+    page-break-inside: avoid;
+  }
+  #topic {
+    font-size: 16pt;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-style: hidden;
+  }
+  .collection-header,
+  h5 {
+    font-size: 12pt !important;
+    margin: 0 !important;
+    padding: 0.2rem !important;
+  }
+  .collection-item {
+    font-size: 9pt;
+    margin: 0 !important;
+    padding: 0.2rem 0.2rem 0.2rem 0.5rem !important;
+  }
+  .timenuser {
+    font-size: 7pt;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: fixed;
+    right: 0;
+    top: 0;
+  }
+}
