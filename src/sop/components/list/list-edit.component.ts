@@ -1,18 +1,13 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 declare var $: any;
-declare var Materialize: any;
+declare var M: any;
 
 @Component({
-selector: 'list-edit',
-templateUrl: 'list-edit.html',
-changeDetection: ChangeDetectionStrategy.OnPush,
-styles: [`
+  selector: 'list-edit',
+  templateUrl: 'list-edit.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  styles: [
+    `
 .ddIcon {
   position: relative;
   display: inline-block;
@@ -45,7 +40,8 @@ styles: [`
   background-color: #455a64;
   color: #fff;
 }
-`]
+`
+  ]
 })
 export class ListEditComponent {
   @Input() list: any;
@@ -53,21 +49,27 @@ export class ListEditComponent {
   @Output() newList = new EventEmitter<any>();
   edit: any;
 
-  constructor () {
+  constructor() {
     this.textfields();
   }
 
   Add() {
-    this.edit = new Object;
+    this.edit = new Object();
     setTimeout(this.textfields(), 1000);
   }
-  Remove(li) { this.list = this.list.filter(item => item !== li); this.newList.emit(this.list); }
+  Remove(li) {
+    this.list = this.list.filter(item => item !== li);
+    this.newList.emit(this.list);
+  }
   Edit(li) {
-    this.edit = li; console.log(this.edit);
+    this.edit = li;
+    console.log(this.edit);
     this.list = this.list.filter(item => item !== li);
     setTimeout(this.textfields(), 1000);
   }
-  Icon(ic) { this.edit.icon = ic.icon; }
+  Icon(ic) {
+    this.edit.icon = ic.icon;
+  }
   New() {
     this.list.push(this.edit);
     this.newList.emit(this.list);
@@ -76,7 +78,7 @@ export class ListEditComponent {
 
   textfields() {
     $(document).ready(function() {
-      Materialize.updateTextFields();
+      M.updateTextFields();
       $('#textarea1').trigger('autoresize');
     });
   }

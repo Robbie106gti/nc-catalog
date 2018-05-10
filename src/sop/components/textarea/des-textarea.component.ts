@@ -1,12 +1,4 @@
-import {
-  Component,
-  Input,
-  ChangeDetectionStrategy,
-  Output,
-  EventEmitter
-} from '@angular/core';
-declare var $: any;
-declare var Materialize: any;
+import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'des-textarea',
@@ -15,7 +7,7 @@ declare var Materialize: any;
   <div *ngIf="title" class="input-field col {{ size || 's6' }}" >
     <textarea id="textarea1" [(ngModel)]="textarea" class="materialize-textarea" (keydown.enter)="Des()" (blur)="Des()"></textarea>
     <label for="textarea1">{{ title }}</label>
-  </div>`,
+  </div>`
 })
 export class DesTextareaComponent {
   @Input() title: string;

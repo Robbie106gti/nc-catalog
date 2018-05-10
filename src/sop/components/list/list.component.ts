@@ -1,11 +1,9 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-declare var $: any;
-declare var Materialize: any;
 
 @Component({
-selector: 'list-card',
-changeDetection: ChangeDetectionStrategy.OnPush,
-template: `
+  selector: 'list-card',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
 <div class="card">
   <ul class="collection with-header">
     <li class="collection-header"><h4>{{ listTitle }}</h4></li>
@@ -17,11 +15,13 @@ template: `
   </ul>
 </div>
 `,
-styles: [`
+  styles: [
+    `
 .collection .collection-item:hover {
   background-color: #e0e0e0 !important;
 }
-`]
+`
+  ]
 })
 export class ListCardComponent {
   @Input() list: any;

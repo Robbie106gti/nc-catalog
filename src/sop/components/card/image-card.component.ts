@@ -1,11 +1,11 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 declare var $: any;
-declare var Materialize: any;
+declare var M: any;
 
 @Component({
-selector: 'image-card',
-changeDetection: ChangeDetectionStrategy.OnPush,
-template: `
+  selector: 'image-card',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
 <div class="card" [ngClass]="card.size || ''">
   <div class="card-image">
     <img [src]="card.image" [alt]="card.title" class="responsive-img materialboxed">
@@ -19,8 +19,8 @@ template: `
 export class ImageCardComponent {
   @Input() card: any;
 
-  constructor () {
-    $(document).ready(function(){
+  constructor() {
+    $(document).ready(function() {
       $('.materialboxed').materialbox();
     });
   }

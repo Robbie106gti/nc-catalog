@@ -1,17 +1,11 @@
-import {
-    Component,
-    Input,
-    Output,
-    EventEmitter,
-    ChangeDetectionStrategy,
-  } from '@angular/core';
-  declare var $: any;
-  declare var Materialize: any;
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+declare var $: any;
+declare var M: any;
 
-  @Component({
-    selector: 'slider-images',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+@Component({
+  selector: 'slider-images',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <div class="card large" *ngIf="param.Version; else cover">
         <div class="carousel carousel-slider" data-indicators="true">
             <div class="carousel-item">
@@ -49,21 +43,23 @@ import {
         <i class="material-icons large">image</i>
     </ng-template>
     `,
-    styles: [`
+  styles: [
+    `
     .carousel .indicators .indicator-item {
             background-color: #444 !important;
             color: #444 !important;
         }
-    `]
-  })
-  export class SliderImagesComponent {
-    @Input() content: any;
-    @Input() param: any;
+    `
+  ]
+})
+export class SliderImagesComponent {
+  @Input() content: any;
+  @Input() param: any;
 
-    constructor () {
-        $(document).ready(function(){
-            $('.carousel.carousel-slider').carousel();
-            $('.materialboxed').materialbox();
-          });
-    }
+  constructor() {
+    $(document).ready(function() {
+      $('.carousel.carousel-slider').carousel();
+      $('.materialboxed').materialbox();
+    });
   }
+}

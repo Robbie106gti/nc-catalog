@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 declare var $: any;
-declare var Materialize: any;
+declare var M: any;
 
 @Component({
   selector: 'edit-modal-bar',

@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, SimpleChanges } from '@angular/core';
 declare var $: any;
-declare var Materialize: any;
+declare var M: any;
 
 @Component({
   selector: 'slider',
@@ -36,7 +36,7 @@ declare var Materialize: any;
 })
 export class SliderComponent {
   constructor() {
-    $(document).ready(function(){
+    $(document).ready(function() {
       $('.slider').slider();
     });
   }

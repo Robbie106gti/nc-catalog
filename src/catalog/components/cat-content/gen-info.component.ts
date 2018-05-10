@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 declare var $: any;
-declare var Materialize: any;
+declare var M: any;
 
 @Component({
   selector: 'gen-info',

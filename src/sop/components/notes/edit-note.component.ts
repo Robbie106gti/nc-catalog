@@ -1,12 +1,6 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 declare var $: any;
-declare var Materialize: any;
+declare var M: any;
 
 @Component({
   selector: 'edit-note',
@@ -43,33 +37,33 @@ declare var Materialize: any;
       </div>
     </div>
   </div>
-  `,
+  `
 })
 export class EditNoteComponent {
   @Input() notes: any;
   edit: any;
   @Output() newNotes = new EventEmitter<any>();
 
-  constructor () {
+  constructor() {
     $(document).ready(function() {
-      Materialize.textareaAutoResize($('#textarea1'));
+      M.textareaAutoResize($('#textarea1'));
     });
   }
 
   Add() {
-    this.edit = new Object;
+    this.edit = new Object();
   }
 
-  Edit (event) {
+  Edit(event) {
     this.edit = event;
     this.notes = this.notes.filter(item => item !== event);
     $(document).ready(function() {
       $('#textarea1').val(event.content);
-      Materialize.textareaAutoResize($('#textarea1'));
+      M.textareaAutoResize($('#textarea1'));
     });
   }
 
-  Remove (event) {
+  Remove(event) {
     this.notes = this.notes.filter(item => item !== event);
     this.newNotes.emit(this.notes);
   }

@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 import { Observable } from 'rxjs/Observable';
 
 declare var $: any;
-declare var Materialize: any;
+declare var M: any;
 
 @Component({
   selector: 'spec-form',

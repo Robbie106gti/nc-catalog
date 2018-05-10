@@ -1,18 +1,11 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-} from '@angular/core';
-declare var $: any;
-declare var Materialize: any;
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-selector: 'sop-modal',
-changeDetection: ChangeDetectionStrategy.OnPush,
-templateUrl: './sop-modal.html',
-styles: [`
+  selector: 'sop-modal',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './sop-modal.html',
+  styles: [
+    `
 .new {
   position: absolute;
   z-index: 999;
@@ -24,10 +17,11 @@ styles: [`
   padding-left: 1rem;
   padding-top: .2rem;
 }
-`]
+`
+  ]
 })
 export class SopModalComponent {
-  @Input() modal: { title: string, action: string, sop?: any, edit?: any, newTitle?: string};
+  @Input() modal: { title: string; action: string; sop?: any; edit?: any; newTitle?: string };
   @Input() user: string;
   @Input() url: string;
   @Input() pct: string;
@@ -44,20 +38,35 @@ export class SopModalComponent {
   titleImage: string;
 
   // Add() { this.add.emit({ title: this.modal.title, fullName: this.user }); }
-  Close() { this.close.emit(false); }
+  Close() {
+    this.close.emit(false);
+  }
   Title(event) {
     this.modal.newTitle = event;
     if (this.modal.action === 'List') {
-      this.newTitle.emit({ listTitle: event, fullName: this.user, sop: this.sop});
+      this.newTitle.emit({ listTitle: event, fullName: this.user, sop: this.sop });
     }
   }
-  Des(event) { this.modal.edit = event; }
-  File(event) { this.file.emit({ file: event, fullName: this.user, dir: `/${this.sop.sub}/${this.sop.title}` }); }
+  Des(event) {
+    this.modal.edit = event;
+  }
+  File(event) {
+    this.file.emit({ file: event, fullName: this.user, dir: `/${this.sop.sub}/${this.sop.title}` });
+  }
 
-  Add() { this.add.emit({ ...this.modal, fullName: this.user }); this.close.emit(false); }
-  NewList(event) { this.newList.emit({ list: event, fullName: this.user, sop: this.sop }); }
-  NewImages(event) { this.newImages.emit({ images: event, fullName: this.user, sop: this.sop }); }
-  Notes(event) { this.notes.emit({ notes: event, fullName: this.user, sop: this.sop, action: 'Notes' }); }
+  Add() {
+    this.add.emit({ ...this.modal, fullName: this.user });
+    this.close.emit(false);
+  }
+  NewList(event) {
+    this.newList.emit({ list: event, fullName: this.user, sop: this.sop });
+  }
+  NewImages(event) {
+    this.newImages.emit({ images: event, fullName: this.user, sop: this.sop });
+  }
+  Notes(event) {
+    this.notes.emit({ notes: event, fullName: this.user, sop: this.sop, action: 'Notes' });
+  }
   AddImage() {
     if (this.titleImage) {
       const image = { title: this.titleImage, image: this.url };
@@ -68,5 +77,7 @@ export class SopModalComponent {
       alert('Please add a TITLE to the image.');
     }
   }
-  TitleImage(event) { this.titleImage = event; }
+  TitleImage(event) {
+    this.titleImage = event;
+  }
 }
