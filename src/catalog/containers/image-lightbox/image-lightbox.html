@@ -1,37 +1,41 @@
-<div class="card" (click)="UpdateModal(true)">
-  <div class="card-content valign-wrapper">
-    <div class="half" (click)="SetSlide(images.default.arrayId)">
-      <img [src]="images.default.image" [alt]="images.default.title" class="responsive-img pointer">
-    </div>
-    <div class="half" (click)="SetSlide(images.spec.arrayId)">
-      <img [src]="images.spec.image" [alt]="images.spec.title" class="responsive-img pointer">
-    </div>
-  </div>
-  <div class="thumbnails card-action blue-grey lighten-4 valign-wrapper">
-    <div class="thumbnail" *ngFor="let image of images.array  let i = index" (click)="SetSlide(i)">
-      <img [src]="image.image" [alt]="image.title">
-    </div>
-  </div>
-</div>
-
-<!-- The Modal/Lightbox -->
-<div class="image-modal" *ngIf="(modal$ | async) == true">
-  <div class="modal-content">
-    <span (click)="UpdateModal(false)" class="close">
-      <i class="material-icons">close</i>
-    </span>
-    <div class="image brown-text text-darken-2">
-      <img class="responsive-img" [src]="images.array[slide].image" [alt]="images.array[slide].title">
-      <div class="image-title flow-text">
-        <h4>{{ images.array[slide].title }}</h4>
+<div *ngIf="(images$ | async) as images">
+  <div class="card" (click)="UpdateModal(true)" *ngIf="(images$ | async) as images">
+    <div class="card-content valign-wrapper">
+      <div class="half" (click)="SetSlide(images.default.arrayId)">
+        <img [src]="images.default.image" [alt]="images.default.title" class="responsive-img pointer">
+      </div>
+      <div class="half" (click)="SetSlide(images.spec.arrayId)">
+        <img [src]="images.spec.image" [alt]="images.spec.title" class="responsive-img pointer">
       </div>
     </div>
-    <a class="prev" (click)="UpdateSlide(-1)">&#10094;</a>
-    <a class="next" (click)="UpdateSlide(1)">&#10095;</a>
-    <div class="other-images">
-      <span class="thumb" *ngFor="let image of images.array;  let i = index" (click)="SetSlide(i)">
+    <div class="thumbnails card-action blue-grey lighten-4 valign-wrapper">
+      <div class="thumbnail" *ngFor="let image of images.array  let i = index" (click)="SetSlide(i)">
         <img [src]="image.image" [alt]="image.title">
-      </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Modal/Lightbox -->
+  <div class="image-modal" *ngIf="(modal$ | async) == true">
+    <div class="modal-content">
+      <div class="close pointer" (click)="UpdateModal(false)">
+        <p>
+          <i class="material-icons">close</i>
+        </p>
+      </div>
+      <div class="image brown-text text-darken-2">
+        <img class="responsive-img" [src]="images.array[slide].image" [alt]="images.array[slide].title">
+        <div class="image-title flow-text">
+          <h4>{{ images.array[slide].title }}</h4>
+        </div>
+      </div>
+      <a class="prev" (click)="UpdateSlide(-1, images.array.length)">&#10094;</a>
+      <a class="next" (click)="UpdateSlide(1, images.array.length)">&#10095;</a>
+      <div class="other-images">
+        <span class="thumb" *ngFor="let image of images.array;  let i = index" (click)="SetSlide(i)">
+          <img [src]="image.image" [alt]="image.title">
+        </span>
+      </div>
     </div>
   </div>
 </div>

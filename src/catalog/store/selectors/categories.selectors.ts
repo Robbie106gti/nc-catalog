@@ -117,6 +117,11 @@ export const getSelectedCatImagesItem = createSelector(getCategories, fromRoot.g
     }
   });
   let arrayId = 0;
+  if (router.state.queryParams.mat) {
+    entity.image = entity.images[router.state.queryParams.mat]
+      ? entity.images[router.state.queryParams.mat].image
+      : entity.image;
+  }
   Object.keys(entity.images).map(id => {
     if (id === 'spec') {
       const defa = { image: entity.image, title: entity.title, arrayId };

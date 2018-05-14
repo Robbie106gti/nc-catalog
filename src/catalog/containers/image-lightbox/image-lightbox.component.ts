@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnChanges, SimpleChanges } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -10,21 +10,29 @@ import { of } from 'rxjs/observable/of';
   templateUrl: './image-lightbox.html',
   styleUrls: ['./image-lightbox.scss']
 })
-export class ImageLightboxComponent {
-  images: any;
+export class ImageLightboxComponent implements OnChanges {
+  images$: Observable<any>;
   modal$: Observable<boolean>;
   slide: number;
   total: number;
+  router$: Observable<any>;
   constructor(private store: Store<fromStore.ProductsState>) {
-    this.store
-      .select(fromStore.getSelectedCatImagesItem)
-      .take(1)
-      .subscribe(images => {
-        this.total = images.array.length;
-        this.images = images;
-      });
+    this.router$ = this.store.select(fromStore.getRouterQueryParams);
+    this.Take1();
     this.modal$ = this.store.select(fromStore.getModalState);
     this.slide = 0;
+  }
+
+  Take1() {
+    this.images$ = this.store.select(fromStore.getSelectedCatImagesItem).take(1);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('changes');
+    if (changes['router$']) {
+      console.log('hello');
+      this.Take1();
+    }
   }
 
   UpdateModal(modal) {
@@ -33,10 +41,10 @@ export class ImageLightboxComponent {
   SetSlide(slide) {
     this.slide = slide;
   }
-  UpdateSlide(slide) {
+  UpdateSlide(slide, total) {
     slide = this.slide + slide;
-    if (this.total === slide) slide = 0;
-    if (slide < 0) slide = this.total - 1;
+    if (total === slide) slide = 0;
+    if (slide < 0) slide = total - 1;
     this.slide = slide;
   }
 }
