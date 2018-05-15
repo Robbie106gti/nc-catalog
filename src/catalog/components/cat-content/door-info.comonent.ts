@@ -1,4 +1,8 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import * as fromStore from '../../store';
 
 @Component({
   selector: 'door-info',
@@ -8,6 +12,11 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 export class DoorInfoComponent {
   @Input() content: any;
   @Input() user: any;
+  images$: Observable<any>;
+  modal$: Observable<boolean>;
 
-  constructor() {}
+  constructor(private store: Store<fromStore.ProductsState>) {
+    this.images$ = this.store.select(fromStore.catagoryImages);
+    this.modal$ = this.store.select(fromStore.getModalState);
+  }
 }

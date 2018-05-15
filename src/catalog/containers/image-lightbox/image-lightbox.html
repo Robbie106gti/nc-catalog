@@ -17,12 +17,12 @@
 
   <!-- The Modal/Lightbox -->
   <div class="image-modal" *ngIf="(modal$ | async) == true">
+    <div class="close pointer" (click)="UpdateModal(false)">
+      <p>
+        <i class="material-icons">close</i>
+      </p>
+    </div>
     <div class="modal-content">
-      <div class="close pointer" (click)="UpdateModal(false)">
-        <p>
-          <i class="material-icons">close</i>
-        </p>
-      </div>
       <div class="image brown-text text-darken-2">
         <img class="responsive-img" [src]="images.array[slide].image" [alt]="images.array[slide].title">
         <div class="image-title flow-text">

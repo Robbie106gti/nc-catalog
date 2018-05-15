@@ -24,8 +24,11 @@ import { User } from '../../models/user.model';
         </div>
       </div>
 
-      <div class="row" id="catalog">
-        <cat-content [content]="content" [user]="(user$ | async)"></cat-content>
+      <div class="row" id="catalog" *ngIf="(user$ | async) as user">
+        <versions-doors *ngIf="content.doorstyle" class="row" [content]="content" [user]="user" (edit)="Edit($event)"></versions-doors>
+        <cat-content [content]="content" [user]="user"></cat-content>
+        <gen-info *ngIf="content.sub == 'General Information'" [content]="content"></gen-info>
+        <door-info *ngIf="content.sub == 'Doors'" [content]="content" [user]="user"></door-info>
       </div>
     </div>
   `,
@@ -50,5 +53,9 @@ export class SpecCatComponent implements OnInit {
     this.user$ = this.store.select(fromStore.getUserData);
     this.content$ = this.store.select(fromStore.getSelectedCategoryItem).take(1);
     this.version$ = this.store.select(fromStore.getRouterQueryParams);
+  }
+
+  Edit(event) {
+    console.log(event);
   }
 }
