@@ -34,7 +34,7 @@ import { of } from 'rxjs/observable/of';
     </div>
 
     <ng-template #Doors>
-      <doors [filtered]="filtered"></doors>
+      <doors></doors>
     </ng-template>
   `
 })
@@ -43,7 +43,7 @@ export class CatViewComponent implements OnInit {
   cat$: Observable<any>;
   category$: Observable<any[]>;
   materials: Observable<any[]>;
-  filtered: Observable<any> = of(false);
+  filtered: boolean;
 
   constructor(private store: Store<fromStore.ProductsState>) {}
 
@@ -53,10 +53,11 @@ export class CatViewComponent implements OnInit {
   }
 
   Filter(event) {
+    this.filtered = false;
     this.store.dispatch({ type: fromStore.FILTER_MAT, payload: event });
     Object.entries(event).map(([key, value]) => {
-      // console.log(key, value);
-      if (value) return (this.filtered = of(value));
+      console.log(key, value);
+      if (value) return (this.filtered = true);
     });
     this.store.dispatch({ type: fromStore.FILTER, payload: this.filtered });
     this.materials = event;

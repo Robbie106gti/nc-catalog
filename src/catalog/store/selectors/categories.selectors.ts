@@ -16,7 +16,7 @@ export const getCategoriesLineState = createSelector(
   getCategoriesState,
   fromRoot.getRouterState,
   (categories, router) => {
-    // console.log(categories, router);
+    console.log(categories[router.state.params.Cat].entities, router);
     return categories[router.state.params.Cat];
   }
 );
@@ -33,73 +33,32 @@ export const getSelectedCategoryLine = createSelector(
 );
 
 export const getCategories = createSelector(
-  getCategoriesEntities,
+  getCategoriesState,
+  fromRoot.getRouterState,
   fromRoot.getUserRoles,
-  (entities, roles): Categories[] => {
+  (categories, router, roles): Categories[] => {
+    const entities = router.state.params.Cat ? categories[router.state.params.Cat].entities : null;
+    console.log(entities);
+    if (entities == null) return entities;
     let list = Object.keys(entities).map(id => entities[id]);
     list = roles.dealer ? list.filter(li => li['active']) : list;
     return list;
   }
 );
 
-export const getDoorsCategory = createSelector(
-  getCategoriesEntities,
+export const dealerVisisibleDoors = createSelector(
+  getCategoriesState,
+  fromRoot.getRouterState,
   fromRoot.getUserRoles,
+  filterByRoleDealer
+);
+export const filteredVisibleDoors = createSelector(
+  dealerVisisibleDoors,
   getFilterState,
   getFilterMaterials,
-  (entities, roles, filter, filtered): Categories[] => {
-    if (!entities) return new Array();
-    const material = new Array();
-    const matfiltered = [];
-    let list = Object.keys(entities).map(id => entities[id]);
-    console.log(filter, filtered, material);
-    if (filter) {
-      Object.entries(filtered).map(([key, value]) => {
-        console.log(key, value);
-        if (value) material.push(key);
-      });
-      list.filter(li => {
-        const materials = li['materials'] ? li['materials'] : ['none'];
-        let addTo = false;
-        material.forEach(mat => {
-          if (!materials.includes(mat)) return;
-          addTo = true;
-        });
-        if (addTo) matfiltered.push(li);
-      });
-      console.log(filter, filtered, material);
-    }
-    list = filter ? matfiltered : list;
-    list = roles.dealer ? list.filter(li => li['active']) : list;
-    const slab = list.filter(door => door['doorstyle'] === 'slab face door');
-    const recessed = list.filter(door => door['doorstyle'] === 'recessed panel door');
-    const raised = list.filter(door => door['doorstyle'] === 'raised panel door');
-    const metal = list.filter(door => door['doorstyle'] === 'metal door');
-    const doors: any = {
-      slab,
-      recessed,
-      raised,
-      metal
-    };
-    return doors;
-  }
+  filterDoors
 );
-
-export const dealerVisisibleDoors = createSelector(getCategoriesEntities, fromRoot.getUserRoles, filterByRoleDealer);
-export const filteredVisibleDoors = createSelector(dealerVisisibleDoors, getFilterMaterials, filterDoors);
-export const filteredAndOrganizedDoors = createSelector(filteredVisibleDoors, list => {
-  const slab = list.filter(door => door['doorstyle'] === 'slab face door');
-  const recessed = list.filter(door => door['doorstyle'] === 'recessed panel door');
-  const raised = list.filter(door => door['doorstyle'] === 'raised panel door');
-  const metal = list.filter(door => door['doorstyle'] === 'metal door');
-  const doors: any = {
-    slab,
-    recessed,
-    raised,
-    metal
-  };
-  return doors;
-});
+export const filteredAndOrganizedDoors = createSelector(filteredVisibleDoors, organizeDoors);
 
 export const getCategoriesLoaded = createSelector(getCategoriesLineState, fromCategories.getCategoriesLoaded);
 
@@ -151,17 +110,15 @@ function organizeImages(entity, router) {
   return images;
 }
 
-function filterDoors(entities, filtered) {
-  entities = Object.keys(entities).map(id => entities[id]);
-  const list = entities;
-  console.log(filtered);
+function filterDoors(entities, filter, filtered) {
+  if (!filter) return entities;
   const material = new Array();
   const matfiltered = [];
   Object.entries(filtered).map(([key, value]) => {
     if (value) material.push(key);
   });
   if (material.length >= 1) {
-    list.filter(li => {
+    entities.filter(li => {
       const materials = li['materials'] ? li['materials'] : ['none'];
       let addTo = false;
       material.forEach(mat => {
@@ -171,10 +128,11 @@ function filterDoors(entities, filtered) {
       if (addTo) matfiltered.push(li);
     });
   }
-  return material.length >= 1 ? matfiltered : entities;
+  return matfiltered;
 }
 
 function organizeDoors(list) {
+  if (list === null) return list;
   const slab = list.filter(door => door['doorstyle'] === 'slab face door');
   const recessed = list.filter(door => door['doorstyle'] === 'recessed panel door');
   const raised = list.filter(door => door['doorstyle'] === 'raised panel door');
@@ -188,7 +146,9 @@ function organizeDoors(list) {
   return doors;
 }
 
-function filterByRoleDealer(entities, roles) {
+function filterByRoleDealer(categories, router, roles) {
+  let entities = router.state.params.Cat ? categories[router.state.params.Cat].entities : null;
+  if (entities == null) return entities;
   entities = Object.keys(entities).map(id => entities[id]);
   entities = roles.dealer ? entities.filter(li => li['active']) : entities;
   return entities;

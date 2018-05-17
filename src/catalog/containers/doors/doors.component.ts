@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -35,7 +35,6 @@ import * as fromStore from '../../store';
     </div>
   </div>
 </div>
-
   `,
   styles: [
     `
@@ -48,10 +47,9 @@ import * as fromStore from '../../store';
 export class DoorsComponent {
   doorstyle: string = 'slab';
   doors$: Observable<any>;
-  @Input() filtered: Observable<boolean>;
 
   constructor(private store: Store<fromStore.ProductsState>) {
-    this.doors$ = this.store.select(fromStore.getDoorsCategory);
+    this.doors$ = this.store.select(fromStore.filteredAndOrganizedDoors);
   }
 
   Menu(style) {
