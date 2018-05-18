@@ -10,15 +10,15 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
       <i class="material-icons">add</i>
     </div>
     <div *ngFor="let version of content.materials">
-      <a [routerLink]="['./']" [queryParams]="{ mat: version }">
-        <div class="col s3 m2 l1 card padding">
+      <a [routerLink]="['./']" [queryParams]="{ mat: version }" (click)="setMat(version)">
+        <div class="col s3 m2 l1 card padding" [ngClass]="{ 'brown lighten-5': mat == version }">
           <div class="card-image waves-effect waves-block waves-light imgh">
             <img *ngIf="content.images[version]; else Default" class="responsive-img" [alt]="content.images[version].title" [src]="content.images[version].image"
             />
           </div>
           <div class="card-content conth">
-            <span class="card-title activator grey-text text-darken-4">{{ content.title | titlecase }}</span>
-            <p>{{ version | titlecase }}</p>
+            <h6 class="activator grey-text text-darken-4">{{ version | titlecase }}</h6>
+            <p class="grey-text">{{ content.title | titlecase }}</p>
           </div>
         </div>
       </a>
@@ -43,6 +43,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
       .card {
         margin-right: 0.5rem !important;
       }
+
       `
   ]
 })
@@ -50,8 +51,11 @@ export class VersionsDoorsrComponent {
   @Input() content: any;
   @Input() user: any;
   @Output() edit = new EventEmitter<any>();
-  image: string;
+  mat: string;
   Edit(event) {
     this.edit.emit(event);
+  }
+  setMat(mat) {
+    this.mat = mat;
   }
 }

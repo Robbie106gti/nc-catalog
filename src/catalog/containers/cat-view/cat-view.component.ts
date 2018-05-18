@@ -22,7 +22,7 @@ import { of } from 'rxjs/observable/of';
             </div>
         </div>
       </div>
-      <div class="row grid" id="catalog" *ngIf="cat.title !== 'Doors'; else Doors">
+      <div class="row grid" id="catalog" *ngIf="cat.title !== 'Doors' && cat.title !== 'Materials and Finishes'">
         <div *ngIf="!((category$ | async)?.length)">
           No items in category, add one to get started.
         </div>
@@ -31,11 +31,9 @@ import { of } from 'rxjs/observable/of';
           [item]="category" class="card">
         </category-view>
       </div>
+      <doors *ngIf="cat.title === 'Doors'"></doors>
+      <materials *ngIf="cat.title === 'Materials and Finishes'"></materials>
     </div>
-
-    <ng-template #Doors>
-      <doors></doors>
-    </ng-template>
   `
 })
 export class CatViewComponent implements OnInit {
@@ -56,7 +54,6 @@ export class CatViewComponent implements OnInit {
     this.filtered = false;
     this.store.dispatch({ type: fromStore.FILTER_MAT, payload: event });
     Object.entries(event).map(([key, value]) => {
-      console.log(key, value);
       if (value) return (this.filtered = true);
     });
     this.store.dispatch({ type: fromStore.FILTER, payload: this.filtered });

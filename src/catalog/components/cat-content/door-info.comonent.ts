@@ -13,6 +13,7 @@ export class DoorInfoComponent {
   @Input() content: any;
   @Input() user: any;
   images$: Observable<any>;
+  @Input() version$: Observable<any>;
   modal$: Observable<boolean>;
 
   constructor(private store: Store<fromStore.ProductsState>) {

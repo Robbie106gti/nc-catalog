@@ -8,18 +8,30 @@ declare var $: any;
   template: `
   <ul class="tabs tabs-fixed-width tab-demo z-depth-1">
     <li class="tab col s3">
-      <a (click)="selStyle('slab')">Slab Face Doors</a>
+      <a class="brown-text" (click)="selStyle('slab')">Slab Face Doors</a>
     </li>
     <li class="tab col s3">
-      <a (click)="selStyle('recessed')">Recessed Panel Doors</a>
+      <a class="brown-text" (click)="selStyle('recessed')">Recessed Panel Doors</a>
     </li>
     <li class="tab col s3">
-      <a (click)="selStyle('raised')">Raised Panel Doors</a>
+      <a class="brown-text" (click)="selStyle('raised')">Raised Panel Doors</a>
     </li>
     <li class="tab col s3">
-      <a (click)="selStyle('metal')">Metal Doors</a>
+      <a class="brown-text" (click)="selStyle('metal')">Metal Doors</a>
     </li>
-  </ul>`
+  </ul>`,
+  styles: [
+    `
+  a.active {
+    font-weight: 450 !important;
+    background-color: #efebe9 !important;
+  }
+.tabs>li.indicator {
+    height: 3px !important;
+    background-color: #efebe9 !important;
+}
+    `
+  ]
 })
 export class DoorMenuComponent {
   @Output() menu = new EventEmitter<any>();

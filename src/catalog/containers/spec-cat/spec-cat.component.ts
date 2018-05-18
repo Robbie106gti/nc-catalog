@@ -28,7 +28,7 @@ import { User } from '../../models/user.model';
         <versions-doors *ngIf="content.doorstyle" class="row" [content]="content" [user]="user" (edit)="Edit($event)"></versions-doors>
         <cat-content [content]="content" [user]="user"></cat-content>
         <gen-info *ngIf="content.sub == 'General Information'" [content]="content"></gen-info>
-        <door-info *ngIf="content.sub == 'Doors'" [content]="content" [user]="user"></door-info>
+        <door-info *ngIf="content.sub == 'Doors'" [content]="content" [version$]="version$" [user]="user"></door-info>
       </div>
     </div>
   `,

@@ -5,6 +5,10 @@
         <li class="collection-header">
           <h5>Specifications</h5>
         </li>
+        <li class="collection-item" *ngIf="(version$ | async).mat">
+          <span>
+            <b>Material: </b>{{ (version$ | async).mat | titlecase }}</span>
+        </li>
         <li class="collection-item">
           <span>
             <b>Finishing: </b>{{ content.finishing }}</span>
@@ -19,7 +23,7 @@
         </li>
         <li class="collection-item">
           <span>
-            <b>Construction: </b>{{ content.construction.default }}</span>
+            <b>Construction: </b>{{ content.construction[((version$ | async).mat)] || content.construction.default }}</span>
         </li>
         <li class="collection-item">
           <span>
@@ -27,7 +31,7 @@
         </li>
         <li class="collection-item">
           <span>
-            <b>Restrictions: </b>{{ content.restrictions.default }}</span>
+            <b>Restrictions: </b>{{ content.restrictions[((version$ | async).mat)] || content.restrictions.default }}</span>
         </li>
       </ul>
       <div class="doorGrid">

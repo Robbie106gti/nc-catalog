@@ -10,6 +10,7 @@ import { OnOffComponent } from '../components/buttons/on-off.component';
 import { DoorsComponent } from './doors/doors.component';
 import { DoorMenuComponent } from './doors/door-menu.component';
 import { ImageLightboxComponent } from './image-lightbox/image-lightbox.component';
+import { MaterialsComponent } from './materials/materials.component';
 
 export const containers: any[] = [
   CategoriesComponent,
@@ -22,7 +23,8 @@ export const containers: any[] = [
   OnOffComponent,
   DoorsComponent,
   DoorMenuComponent,
-  ImageLightboxComponent
+  ImageLightboxComponent,
+  MaterialsComponent
 ];
 
 // export * from ''
@@ -37,3 +39,4 @@ export * from '../components/buttons/on-off.component';
 export * from './doors/doors.component';
 export * from './doors/door-menu.component';
 export * from './image-lightbox/image-lightbox.component';
+export * from './materials/materials.component';

@@ -15,10 +15,7 @@ export const getCategoriesState = createSelector(
 export const getCategoriesLineState = createSelector(
   getCategoriesState,
   fromRoot.getRouterState,
-  (categories, router) => {
-    console.log(categories[router.state.params.Cat].entities, router);
-    return categories[router.state.params.Cat];
-  }
+  (categories, router) => categories[router.state.params.Cat]
 );
 
 export const getCategoriesEntities = createSelector(getCategoriesLineState, fromCategories.getCategoriesEntities);
@@ -38,7 +35,7 @@ export const getCategories = createSelector(
   fromRoot.getUserRoles,
   (categories, router, roles): Categories[] => {
     const entities = router.state.params.Cat ? categories[router.state.params.Cat].entities : null;
-    console.log(entities);
+    // console.log(entities);
     if (entities == null) return entities;
     let list = Object.keys(entities).map(id => entities[id]);
     list = roles.dealer ? list.filter(li => li['active']) : list;
@@ -106,12 +103,12 @@ function organizeImages(entity, router) {
     images.array.push(entity.images[id]);
     arrayId++;
   });
-
   return images;
 }
 
 function filterDoors(entities, filter, filtered) {
   if (!filter) return entities;
+  if (!entities) return entities;
   const material = new Array();
   const matfiltered = [];
   Object.entries(filtered).map(([key, value]) => {
