@@ -2,15 +2,7 @@ import { Injectable, Pipe } from '@angular/core';
 
 import { Effect, Actions } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
-import {
-  map,
-  switchMap,
-  catchError,
-  mergeMap,
-  take,
-  delayWhen,
-  takeWhile
-} from 'rxjs/operators';
+import { map, switchMap, catchError, mergeMap, take, delayWhen, takeWhile } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -36,17 +28,15 @@ export class CabinetsEffects {
   @Effect()
   loadCabinets$ = this.actions$.ofType(cabinetsActions.LOAD_CABINETS).pipe(
     switchMap(cabinets => {
-      return this.firestoreService
-        .colWithIds$(`structure/cabinets/${cabinets['payload'].toLowerCase()}`)
-        .pipe(
-          map(bases => {
-            const base = bases.map(b => {
-              return { ...b, sub: cabinets['payload'], cabinet: true };
-            });
-            return new cabinetsActions.LoadCabinetsSuccess(base);
-          }),
-          catchError(error => of(new cabinetsActions.LoadCabinetsFail(error)))
-        );
+      return this.firestoreService.colWithIds$(`structure/cabinets/${cabinets['payload'].split('-').join(' ')}`).pipe(
+        map(bases => {
+          const base = bases.map(b => {
+            return { ...b, sub: cabinets['payload'], cabinet: true };
+          });
+          return new cabinetsActions.LoadCabinetsSuccess(base);
+        }),
+        catchError(error => of(new cabinetsActions.LoadCabinetsFail(error)))
+      );
     })
   );
 
@@ -65,15 +55,11 @@ export class CabinetsEffects {
           switch (cat) {
             case 'specifications': {
               if (update.version === 'main') {
-                cab.specifications = cab.specifications
-                  ? cab.specifications
-                  : [];
+                cab.specifications = cab.specifications ? cab.specifications : [];
                 cab.specifications.push(update.id);
                 value = { [cat]: cab.specifications };
               } else {
-                const spec = versions[update.version].specifications
-                  ? versions[update.version].specifications
-                  : [];
+                const spec = versions[update.version].specifications ? versions[update.version].specifications : [];
                 spec.push(update.id);
                 versions[update.version].specifications = spec;
                 value = { versions };
@@ -99,9 +85,7 @@ export class CabinetsEffects {
                 cab.iwhd[key] = update.id;
                 value = { [cat]: cab.iwhd };
               } else {
-                const iwhd = versions[update.version].iwhd
-                  ? versions[update.version].iwhd
-                  : {};
+                const iwhd = versions[update.version].iwhd ? versions[update.version].iwhd : {};
                 // tslint:disable-next-line:triple-equals
                 if (key == 'height') {
                   key = 'heights';
@@ -130,9 +114,7 @@ export class CabinetsEffects {
                 cab.notes.push(update.value.id);
                 value = { [cat]: cab.notes };
               } else {
-                const notes = versions[update.version].notes
-                  ? versions[update.version].notes
-                  : [];
+                const notes = versions[update.version].notes ? versions[update.version].notes : [];
                 notes.push(update.value.id);
                 versions[update.version].notes = notes;
                 value = { versions };
@@ -145,9 +127,7 @@ export class CabinetsEffects {
                 cab.addons.push(update.value.id);
                 value = { [cat]: cab.addons };
               } else {
-                const addons = versions[update.version].addons
-                  ? versions[update.version].addons
-                  : [];
+                const addons = versions[update.version].addons ? versions[update.version].addons : [];
                 addons.push(update.value.id);
                 versions[update.version].addons = addons;
                 value = { versions };
@@ -164,10 +144,10 @@ export class CabinetsEffects {
               break;
             }
           }
-          this.firestoreService.update(
-            `structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`,
-            { ...value, updatedBy: update.user.fullName }
-          );
+          this.firestoreService.update(`structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`, {
+            ...value,
+            updatedBy: update.user.fullName
+          });
           return new cabinetsActions.UpdateEditCabSuccess({
             ...cab,
             update,
@@ -180,70 +160,68 @@ export class CabinetsEffects {
   );
 
   @Effect()
-  RemoveFromCab$ = this.actions$
-    .ofType(cabinetsActions.REMOVE_FROM_CABINET)
-    .pipe(
-      switchMap(updates => {
-        // console.log(updates);
-        return this.store.select(fromStore.getSelectedCabinetItem).pipe(
-          take(1),
-          map(cab => {
-            const update = updates['payload'];
-            const cat = update.sub.toLowerCase();
-            const versions = cab.versions;
-            let value;
-            switch (cat) {
-              case 'specifications': {
-                if (update.version === 'main') {
-                  value = cab.specifications.filter(item => item !== update.id);
-                  value = { [cat]: value };
-                } else {
-                  let spec = versions[update.version].specifications;
-                  spec = spec.filter(item => item !== update.id);
-                  versions[update.version].specifications = spec;
-                  value = { versions };
-                }
-                break;
+  RemoveFromCab$ = this.actions$.ofType(cabinetsActions.REMOVE_FROM_CABINET).pipe(
+    switchMap(updates => {
+      // console.log(updates);
+      return this.store.select(fromStore.getSelectedCabinetItem).pipe(
+        take(1),
+        map(cab => {
+          const update = updates['payload'];
+          const cat = update.sub.toLowerCase();
+          const versions = cab.versions;
+          let value;
+          switch (cat) {
+            case 'specifications': {
+              if (update.version === 'main') {
+                value = cab.specifications.filter(item => item !== update.id);
+                value = { [cat]: value };
+              } else {
+                let spec = versions[update.version].specifications;
+                spec = spec.filter(item => item !== update.id);
+                versions[update.version].specifications = spec;
+                value = { versions };
               }
-              case 'iwhd': {
-                let key = update.title.toLowerCase();
-                // tslint:disable-next-line:triple-equals
-                if (key == 'height') {
-                  key = 'heights';
-                }
-                // tslint:disable-next-line:triple-equals
-                if (key == 'width') {
-                  key = 'widths';
-                }
-                // tslint:disable-next-line:triple-equals
-                if (key == 'depth') {
-                  key = 'depths';
-                }
-                if (update.version === 'main') {
-                  value = cab.iwhd;
-                  delete value[key];
-                  value = { [cat]: value };
-                } else {
-                  delete versions[update.version].iwhd[key];
-                  value = { versions };
-                }
-                break;
-              }
+              break;
             }
-            this.firestoreService.update(
-              `structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`,
-              { ...value, updatedBy: update.user.fullName }
-            );
-            return new cabinetsActions.UpdateEditCabSuccess({
-              ...cab,
-              update,
-              Updated: { key: cat, value, toDo: update.toDo }
-            });
-          }),
-          catchError(error => of(new cabinetsActions.UpdateEditCabFail(error)))
-        );
-      })
-    );
+            case 'iwhd': {
+              let key = update.title.toLowerCase();
+              // tslint:disable-next-line:triple-equals
+              if (key == 'height') {
+                key = 'heights';
+              }
+              // tslint:disable-next-line:triple-equals
+              if (key == 'width') {
+                key = 'widths';
+              }
+              // tslint:disable-next-line:triple-equals
+              if (key == 'depth') {
+                key = 'depths';
+              }
+              if (update.version === 'main') {
+                value = cab.iwhd;
+                delete value[key];
+                value = { [cat]: value };
+              } else {
+                delete versions[update.version].iwhd[key];
+                value = { versions };
+              }
+              break;
+            }
+          }
+          this.firestoreService.update(`structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`, {
+            ...value,
+            updatedBy: update.user.fullName
+          });
+          return new cabinetsActions.UpdateEditCabSuccess({
+            ...cab,
+            update,
+            Updated: { key: cat, value, toDo: update.toDo }
+          });
+        }),
+        catchError(error => of(new cabinetsActions.UpdateEditCabFail(error)))
+      );
+    })
+  );
 
   @Effect()
   UploadCab$ = this.actions$.ofType(cabinetsActions.UPLOAD_CABINET).pipe(
@@ -282,24 +260,22 @@ export class CabinetsEffects {
         map(cab => {
           this.firestoreService.add('updates/images/uploads', image);
           if (ob.version === 'main') {
-            this.firestoreService.update(
-              `structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`,
-              { image: image.url, updatedBy: image.uploadBy }
-            );
+            this.firestoreService.update(`structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`, {
+              image: image.url,
+              updatedBy: image.uploadBy
+            });
             // console.log({ 'image': image.url, 'updatedBy': image.uploadBy, string: `cabinets/${cab.sub}/${cab.id}` });
           } else {
-            const images = cab.versions[ob.version].images
-              ? cab.versions[ob.version].images
-              : {};
+            const images = cab.versions[ob.version].images ? cab.versions[ob.version].images : {};
             const title = image.type === 'spec' ? 'Spec' : '';
             cab.versions[ob.version].images = {
               ...images,
               [image.type]: { title, image: image.url }
             };
-            this.firestoreService.update(
-              `structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`,
-              { versions: cab.versions, updatedBy: image.uploadBy }
-            );
+            this.firestoreService.update(`structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`, {
+              versions: cab.versions,
+              updatedBy: image.uploadBy
+            });
             // console.log({ versions: cab.versions, 'updatedBy': image.uploadBy, string: `cabinets/${cab.sub}/${cab.id}` });
           }
           return new cabinetsActions.DownloadUrlSuccess(image);

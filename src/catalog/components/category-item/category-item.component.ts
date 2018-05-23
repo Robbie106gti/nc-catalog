@@ -1,15 +1,9 @@
-import {
-    Component,
-    Input,
-    Output,
-    EventEmitter,
-    ChangeDetectionStrategy,
-  } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
-  @Component({
-    selector: 'category-item',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+@Component({
+  selector: 'category-item',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <tool-item  *ngIf="user"
         [category]="category"
         [user]="user"
@@ -18,7 +12,7 @@ import {
         (remove)="UnbookmarkIt($event)"
         (turnOn)="Active($event)"
         (turnOff)="Unactive($event)"></tool-item>
-    <a *ngIf="!category.cabinet; else cabinet" [routerLink]="['./category', category.title]">
+    <a *ngIf="!category.cabinet; else cabinet" [routerLink]="['./category', category.link]">
         <div class="card-image waves-effect waves-block waves-light">
             <img class="image20 activator" src="{{category.image}}">
         </div>
@@ -29,7 +23,7 @@ import {
     </a>
 
     <ng-template #cabinet>
-        <a [routerLink]="['./cabinets', category.title]">
+        <a [routerLink]="['./cabinets', category.link]">
             <div class="card-image waves-effect waves-block waves-light">
                 <img class="image20 activator" src="{{category.image}}">
             </div>
@@ -39,19 +33,27 @@ import {
             </div>
         </a>
     </ng-template>
-    `,
-  })
-  export class CategoryItemComponent {
-    @Input() category: any;
-    @Input() user: any;
-    @Input() userFavs: any;
-    @Output() add = new EventEmitter<any>();
-    @Output() remove = new EventEmitter<any>();
-    @Output() turnOn = new EventEmitter<any>();
-    @Output() turnOff = new EventEmitter<any>();
+    `
+})
+export class CategoryItemComponent {
+  @Input() category: any;
+  @Input() user: any;
+  @Input() userFavs: any;
+  @Output() add = new EventEmitter<any>();
+  @Output() remove = new EventEmitter<any>();
+  @Output() turnOn = new EventEmitter<any>();
+  @Output() turnOff = new EventEmitter<any>();
 
-    BookmarkIt(event)   { this.add.emit(event); }
-    UnbookmarkIt(event) { this.remove.emit(event); }
-    Active(event)       { this.turnOn.emit(event); }
-    Unactive(event)     { this.turnOff.emit(event); }
+  BookmarkIt(event) {
+    this.add.emit(event);
   }
+  UnbookmarkIt(event) {
+    this.remove.emit(event);
+  }
+  Active(event) {
+    this.turnOn.emit(event);
+  }
+  Unactive(event) {
+    this.turnOff.emit(event);
+  }
+}

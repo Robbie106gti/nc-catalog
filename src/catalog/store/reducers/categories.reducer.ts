@@ -1,5 +1,6 @@
 import * as fromCategories from '../actions/categories.action';
 import { Categories } from '../../models/categories.model';
+import * as common from '../../utils/common';
 
 export interface CategoriesState {
   Accessories: CategoriesLine;
@@ -85,7 +86,7 @@ export function reducer(state = initialState, action: fromCategories.CategoriesA
       const entities = category.reduce(
         // tslint:disable-next-line:no-shadowed-variable
         (entities: { [id: string]: Categories }, cat: Categories) => {
-          return { ...entities, [cat.title]: { ...cat } };
+          return { ...entities, [common.makelink(cat.title)]: { ...cat, link: common.makelink(cat.title) } };
         },
         { ...state[category[0].sub].entities }
       );

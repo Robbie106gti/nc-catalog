@@ -108,15 +108,7 @@ export const getCabSpecs = createSelector(
       spec[a] = spec[a].map(id => specs[id]);
     });
     spec['v'] = router.state.params.Version ? router.state.params.Version : 'main';
-    // console.log(spec, arr);
     return spec;
-
-    /* let specifications = cab.specifications ? cab.specifications : [];
-        if (router.state.params.Version && cab.versions[router.state.params.Version].specifications) {
-            specifications = specifications.concat(cab.versions[router.state.params.Version].specifications);
-        }
-        if (specifications.length === undefined) { return []; }
-        return specifications.map(cabSpec => specs[cabSpec]); */
   }
 );
 
@@ -155,30 +147,7 @@ export const getCabIWHDs = createSelector(
       iwhd[a] = iwhd[a].map(id => iwhds[id]);
     });
     iwhd['v'] = router.state.params.Version ? router.state.params.Version : 'main';
-    // console.log(iwhd, ty);
     return iwhd;
-
-    /*         const fish = new Array();
-        let width = 'default';
-        let height = 'default';
-        let depth = 'default';
-        let incre = 'SKR683fyZIN2ndh9C1as';
-        if (cab.iwhd) {
-            width = cab.iwhd.widths ? cab.iwhd.widths : width;
-            height = cab.iwhd.heights ? cab.iwhd.heights : height;
-            depth = cab.iwhd.depths ? cab.iwhd.depths : depth;
-            incre = cab.iwhd.increments ? cab.iwhd.increments : incre;
-        }
-        if (router.state.params.Version && cab.versions[router.state.params.Version].iwhd) {
-            width = cab.versions[router.state.params.Version].iwhd.widths ? cab.versions[router.state.params.Version].iwhd.widths : width;
-            height = cab.versions[router.state.params.Version].iwhd.heights ? cab.versions[router.state.params.Version].iwhd.heights : height;
-            depth = cab.versions[router.state.params.Version].iwhd.depths ? cab.versions[router.state.params.Version].iwhd.depths : depth;
-            incre = cab.versions[router.state.params.Version].iwhd.increments ? cab.versions[router.state.params.Version].iwhd.increments : incre;
-        }
-        const array = [ incre, depth, height, width ];
-        if (array.length === 0) { return []; }
-        array.map(i => i !== 'default' ? fish.push(iwhds[i]) : null);
-        return fish; */
   }
 );
 

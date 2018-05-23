@@ -1,5 +1,6 @@
 import * as fromCatalog from '../actions/catalog.action';
 import { Catalog } from '../../models/catalog.model';
+import * as common from '../../utils/common';
 
 export interface CatalogState {
   entities: { [id: string]: Catalog };
@@ -10,19 +11,15 @@ export interface CatalogState {
 export const initialState: CatalogState = {
   entities: {},
   loaded: false,
-  loading: false,
+  loading: false
 };
 
-export function reducer(
-  state = initialState,
-  action: fromCatalog.CatalogAction
-): CatalogState {
+export function reducer(state = initialState, action: fromCatalog.CatalogAction): CatalogState {
   switch (action.type) {
-
     case fromCatalog.LOAD_CATALOG: {
       return {
         ...state,
-        loading: true,
+        loading: true
       };
     }
 
@@ -32,16 +29,17 @@ export function reducer(
       catagories.sort((a, b) => a.sort - b.sort);
       const entities = catagories.reduce(
         // tslint:disable-next-line:no-shadowed-variable
-      (entities: { [id: string]: Catalog }, cat: Catalog) => {
-        return { ...entities, [cat.title]: { ...cat} };
-      },
-      { ...state.entities, });
+        (entities: { [id: string]: Catalog }, cat: Catalog) => {
+          return { ...entities, [common.makelink(cat.title)]: { ...cat, link: common.makelink(cat.title) } };
+        },
+        { ...state.entities }
+      );
 
       return {
         ...state,
         loading: false,
         loaded: true,
-        entities,
+        entities
       };
     }
 
@@ -49,7 +47,7 @@ export function reducer(
       return {
         ...state,
         loading: false,
-        loaded: false,
+        loaded: false
       };
     }
   }

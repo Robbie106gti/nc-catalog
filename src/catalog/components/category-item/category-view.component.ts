@@ -17,7 +17,7 @@ import * as fromStore from '../../store';
         (remove)="UnbookmarkIt($event)"
         (turnOn)="Active($event)"
         (turnOff)="Unactive($event)"></tool-item>
-    <a [routerLink]="[item.title]">
+    <a [routerLink]="[item.link]">
         <div class="card-image waves-effect waves-block waves-light">
           <div class="bottom hide-on-med-and-down" *ngFor="let mat of item.materials">
           <div *ngFor="let mat of item.materials">
