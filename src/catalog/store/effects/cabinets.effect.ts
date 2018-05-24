@@ -5,6 +5,7 @@ import { of } from 'rxjs/observable/of';
 import { map, switchMap, catchError, mergeMap, take, delayWhen, takeWhile } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import * as common from '../../utils/common';
 
 import * as fromStore from '../../store';
 import * as fromRoot from '../../../app/store';
@@ -27,11 +28,11 @@ export class CabinetsEffects {
 
   @Effect()
   loadCabinets$ = this.actions$.ofType(cabinetsActions.LOAD_CABINETS).pipe(
-    switchMap(cabinets => {
-      return this.firestoreService.colWithIds$(`structure/cabinets/${cabinets['payload'].split('-').join(' ')}`).pipe(
+    switchMap((cabinets: Ap) => {
+      return this.firestoreService.colWithIds$(`structure/cabinets/${cabinets.payload.split('-').join(' ')}`).pipe(
         map(bases => {
           const base = bases.map(b => {
-            return { ...b, sub: cabinets['payload'], cabinet: true };
+            return { ...b, sub: cabinets.payload, cabinet: true };
           });
           return new cabinetsActions.LoadCabinetsSuccess(base);
         }),
@@ -144,7 +145,7 @@ export class CabinetsEffects {
               break;
             }
           }
-          this.firestoreService.update(`structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`, {
+          this.firestoreService.update(`structure/cabinets/${common.prepareFirestore(cab.sub)}/${cab.id}`, {
             ...value,
             updatedBy: update.user.fullName
           });
@@ -208,7 +209,7 @@ export class CabinetsEffects {
               break;
             }
           }
-          this.firestoreService.update(`structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`, {
+          this.firestoreService.update(`structure/cabinets/${common.prepareFirestore(cab.sub)}/${cab.id}`, {
             ...value,
             updatedBy: update.user.fullName
           });
@@ -260,7 +261,7 @@ export class CabinetsEffects {
         map(cab => {
           this.firestoreService.add('updates/images/uploads', image);
           if (ob.version === 'main') {
-            this.firestoreService.update(`structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`, {
+            this.firestoreService.update(`structure/cabinets/${common.prepareFirestore(cab.sub)}/${cab.id}`, {
               image: image.url,
               updatedBy: image.uploadBy
             });
@@ -272,7 +273,7 @@ export class CabinetsEffects {
               ...images,
               [image.type]: { title, image: image.url }
             };
-            this.firestoreService.update(`structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`, {
+            this.firestoreService.update(`structure/cabinets/${common.prepareFirestore(cab.sub)}/${cab.id}`, {
               versions: cab.versions,
               updatedBy: image.uploadBy
             });
@@ -284,41 +285,4 @@ export class CabinetsEffects {
       );
     })
   );
-
-  /*   @Effect()
-  batchEditSection$ = this.actions$.ofType(cabinetsActions.LOAD_CABINETS_SUCCESS).pipe(
-    take(1),
-    map(cabs => {
-      console.log(cabs);
-      let id = 1;
-      cabs['payload'].map(cab => {
-        const update = cab;
-        const versions = update.versions ? update.versions : {};
-        const heights = update.heights.map(h => {
-          const title = h.version ? h.version : h.height;
-          const base = { 'active': true, title, 'id': title };
-          versions[title] = versions[title] ? {...versions[title], ...base } : { ...base };
-          return { ...h, title, 'id': title };
-        });
-        update.heights = heights;
-        update.versions = versions;
-        const increments = 'SKR683fyZIN2ndh9C1as';
-        const iwhd = { increments };
-        if (update.iwhd) {
-          if (update.iwhd.increments) { iwhd.increments = update.iwhd.increments ? update.iwhd.increments : increments; }
-          if (update.iwhd.widths) { iwhd['widths'] = update.iwhd.widths; }
-          if (update.iwhd.heights) { iwhd['heights'] = update.iwhd.heights; }
-          if (update.iwhd.depths) { iwhd['depths'] = update.iwhd.depths; }
-        }
-        update.iwhd = iwhd;
-        update.active = true;
-        delete update.crudInfo;
-        delete update.updatedAt;
-        console.log(update);
-        console.log(`${id} of ${cabs['payload'].length}`);
-        id++;
-         // this.firestoreService.update(`structure/cabinets/${cab.sub.toLowerCase()}/${cab.id}`, update);
-      });
-    })
-  ); */
 }

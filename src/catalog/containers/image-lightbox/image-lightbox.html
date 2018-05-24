@@ -1,5 +1,5 @@
 <div *ngIf="(images$ | async) as images">
-  <div class="card" (click)="UpdateModal(true)" *ngIf="(images$ | async) as images">
+  <div class="card" (click)="UpdateModal(true)">
     <div class="card-content valign-wrapper">
       <div class="half" (click)="SetSlide(images.default.arrayId)">
         <img [src]="images.default.image" [alt]="images.default.title" class="responsive-img pointer">

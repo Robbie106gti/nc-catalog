@@ -12,29 +12,36 @@ export const getCategoriesState = createSelector(
   (state: fromFeature.ProductsState) => state.categories
 );
 
+const getSelectedRouteCat = createSelector(
+  fromRoot.getRouterState,
+  router => (router.state.params.Cat ? router.state.params.Cat : null)
+);
+
+const getSelectedRouteItem = createSelector(
+  fromRoot.getRouterState,
+  router => (router.state.params.Item ? router.state.params.Item : null)
+);
+
 export const getCategoriesLineState = createSelector(
   getCategoriesState,
-  fromRoot.getRouterState,
-  (categories, router) => categories[router.state.params.Cat]
+  getSelectedRouteCat,
+  (categories, cat) => categories[cat]
 );
 
 export const getCategoriesEntities = createSelector(getCategoriesLineState, fromCategories.getCategoriesEntities);
 
 export const getSelectedCategoryLine = createSelector(
   getCategoriesEntities,
-  fromRoot.getRouterState,
-  (entities, router): Categories => {
-    const Id = router.state.params.Cat;
-    return router.state && entities[Id];
-  }
+  getSelectedRouteCat,
+  (entities, cat): Categories => entities[cat]
 );
 
 export const getCategories = createSelector(
   getCategoriesState,
-  fromRoot.getRouterState,
+  getSelectedRouteCat,
   fromRoot.getUserRoles,
-  (categories, router, roles): Categories[] => {
-    const entities = router.state.params.Cat ? categories[router.state.params.Cat].entities : null;
+  (categories, cat, roles): Categories[] => {
+    const entities = cat ? categories[cat].entities : null;
     // console.log(entities);
     if (entities == null) return entities;
     let list = Object.keys(entities).map(id => entities[id]);
@@ -45,7 +52,7 @@ export const getCategories = createSelector(
 
 export const dealerVisisibleDoors = createSelector(
   getCategoriesState,
-  fromRoot.getRouterState,
+  getSelectedRouteCat,
   fromRoot.getUserRoles,
   filterByRoleDealer
 );
@@ -61,15 +68,11 @@ export const getCategoriesLoaded = createSelector(getCategoriesLineState, fromCa
 
 export const getCategoriesLoading = createSelector(getCategoriesLineState, fromCategories.getCategoriesLoading);
 
-export const getSelectedCategoryItem = createSelector(getCategories, fromRoot.getRouterState, (entities, router) => {
-  let entity;
-  entities.map(en => {
-    if (en.title === router.state.params.Item) {
-      return (entity = en);
-    }
-  });
-  return entity;
-});
+export const getSelectedCategoryItem = createSelector(
+  getCategoriesEntities,
+  getSelectedRouteItem,
+  (entities, item) => entities[item]
+);
 
 export const catagoryImages = createSelector(getSelectedCategoryItem, fromRoot.getRouterState, organizeImages);
 
@@ -143,8 +146,8 @@ function organizeDoors(list) {
   return doors;
 }
 
-function filterByRoleDealer(categories, router, roles) {
-  let entities = router.state.params.Cat ? categories[router.state.params.Cat].entities : null;
+function filterByRoleDealer(categories, cat, roles) {
+  let entities = cat ? categories[cat].entities : null;
   if (entities == null) return entities;
   entities = Object.keys(entities).map(id => entities[id]);
   entities = roles.dealer ? entities.filter(li => li['active']) : entities;

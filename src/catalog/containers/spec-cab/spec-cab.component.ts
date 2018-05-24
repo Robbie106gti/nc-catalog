@@ -32,10 +32,7 @@ export class SpecCabComponent implements OnInit {
   snapshot: Observable<any>;
   downloadURL: Observable<string>;
 
-  constructor(
-    private store: Store<fromStore.ProductsState>,
-    private storage: StorageService
-  ) {}
+  constructor(private store: Store<fromStore.ProductsState>, private storage: StorageService) {}
 
   ngOnInit() {
     this.user$ = this.store.select(fromStore.getUserData);
@@ -76,6 +73,11 @@ export class SpecCabComponent implements OnInit {
       payload: event
     });
     this.Take(3);
+  }
+
+  TransformCat(str) {
+    str = str.replace(/-/g, ' ');
+    return str;
   }
 
   Take(count) {

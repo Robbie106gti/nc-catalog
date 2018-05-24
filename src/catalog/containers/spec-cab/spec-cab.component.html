@@ -9,7 +9,9 @@
             <i class="small material-icons">arrow_back</i>
           </a>
           <div id="topic">
-            <h3 id="topic">Category: {{ content.sub }}</h3>
+            <h3 id="topic">Category: {{ TransformCat(content.sub) | titlecase }}</h3>
+
+
             <h4 id="topic">Item: {{ content.title }}</h4>
             <br>
           </div>

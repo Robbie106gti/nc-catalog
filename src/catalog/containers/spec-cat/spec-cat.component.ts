@@ -27,8 +27,8 @@ import { User } from '../../models/user.model';
       <div class="row" id="catalog" *ngIf="(user$ | async) as user">
         <versions-doors *ngIf="content.doorstyle" class="row" [content]="content" [user]="user" (edit)="Edit($event)"></versions-doors>
         <cat-content [content]="content" [user]="user"></cat-content>
-        <gen-info *ngIf="content.sub == 'General Information'" [content]="content"></gen-info>
-        <door-info *ngIf="content.sub == 'Doors'" [content]="content" [version$]="version$" [user]="user"></door-info>
+        <gen-info *ngIf="content.sub == 'general-information'" [content]="content"></gen-info>
+        <door-info *ngIf="content.sub == 'doors'" [content]="content" [version$]="version$" [user]="user"></door-info>
       </div>
     </div>
   `,

@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 declare var $: any;
 declare var M: any;
 
@@ -22,7 +23,7 @@ declare var M: any;
             <li *ngFor="let spec of specs['main']"><b>{{spec?.title}}</b>: {{ spec?.content }}</li>
         </ul>
     </div>
-    <spec-form [iwhd]="iwhd" [specs]="specs" [results$]="results$" [content]="content"
+    <spec-form [iwhd]="iwhd" [specs]="specs" [results$]="results$" [content]="content" [open]="open"
     (search)="Search($event)" (update)="Update($event)" (remove)="Remove($event)"></spec-form>
 
     <ng-template #version>
@@ -48,9 +49,10 @@ export class SpecContentComponent {
   @Output() search = new EventEmitter<any>();
   @Output() update = new EventEmitter<any>();
   @Output() remove = new EventEmitter<any>();
+  open: Observable<boolean> = of(false);
 
   Edit() {
-    $('#modal1').modal('open');
+    this.open = of(true);
   }
 
   Search(event) {

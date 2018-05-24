@@ -1,17 +1,25 @@
-<div id="modal1" class="modal modal-fixed-footer" *ngIf="(results$ | async) as results">
-  <div class="modal-content">
+<div class="image-modal" *ngIf="(open | async) === true">
+  <div class="modal-content" *ngIf="(results$ | async) as results">
+
     <div class="row">
 
       <div class="col s12">
         <a (click)="Close()" class="secondary-content">
           <i class="material-icons small grey-text pointer">clear</i>
         </a>
-        <ul class="tabs flow-text tab-demo z-depth-1">
-          <li class="tab col">
-            <a class="active" (click)="setId('main')" class="btn btn-large">{{ content.title }}</a>
+        <ul class="tabs  tabs-fixed-width tab-demo z-depth-1">
+
+          <li class="tab">
+            <a class="brown-text" [ngClass]="{ active: id === 'main' }" (click)="setId('main')">{{ content.title }}</a>
+
+
+
           </li>
-          <li class="tab col" *ngFor="let v of content.heights">
-            <a (click)="setId(v.id)" class="btn btn-large">{{ v.title }}
+          <li class="tab" *ngFor="let v of content.heights">
+            <a class="brown-text" [ngClass]="{ active: id === v.id }" (click)="setId(v.id)">{{ v.title }}
+
+
+
               <span *ngIf="!v.version">"</span>
             </a>
           </li>
@@ -24,7 +32,7 @@
       <div id="main" *ngIf="id === 'main'">
         <div class="row">
           <div class="col s12 m6">
-            <h4>Update Dimentions</h4>
+            <h4>Update Main Dimentions</h4>
             <div class="input-field">
               <input id="email" type="text" #dim (keyup)="Search(dim.value, 'iwhd', 'main')">
               <label for="email" data-error="wrong" data-success="right">Add one, start typing...</label>
@@ -54,8 +62,9 @@
           </div>
         </div>
         <div class="row">
+
           <div class="col s12 m6">
-            <h4>Update Specifications</h4>
+            <h4>Update Main Specifications</h4>
             <div class="input-field">
               <input id="email" type="text" #spec (keyup)="Search(spec.value, 'specifications', 'main')">
               <label for="email" data-error="wrong" data-success="right">Add one, start typing...</label>
@@ -86,11 +95,15 @@
         </div>
       </div>
 
+
       <div *ngFor="let v of content.heights">
         <div id="version{{v.id}}" *ngIf="id === v.id">
           <div class="row">
+
             <div class="col s12 m6">
-              <h4>Update Dimentions</h4>
+              <h4>Update Dimentions for {{ v.title }}"</h4>
+
+
               <div class="input-field">
                 <input id="email" type="text" #dim (keyup)="Search(dim.value, 'iwhd', v.id)">
                 <label for="email" data-error="wrong" data-success="right">Add one, start typing...</label>
@@ -120,13 +133,15 @@
                 <li class="second" *ngFor="let i of iwhd['main']">
                   <i class="material-icons">tune</i> {{i.title}} - {{i.content}}
                 </li>
-
               </ul>
             </div>
           </div>
           <div class="row">
+
             <div class="col s12 m6">
-              <h4>Update Specifications</h4>
+              <h4>Update Specifications for {{ v.title }}"</h4>
+
+
               <div class="input-field">
                 <input id="email" type="text" #spec (keyup)="Search(spec.value, 'specifications', v.id)">
                 <label for="email" data-error="wrong" data-success="right">Add one, start typing...</label>
@@ -161,6 +176,7 @@
           </div>
         </div>
       </div>
+
 
     </div>
   </div>
