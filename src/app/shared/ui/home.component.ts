@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
   template: `
   <div class="grid" *ngIf="(roles$ | async) as roles">
     <div class="card blue-grey darken-1" *ngIf="roles.reader">
-      <a [routerLink]="['./catalog', { root: 'Catalog'}]">
+      <a [routerLink]="['./catalog']">
         <div class="card-image card20">
           <img src="../../../assets/images/nc.jpg" class="responsive-img">
         </div>
@@ -19,7 +19,7 @@ import { Observable } from 'rxjs/Observable';
       </a>
     </div>
     <div class="card red darken-3" *ngIf="roles.nickels">
-      <a [routerLink]="['./sop', { root: 'SOP'}]">
+      <a [routerLink]="['./sop']">
         <div class="card-image card20">
           <img src="../../../assets/images/SOP.jpg" class="responsive-img">
         </div>
@@ -29,7 +29,7 @@ import { Observable } from 'rxjs/Observable';
       </a>
     </div>
     <div class="card orange darken-3" *ngIf="roles.nickels">
-      <a [routerLink]="['./mds', { root: 'MDS'}]">
+      <a [routerLink]="['./mds']">
         <div class="card-image card20">
           <img src="../../../assets/images/mds.jpg" class="responsive-img">
         </div>
