@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 declare var M: any;
 
 @Component({
@@ -11,9 +12,7 @@ declare var M: any;
       <div class="whiteLine"></div>
       <a href="https://nickels-catalog.firebaseapp.com/" class="brand-logo">
         <img class="imageLogo" src="/assets/icons/logoNC.png" alt="Nickels Cabinets"/>
-        <span class="headingLogo" *ngIf="(router$ | async)?.state.params?.root ==='Catalog'"> <i class="material-icons">collections_bookmark</i> Catalog</span>
-        <span class="headingLogo" *ngIf="(router$ | async)?.state.params?.root ==='MDS'"> <i class="material-icons">style</i> Material Data Sheets</span>
-        <span class="headingLogo" *ngIf="(router$ | async)?.state.params?.root ==='SOP'"> <i class="material-icons">assignment</i> SOP</span>
+        <span class="headingLogo" *ngIf="(router$ | async) as router"><i class="material-icons">{{ icon | async }}</i> {{ TitleChange(router.state.url) | titlecase }}</span>
       </a>
 
       <ul class="right hide-on-med-and-down">
@@ -26,17 +25,17 @@ declare var M: any;
     <!-- Dropdown Structure -->
     <ul id="dropdown1" class="dropdown-content uTop">
       <li class="tooltipped" data-position="bottom" data-tooltip="Catalogue">
-        <a [routerLink]="['./catalog', { root: 'Catalog'}]" class="right">
+        <a [routerLink]="['./catalog']" class="right">
           <i class="material-icons blue-grey-text">collections_bookmark</i>
         </a>
       </li>
       <li *ngIf="(user$ | async)?.roles?.admin">
-        <a class="right tooltipped" data-position="bottom" data-tooltip="(SOP) Standard Operating Procedure" [routerLink]="['./sop', { root: 'SOP'}]">
+        <a class="right tooltipped" data-position="bottom" data-tooltip="(SOP) Standard Operating Procedure" [routerLink]="['./sop']">
           <i class="material-icons red-text">assignment</i>
         </a>
       </li>
       <li *ngIf="(user$ | async)?.roles?.admin">
-        <a class="right tooltipped" data-position="bottom" data-tooltip="(MDS) Material Data Sheet" [routerLink]="['./mds', { root: 'MDS'}]">
+        <a class="right tooltipped" data-position="bottom" data-tooltip="(MDS) Material Data Sheet" [routerLink]="['./mds']">
           <i class="material-icons orange-text">style</i>
         </a>
       </li>
@@ -67,11 +66,10 @@ declare var M: any;
   `
   ]
 })
-
-// <li><a class="right" [routerLink]="['../']"><i class="material-icons">arrow_back</i></a></li>
 export class HeaderComponent implements OnChanges {
   @Input() user$: Observable<any>;
   @Input() router$: Observable<any>;
+  icon: Observable<string>;
 
   constructor() {
     document.addEventListener('DOMContentLoaded', function() {
@@ -87,7 +85,7 @@ export class HeaderComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['user$']) {
+    if (changes['user$'] || changes['router$']) {
       document.addEventListener('DOMContentLoaded', function() {
         const options = { hover: true };
         const elems = document.querySelectorAll('.dropdown-trigger');
@@ -99,5 +97,28 @@ export class HeaderComponent implements OnChanges {
         const instances = M.Tooltip.init(elems, options);
       });
     }
+  }
+
+  TitleChange(str) {
+    str = str.split('/');
+    str = str[1] ? str[1] : null;
+    switch (str) {
+      case 'catalog':
+        this.icon = of('collections_bookmark');
+        str = 'Catalog';
+        break;
+      case 'sop':
+        this.icon = of('assignment');
+        str = 'Standard operating procedure';
+        break;
+      case 'mds':
+        this.icon = of('style');
+        str = 'Material Data Sheets';
+        break;
+      default:
+        this.icon = of('collections_bookmark');
+        str = 'Nickels Cabinets';
+    }
+    return str;
   }
 }
