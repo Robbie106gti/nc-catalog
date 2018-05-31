@@ -34,6 +34,7 @@ export class SopModalComponent {
   @Output() newTitle = new EventEmitter<any>();
   @Output() notes = new EventEmitter<any>();
   @Output() file = new EventEmitter<any>();
+  @Output() table = new EventEmitter<any>();
 
   titleImage: string;
 
@@ -79,5 +80,8 @@ export class SopModalComponent {
   }
   TitleImage(event) {
     this.titleImage = event;
+  }
+  NewTable(event) {
+    this.table.emit({ table: event, fullName: this.user, sop: this.sop });
   }
 }

@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore,
-  AngularFirestoreCollection,
-  AngularFirestoreDocument
-} from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
@@ -13,13 +10,12 @@ import * as firebase from 'firebase/app';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../store';
 
-type CollectionPredicate<T>   = string |  AngularFirestoreCollection<T>;
-type DocPredicate<T>          = string |  AngularFirestoreDocument<T>;
+type CollectionPredicate<T> = string | AngularFirestoreCollection<T>;
+type DocPredicate<T> = string | AngularFirestoreDocument<T>;
 
 @Injectable()
 export class FirestoreService {
-
-  constructor(public afs: AngularFirestore, private store: Store<fromStore.SopsState>) { }
+  constructor(public afs: AngularFirestore, private store: Store<fromStore.SopsState>) {}
 
   /// **************
   /// Get a Reference
@@ -33,26 +29,32 @@ export class FirestoreService {
   /// **************
   /// Get Data
   /// **************
-  doc$<T>(ref:  DocPredicate<T>): Observable<T> {
-    return this.doc(ref).snapshotChanges().map(doc => {
-      return doc.payload.data() as T;
-    });
+  doc$<T>(ref: DocPredicate<T>): Observable<T> {
+    return this.doc(ref)
+      .snapshotChanges()
+      .map(doc => {
+        return doc.payload.data() as T;
+      });
   }
   col$<T>(ref: CollectionPredicate<T>, queryFn?): Observable<T[]> {
-    return this.col(ref, queryFn).snapshotChanges().map(docs => {
-      return docs.map(a => a.payload.doc.data()) as T[];
-    });
+    return this.col(ref, queryFn)
+      .snapshotChanges()
+      .map(docs => {
+        return docs.map(a => a.payload.doc.data()) as T[];
+      });
   }
   /// with Ids
   colWithIds$<T>(ref: CollectionPredicate<T>, queryFn?): Observable<any[]> {
-   // console.log(ref);
-    return this.col(ref, queryFn).snapshotChanges().map(actions => {
-      return actions.map(a => {
-        const data = a.payload.doc.data();
-        const id = a.payload.doc.id;
-        return { id, ...data };
+    // console.log(ref);
+    return this.col(ref, queryFn)
+      .snapshotChanges()
+      .map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        });
       });
-    });
   }
   /// **************
   /// Write Data
@@ -63,7 +65,7 @@ export class FirestoreService {
   }
   set<T>(ref: DocPredicate<T>, data: any) {
     const timestamp = this.timestamp;
-   // console.log(ref, data);
+    // console.log(ref, data);
     return this.doc(ref).set({
       ...data,
       updatedAt: timestamp,
@@ -71,7 +73,7 @@ export class FirestoreService {
     });
   }
   update<T>(ref: DocPredicate<T>, data: any) {
-    // console.log(ref, data);
+    console.log(ref, data);
     return this.doc(ref).update({
       ...data,
       updatedAt: this.timestamp
@@ -109,7 +111,10 @@ export class FirestoreService {
   /// If doc exists update, otherwise set
   upsert<T>(ref: DocPredicate<T>, data: any) {
     // console.log(ref, data);
-    const doc = this.doc(ref).snapshotChanges().take(1).toPromise();
+    const doc = this.doc(ref)
+      .snapshotChanges()
+      .take(1)
+      .toPromise();
     return doc.then(snap => {
       // console.log(snap.payload);
       return snap.payload.exists ? this.update(ref, data) : this.set(ref, data);
@@ -118,34 +123,41 @@ export class FirestoreService {
   /// If doc exists update, otherwise set
   upsertUser<T>(ref: DocPredicate<T>, data: any) {
     // console.log(ref, data);
-    const doc = this.doc(ref).snapshotChanges().take(1).toPromise();
-    return doc.then(snap => {
-      console.log(snap.payload);
-      return snap.payload.exists ? this.updateUser(ref, data) : this.setUser(ref, data);
-    }).then(() => setTimeout(() => location.reload(), 1000));
+    const doc = this.doc(ref)
+      .snapshotChanges()
+      .take(1)
+      .toPromise();
+    return doc
+      .then(snap => {
+        console.log(snap.payload);
+        return snap.payload.exists ? this.updateUser(ref, data) : this.setUser(ref, data);
+      })
+      .then(() => setTimeout(() => location.reload(), 1000));
   }
   /// **************
   /// Inspect Data
   /// **************
   inspectDoc(ref: DocPredicate<any>): void {
     const tick = new Date().getTime();
-    this.doc(ref).snapshotChanges()
-        .take(1)
-        .do(d => {
-          const tock = new Date().getTime() - tick;
-          console.log(`Loaded Document in ${tock}ms`, d);
-        })
-        .subscribe();
+    this.doc(ref)
+      .snapshotChanges()
+      .take(1)
+      .do(d => {
+        const tock = new Date().getTime() - tick;
+        console.log(`Loaded Document in ${tock}ms`, d);
+      })
+      .subscribe();
   }
   inspectCol(ref: CollectionPredicate<any>): void {
     const tick = new Date().getTime();
-    this.col(ref).snapshotChanges()
-        .take(1)
-        .do(c => {
-          const tock = new Date().getTime() - tick;
-          console.log(`Loaded Collection in ${tock}ms`, c);
-        })
-        .subscribe();
+    this.col(ref)
+      .snapshotChanges()
+      .take(1)
+      .do(c => {
+        const tock = new Date().getTime() - tick;
+        console.log(`Loaded Collection in ${tock}ms`, c);
+      })
+      .subscribe();
   }
   /// **************
   /// Create and read doc references
@@ -180,6 +192,4 @@ export class FirestoreService {
     /// commit operations
     return batch.commit();
   }
-
-
 }

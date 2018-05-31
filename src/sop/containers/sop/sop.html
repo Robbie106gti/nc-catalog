@@ -1,9 +1,8 @@
 <div *ngIf="(sop$ | async) as sop">
 
-  <sop-modal *ngIf="add === true"
-  [modal]="modal" [user]="(user$ | async)" [sop]="sop" [icons]="(icons$ | async)" [pct]="(pct$ | async)" [url]="(url$ | async)"
-  (close)="Close($event)" (add)="Add($event)" (newList)="NewList($event)" (newTitle)="NewTitle($event)" (notes)="Notes($event)" (newImages)="Images($event)" (file)="File($event)"
-  ></sop-modal>
+  <sop-modal *ngIf="add === true" [modal]="modal" [user]="(user$ | async)" [sop]="sop" [icons]="(icons$ | async)" [pct]="(pct$ | async)"
+    [url]="(url$ | async)" (close)="Close($event)" (add)="Add($event)" (newList)="NewList($event)" (newTitle)="NewTitle($event)"
+    (notes)="Notes($event)" (newImages)="Images($event)" (file)="File($event)" (table)="NewTable($event)"></sop-modal>
 
   <div class="section no-pad-bot" id="index-banner">
     <div class="card" id="top">

@@ -28,23 +28,23 @@ import * as fromGuards from './guards';
 export const ROUTES: Routes = [
   {
     path: '',
-    canActivate: [ fromGuards.CatGuard ],
-    component: fromContainers.MainComponent,
+    canActivate: [fromGuards.CatGuard],
+    component: fromContainers.MainComponent
   },
   {
     path: 'new',
-    canActivate: [ fromGuards.CatGuard ],
-    component: fromContainers.NewComponent,
+    canActivate: [fromGuards.CatGuard],
+    component: fromContainers.NewComponent
   },
   {
     path: ':Sop',
-    canActivate: [ fromGuards.CatGuard, fromGuards.SopsGuard ],
-    component: fromContainers.SubComponent,
+    canActivate: [fromGuards.CatGuard, fromGuards.SopsGuard],
+    component: fromContainers.SubComponent
   },
   {
     path: ':Sop/:Item',
-    canActivate: [ fromGuards.CatGuard, fromGuards.SopsGuard ],
-    component: fromContainers.SopComponent,
+    canActivate: [fromGuards.CatGuard, fromGuards.SopsGuard],
+    component: fromContainers.SopComponent
   }
 ];
 
@@ -57,8 +57,8 @@ export const ROUTES: Routes = [
     StoreModule.forFeature('sops', reducers),
     EffectsModule.forFeature(effects)
   ],
-  providers: [...fromServices.services, ...fromGuards.guards ],
-  declarations: [...fromContainers.containers, ...fromComponents.components ],
-  exports: [...fromContainers.containers, ...fromComponents.components],
+  providers: [...fromServices.services, ...fromGuards.guards],
+  declarations: [...fromContainers.containers, ...fromComponents.components],
+  exports: [...fromContainers.containers, ...fromComponents.components]
 })
 export class SopModule {}

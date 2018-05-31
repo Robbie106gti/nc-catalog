@@ -9,7 +9,8 @@
       <input-title [title]="'Title ' + modal.action" [placeholder]="modal.sop.title" [size]="'s10'" (name)="TitleImage($event)"></input-title>
       <image-upload [size]="'s8'" [fileName]="'replace'" [title]="'Upload image'" [url]="url" [pct]="pct" (file)="File($event)"></image-upload>
       <div class="col s12">
-        <button class="waves-effect waves-green btn red right" (click)="AddImage()" [disabled]="!url"><i class="material-icons left">add</i>Add</button>
+        <button class="waves-effect waves-green btn red right" (click)="AddImage()" [disabled]="!url">
+          <i class="material-icons left">add</i>Add</button>
       </div>
     </div>
     <div class="row" *ngIf="modal.action === 'Description'">
@@ -22,6 +23,9 @@
     <div class="row" *ngIf="modal.action === 'List'">
       <input-title [title]="'Title ' + modal.action" [placeholder]="modal.sop.title" [size]="'s10'" (name)="Title($event)"></input-title>
       <list-edit class="col s12" [list]="modal.sop.value" [icons]="icons" (newList)="NewList($event)"></list-edit>
+    </div>
+    <div class="row" *ngIf="modal.action === 'Table'">
+      <csvtojson (table)="NewTable($event)"></csvtojson>
     </div>
   </div>
   <div class="modal-footer" *ngIf="modal.action === 'Description'">

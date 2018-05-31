@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
@@ -43,9 +37,7 @@ export class SopComponent {
     let edit;
     switch (event) {
       case 'Description': {
-        sop.description = sop.description
-          ? sop.description
-          : { title: '', description: '' };
+        sop.description = sop.description ? sop.description : { title: '', description: '' };
         edit = {
           title: sop.description.title,
           value: sop.description.description
@@ -88,6 +80,13 @@ export class SopComponent {
     this.store.dispatch({
       type: fromStore.ADD_TO_SOP,
       payload: { ...event, action: 'List' }
+    });
+  }
+
+  NewTable(event) {
+    this.store.dispatch({
+      type: fromStore.ADD_TO_SOP,
+      payload: { ...event, action: 'Table' }
     });
   }
 

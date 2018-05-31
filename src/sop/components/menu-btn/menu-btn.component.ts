@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import * as csvtojson from 'csvtojson';
 declare var $: any;
 declare var M: any;
 
@@ -11,7 +12,8 @@ declare var M: any;
     <i class="large material-icons">mode_edit</i>
   </a>
   <ul>
-    <li (click)="Menu('Image')"><a class="btn-floating red tooltipped" data-position="top" data-tooltip="Add a image"><i class="material-icons">camera</i></a></li>
+  <li (click)="Menu('Image')"><a class="btn-floating purple tooltipped" data-position="top" data-tooltip="Add an image"><i class="material-icons">camera</i></a></li>
+  <li (click)="Menu('Table')"><a class="btn-floating red tooltipped" data-position="top" data-tooltip="Add a table"><i class="material-icons">web</i></a></li>
     <li (click)="Menu('Description')"><a class="btn-floating yellow darken-1 tooltipped" data-position="top" data-tooltip="Add a description"><i class="material-icons">format_quote</i></a></li>
     <li (click)="Menu('List')"><a class="btn-floating green tooltipped" data-position="top" data-tooltip="Add a bullet list"><i class="material-icons">list</i></a></li>
     <li (click)="Menu('Attach')"><a class="btn-floating blue tooltipped" data-position="top" data-tooltip="Attach a webquoin code"><i class="material-icons">widgets</i></a></li>
