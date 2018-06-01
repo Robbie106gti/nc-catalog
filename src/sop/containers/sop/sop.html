@@ -30,7 +30,9 @@
     </div>
     <image-card *ngIf="sop.image" class="col s12 m6" [card]="{title: sop.title, image: sop.image, size: '' }"></image-card>
     <image-card *ngFor="let image of sop.images" class="col s4 m3 l2" [card]="image"></image-card>
-    <div class="col s12 m6"></div>
+    <div class="col s12 m6">
+      <table-item [table]="sop.table" (remove)="TableRemove($event)"></table-item>
+    </div>
     <menu-btn (menu)="Menu($event, sop)"></menu-btn>
   </div>
 </div>

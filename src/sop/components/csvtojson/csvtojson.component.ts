@@ -32,7 +32,6 @@ export class CsvToJsonComponent {
         jsonArr.forEach((row, index) => {
           if (index === 0) {
             Object.keys(row).map(id => hds.push(row[id].toLocaleLowerCase()));
-            // console.log(this.headers, index);
           } else {
             row = Object.keys(row).map(id => row[id]);
             if (row.length !== hds.length) {
@@ -43,16 +42,13 @@ export class CsvToJsonComponent {
               newrow[head] = row[i];
             });
             rows.push(newrow);
-            //console.log(newrow, index);
           }
         });
+        const table = { headers: hds, rows: rows };
+        return table;
+      })
+      .then(tab => {
+        this.table.emit(tab);
       });
-    console.log(hds, rows);
-    this.table.emit({ headers: hds, rows: rows });
   }
-}
-
-interface Table {
-  headers: any[];
-  rows: any[];
 }

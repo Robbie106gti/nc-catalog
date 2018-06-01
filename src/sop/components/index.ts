@@ -21,6 +21,7 @@ import { NoteComponent } from './notes/note.component';
 import { EditNoteComponent } from './notes/edit-note.component';
 import { ManImageComponent } from './image-upload/man-image.component';
 import { CsvToJsonComponent } from './csvtojson/csvtojson.component';
+import { TableComponent } from './csvtojson/table.component';
 
 export const components: any[] = [
   EditBtnComponent,
@@ -45,7 +46,8 @@ export const components: any[] = [
   NoteComponent,
   EditNoteComponent,
   ManImageComponent,
-  CsvToJsonComponent
+  CsvToJsonComponent,
+  TableComponent
 ];
 
 // export * from ''
@@ -72,3 +74,4 @@ export * from './notes/note.component';
 export * from './notes/edit-note.component';
 export * from './image-upload/man-image.component';
 export * from './csvtojson/csvtojson.component';
+export * from './csvtojson/table.component';

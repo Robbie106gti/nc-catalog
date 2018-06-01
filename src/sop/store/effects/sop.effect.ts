@@ -127,7 +127,7 @@ export class SopEffects {
               break;
             }
           }
-          console.log(key, value);
+          // console.log(key, value);
           this.firestore.update(`sops/${sop.idCat}/entities/${sop.id}`, { [key]: value, updatedBy: user });
           return new fromStore.AddToSopSuccess({ [key]: value, edit: sop, user });
         }),

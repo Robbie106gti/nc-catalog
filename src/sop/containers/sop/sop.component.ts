@@ -27,7 +27,7 @@ export class SopComponent {
 
   constructor(private store: Store<fromStore.SopsState>) {
     this.user$ = this.store.select(fromStore.getUserName);
-    this.sop$ = this.store.select(fromStore.getSelectedSop).take(2);
+    this.sop$ = this.store.select(fromStore.getSelectedSop);
     this.icons$ = this.store.select(fromStore.getIcons);
     this.url$ = this.store.select(fromStore.getUploadUrl);
     this.pct$ = this.store.select(fromStore.getUploadPercentage);
@@ -88,6 +88,10 @@ export class SopComponent {
       type: fromStore.ADD_TO_SOP,
       payload: { ...event, action: 'Table' }
     });
+  }
+
+  TableRemove(event) {
+    console.log(event);
   }
 
   NewTitle(event) {

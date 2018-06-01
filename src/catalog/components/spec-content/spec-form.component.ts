@@ -103,11 +103,11 @@ export class SpecFormComponent {
 
   Remove(r) {
     if (r.sub === 'iwhd') {
-      this.iwhd[this.sId] = this.iwhd[this.sId].filter(item => item.id !== r.id);
+      this.iwhd[this.id] = this.iwhd[this.id].filter(item => item.id !== r.id);
     } else {
-      this.specs[this.sId] = this.specs[this.sId].filter(item => item.id !== r.id);
+      this.specs[this.id] = this.specs[this.id].filter(item => item.id !== r.id);
     }
-    this.remove.emit({ ...r, toDo: 'remove', version: this.sId });
+    this.remove.emit({ ...r, toDo: 'remove', version: this.id });
   }
   Close() {
     this.open = of(false);

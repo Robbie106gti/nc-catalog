@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store';
-import { Action } from 'rxjs/scheduler/Action';
 
 // load Category SOP
 export const LOAD_SOPS = '[SOP] Load SOP category';
@@ -50,7 +49,7 @@ export class AddToSop implements Action {
 export class AddToSopSuccess implements Action {
   readonly type = ADD_TO_SOP_SUCCESS;
   constructor(public payload: any) {
-    console.log(payload);
+    // console.log(payload);
   }
 }
 export class AddToSopFail implements Action {
