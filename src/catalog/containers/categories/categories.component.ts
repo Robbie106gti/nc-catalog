@@ -38,7 +38,7 @@ export class CategoriesComponent implements OnInit {
   constructor(private store: Store<fromStore.ProductsState>, private firestore: fromServices.FirestoreService) {}
 
   ngOnInit() {
-    this.categories$ = this.store.select(fromStore.getCatalogBase).take(1);
+    this.categories$ = this.store.select(fromStore.getCatalogBase);
     this.user$ = this.store.select(fromStore.getUserData);
     this.userFavs$ = this.store.select(fromStore.getUserFavs);
     this.userNotes$ = this.store.select(fromStore.getUserNotes);

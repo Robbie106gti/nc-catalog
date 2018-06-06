@@ -37,7 +37,7 @@ export class CabViewComponent implements OnInit {
   constructor(private store: Store<fromStore.ProductsState>) {}
 
   ngOnInit() {
-    this.cat$ = this.store.select(fromStore.getSelectedCategory).take(1);
-    this.category$ = this.store.select(fromStore.getCabinets).take(1);
+    this.cat$ = this.store.select(fromStore.getSelectedCategory);
+    this.category$ = this.store.select(fromStore.getCabinets);
   }
 }

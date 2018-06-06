@@ -168,6 +168,6 @@ export function reducer(state = initialState, action: fromCabinets.CabinetsActio
   return state;
 }
 
-export const getCabinetsEntities = (state: CabinetsLine) => state.entities;
+export const getCabinetsEntities = (state: CabinetsLine) => (state ? state.entities : {});
 export const getCabinetsLoading = (state: CabinetsLine) => state.loading;
 export const getCabinetsLoaded = (state: CabinetsLine) => state.loaded;
