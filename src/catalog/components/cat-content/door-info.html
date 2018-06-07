@@ -35,7 +35,7 @@
         </li>
       </ul>
       <div class="doorGrid">
-        <div class="">
+        <div class="" *ngIf="content.edges.length !== 0">
           <ul class="collection with-header">
             <li class="collection-header">
               <h5>OUTSIDE DOOR PROFILES</h5>
@@ -58,7 +58,7 @@
             </li>
           </ul>
         </div>
-        <div class="">
+        <div class="" *ngIf="content.dfoptions.length !== 0">
           <ul class="collection with-header">
             <li class="collection-header">
               <h5>DRAWER FACE OPTIONS</h5>
@@ -68,7 +68,7 @@
             </li>
           </ul>
         </div>
-        <div class="">
+        <div class="" *ngIf="content.srstandard.length !== 0">
           <ul class="collection with-header">
             <li class="collection-header">
               <h5>STILE & RAIL STANDARDS</h5>
@@ -78,7 +78,7 @@
             </li>
           </ul>
         </div>
-        <div class="">
+        <div class="" *ngIf="content.sizes">
           <ul class="collection with-header">
             <li class="collection-header">
               <h5>MINUMUM SIZES</h5>
@@ -101,7 +101,7 @@
             </li>
           </ul>
         </div>
-        <div class="">
+        <div class="" *ngIf="content.mtg.length !== 0">
           <ul class="collection with-header">
             <li class="collection-header">
               <h5>MULLIONS, TOPLIGHTS & GLASS</h5>

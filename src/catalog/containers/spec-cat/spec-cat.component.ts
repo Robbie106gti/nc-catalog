@@ -18,7 +18,9 @@ import { User } from '../../models/user.model';
             <a routerLink="../" class="right no-print"><i class="small material-icons">arrow_back</i></a>
             <div id="topic">
                 <h3 id="topic">Category: {{ content.sub | titlecase }}</h3>
-                <h4 id="topic">Item: {{ content.title | titlecase }}<span *ngIf="(version$ | async).mat as version"> - {{ version | titlecase }}</span></h4><br>
+                <span *ngIf="(version$ | async) as version">
+                  <h4 id="topic" *ngIf="version.mat !== 'metal'">Item: {{ content.title | titlecase }}<span *ngIf="version.wr === 'true'"> WR</span><span *ngIf="version.pc"> {{version.pc}}PC</span> <span *ngIf="version.mat">- {{ version.mat | titlecase }}</span></h4>
+                  <h4 id="topic" *ngIf="version.mat === 'metal'">Item: {{ content.title }}</h4></span><br>
                 <i class="timenuser hide-on-med-and-down"><small>Updated:  {{ content.updatedAt }} - {{ content.updatedBy }}</small></i>
             </div>
         </div>
@@ -34,12 +36,12 @@ import { User } from '../../models/user.model';
   `,
   styles: [
     `
-  .timenuser {
-    position: absolute;
-    bottom: 0.3em;
-    right: 3rem;
-  }
-  `
+      .timenuser {
+        position: absolute;
+        bottom: 0.3em;
+        right: 3rem;
+      }
+    `
   ]
 })
 export class SpecCatComponent implements OnInit {

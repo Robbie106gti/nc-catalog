@@ -1,0 +1,69 @@
+{
+  "id": "OOXM5m512VeJWbTMWzqx",
+  "active": false,
+  "construction": {
+    "default": "1 piece composite core slab face with a 4 edge 0.5mm edge tape.",
+    "painted": "1 piece composite core slab, no edge tape."
+  },
+  "dfoptions": ["all slab"],
+  "doorstyle": "slab face door",
+  "edges": ["sq", "bv3", "bv5", "cv6", "cv11", "rd3", "rd6"],
+  "finishing": "Both faces and all edges.",
+  "grain": ["default", "vg", "hg"],
+  "image": "https://webquoin.com/catalog/images/AlphaHG-1.jpg",
+  "images": {
+    "engineered": {
+      "image": "https://webquoin.com/catalog/images/AlphaHG-1.jpg",
+      "imageHG": "https://webquoin.com/catalog/images/AlphaHG-1.jpg",
+      "imageVG": "https://webquoin.com/catalog/images/AlphaVGM-1.jpg",
+      "material": "engineered",
+      "title": "Alpha Engineered"
+    },
+    "painted": {
+      "image": "https://webquoin.com/catalog/images/Alpha.gif",
+      "material": "painted",
+      "title": "Alpha Cloud White - Painted"
+    },
+    "spec": {
+      "image": "https://webquoin.com/catalog/images/Doors/Spec/Alpha.png",
+      "title": "Spec Alpha"
+    },
+    "wood": {
+      "image": "https://webquoin.com/catalog/images/AlphaVGM-1.jpg",
+      "imageVG": "https://webquoin.com/catalog/images/AlphaVGM-1.jpg",
+      "material": "wood",
+      "title": "Alpha Maple"
+    }
+  },
+  "materials": ["painted", "wood", "engineered", "melamine", "euro materials", "gloss"],
+  "mtg": ["toplight", "glass"],
+  "notes": [
+    {
+      "wq-tip":
+        "Horizontal grain matching (HGM) standards: doors and/or drawers on an individual cabinet will be cut from the same piece of material resulting in a horizontal grain spanning the width of the individual cabinet. The selection of material will result in a general balance of grain and tone in the room, although variations are normal."
+    },
+    {
+      "note":
+        "Use CC-CHGM to have a continues grain across multiple cabinets. Will need to be applied to each item where continues grain matching is required."
+    }
+  ],
+  "options": {
+    "default": "n/a"
+  },
+  "restrictions": {
+    "default": "n/a",
+    "wood": "Not available in Alder, Black Walnut, Cherry and Maple."
+  },
+  "sizes": {
+    "height": "3 7/8",
+    "width": "3 7/8",
+    "drawerSTheight": "",
+    "drawerNRheight": ""
+  },
+  "srstandard": ["n/a"],
+  "tags": ["1PC"],
+  "title": "Alpha",
+  "updatedAt": "2018-05-03T17:55:22.374Z",
+  "updatedBy": "Robert Leeuwerink",
+  "sub": "doors"
+}
