@@ -29,19 +29,18 @@ export const getSelectedCabinetLine = createSelector(
   (entities, cat): Cabinets => entities[cat]
 );
 
-export const getCabinets = createSelector(getCabinetsEntities, fromRoot.getUserRoles, (entities, roles): Cabinets[] => {
-  if (!entities) {
-    return [];
+export const getCabinets = createSelector(
+  getCabinetsEntities,
+  fromRoot.getUserRoles,
+  (entities, roles): Cabinets[] => {
+    if (!entities) {
+      return [];
+    }
+    let list = Object.keys(entities).map(id => entities[id]);
+    list = roles.dealer ? list.filter(li => li.active) : list;
+    return list;
   }
-  let list = Object.keys(entities).map(id => entities[id]);
-  list = roles.dealer ? list.filter(li => li.active) : list;
-  list.sort(function(a, b) {
-    if (a.title < b.title) return -1;
-    if (a.title > b.title) return 1;
-    return 0;
-  });
-  return list;
-});
+);
 
 export const getCabinetsLoaded = createSelector(getCabinetsLineState, fromCabinets.getCabinetsLoaded);
 

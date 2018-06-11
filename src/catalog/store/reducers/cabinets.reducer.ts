@@ -93,6 +93,11 @@ export function reducer(state = initialState, action: fromCabinets.CabinetsActio
 
     case fromCabinets.LOAD_CABINETS_SUCCESS: {
       const category = action.payload;
+      category.sort(function(a, b) {
+        if (a.title < b.title) return -1;
+        if (a.title > b.title) return 1;
+        return 0;
+      });
       const entities = category.reduce(
         // tslint:disable-next-line:no-shadowed-variable
         (entities: { [id: string]: Cabinets }, cat: Cabinets) => {

@@ -48,6 +48,11 @@ export function reducer(state = initialState, action: fromCategories.CategoriesA
     case fromCategories.LOAD_CATEGORIES_SUCCESS: {
       const category = action.payload;
       const cat = category.length > 0 ? category[0].sub : state.load;
+      category.sort(function(a, b) {
+        if (a.title < b.title) return -1;
+        if (a.title > b.title) return 1;
+        return 0;
+      });
       const entities = category.reduce(
         // tslint:disable-next-line:no-shadowed-variable
         (entities: { [id: string]: Categories }, cat: Categories) => {

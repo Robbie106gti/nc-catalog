@@ -5,6 +5,30 @@
     "default": "1 piece composite core slab face with a 4 edge 0.5mm edge tape.",
     "painted": "1 piece composite core slab, no edge tape."
   },
+  "choices": {
+    "title": "door options",
+    "pc1": {
+      "active": false,
+      "default": true
+    },
+    "pc2": {
+      "active": false,
+      "default": false
+    },
+    "pc5": {
+      "active": false,
+      "default": false
+    },
+    "wide": {
+      "active": false,
+      "default": false
+    }
+  },
+  "params": {
+    "mat": "painted",
+    "pc": "1",
+    "wr": false
+  },
   "dfoptions": ["all slab"],
   "doorstyle": "slab face door",
   "edges": ["sq", "bv3", "bv5", "cv6", "cv11", "rd3", "rd6"],
@@ -37,14 +61,11 @@
   },
   "materials": ["painted", "wood", "engineered", "melamine", "euro materials", "gloss"],
   "mtg": ["toplight", "glass"],
-  "notes": [
-    {
-      "wq-tip":
-        "Horizontal grain matching (HGM) standards: doors and/or drawers on an individual cabinet will be cut from the same piece of material resulting in a horizontal grain spanning the width of the individual cabinet. The selection of material will result in a general balance of grain and tone in the room, although variations are normal."
+  "notes": [{
+      "wq-tip": "Horizontal grain matching (HGM) standards: doors and/or drawers on an individual cabinet will be cut from the same piece of material resulting in a horizontal grain spanning the width of the individual cabinet. The selection of material will result in a general balance of grain and tone in the room, although variations are normal."
     },
     {
-      "note":
-        "Use CC-CHGM to have a continues grain across multiple cabinets. Will need to be applied to each item where continues grain matching is required."
+      "note": "Use CC-CHGM to have a continues grain across multiple cabinets. Will need to be applied to each item where continues grain matching is required."
     }
   ],
   "options": {
