@@ -113,6 +113,7 @@ function organizeImages(entity, router) {
 }
 
 function filterDoors(entities, filter, filtered) {
+  console.log(filter, filtered);
   if (!filter) return entities;
   if (!entities) return entities;
   const material = new Array();
@@ -123,13 +124,18 @@ function filterDoors(entities, filter, filtered) {
   if (material.length >= 1) {
     console.log(material, filter, filtered);
     entities.filter(li => {
-      const materials = li['materials'] ? li['materials'] : ['none'];
-      let addTo = false;
+      const materials = li['materials'] ? li['materials'] : [];
+      const tags = li.tags ? li.tags : [];
+      const search = ['none'];
+      materials.forEach(el => search.push(el.toLowerCase()));
+      tags.forEach(el => search.push(el.toLowerCase()));
+      // console.log(search);
+      let addTo = 0;
       material.forEach(mat => {
-        if (!materials.includes(mat)) return;
-        addTo = true;
+        if (search.includes(mat)) addTo++;
       });
-      if (addTo) matfiltered.push(li);
+      console.log(addTo, material.length);
+      if (addTo === material.length) matfiltered.push(li);
     });
   }
   return matfiltered;

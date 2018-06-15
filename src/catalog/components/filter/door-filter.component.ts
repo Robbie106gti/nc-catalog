@@ -4,7 +4,6 @@ declare var $: any;
 
 @Component({
   selector: 'door-filter',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <ul class="collapsible z-depth-0 right">
     <li>
@@ -13,53 +12,83 @@ declare var $: any;
       <div class="collapsible-body">
         <form action="#" class="row">
         <div class="col s8">
-          <div *ngFor="let mat of materials">
+          <div>
             <label>
-              <input type="checkbox" [checked]="filtered[mat]" (click)="Filter(mat)" />
-              <span>{{ mat | titlecase }}</span>
+              <input type="checkbox" [checked]="filtered['painted']" (click)="Filter('painted')" />
+              <span>Painted</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="checkbox" [checked]="filtered['wood']" (click)="Filter('wood')" />
+              <span>Wood</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="checkbox" [checked]="filtered['engineered']" (click)="Filter('engineered')" />
+              <span>Engineered</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="checkbox" [checked]="filtered['melamine']" (click)="Filter('melamine')" />
+              <span>Melamine</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="checkbox" [checked]="filtered['euro materials']" (click)="Filter('euro materials')" />
+              <span>Euro Materials</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="checkbox" [checked]="filtered['gloss']" (click)="Filter('gloss')" />
+              <span>Gloss</span>
             </label>
           </div>
           </div>
           <div class="col s4">
           <div>
             <label>
-              <input type="checkbox" />
+              <input type="checkbox"  [checked]="filtered['wr']" (click)="Filter('wr')"/>
               <span>WR</span>
             </label>
           </div>
           <div>
             <label>
-              <input type="checkbox" />
+              <input type="checkbox"  [checked]="filtered['1pc']" (click)="Filter('1pc')"/>
               <span>1PC/2PC</span>
             </label>
           </div>
           <div>
             <label>
-              <input type="checkbox" />
+              <input type="checkbox"  [checked]="filtered['5pc']" (click)="Filter('5pc')"/>
               <span>5PC</span>
             </label>
           </div>
           <div>
             <label>
-              <input type="checkbox" />
+              <input type="checkbox"  [checked]="filtered['rrp']" (click)="Filter('rrp')"/>
               <span>RRP</span>
             </label>
           </div>
           <div>
             <label>
-              <input type="checkbox" />
+              <input type="checkbox"  [checked]="filtered['miter']" (click)="Filter('miter')"/>
               <span>Miter</span>
             </label>
           </div>
           <div>
             <label>
-              <input type="checkbox" />
+              <input type="checkbox"  [checked]="filtered['m&t']" (click)="Filter('m&t')"/>
               <span>M&T</span>
             </label>
           </div>
           <div>
             <label>
-              <input type="checkbox" />
+              <input type="checkbox"  [checked]="filtered['routered']" (click)="Filter('routered')"/>
               <span>Routered</span>
             </label>
           </div>
@@ -87,27 +116,17 @@ declare var $: any;
 })
 export class DoorFilterComponent {
   @Output() filter = new EventEmitter<any>();
-  materials: any;
-  filtered: any;
+  @Input() filtered: any;
 
   constructor() {
     $(document).ready(function() {
       $('.collapsible').collapsible();
     });
-    this.materials = ['painted', 'wood', 'engineered', 'melamine', 'euro materials', 'gloss'];
-    this.filtered = {
-      painted: false,
-      wood: false,
-      engineered: false,
-      melamine: false,
-      'euro materials': false,
-      gloss: false
-    };
   }
 
   Filter(mat) {
-    console.log(mat);
-    !this.filtered[mat] ? (this.filtered[mat] = true) : (this.filtered[mat] = false);
+    // console.log(mat);
+    this.filtered[mat] === false ? (this.filtered[mat] = true) : (this.filtered[mat] = false);
     return this.filter.emit(this.filtered);
   }
 }

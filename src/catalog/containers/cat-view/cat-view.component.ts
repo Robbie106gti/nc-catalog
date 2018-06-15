@@ -18,7 +18,7 @@ import { of } from 'rxjs/observable/of';
             <a routerLink="/catalog" class="right no-print"><i class="small material-icons">arrow_back</i></a>
             <div id="topic"><h1 id="topic">{{ cat.title }}</h1></div>
             <div *ngIf="cat.title === 'Doors'" class="row">
-              <door-filter (filter)="Filter($event)"></door-filter>
+              <door-filter (filter)="Filter($event)" [filtered]="filters$ | async"></door-filter>
             </div>
         </div>
       </div>
@@ -40,23 +40,23 @@ export class CatViewComponent implements OnInit {
   categories$: Observable<Catalog[]>;
   cat$: Observable<any>;
   category$: Observable<any[]>;
-  materials: Observable<any[]>;
-  filtered: boolean;
+  filters$: Observable<any>;
 
   constructor(private store: Store<fromStore.ProductsState>) {}
 
   ngOnInit() {
-    this.cat$ = this.store.select(fromStore.getSelectedCategory).take(1);
-    this.category$ = this.store.select(fromStore.getCategories).take(1);
+    this.cat$ = this.store.select(fromStore.getSelectedCategory);
+    this.category$ = this.store.select(fromStore.getCategories);
+    this.filters$ = this.store.select(fromStore.getFilterMaterials);
   }
 
   Filter(event) {
-    this.filtered = false;
+    let filtered = false;
+    this.store.dispatch({ type: fromStore.FILTER, payload: filtered }); // makes sure the filter gets re-applied with multiple selections
     this.store.dispatch({ type: fromStore.FILTER_MAT, payload: event });
     Object.entries(event).map(([key, value]) => {
-      if (value) return (this.filtered = true);
+      if (value) return (filtered = true);
     });
-    this.store.dispatch({ type: fromStore.FILTER, payload: this.filtered });
-    this.materials = event;
+    this.store.dispatch({ type: fromStore.FILTER, payload: filtered });
   }
 }

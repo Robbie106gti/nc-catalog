@@ -14,6 +14,13 @@ export interface SearchState {
     melamine: boolean;
     'euro materials': boolean;
     gloss: boolean;
+    wr: boolean;
+    '1pc': boolean;
+    '5pc': boolean;
+    rrp: boolean;
+    miter: boolean;
+    'm&t': boolean;
+    routered: boolean;
   };
 }
 
@@ -24,7 +31,21 @@ export const initialState: SearchState = {
   loading: false,
   modal: false,
   filter: false,
-  matfilter: { painted: false, wood: false, engineered: false, melamine: false, 'euro materials': false, gloss: false }
+  matfilter: {
+    painted: false,
+    wood: false,
+    engineered: false,
+    melamine: false,
+    'euro materials': false,
+    gloss: false,
+    wr: false,
+    '1pc': false,
+    '5pc': false,
+    rrp: false,
+    miter: false,
+    'm&t': false,
+    routered: false
+  }
 };
 
 export function reducer(state = initialState, action: fromSearch.SearchAction): SearchState {

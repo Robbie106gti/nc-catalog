@@ -4,7 +4,8 @@ import { User, Favorites, Notes } from '../../models/user.model';
 import * as fromServices from '../../services';
 import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
-
+declare var M: any;
+declare var $: any;
 @Component({
   selector: 'category-view',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,13 +16,13 @@ import * as fromStore from '../../store';
   <div class="card-image waves-effect waves-block waves-light">
     <div class="bottom hide-on-med-and-down" *ngFor="let mat of item.materials">
       <div *ngFor="let mat of item.materials">
-        <div class="mats p" *ngIf="mat === 'painted'"></div>
-        <div class="mats w" *ngIf="mat === 'wood'"></div>
-        <div class="mats en" *ngIf="mat === 'engineered'"></div>
-        <div class="mats m" *ngIf="mat === 'melamine'"></div>
-        <div class="mats eu" *ngIf="mat === 'euro materials'"></div>
-        <div class="mats g" *ngIf="mat === 'gloss'"></div>
-        <div class="mats me" *ngIf="mat === 'metal'"></div>
+        <div class="mats p tooltipped" data-position="right" data-tooltip="Paint is available" *ngIf="mat === 'painted'"></div>
+        <div class="mats w tooltipped" data-position="right" data-tooltip="Wood is available" *ngIf="mat === 'wood'"></div>
+        <div class="mats en tooltipped" data-position="right" data-tooltip="Engineered is available" *ngIf="mat === 'engineered'"></div>
+        <div class="mats m tooltipped" data-position="right" data-tooltip="Melanines are available" *ngIf="mat === 'melamine'"></div>
+        <div class="mats eu tooltipped" data-position="right" data-tooltip="Euro Materials are available" *ngIf="mat === 'euro materials'"></div>
+        <div class="mats g tooltipped" data-position="right" data-tooltip="Gloss is available" *ngIf="mat === 'gloss'"></div>
+        <div class="mats me tooltipped" data-position="right" data-tooltip="Metal is available" *ngIf="mat === 'metal'"></div>
       </div>
     </div>
     <img class="image20 activator" src="{{ item.image }}">
@@ -80,6 +81,9 @@ export class CategoryViewComponent {
   constructor(private store: Store<fromStore.ProductsState>, private firestore: fromServices.FirestoreService) {
     this.user$ = this.store.select(fromStore.getUserData);
     this.userFavs$ = this.store.select(fromStore.getUserFavs);
+    $(document).ready(function() {
+      $('.tooltipped').tooltip();
+    });
   }
 
   BookmarkIt(event) {
