@@ -11,7 +11,7 @@ declare var $: any;
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
 <tool-item *ngIf="(user$ | async) as user" [category]="item" [user]="user" [userFavs]="(userFavs$ | async)" (add)="BookmarkIt($event)"
-  (remove)="UnbookmarkIt($event)" (turnOn)="Active($event)" (turnOff)="Unactive($event)"></tool-item>
+  (remove)="UnbookmarkIt($event)" (turnOn)="Active($event)" (turnOff)="Unactive($event)" (edit)="Edit($event)"></tool-item>
 <a [routerLink]="[item.link]" [queryParams]="item.params">
   <div class="card-image waves-effect waves-block waves-light">
     <div class="bottom hide-on-med-and-down" *ngFor="let mat of item.materials">
@@ -109,5 +109,8 @@ export class CategoryViewComponent {
   }
   CatOrCab(cat) {
     return cat.cabinet ? 'cabinets' : 'category';
+  }
+  Edit(e) {
+    this.store.dispatch({ type: fromStore.LOAD_EDIT, payload: e });
   }
 }

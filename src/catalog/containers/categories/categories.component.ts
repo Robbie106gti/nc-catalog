@@ -11,6 +11,7 @@ import * as fromServices from '../../services';
   selector: 'categories',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
+  <edit-cat [item]="item$ | async" (edited)="Edited($event)"></edit-cat>
     <div class="section no-pad-bot no-pad-top" id="index-banner" *ngIf="(user$ | async) as user">
       <div class="row grid" id="catalog">
         <div *ngIf="!((categories$ | async)?.length)">
@@ -23,7 +24,8 @@ import * as fromServices from '../../services';
           (add)="BookmarkIt($event)"
           (remove)="UnbookmarkIt($event)"
           (turnOn)="Active($event)"
-          (turnOff)="Unactive($event)">
+          (turnOff)="Unactive($event)"
+          (edit)="Edit($event)">          
         </category-item>
       </div>
     </div>
@@ -34,6 +36,7 @@ export class CategoriesComponent implements OnInit {
   user$: Observable<User>;
   userFavs$: Observable<Favorites[]>;
   userNotes$: Observable<Notes[]>;
+  item$: Observable<any>;
 
   constructor(private store: Store<fromStore.ProductsState>, private firestore: fromServices.FirestoreService) {}
 
@@ -42,6 +45,7 @@ export class CategoriesComponent implements OnInit {
     this.user$ = this.store.select(fromStore.getUserData);
     this.userFavs$ = this.store.select(fromStore.getUserFavs);
     this.userNotes$ = this.store.select(fromStore.getUserNotes);
+    this.item$ = this.store.select(fromStore.getEditItem);
   }
 
   BookmarkIt(event) {
@@ -64,5 +68,14 @@ export class CategoriesComponent implements OnInit {
       active: false,
       updatedBy: event.user.fullName
     });
+  }
+
+  Edit(e) {
+    // console.log(e);
+    this.store.dispatch({ type: fromStore.LOAD_EDIT, payload: e });
+  }
+
+  Edited(e) {
+    console.log(e);
   }
 }

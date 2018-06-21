@@ -12,6 +12,7 @@ import { of } from 'rxjs/observable/of';
   // styleUrls: ['products.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
+  <edit-cat [item]="item$ | async" (edited)="Edited($event)"></edit-cat>
     <div class="section no-pad-bot no-pad-top" id="index-banner" *ngIf="(cat$ | async) as cat">
       <div class="card" id="top">
         <div class="container">
@@ -41,6 +42,7 @@ export class CatViewComponent implements OnInit {
   cat$: Observable<any>;
   category$: Observable<any[]>;
   filters$: Observable<any>;
+  item$: Observable<any>;
 
   constructor(private store: Store<fromStore.ProductsState>) {}
 
@@ -48,6 +50,7 @@ export class CatViewComponent implements OnInit {
     this.cat$ = this.store.select(fromStore.getSelectedCategory);
     this.category$ = this.store.select(fromStore.getCategories);
     this.filters$ = this.store.select(fromStore.getFilterMaterials);
+    this.item$ = this.store.select(fromStore.getEditItem);
   }
 
   Filter(event) {
@@ -58,5 +61,9 @@ export class CatViewComponent implements OnInit {
       if (value) return (filtered = true);
     });
     this.store.dispatch({ type: fromStore.FILTER, payload: filtered });
+  }
+
+  Edited(e) {
+    console.log(e);
   }
 }

@@ -11,7 +11,8 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
         (add)="BookmarkIt($event)"
         (remove)="UnbookmarkIt($event)"
         (turnOn)="Active($event)"
-        (turnOff)="Unactive($event)"></tool-item>
+        (turnOff)="Unactive($event)"
+        (edit)="Edit($event)"></tool-item>
     <a *ngIf="!category.cabinet; else cabinet" [routerLink]="['./category', category.link]">
         <div class="card-image waves-effect waves-block waves-light">
             <img class="image20 activator" src="{{category.image}}">
@@ -43,6 +44,7 @@ export class CategoryItemComponent {
   @Output() remove = new EventEmitter<any>();
   @Output() turnOn = new EventEmitter<any>();
   @Output() turnOff = new EventEmitter<any>();
+  @Output() edit = new EventEmitter<any>();
 
   BookmarkIt(event) {
     this.add.emit(event);
@@ -55,5 +57,9 @@ export class CategoryItemComponent {
   }
   Unactive(event) {
     this.turnOff.emit(event);
+  }
+  Edit(e) {
+    // console.log(e);
+    this.edit.emit(e);
   }
 }

@@ -22,6 +22,8 @@ import { SpecFormComponent } from './spec-content/spec-form.component';
 import { VersionsDoorsrComponent } from './versions-bar/versions-doors.component';
 import { DoorFilterComponent } from './filter/door-filter.component';
 import { DoorInfoComponent } from './cat-content/door-info.comonent';
+import { EditCatComponent } from './edit-form/edit-cat.component';
+import { InputAddComponent } from './edit-form/input-add.component';
 
 export const components: any[] = [
   CategoryItemComponent,
@@ -38,6 +40,7 @@ export const components: any[] = [
   ImageBarComponent,
   EditModalBarComponent,
   EditFormCabComponent,
+  EditCatComponent,
   DropZoneDirective,
   UploadInputComponent,
   LoaderComponent,
@@ -46,7 +49,8 @@ export const components: any[] = [
   SpecFormComponent,
   VersionsDoorsrComponent,
   DoorFilterComponent,
-  DoorInfoComponent
+  DoorInfoComponent,
+  InputAddComponent
 ];
 
 // export * from ''
@@ -73,3 +77,5 @@ export * from './spec-content/spec-form.component';
 export * from './versions-bar/versions-doors.component';
 export * from './filter/door-filter.component';
 export * from './cat-content/door-info.comonent';
+export * from './edit-form/edit-cat.component';
+export * from './edit-form/input-add.component';

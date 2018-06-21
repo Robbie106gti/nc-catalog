@@ -10,6 +10,7 @@ import { take } from 'rxjs/operators';
   // styleUrls: ['products.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
+  <edit-cat [item]="item$ | async" (edited)="Edited($event)"></edit-cat>
     <div class="section no-pad-bot no-pad-top" id="index-banner">
       <div class="card" id="top">
         <div class="container" *ngIf="(cat$ | async) as cat">
@@ -33,11 +34,17 @@ import { take } from 'rxjs/operators';
 export class CabViewComponent implements OnInit {
   cat$: Observable<any>;
   category$: Observable<any[]>;
+  item$: Observable<any>;
 
   constructor(private store: Store<fromStore.ProductsState>) {}
 
   ngOnInit() {
     this.cat$ = this.store.select(fromStore.getSelectedCategory);
     this.category$ = this.store.select(fromStore.getCabinets);
+    this.item$ = this.store.select(fromStore.getEditItem);
+  }
+
+  Edited(e) {
+    console.log(e);
   }
 }

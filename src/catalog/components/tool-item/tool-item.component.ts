@@ -14,7 +14,7 @@ import {
   template: `
     <div class="tool-item">
         <span *ngIf="user.roles.admin">
-            <i class="material-icons indigo-text text-darken-1">edit</i>
+            <i class="material-icons indigo-text text-darken-1" (click)="Edit(category)">edit</i>
             <i *ngIf="category?.active; else active" (click)="TurnOff()" class="material-icons blue-grey-text text-darken-4">visibility</i>
         </span>
         <i *ngIf="bookmark; else notFav" (click)="UnbookmarkIt()" class="material-icons red-text text-darken-4">turned_in</i>
@@ -32,6 +32,7 @@ export class ToolItemComponent implements OnChanges {
   @Output() remove = new EventEmitter<any>();
   @Output() turnOn = new EventEmitter<any>();
   @Output() turnOff = new EventEmitter<any>();
+  @Output() edit = new EventEmitter<any>();
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['userFavs']) {
@@ -63,5 +64,8 @@ export class ToolItemComponent implements OnChanges {
   TurnOff() {
     this.turnOff.emit({ cat: this.category, user: this.user });
     this.category.active = false;
+  }
+  Edit(category) {
+    this.edit.emit(category);
   }
 }
