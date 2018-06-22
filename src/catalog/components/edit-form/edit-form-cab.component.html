@@ -1,14 +1,14 @@
 <div id="modal1" class="modal bottom-sheet" *ngIf="(results$ | async) as results">
-  <form *ngIf="edit" [formGroup]="form" novalidate>
+  <form [formGroup]="form" novalidate>
     <div class="row">
       <div class="col s12">
         <ul class="tabs tabs-fixed-width">
 
           <li class="tab col">
-            <a class="brown-text" [ngClass]="{ active: id === 'main' }" (click)="setId('main')">{{edit.content.title}}</a>
+            <a class="brown-text" [ngClass]="{ active: id === 'main' }" (click)="setId('main')">{{content.title}}</a>
 
           </li>
-          <li class="tab col" *ngFor="let v of edit.content.heights">
+          <li class="tab col" *ngFor="let v of content.heights">
             <a class="brown-text" [ngClass]="{ active: id === v.id }" (click)="setId(v.id)">{{ v.title }}{{ v.version || "\""}}</a>
 
           </li>
@@ -19,13 +19,13 @@
         <br>
       </div>
       <div id="main" class="col s12 section" *ngIf="version === 'main'">
-        <h4>Update {{edit.content.title}}
-          <on-off [active]="edit.content.active" [id]="'none'" (offOn)="OffOn($event)"></on-off>
+        <h4>Update {{content.title}}
+          <on-off [active]="content.active" [id]="'none'" (offOn)="OffOn($event)"></on-off>
         </h4>
         <div class="col s12 m6 l4">
-          <upload-input [title]="edit.content.title" [button]="'image'" [pct]="pct" [url]="url" [pctfile]="pctfile" (file)="imageUpload($event)"></upload-input>
+          <upload-input [title]="content.title" [button]="'image'" [pct]="pct" [url]="url" [pctfile]="pctfile" (file)="imageUpload($event)"></upload-input>
           <div class="input-field col s12">
-            <textarea id="description" class="materialize-textarea" (keydown.enter)="onDes($event)" formControlName="description" [(ngModel)]="edit.content.description"></textarea>
+            <textarea id="description" class="materialize-textarea" (keydown.enter)="onDes($event)" formControlName="description" [(ngModel)]="content.description"></textarea>
             <label for="description">Description</label>
           </div>
         </div>
@@ -54,10 +54,10 @@
         </div>
       </div>
 
-      <div *ngFor="let v of edit.content.heights" id="version{{v.id}}" class="col s12 section">
+      <div *ngFor="let v of content.heights" id="version{{v.id}}" class="col s12 section">
         <div *ngIf="version === v.id">
-          <h4>Update {{edit.content.title}} {{ edit.content.versions[v.id].title }}{{ v.version || '" high'}}
-            <on-off [active]="edit.content.versions[v.id].active" [id]="v.id" (offOn)="OffOn($event)"></on-off>
+          <h4>Update {{content.title}} {{ content.versions[v.id].title }}{{ v.version || '" high'}}
+            <on-off [active]="content.versions[v.id].active" [id]="v.id" (offOn)="OffOn($event)"></on-off>
           </h4>
           <div class="col s12 l4 m6">
             <upload-input [title]="v.id" [button]="'image'" [pct]="pct" [url]="url" [pctfile]="pctfile" (file)="imageUpload($event)"></upload-input>

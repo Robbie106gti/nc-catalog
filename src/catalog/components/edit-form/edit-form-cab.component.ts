@@ -12,7 +12,7 @@ declare var M: any;
 })
 export class EditFormCabComponent {
   form: FormGroup;
-  @Input() edit: any;
+  @Input() content: any;
   @Input() user: any;
   @Input() pct: number;
   @Input() pctfile: string;

@@ -7,18 +7,11 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
     <div class="col s12 m12 card padding">
       <h5>Select height</h5>
       <div *ngFor="let version of content.heights">
-        <image-bar [version]="version" [content]="content" [user]="user" (edit)="Edit($event)"></image-bar>
+        <image-bar [version]="version" [content]="content"></image-bar>
       </div>
-      <div *ngIf="user.roles.admin" class="col s2 m1 padding right"><i class="material-icons large">add</i></div>
     </div>
     `
 })
 export class VersionsBarComponent {
   @Input() content: any;
-  @Input() user: any;
-  @Output() edit = new EventEmitter<any>();
-
-  Edit(event) {
-    this.edit.emit(event);
-  }
 }

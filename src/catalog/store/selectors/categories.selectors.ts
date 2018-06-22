@@ -90,7 +90,7 @@ function organizeImages(entity, router) {
   Object.keys(entity.images).map(id => {
     if (id === 'spec') {
       const defa = { image: entity.image, title: entity.title, arrayId };
-      console.log(defa);
+      // console.log(defa);
       images.default = defa;
       images.array.push(defa);
       arrayId++;
@@ -108,12 +108,12 @@ function organizeImages(entity, router) {
     images.array.push(entity.images[id]);
     arrayId++;
   });
-  console.log(images);
+  // console.log(images);
   return images;
 }
 
 function filterDoors(entities, filter, filtered) {
-  console.log(filter, filtered);
+  // console.log(filter, filtered);
   if (!filter) return entities;
   if (!entities) return entities;
   const material = new Array();
@@ -122,7 +122,7 @@ function filterDoors(entities, filter, filtered) {
     if (value) material.push(key);
   });
   if (material.length >= 1) {
-    console.log(material, filter, filtered);
+    // console.log(material, filter, filtered);
     entities.filter(li => {
       const materials = li['materials'] ? li['materials'] : [];
       const tags = li.tags ? li.tags : [];
@@ -134,7 +134,7 @@ function filterDoors(entities, filter, filtered) {
       material.forEach(mat => {
         if (search.includes(mat)) addTo++;
       });
-      console.log(addTo, material.length);
+      // console.log(addTo, material.length);
       if (addTo === material.length) matfiltered.push(li);
     });
   }

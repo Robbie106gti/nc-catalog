@@ -29,7 +29,7 @@ export class EditEffects {
     switchMap((action: Ap) => {
       return this.store.select(fromRoot.getUserData).pipe(
         map(user => {
-          console.log(user);
+          // console.log(user);
           const item = action.payload;
           const cab = item.cabinet ? 'cabinets' : 'category';
           const db_loc = item.sub
