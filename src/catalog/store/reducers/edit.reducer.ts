@@ -18,6 +18,11 @@ export function reducer(state = initialState, action: fromEdit.EditAction): Edit
     case fromEdit.EDITED: {
       return { ...state, loaded: false, item: {} };
     }
+
+    case fromEdit.UPDATE_TITLE: {
+      const item = action.payload;
+      return { ...state, loaded: false, item };
+    }
   }
 
   return state;

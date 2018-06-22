@@ -10,7 +10,7 @@ import { take } from 'rxjs/operators';
   // styleUrls: ['products.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <edit-cat [item]="item$ | async" (edited)="Edited($event)"></edit-cat>
+  <edit-cat *ngIf="e$ | async" [item]="item$ | async" (edit)="Edit($event)" (close)="Close($event)" (title)="TitleUpdate($event)"></edit-cat>
     <div class="section no-pad-bot no-pad-top" id="index-banner">
       <div class="card" id="top">
         <div class="container" *ngIf="(cat$ | async) as cat">
@@ -35,6 +35,7 @@ export class CabViewComponent implements OnInit {
   cat$: Observable<any>;
   category$: Observable<any[]>;
   item$: Observable<any>;
+  e$: Observable<boolean>;
 
   constructor(private store: Store<fromStore.ProductsState>) {}
 
@@ -42,9 +43,20 @@ export class CabViewComponent implements OnInit {
     this.cat$ = this.store.select(fromStore.getSelectedCategory);
     this.category$ = this.store.select(fromStore.getCabinets);
     this.item$ = this.store.select(fromStore.getEditItem);
+    this.e$ = this.store.select(fromStore.getEditLoaded);
   }
 
-  Edited(e) {
-    console.log(e);
+  Edit(e) {
+    // console.log(e);
+    this.store.dispatch({ type: fromStore.LOAD_EDIT, payload: e });
+  }
+
+  TitleUpdate(e) {
+    this.store.dispatch({ type: fromStore.UPDATE_TITLE, payload: e });
+  }
+
+  Close(e) {
+    // console.log(e);
+    this.store.dispatch({ type: fromStore.EDITED });
   }
 }

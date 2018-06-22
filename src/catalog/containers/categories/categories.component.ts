@@ -11,7 +11,7 @@ import * as fromServices from '../../services';
   selector: 'categories',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <edit-cat [item]="item$ | async" (edited)="Edited($event)"></edit-cat>
+  <edit-cat *ngIf="e$ | async" [item]="item$ | async" (edit)="Edit($event)" (close)="Close($event)" (title)="TitleUpdate($event)"></edit-cat>
     <div class="section no-pad-bot no-pad-top" id="index-banner" *ngIf="(user$ | async) as user">
       <div class="row grid" id="catalog">
         <div *ngIf="!((categories$ | async)?.length)">
@@ -37,6 +37,7 @@ export class CategoriesComponent implements OnInit {
   userFavs$: Observable<Favorites[]>;
   userNotes$: Observable<Notes[]>;
   item$: Observable<any>;
+  e$: Observable<boolean>;
 
   constructor(private store: Store<fromStore.ProductsState>, private firestore: fromServices.FirestoreService) {}
 
@@ -46,6 +47,7 @@ export class CategoriesComponent implements OnInit {
     this.userFavs$ = this.store.select(fromStore.getUserFavs);
     this.userNotes$ = this.store.select(fromStore.getUserNotes);
     this.item$ = this.store.select(fromStore.getEditItem);
+    this.e$ = this.store.select(fromStore.getEditLoaded);
   }
 
   BookmarkIt(event) {
@@ -75,7 +77,12 @@ export class CategoriesComponent implements OnInit {
     this.store.dispatch({ type: fromStore.LOAD_EDIT, payload: e });
   }
 
-  Edited(e) {
-    console.log(e);
+  Close(e) {
+    // console.log(e);
+    this.store.dispatch({ type: fromStore.EDITED });
+  }
+
+  TitleUpdate(e) {
+    this.store.dispatch({ type: fromStore.UPDATE_TITLE, payload: e });
   }
 }

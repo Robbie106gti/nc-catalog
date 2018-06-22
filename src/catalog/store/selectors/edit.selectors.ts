@@ -9,5 +9,4 @@ export const getEditState = createSelector(
 );
 
 export const getEditItem = createSelector(getEditState, fromEdit.getEditItem);
-
 export const getEditLoaded = createSelector(getEditState, fromEdit.getEditLoaded);

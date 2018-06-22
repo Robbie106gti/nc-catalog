@@ -1,6 +1,4 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
 
 declare var $: any;
 declare var M: any;
@@ -28,17 +26,19 @@ declare var M: any;
 export class EditCatComponent {
   @Input() item: any;
   @Input() user: any;
-  @Output() edited = new EventEmitter<any>();
+  @Output() edit = new EventEmitter<any>();
   @Output() close = new EventEmitter<boolean>();
+  @Output() title = new EventEmitter<boolean>();
   constructor() {}
 
-  Edited(e) {
-    this.edited.emit(e);
+  Edit(e) {
+    this.edit.emit(e);
   }
   Close() {
-    console.log('close');
+    this.close.emit(true);
   }
-  Name(e) {
-    console.log(e);
+  Title(e) {
+    this.item.title = e;
+    this.title.emit(this.item);
   }
 }

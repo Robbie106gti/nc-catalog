@@ -12,7 +12,7 @@ import { of } from 'rxjs/observable/of';
   // styleUrls: ['products.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <edit-cat [item]="item$ | async" (edited)="Edited($event)"></edit-cat>
+  <edit-cat *ngIf="e$ | async"  [item]="item$ | async" (edit)="Edit($event)" (close)="Close($event)" (title)="TitleUpdate($event)"></edit-cat>
     <div class="section no-pad-bot no-pad-top" id="index-banner" *ngIf="(cat$ | async) as cat">
       <div class="card" id="top">
         <div class="container">
@@ -43,6 +43,7 @@ export class CatViewComponent implements OnInit {
   category$: Observable<any[]>;
   filters$: Observable<any>;
   item$: Observable<any>;
+  e$: Observable<boolean>;
 
   constructor(private store: Store<fromStore.ProductsState>) {}
 
@@ -51,6 +52,7 @@ export class CatViewComponent implements OnInit {
     this.category$ = this.store.select(fromStore.getCategories);
     this.filters$ = this.store.select(fromStore.getFilterMaterials);
     this.item$ = this.store.select(fromStore.getEditItem);
+    this.e$ = this.store.select(fromStore.getEditLoaded);
   }
 
   Filter(event) {
@@ -63,7 +65,17 @@ export class CatViewComponent implements OnInit {
     this.store.dispatch({ type: fromStore.FILTER, payload: filtered });
   }
 
-  Edited(e) {
-    console.log(e);
+  Edit(e) {
+    // console.log(e);
+    this.store.dispatch({ type: fromStore.LOAD_EDIT, payload: e });
+  }
+
+  TitleUpdate(e) {
+    this.store.dispatch({ type: fromStore.UPDATE_TITLE, payload: e });
+  }
+
+  Close(e) {
+    // console.log(e);
+    this.store.dispatch({ type: fromStore.EDITED });
   }
 }

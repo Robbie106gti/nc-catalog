@@ -5,7 +5,7 @@
     <h4>EDIT: {{ item.title }}</h4>
     <hr>
     <div class="row">
-      <input-add [title]="item.title" [size]="'s8'" (name)="Name($event)"></input-add>
+      <input-add [title]="item.title" [size]="'s8'" (name)="Title($event)"></input-add>
     </div>
     <div class="modal-footer">
       <chip *ngFor="let chip of item.tags" [chip]="chip"></chip>
