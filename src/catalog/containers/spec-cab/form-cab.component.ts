@@ -10,13 +10,22 @@ import { of } from 'rxjs/observable/of';
   selector: 'form-cab',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <i class="material-icons pointer" (click)="Edit({content: content})">edit</i>
+  <i class="material-icons pointer offset" (click)="Edit({content: content})">edit</i>
   <edit-form-cab
-  *ngIf="editing"
+  *ngIf="editing" [specials]="specials$ | async"
   [content]="content" [user]="user" [pct]="pct" [pctfile]="pctfile" [url]="downloadURL" [results$]="results$"
-  (close)="Close($event)" (file)="UploadFile($event)" (update)="Update($event)" (search)="Search($event)"
+  (close)="Close($event)" (file)="UploadFile($event)" (update)="Update($event)" (search)="Search($event)" (remove)="Remove($event)"
   ></edit-form-cab>
-  `
+  `,
+  styles: [
+    `
+      .offset {
+        position: relative;
+        right: 1.2em;
+        bottom: 0.8em;
+      }
+    `
+  ]
 })
 export class FormCabComponent {
   editing: Boolean;
@@ -27,6 +36,7 @@ export class FormCabComponent {
   param$: Observable<any>;
   results$: Observable<any>;
   user$: Observable<User>;
+  specials$: Observable<any>;
 
   pct: Observable<any>;
   pctfile: Observable<string>;
@@ -36,6 +46,7 @@ export class FormCabComponent {
   constructor(private store: Store<fromStore.ProductsState>) {
     this.param$ = this.store.select(fromStore.getRouterParams);
     this.results$ = this.store.select(fromStore.getSearchResults);
+    this.specials$ = this.store.select(fromStore.getCabSpecials);
   }
 
   Edit(event) {
@@ -54,6 +65,9 @@ export class FormCabComponent {
   }
   Search(event) {
     this.store.dispatch({ type: fromStore.SEARCH, payload: event });
+  }
+  Remove(event) {
+    console.log(event);
   }
 
   UploadFile(event) {

@@ -11,8 +11,8 @@
             <h3 id="topic">Category: {{ TransformCat(content.sub) | titlecase }}</h3>
             <h4 id="topic">
               Item: {{ content.title }}
-              <form-cab *ngIf="user.roles.admin" [user]="user" [content]="content" (edit)="Fetch($event)"></form-cab>
             </h4>
+            <form-cab *ngIf="user.roles.admin" [user]="user" [content]="content" (edit)="Fetch($event)"></form-cab>
             <br>
           </div>
         </div>

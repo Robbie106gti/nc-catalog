@@ -3,14 +3,11 @@
     <div class="row">
       <div class="col s12">
         <ul class="tabs tabs-fixed-width">
-
           <li class="tab col">
             <a class="brown-text" [ngClass]="{ active: id === 'main' }" (click)="setId('main')">{{content.title}}</a>
-
           </li>
           <li class="tab col" *ngFor="let v of content.heights">
             <a class="brown-text" [ngClass]="{ active: id === v.id }" (click)="setId(v.id)">{{ v.title }}{{ v.version || "\""}}</a>
-
           </li>
         </ul>
         <i class="material-icons tool-item small" (click)="Closed()">close</i>
@@ -19,29 +16,71 @@
         <br>
       </div>
       <div id="main" class="col s12 section" *ngIf="version === 'main'">
-        <h4>Update {{content.title}}
+        <h4>UPDATING: {{content.title}}
           <on-off [active]="content.active" [id]="'none'" (offOn)="OffOn($event)"></on-off>
         </h4>
-        <div class="col s12 m6 l4">
+        <div class="col s12 m6">
           <upload-input [title]="content.title" [button]="'image'" [pct]="pct" [url]="url" [pctfile]="pctfile" (file)="imageUpload($event)"></upload-input>
-          <div class="input-field col s12">
+          <ul>
+            <b>Dimensional</b>
+            <li class="second" *ngFor="let i of specials.iwhd['main']">
+              <i class="material-icons">tune</i> {{i.title}} - {{i.content}}
+              <a (click)="Remove(i)" class="secondary-content">
+                <i class="material-icons red-text pointer tiny">clear</i>
+              </a>
+            </li>
+          </ul>
+          <hr>
+          <ul>
+            <b>Specifications</b>
+            <li *ngFor="let spec of specials.specs['main']">
+              <b>{{spec?.title}}</b>: {{ spec?.content }}
+              <a (click)="Remove(spec)" class="secondary-content">
+                <i class="material-icons red-text pointer tiny">clear</i>
+              </a>
+            </li>
+          </ul>
+          <hr>
+          <ul>
+            <b>Notes</b>
+            <li *ngFor="let note of specials.notes['main']">
+              <b>{{note?.title}}</b>: {{ note?.content }}
+              <a (click)="Remove(note)" class="secondary-content">
+                <i class="material-icons red-text pointer tiny">clear</i>
+              </a>
+            </li>
+          </ul>
+          <hr>
+          <ul>
+            <b>Addons</b>
+            <li *ngFor="let addon of specials.addons['main']">
+              <b>{{addon?.title}}</b>: {{ addon?.content }}
+              <a (click)="Remove(addon)" class="secondary-content">
+                <i class="material-icons red-text pointer tiny">clear</i>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col s12 m6">
+          <div class="input-field">
             <textarea id="description" class="materialize-textarea" (keydown.enter)="onDes($event)" formControlName="description" [(ngModel)]="content.description"></textarea>
             <label for="description">Description</label>
           </div>
-        </div>
-        <div class="col s6 m6 l4">
+          <a class="waves-effect waves-light btn-small" (click)="setItem('dimensions')">
+            <i class="material-icons left">tune</i>Dimensions</a>
+          <a class="waves-effect waves-light btn-small" (click)="setItem('specifications')">
+            <i class="material-icons left">build</i>Specifications</a>
+          <a class="waves-effect waves-light btn-small" (click)="setItem('notes')">
+            <i class="material-icons left">announcement</i>Notes</a>
+          <a class="waves-effect waves-light btn-small" (click)="setItem('addons')">
+            <i class="material-icons left">cloud</i>Addons</a>
           <div class="input-field">
             <i class="material-icons prefix">textsms</i>
-            <input type="text" formControlName="spec" #addon (keyup)="Search(addon.value, 'addons')">
-            <label for="autocomplete-specg">Popular Attachments and Applications</label>
-          </div>
-          <div class="input-field">
-            <i class="material-icons prefix">textsms</i>
-            <input type="text" formControlName="note" #note (keyup)="Search(note.value, 'notes')">
-            <label for="autocomplete-noteg">Notes</label>
+            <input type="text" formControlName="note" #note (keyup)="Search(note.value, cat)" [attr.disabled]="!cat ? true : null">
+            <label for="autocomplete-noteg">{{ (cat | titlecase) || 'select a category'}}</label>
           </div>
         </div>
-        <div class="col s6 l4 m6">
+        <div class="col s12 m6">
           <ul *ngIf="results.length > 0" class="collection">
             <li *ngFor="let r of results" class="collection-item">
               <a class="secondary-content pointer" (click)="Add(r, 'main')">
@@ -53,39 +92,39 @@
           </ul>
         </div>
       </div>
+    </div>
 
-      <div *ngFor="let v of content.heights" id="version{{v.id}}" class="col s12 section">
-        <div *ngIf="version === v.id">
-          <h4>Update {{content.title}} {{ content.versions[v.id].title }}{{ v.version || '" high'}}
-            <on-off [active]="content.versions[v.id].active" [id]="v.id" (offOn)="OffOn($event)"></on-off>
-          </h4>
-          <div class="col s12 l4 m6">
-            <upload-input [title]="v.id" [button]="'image'" [pct]="pct" [url]="url" [pctfile]="pctfile" (file)="imageUpload($event)"></upload-input>
-            <upload-input [title]="v.id" [button]="'spec'" [pct]="pct" [url]="url" [pctfile]="pctfile" (file)="imageUpload($event)"></upload-input>
+    <div *ngFor="let v of content.heights" id="version{{v.id}}" class="col s12 section">
+      <div *ngIf="version === v.id">
+        <h4>Update {{content.title}} {{ content.versions[v.id].title }}{{ v.version || '" high'}}
+          <on-off [active]="content.versions[v.id].active" [id]="v.id" (offOn)="OffOn($event)"></on-off>
+        </h4>
+        <div class="col s12 l4 m6">
+          <upload-input [title]="v.id" [button]="'image'" [pct]="pct" [url]="url" [pctfile]="pctfile" (file)="imageUpload($event)"></upload-input>
+          <upload-input [title]="v.id" [button]="'spec'" [pct]="pct" [url]="url" [pctfile]="pctfile" (file)="imageUpload($event)"></upload-input>
+        </div>
+        <div class="col s6 l4 m6">
+          <div class="input-field">
+            <i class="material-icons prefix">textsms</i>
+            <input type="text" formControlName="specV" #addonv (keyup)="Search(addonv.value, 'addons')">
+            <label for="autocomplete-spec">Popular Attachments and Applications</label>
           </div>
-          <div class="col s6 l4 m6">
-            <div class="input-field">
-              <i class="material-icons prefix">textsms</i>
-              <input type="text" formControlName="specV" #addonv (keyup)="Search(addonv.value, 'addons')">
-              <label for="autocomplete-spec">Popular Attachments and Applications</label>
-            </div>
-            <div class="input-field">
-              <i class="material-icons prefix">textsms</i>
-              <input type="text" formControlName="noteV" #notev (keyup)="Search(notev.value, 'notes')">
-              <label for="autocomplete-note">Notes</label>
-            </div>
+          <div class="input-field">
+            <i class="material-icons prefix">textsms</i>
+            <input type="text" formControlName="noteV" #notev (keyup)="Search(notev.value, 'notes')">
+            <label for="autocomplete-note">Notes</label>
           </div>
-          <div class="col s6 l4 m6">
-            <ul *ngIf="results.length > 0" class="collection">
-              <li *ngFor="let r of results" class="collection-item">
-                <a class="secondary-content pointer" (click)="Add(r, v.id)">
-                  <i class="material-icons">send</i>
-                </a>
-                <span class="limit">
-                  <i class="material-icons prefix">announcement</i>{{r.title}} - {{r.content}}</span>
-              </li>
-            </ul>
-          </div>
+        </div>
+        <div class="col s6 l4 m6">
+          <ul *ngIf="results.length > 0" class="collection">
+            <li *ngFor="let r of results" class="collection-item">
+              <a class="secondary-content pointer" (click)="Add(r, v.id)">
+                <i class="material-icons">send</i>
+              </a>
+              <span class="limit">
+                <i class="material-icons prefix">announcement</i>{{r.title}} - {{r.content}}</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

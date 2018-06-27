@@ -9,17 +9,21 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
 import * as searchActions from '../actions';
 
+interface Ap {
+  type: string;
+  payload: any;
+}
 @Injectable()
 export class SearchEffects {
   constructor(private store: Store<fromStore.ProductsState>, private actions$: Actions) {}
 
   @Effect()
   search$ = this.actions$.ofType(searchActions.SEARCH).pipe(
-    switchMap(action => {
+    switchMap((action: Ap) => {
       console.log(action);
       let helper;
-      switch (action['payload'].category) {
-        case 'iwhd': {
+      switch (action.payload.category) {
+        case 'dimensions': {
           helper = 'getHelperIWHDs';
           break;
         }

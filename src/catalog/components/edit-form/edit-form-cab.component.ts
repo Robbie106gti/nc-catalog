@@ -8,7 +8,15 @@ declare var M: any;
 @Component({
   selector: 'edit-form-cab',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './edit-form-cab.component.html'
+  templateUrl: './edit-form-cab.component.html',
+  styles: [
+    `
+      .modal.bottom-sheet {
+        height: 87%;
+        max-height: 87%;
+      }
+    `
+  ]
 })
 export class EditFormCabComponent {
   form: FormGroup;
@@ -18,11 +26,13 @@ export class EditFormCabComponent {
   @Input() pctfile: string;
   @Input() url: string;
   @Input() results$: Observable<any>;
+  @Input() specials: any;
 
   @Output() close = new EventEmitter<boolean>();
   @Output() file = new EventEmitter<any>();
   @Output() update = new EventEmitter<any>();
   @Output() search = new EventEmitter<any>();
+  @Output() remove = new EventEmitter<any>();
 
   cat: string;
   version: string;
@@ -40,6 +50,10 @@ export class EditFormCabComponent {
     this.version = id;
   }
 
+  setItem(item) {
+    this.cat = item;
+  }
+
   createForm() {
     this.form = this.fb.group({
       description: [''],
@@ -50,11 +64,10 @@ export class EditFormCabComponent {
     });
   }
 
-  Search(value: string, str: string) {
+  Search(value: string) {
     if (value.length > 1) {
-      this.cat = str;
-      this.search.emit({ category: str, value });
-      console.log(str, value);
+      this.search.emit({ category: this.cat, value });
+      console.log(this.cat, value);
     }
   }
 
@@ -80,7 +93,17 @@ export class EditFormCabComponent {
   }
 
   Add(event, version) {
-    this.update.emit({ sub: this.cat, value: event, version });
+    console.log({ sub: this.cat, value: event, version });
+    // this.update.emit({ sub: this.cat, value: event, version });
+  }
+
+  Remove(r) {
+    if (r.sub === 'iwhd') {
+      this.specials.iwhd[this.version] = this.specials.iwhd[this.version].filter(item => item.id !== r.id);
+    } else {
+      this.specials.specs[this.version] = this.specials.specs[this.version].filter(item => item.id !== r.id);
+    }
+    this.remove.emit({ ...r, toDo: 'remove', version: this.version });
   }
 
   Closed() {
