@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 
 declare var $: any;
@@ -92,9 +92,9 @@ export class EditFormCabComponent {
     this.update.emit({ ...up });
   }
 
-  Add(event, version) {
-    console.log({ sub: this.cat, value: event, version });
-    // this.update.emit({ sub: this.cat, value: event, version });
+  Add(event) {
+    console.log({ sub: this.cat, value: event, version: this.version });
+    this.update.emit({ sub: this.cat, value: event, version: this.version });
   }
 
   Remove(r) {
@@ -103,7 +103,7 @@ export class EditFormCabComponent {
     } else {
       this.specials.specs[this.version] = this.specials.specs[this.version].filter(item => item.id !== r.id);
     }
-    this.remove.emit({ ...r, toDo: 'remove', version: this.version });
+    this.remove.emit({ ...r, toDo: 'remove', version: this.version, user: this.user });
   }
 
   Closed() {

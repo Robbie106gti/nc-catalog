@@ -6,10 +6,16 @@ declare var M: any;
   selector: 'add-custom',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="card padding unset" *ngIf="addons.length">
+    <div class="card padding unset" *ngIf="specials.addons['main'].length">
         <h4>Popular Attachments and Applications:</h4>
         <ul class="collapsible popout" data-collapsible="accordion">
-            <li *ngFor="let addon of addons">
+            <li *ngFor="let addon of specials.addons['main']">
+                <div class="collapsible-header"><i class="material-icons">{{ addon.icon }}</i>{{ addon.title }}</div>
+                <div class="collapsible-body">
+                    <span><b>{{ addon.title}}</b> {{ addon.content }}</span>
+                </div>
+            </li>
+            <li *ngFor="let addon of specials.addons[v]">
                 <div class="collapsible-header"><i class="material-icons">{{ addon.icon }}</i>{{ addon.title }}</div>
                 <div class="collapsible-body">
                     <span><b>{{ addon.title}}</b> {{ addon.content }}</span>
@@ -26,7 +32,8 @@ declare var M: any;
     `
 })
 export class AddCustomComponent {
-  @Input() addons: any;
+  @Input() specials: any;
+  @Input() v: any;
 
   constructor() {
     $(document).ready(function() {

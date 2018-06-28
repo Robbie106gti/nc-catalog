@@ -68,6 +68,7 @@ export class FormCabComponent {
   }
   Remove(event) {
     console.log(event);
+    this.store.dispatch({ type: fromStore.REMOVE_FROM_CABINET, payload: event });
   }
 
   UploadFile(event) {

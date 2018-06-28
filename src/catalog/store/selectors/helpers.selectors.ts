@@ -192,25 +192,27 @@ export const getCabSpecials = createSelector(
   fromStore.getSelectedCabinetItem,
   (iwhds, specs, notes, addons, router, cab) => {
     const cabSpecs = { specs: { main: [] }, iwhd: { main: [] }, notes: { main: [] }, addons: { main: [] } };
-    cabSpecs.specs.main = makeCabSpecVersions(specs, cab.specifications);
-    cabSpecs.iwhd.main = makeCabIWHDVersions(iwhds, cab.iwhd);
-    cabSpecs.notes.main = makeCabSpecVersions(notes, cab.notes);
-    cabSpecs.addons.main = makeCabSpecVersions(addons, cab.addons);
-    if (cab.heights) {
-      cab.heights.forEach(version => {
-        cabSpecs.specs[version.id] = cab.versions[version.id].specifications
-          ? makeCabSpecVersions(specs, cab.versions[version.id].specifications)
-          : [];
-        cabSpecs.iwhd[version.id] = cab.versions[version.id].iwhd
-          ? makeCabIWHDVersions(iwhds, cab.versions[version.id].iwhd)
-          : [];
-        cabSpecs.notes[version.id] = cab.versions[version.id].notes
-          ? makeCabSpecVersions(notes, cab.versions[version.id].notes)
-          : [];
-        cabSpecs.addons[version.id] = cab.versions[version.id].addons
-          ? makeCabSpecVersions(addons, cab.versions[version.id].addons)
-          : [];
-      });
+    if (router.state.params.Item) {
+      cabSpecs.specs.main = makeCabSpecVersions(specs, cab.specifications);
+      cabSpecs.iwhd.main = makeCabIWHDVersions(iwhds, cab.iwhd);
+      cabSpecs.notes.main = makeCabSpecVersions(notes, cab.notes);
+      cabSpecs.addons.main = makeCabSpecVersions(addons, cab.addons);
+      if (cab.heights) {
+        cab.heights.forEach(version => {
+          cabSpecs.specs[version.id] = cab.versions[version.id].specifications
+            ? makeCabSpecVersions(specs, cab.versions[version.id].specifications)
+            : [];
+          cabSpecs.iwhd[version.id] = cab.versions[version.id].iwhd
+            ? makeCabIWHDVersions(iwhds, cab.versions[version.id].iwhd)
+            : [];
+          cabSpecs.notes[version.id] = cab.versions[version.id].notes
+            ? makeCabSpecVersions(notes, cab.versions[version.id].notes)
+            : [];
+          cabSpecs.addons[version.id] = cab.versions[version.id].addons
+            ? makeCabSpecVersions(addons, cab.versions[version.id].addons)
+            : [];
+        });
+      }
     }
     // console.log(cabSpecs);
     return cabSpecs;

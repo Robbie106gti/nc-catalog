@@ -208,6 +208,30 @@ export class CabinetsEffects {
               }
               break;
             }
+            case 'notes': {
+              if (update.version === 'main') {
+                value = cab.notes.filter(item => item !== update.id);
+                value = { [cat]: value };
+              } else {
+                let spec = versions[update.version].notes;
+                spec = spec.filter(item => item !== update.id);
+                versions[update.version].notes = spec;
+                value = { versions };
+              }
+              break;
+            }
+            case 'addons': {
+              if (update.version === 'main') {
+                value = cab.addons.filter(item => item !== update.id);
+                value = { [cat]: value };
+              } else {
+                let spec = versions[update.version].addons;
+                spec = spec.filter(item => item !== update.id);
+                versions[update.version].addons = spec;
+                value = { versions };
+              }
+              break;
+            }
           }
           this.firestoreService.update(`structure/cabinets/${common.prepareFirestore(cab.sub)}/${cab.id}`, {
             ...value,
