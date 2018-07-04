@@ -60,6 +60,7 @@ export class FormCabComponent {
   }
 
   Update(event) {
+    //console.log(event);
     event = { ...event, user: this.user };
     this.store.dispatch({ type: fromStore.UPDATE_CABINET, payload: event });
   }
@@ -67,7 +68,7 @@ export class FormCabComponent {
     this.store.dispatch({ type: fromStore.SEARCH, payload: event });
   }
   Remove(event) {
-    console.log(event);
+    // console.log(event);
     this.store.dispatch({ type: fromStore.REMOVE_FROM_CABINET, payload: event });
   }
 

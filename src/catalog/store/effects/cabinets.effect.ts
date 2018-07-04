@@ -49,7 +49,7 @@ export class CabinetsEffects {
         take(1),
         map(cab => {
           const update = updates['payload'];
-          // console.log(update);
+          // console.log(update, cab, 'Effects');
           const cat = update.sub.toLowerCase();
           const versions = cab.versions;
           let value;
@@ -57,11 +57,11 @@ export class CabinetsEffects {
             case 'specifications': {
               if (update.version === 'main') {
                 cab.specifications = cab.specifications ? cab.specifications : [];
-                cab.specifications.push(update.id);
-                value = { [cat]: cab.specifications };
+                cab.specifications.push(update.value.id);
+                value = { specifications: cab.specifications };
               } else {
                 const spec = versions[update.version].specifications ? versions[update.version].specifications : [];
-                spec.push(update.id);
+                spec.push(update.value.id);
                 versions[update.version].specifications = spec;
                 value = { versions };
               }
@@ -84,7 +84,7 @@ export class CabinetsEffects {
                   key = 'depths';
                 }
                 cab.iwhd[key] = update.id;
-                value = { [cat]: cab.iwhd };
+                value = { iwhd: cab.iwhd };
               } else {
                 const iwhd = versions[update.version].iwhd ? versions[update.version].iwhd : {};
                 // tslint:disable-next-line:triple-equals
@@ -113,7 +113,7 @@ export class CabinetsEffects {
               if (update.version === 'main') {
                 cab.notes = cab.notes ? cab.notes : [];
                 cab.notes.push(update.value.id);
-                value = { [cat]: cab.notes };
+                value = { notes: cab.notes };
               } else {
                 const notes = versions[update.version].notes ? versions[update.version].notes : [];
                 notes.push(update.value.id);
@@ -126,7 +126,7 @@ export class CabinetsEffects {
               if (update.version === 'main') {
                 cab.addons = cab.addons ? cab.addons : [];
                 cab.addons.push(update.value.id);
-                value = { [cat]: cab.addons };
+                value = { addons: cab.addons };
               } else {
                 const addons = versions[update.version].addons ? versions[update.version].addons : [];
                 addons.push(update.value.id);

@@ -67,7 +67,7 @@ export class EditFormCabComponent {
   Search(value: string) {
     if (value.length > 1) {
       this.search.emit({ category: this.cat, value });
-      console.log(this.cat, value);
+      // console.log(this.cat, value);
     }
   }
 
@@ -93,7 +93,7 @@ export class EditFormCabComponent {
   }
 
   Add(event) {
-    console.log({ sub: this.cat, value: event, version: this.version });
+    // console.log({ sub: this.cat, value: event, version: this.version });
     this.update.emit({ sub: this.cat, value: event, version: this.version });
   }
 
