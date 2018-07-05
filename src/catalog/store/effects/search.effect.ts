@@ -20,7 +20,7 @@ export class SearchEffects {
   @Effect()
   search$ = this.actions$.ofType(searchActions.SEARCH).pipe(
     switchMap((action: Ap) => {
-      console.log(action);
+      // console.log(action);
       let helper;
       switch (action.payload.category) {
         case 'dimensions': {

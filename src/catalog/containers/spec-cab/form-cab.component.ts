@@ -67,7 +67,7 @@ export class FormCabComponent {
     this.store.dispatch({ type: fromStore.SEARCH, payload: event });
   }
   Remove(event) {
-    console.log(event);
+    // console.log(event);
     this.store.dispatch({ type: fromStore.REMOVE_FROM_CABINET, payload: event });
   }
 

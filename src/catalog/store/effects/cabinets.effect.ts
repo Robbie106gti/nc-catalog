@@ -49,26 +49,27 @@ export class CabinetsEffects {
         take(1),
         map(cab => {
           const update = updates['payload'];
-          // console.log(update);
-          const cat = update.sub.toLowerCase();
+          let cat = update.sub.toLowerCase();
           const versions = cab.versions;
           let value;
+          // console.log(update, cat, cab);
           switch (cat) {
             case 'specifications': {
               if (update.version === 'main') {
                 cab.specifications = cab.specifications ? cab.specifications : [];
-                cab.specifications.push(update.id);
-                value = { [cat]: cab.specifications };
+                cab.specifications.push(update.value.id);
+                value = { specifications: cab.specifications };
               } else {
                 const spec = versions[update.version].specifications ? versions[update.version].specifications : [];
-                spec.push(update.id);
+                spec.push(update.value.id);
                 versions[update.version].specifications = spec;
                 value = { versions };
               }
               break;
             }
-            case 'iwhd': {
-              let key = update.title.toLowerCase();
+            case 'dimensions': {
+              cat = 'iwhd';
+              let key = update.value.title.toLowerCase();
               if (update.version === 'main') {
                 cab.iwhd = cab.iwhd ? cab.iwhd : {};
                 // tslint:disable-next-line:triple-equals
@@ -83,8 +84,8 @@ export class CabinetsEffects {
                 if (key == 'depth') {
                   key = 'depths';
                 }
-                cab.iwhd[key] = update.id;
-                value = { [cat]: cab.iwhd };
+                cab.iwhd[key] = update.value.id;
+                value = { iwhd: cab.iwhd };
               } else {
                 const iwhd = versions[update.version].iwhd ? versions[update.version].iwhd : {};
                 // tslint:disable-next-line:triple-equals
@@ -99,21 +100,21 @@ export class CabinetsEffects {
                 if (key == 'depth') {
                   key = 'depths';
                 }
-                iwhd[key] = update.id;
+                iwhd[key] = update.value.id;
                 versions[update.version].iwhd = iwhd;
                 value = { versions };
               }
               break;
             }
             case 'description': {
-              value = { [cat]: update.value };
+              value = { description: update.value };
               break;
             }
             case 'notes': {
               if (update.version === 'main') {
                 cab.notes = cab.notes ? cab.notes : [];
                 cab.notes.push(update.value.id);
-                value = { [cat]: cab.notes };
+                value = { notes: cab.notes };
               } else {
                 const notes = versions[update.version].notes ? versions[update.version].notes : [];
                 notes.push(update.value.id);
@@ -126,7 +127,7 @@ export class CabinetsEffects {
               if (update.version === 'main') {
                 cab.addons = cab.addons ? cab.addons : [];
                 cab.addons.push(update.value.id);
-                value = { [cat]: cab.addons };
+                value = { addons: cab.addons };
               } else {
                 const addons = versions[update.version].addons ? versions[update.version].addons : [];
                 addons.push(update.value.id);
@@ -143,6 +144,10 @@ export class CabinetsEffects {
                 value = { versions };
               }
               break;
+            }
+            default: {
+              console.log('No case found!');
+              console.log(cat, cab, update);
             }
           }
           this.firestoreService.update(`structure/cabinets/${common.prepareFirestore(cab.sub)}/${cab.id}`, {
@@ -175,7 +180,7 @@ export class CabinetsEffects {
             case 'specifications': {
               if (update.version === 'main') {
                 value = cab.specifications.filter(item => item !== update.id);
-                value = { [cat]: value };
+                value = { specifications: value };
               } else {
                 let spec = versions[update.version].specifications;
                 spec = spec.filter(item => item !== update.id);
@@ -201,7 +206,7 @@ export class CabinetsEffects {
               if (update.version === 'main') {
                 value = cab.iwhd;
                 delete value[key];
-                value = { [cat]: value };
+                value = { iwhd: value };
               } else {
                 delete versions[update.version].iwhd[key];
                 value = { versions };
@@ -211,7 +216,7 @@ export class CabinetsEffects {
             case 'notes': {
               if (update.version === 'main') {
                 value = cab.notes.filter(item => item !== update.id);
-                value = { [cat]: value };
+                value = { notes: value };
               } else {
                 let spec = versions[update.version].notes;
                 spec = spec.filter(item => item !== update.id);
@@ -223,7 +228,7 @@ export class CabinetsEffects {
             case 'addons': {
               if (update.version === 'main') {
                 value = cab.addons.filter(item => item !== update.id);
-                value = { [cat]: value };
+                value = { addons: value };
               } else {
                 let spec = versions[update.version].addons;
                 spec = spec.filter(item => item !== update.id);
