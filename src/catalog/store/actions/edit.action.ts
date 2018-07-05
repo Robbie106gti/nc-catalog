@@ -4,6 +4,7 @@ import { Action } from '@ngrx/store';
 export const LOAD_EDIT = '[Edit] Edit is active';
 export const UPDATE_TITLE = '[Edit] Update Title of item';
 export const EDITED = '[Edit] Edit is done';
+export const EDIT_DOOR = '[Edit] Edit Door';
 
 export const EDIT_SUCCESS = '[Edit] Edit is successively updated';
 export const EDIT_FAIL = '[Edit] Edit Failed';
@@ -19,6 +20,12 @@ export class LoadEdit implements Action {
 // update items
 export class EditActive implements Action {
   readonly type = UPDATE_TITLE;
+  constructor(public payload: any) {
+    // console.log(payload);
+  }
+}
+export class EditDoor implements Action {
+  readonly type = EDIT_DOOR;
   constructor(public payload: any) {
     // console.log(payload);
   }
@@ -45,4 +52,4 @@ export class EditSuccess implements Action {
 }
 
 // action types
-export type EditAction = LoadEdit | EditActive | Edited | EditFail | EditSuccess;
+export type EditAction = LoadEdit | EditActive | Edited | EditDoor | EditFail | EditSuccess;
