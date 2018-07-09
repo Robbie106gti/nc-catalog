@@ -35,13 +35,20 @@ import * as fromStore from '../../store';
     </div>
   </div>
 </div>
+<a class="btn-floating red floated" (click)="Adddoors()"><i class="material-icons">add</i></a>
   `,
   styles: [
     `
-  .doorMenu {
-    top: -10px;
-    position: relative;
-  }`
+      .doorMenu {
+        top: -10px;
+        position: relative;
+      }
+      .floated {
+        position: absolute;
+        bottom: 3rem;
+        right: 3rem;
+      }
+    `
   ]
 })
 export class DoorsComponent {
@@ -54,5 +61,16 @@ export class DoorsComponent {
 
   Menu(style) {
     return (this.doorstyle = style);
+  }
+
+  Adddoors() {
+    this.doors$.take(1).subscribe(doors => {
+      console.log(doors);
+      const newDoor = doors.slab[4];
+      this.store.dispatch({
+        type: fromStore.EDIT_DOOR,
+        payload: newDoor
+      });
+    });
   }
 }

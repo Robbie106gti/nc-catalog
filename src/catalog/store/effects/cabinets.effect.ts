@@ -49,10 +49,15 @@ export class CabinetsEffects {
         take(1),
         map(cab => {
           const update = updates['payload'];
+<<<<<<< HEAD
           // console.log(update, cab, 'Effects');
           const cat = update.sub.toLowerCase();
+=======
+          let cat = update.sub.toLowerCase();
+>>>>>>> 71a4152c57cbf4f6e394f168094ec6fb096de59c
           const versions = cab.versions;
           let value;
+          // console.log(update, cat, cab);
           switch (cat) {
             case 'specifications': {
               if (update.version === 'main') {
@@ -67,8 +72,9 @@ export class CabinetsEffects {
               }
               break;
             }
-            case 'iwhd': {
-              let key = update.title.toLowerCase();
+            case 'dimensions': {
+              cat = 'iwhd';
+              let key = update.value.title.toLowerCase();
               if (update.version === 'main') {
                 cab.iwhd = cab.iwhd ? cab.iwhd : {};
                 // tslint:disable-next-line:triple-equals
@@ -83,7 +89,11 @@ export class CabinetsEffects {
                 if (key == 'depth') {
                   key = 'depths';
                 }
+<<<<<<< HEAD
                 cab.iwhd[key] = update.id;
+=======
+                cab.iwhd[key] = update.value.id;
+>>>>>>> 71a4152c57cbf4f6e394f168094ec6fb096de59c
                 value = { iwhd: cab.iwhd };
               } else {
                 const iwhd = versions[update.version].iwhd ? versions[update.version].iwhd : {};
@@ -99,14 +109,14 @@ export class CabinetsEffects {
                 if (key == 'depth') {
                   key = 'depths';
                 }
-                iwhd[key] = update.id;
+                iwhd[key] = update.value.id;
                 versions[update.version].iwhd = iwhd;
                 value = { versions };
               }
               break;
             }
             case 'description': {
-              value = { [cat]: update.value };
+              value = { description: update.value };
               break;
             }
             case 'notes': {
@@ -144,6 +154,10 @@ export class CabinetsEffects {
               }
               break;
             }
+            default: {
+              console.log('No case found!');
+              console.log(cat, cab, update);
+            }
           }
           this.firestoreService.update(`structure/cabinets/${common.prepareFirestore(cab.sub)}/${cab.id}`, {
             ...value,
@@ -175,7 +189,7 @@ export class CabinetsEffects {
             case 'specifications': {
               if (update.version === 'main') {
                 value = cab.specifications.filter(item => item !== update.id);
-                value = { [cat]: value };
+                value = { specifications: value };
               } else {
                 let spec = versions[update.version].specifications;
                 spec = spec.filter(item => item !== update.id);
@@ -201,7 +215,7 @@ export class CabinetsEffects {
               if (update.version === 'main') {
                 value = cab.iwhd;
                 delete value[key];
-                value = { [cat]: value };
+                value = { iwhd: value };
               } else {
                 delete versions[update.version].iwhd[key];
                 value = { versions };
@@ -211,7 +225,7 @@ export class CabinetsEffects {
             case 'notes': {
               if (update.version === 'main') {
                 value = cab.notes.filter(item => item !== update.id);
-                value = { [cat]: value };
+                value = { notes: value };
               } else {
                 let spec = versions[update.version].notes;
                 spec = spec.filter(item => item !== update.id);
@@ -223,7 +237,7 @@ export class CabinetsEffects {
             case 'addons': {
               if (update.version === 'main') {
                 value = cab.addons.filter(item => item !== update.id);
-                value = { [cat]: value };
+                value = { addons: value };
               } else {
                 let spec = versions[update.version].addons;
                 spec = spec.filter(item => item !== update.id);
