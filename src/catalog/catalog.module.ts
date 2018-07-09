@@ -35,37 +35,42 @@ export const ROUTES: Routes = [
   {
     path: '',
     canActivate: [fromGuards.CatalogGuard],
-    component: fromContainers.CategoriesComponent,
+    component: fromContainers.CategoriesComponent
   },
   {
-    path: 'new',
-   // canActivate: [fromGuards.PizzasGuard],
-   // component: fromContainers.ProductItemComponent,
+    path: 'new'
+    // canActivate: [fromGuards.PizzasGuard],
+    // component: fromContainers.ProductItemComponent,
   },
   {
     path: 'category/:Cat',
-    canActivate: [fromGuards.CatalogGuard, fromGuards.CategoriesGuard ],
-    component: fromContainers.CatViewComponent,
+    canActivate: [fromGuards.CatalogGuard, fromGuards.CategoriesGuard],
+    component: fromContainers.CatViewComponent
   },
   {
     path: 'category/:Cat/:Item',
-    canActivate: [fromGuards.CatalogGuard, fromGuards.CategoriesGuard ],
-    component: fromContainers.SpecCatComponent,
+    canActivate: [fromGuards.CatalogGuard, fromGuards.CategoriesGuard],
+    component: fromContainers.SpecCatComponent
+  },
+  {
+    path: 'category/:Cat/:Item/:Version',
+    canActivate: [fromGuards.CatalogGuard, fromGuards.CategoriesGuard],
+    component: fromContainers.CatVersionComponent
   },
   {
     path: 'cabinets/:Cat',
-    canActivate: [fromGuards.CatalogGuard, fromGuards.CabinetsGuard ],
-    component: fromContainers.CabViewComponent,
+    canActivate: [fromGuards.CatalogGuard, fromGuards.CabinetsGuard],
+    component: fromContainers.CabViewComponent
   },
   {
     path: 'cabinets/:Cat/:Item',
-    canActivate: [fromGuards.CatalogGuard, fromGuards.CabinetsGuard ],
-    component: fromContainers.SpecCabComponent,
+    canActivate: [fromGuards.CatalogGuard, fromGuards.CabinetsGuard],
+    component: fromContainers.SpecCabComponent
   },
   {
     path: 'cabinets/:Cat/:Item/:Version',
-    canActivate: [fromGuards.CatalogGuard, fromGuards.CabinetsGuard ],
-    component: fromContainers.SpecCabComponent,
+    canActivate: [fromGuards.CatalogGuard, fromGuards.CabinetsGuard],
+    component: fromContainers.SpecCabComponent
   }
 ];
 
@@ -84,6 +89,6 @@ export const ROUTES: Routes = [
   ],
   providers: [...fromServices.services, ...fromGuards.guards],
   declarations: [...fromContainers.containers, ...fromComponents.components, ...fromPipes.pipes],
-  exports: [...fromContainers.containers, ...fromComponents.components],
+  exports: [...fromContainers.containers, ...fromComponents.components]
 })
 export class CatalogModule {}

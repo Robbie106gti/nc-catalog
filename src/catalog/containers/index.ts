@@ -11,6 +11,7 @@ import { DoorsComponent } from './doors/doors.component';
 import { DoorMenuComponent } from './doors/door-menu.component';
 import { ImageLightboxComponent } from './image-lightbox/image-lightbox.component';
 import { MaterialsComponent } from './materials/materials.component';
+import { CatVersionComponent } from './spec-cat/cat-version.component';
 
 export const containers: any[] = [
   CategoriesComponent,
@@ -24,7 +25,8 @@ export const containers: any[] = [
   DoorsComponent,
   DoorMenuComponent,
   ImageLightboxComponent,
-  MaterialsComponent
+  MaterialsComponent,
+  CatVersionComponent
 ];
 
 // export * from ''
@@ -40,3 +42,4 @@ export * from './doors/doors.component';
 export * from './doors/door-menu.component';
 export * from './image-lightbox/image-lightbox.component';
 export * from './materials/materials.component';
+export * from './spec-cat/cat-version.component';
