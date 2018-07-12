@@ -29,8 +29,8 @@ import * as fromStore from '../../store';
       <div class="card-content">
         <span class="card-title flow-text">Materials and Finishes Header Dropdown-menu's</span>
         <div class="collection">
-          <a [routerLink]="['exterior', 'materials']" class="collection-item">Exterior Materials</a>
-          <a [routerLink]="['interior', 'materials']" class="collection-item">Interior Materials</a>
+          <a [routerLink]="['exterior', 'materials']" [queryParams]="{ mat: 'painted' }"  class="collection-item">Exterior Materials</a>
+          <a [routerLink]="['interior', 'materials']" [queryParams]="{ mat: 'painted' }"  class="collection-item">Interior Materials</a>
           <a [routerLink]="['colors', 'options']" class="collection-item">Colors Options</a>
           <a [routerLink]="['sheen', 'options']" class="collection-item">Sheen Options</a>
           <a [routerLink]="['special-finish', 'options']" class="collection-item">Special Finish Options</a>

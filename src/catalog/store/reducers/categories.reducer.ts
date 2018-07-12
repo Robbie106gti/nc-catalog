@@ -53,13 +53,28 @@ export function reducer(state = initialState, action: fromCategories.CategoriesA
         if (a.title > b.title) return 1;
         return 0;
       });
-      const entities = category.reduce(
-        // tslint:disable-next-line:no-shadowed-variable
-        (entities: { [id: string]: Categories }, cat: Categories) => {
-          return { ...entities, [common.makelink(cat.title)]: { ...cat, link: common.makelink(cat.title) } };
-        },
-        { ...state[cat].entities }
-      );
+
+      let entities;
+      if (category[0].sub === 'materials-and-finishes') {
+        entities = category.reduce(
+          // tslint:disable-next-line:no-shadowed-variable
+          (entities: { [id: string]: Categories }, cat: Categories) => {
+            let title = common.makelink(cat['material']);
+            const sub = cat['sub-material'] ? '-' + common.makelink(cat['sub-material']) + '-' : '-';
+            title = title + sub + common.makelink(cat.title);
+            return { ...entities, [title]: { ...cat, link: common.makelink(cat.title) } };
+          },
+          { ...state[cat].entities }
+        );
+      } else {
+        entities = category.reduce(
+          // tslint:disable-next-line:no-shadowed-variable
+          (entities: { [id: string]: Categories }, cat: Categories) => {
+            return { ...entities, [common.makelink(cat.title)]: { ...cat, link: common.makelink(cat.title) } };
+          },
+          { ...state[cat].entities }
+        );
+      }
 
       return {
         ...state,
