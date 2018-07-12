@@ -29,11 +29,11 @@ import * as fromStore from '../../store';
       <div class="card-content">
         <span class="card-title flow-text">Materials and Finishes Header Dropdown-menu's</span>
         <div class="collection">
-          <a [routerLink]="['materials', 'exterior']" class="collection-item">Exterior Materials</a>
-          <a [routerLink]="['interior-materials']" class="collection-item">Interior Materials</a>
-          <a [routerLink]="['colors']" class="collection-item">Colors Options</a>
-          <a [routerLink]="['sheen']" class="collection-item">Sheen Options</a>
-          <a [routerLink]="['special-finish']" class="collection-item">Special Finish Options</a>
+          <a [routerLink]="['exterior', 'materials']" class="collection-item">Exterior Materials</a>
+          <a [routerLink]="['interior', 'materials']" class="collection-item">Interior Materials</a>
+          <a [routerLink]="['colors', 'options']" class="collection-item">Colors Options</a>
+          <a [routerLink]="['sheen', 'options']" class="collection-item">Sheen Options</a>
+          <a [routerLink]="['special-finish', 'options']" class="collection-item">Special Finish Options</a>
         </div>
       </div>
     </div>

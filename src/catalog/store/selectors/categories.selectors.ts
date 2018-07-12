@@ -6,6 +6,7 @@ import * as fromCategories from '../reducers/categories.reducer';
 
 import { Categories } from '../../models/categories.model';
 import { getFilterState, getFilterMaterials } from '../selectors/search.selectors';
+import * as common from '../../utils/common';
 
 export const getCategoriesState = createSelector(
   fromFeature.getProductsState,
@@ -22,6 +23,11 @@ const getSelectedRouteItem = createSelector(
   router => (router.state.params.Item ? router.state.params.Item : null)
 );
 
+const getRouteParams = createSelector(
+  fromRoot.getRouterState,
+  router => (router.state.params ? router.state.params : null)
+);
+
 export const getCategoriesLineState = createSelector(
   getCategoriesState,
   getSelectedRouteCat,
@@ -36,6 +42,7 @@ export const getSelectedCategoryLine = createSelector(
   (entities, cat): Categories => entities[cat]
 );
 
+///// BELOW is the one to get enities of category selected with dealer filter /////
 export const getCategories = createSelector(
   getCategoriesState,
   getSelectedRouteCat,
@@ -75,6 +82,21 @@ export const getSelectedCategoryItem = createSelector(
 );
 
 export const catagoryImages = createSelector(getSelectedCategoryItem, fromRoot.getRouterState, organizeImages);
+
+export const getMaterials = createSelector(fromRoot.getRouterState, getCategories, (router, entities) => {
+  // console.log(router, entities);
+  const options = router.state;
+  entities =
+    options.params.Version === 'materials' ? entities.filter(li => li['properties'][options.params.Item]) : entities;
+  if (options.queryParams.mat) {
+    const mat = common.prepareFirestore(options.queryParams.mat);
+    // console.log(mat);
+    entities = entities.filter(li => li['material'] === mat);
+  }
+  return entities;
+});
+
+////// Functions below this /////
 
 function organizeImages(entity, router) {
   const images = { default: { title: null, image: null }, spec: { title: null, image: null }, array: [] };

@@ -49,12 +49,7 @@ export class CabinetsEffects {
         take(1),
         map(cab => {
           const update = updates['payload'];
-<<<<<<< HEAD
-          // console.log(update, cab, 'Effects');
-          const cat = update.sub.toLowerCase();
-=======
           let cat = update.sub.toLowerCase();
->>>>>>> 71a4152c57cbf4f6e394f168094ec6fb096de59c
           const versions = cab.versions;
           let value;
           // console.log(update, cat, cab);
@@ -89,11 +84,7 @@ export class CabinetsEffects {
                 if (key == 'depth') {
                   key = 'depths';
                 }
-<<<<<<< HEAD
-                cab.iwhd[key] = update.id;
-=======
                 cab.iwhd[key] = update.value.id;
->>>>>>> 71a4152c57cbf4f6e394f168094ec6fb096de59c
                 value = { iwhd: cab.iwhd };
               } else {
                 const iwhd = versions[update.version].iwhd ? versions[update.version].iwhd : {};

@@ -24,6 +24,8 @@ import { DoorFilterComponent } from './filter/door-filter.component';
 import { DoorInfoComponent } from './cat-content/door-info.comonent';
 import { EditCatComponent } from './edit-form/edit-cat.component';
 import { InputAddComponent } from './edit-form/input-add.component';
+import { MatItemComponent } from './cat-content/mat-item.component';
+import { SwitchMatComponent } from './buttons/switch-mat.component';
 
 export const components: any[] = [
   CategoryItemComponent,
@@ -50,7 +52,9 @@ export const components: any[] = [
   VersionsDoorsrComponent,
   DoorFilterComponent,
   DoorInfoComponent,
-  InputAddComponent
+  InputAddComponent,
+  MatItemComponent,
+  SwitchMatComponent
 ];
 
 // export * from ''
@@ -79,3 +83,5 @@ export * from './filter/door-filter.component';
 export * from './cat-content/door-info.comonent';
 export * from './edit-form/edit-cat.component';
 export * from './edit-form/input-add.component';
+export * from './cat-content/mat-item.component';
+export * from './buttons/switch-mat.component';
