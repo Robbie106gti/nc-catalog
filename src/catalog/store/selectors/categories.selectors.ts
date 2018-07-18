@@ -103,20 +103,38 @@ function organizeImages(entity, router) {
   if (!entity) return images;
 
   let arrayId = 0;
-  if (router.state.queryParams.mat) {
-    entity.image = entity.images[router.state.queryParams.mat]
-      ? entity.images[router.state.queryParams.mat].image
-      : entity.image;
-  }
+  const mat = router.state.queryParams.mat ? router.state.queryParams.mat : null;
+  const pc = router.state.queryParams.pc ? router.state.queryParams.pc + 'pc' : '';
+  const wr = router.state.queryParams.wr ? 'WR' : '';
+  let image = entity.image;
+  image = entity.images[`${mat}${wr}`] ? entity.images[`${mat}${wr}`] : image;
 
   Object.keys(entity.images).map(id => {
     if (id === 'spec') {
-      const defa = { image: entity.image, title: entity.title, arrayId };
+      const defa = { image: image.image, title: entity.title, arrayId };
       // console.log(defa);
       images.default = defa;
       images.array.push(defa);
       arrayId++;
-      const spec = { image: entity.images[id].image, title: entity.images[id].title, arrayId };
+      let urlSpec;
+      let titleSpec;
+      if (entity.images[id + pc + wr]) {
+        urlSpec = entity.images[id + pc + wr].image;
+        titleSpec = entity.images[id + pc + wr].title;
+        console.log('PC and WR');
+      }
+      if (!urlSpec && entity.images[id + pc]) {
+        urlSpec = entity.images[id + pc + wr].image;
+        titleSpec = entity.images[id + pc + wr].title;
+        console.log('PC only');
+      }
+      if (!urlSpec && entity.images[id + wr]) {
+        urlSpec = entity.images[id + wr].image;
+        titleSpec = entity.images[id + wr].title;
+        console.log('WR only');
+      }
+
+      const spec = { image: urlSpec, title: titleSpec, arrayId };
       images.spec = spec;
     }
     if (entity.images[id].imageVG) {
@@ -130,7 +148,7 @@ function organizeImages(entity, router) {
     images.array.push(entity.images[id]);
     arrayId++;
   });
-  // console.log(images);
+  console.log(images);
   return images;
 }
 
