@@ -9,33 +9,25 @@ import * as fromStore from '../../store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
 <div *ngIf="(doors$ | async) as doors">
-  <door-menu class="row doorMenu" (menu)="Menu($event)"></door-menu>
-  <div class="row" id="slab" *ngIf="doorstyle === 'slab'">
-    <div class="grid">
-      <category-view *ngFor="let door of doors.slab" [item]="door" class="card">
-      </category-view>
+  <div *ngIf="(param$ | async) as params">
+    <door-menu class="row doorMenu" (menu)="Menu($event)" [params]="params"></door-menu>
+    <div class="row">
+      <div class="grid" *ngIf="params.tab; else slab">
+        <category-view *ngFor="let door of doors[params.tab]" [item]="door" class="card">
+        </category-view>
+      </div>
     </div>
-  </div>
-  <div class="row" id="recessed" *ngIf="doorstyle === 'recessed'">
-    <div class="grid">
-      <category-view *ngFor="let door of doors.recessed" [item]="door" class="card">
-      </category-view>
-    </div>
-  </div>
-  <div class="row" id="raised" *ngIf="doorstyle === 'raised'">
-    <div class="grid">
-      <category-view *ngFor="let door of doors.raised" [item]="door" class="card">
-      </category-view>
-    </div>
-  </div>
-  <div class="row" id="metal" *ngIf="doorstyle === 'metal'">
-    <div class="grid">
-      <category-view *ngFor="let door of doors.metal" [item]="door" class="card">
-      </category-view>
-    </div>
+    <a class="btn-floating red floated" (click)="Adddoors()">
+      <i class="material-icons">add</i>
+    </a>
+    <ng-template #slab>
+      <div class="grid">
+        <category-view *ngFor="let door of doors.slab" [item]="door" class="card">
+        </category-view>
+      </div>
+    </ng-template>
   </div>
 </div>
-<a class="btn-floating red floated" (click)="Adddoors()"><i class="material-icons">add</i></a>
   `,
   styles: [
     `
@@ -54,9 +46,11 @@ import * as fromStore from '../../store';
 export class DoorsComponent {
   doorstyle: string = 'slab';
   doors$: Observable<any>;
+  param$: Observable<any>;
 
   constructor(private store: Store<fromStore.ProductsState>) {
     this.doors$ = this.store.select(fromStore.filteredAndOrganizedDoors);
+    this.param$ = this.store.select(fromStore.getRouterQueryParams);
   }
 
   Menu(style) {

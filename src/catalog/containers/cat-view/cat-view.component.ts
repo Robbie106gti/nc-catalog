@@ -16,7 +16,7 @@ import { of } from 'rxjs/observable/of';
     <div class="section no-pad-bot no-pad-top" id="index-banner" *ngIf="(cat$ | async) as cat">
       <div class="card" id="top">
         <div class="container">
-            <a routerLink="/catalog" class="right no-print"><i class="small material-icons">arrow_back</i></a>
+            <a routerLink="/catalog" class="right no-print"  queryParamsHandling="merge"><i class="small material-icons">arrow_back</i></a>
             <div id="topic"><h1 id="topic">{{ cat.title }}</h1></div>
             <div *ngIf="cat.title === 'Doors'" class="row">
               <door-filter (filter)="Filter($event)" [filtered]="filters$ | async"></door-filter>

@@ -14,7 +14,7 @@ import { take } from 'rxjs/operators';
     <div class="section no-pad-bot no-pad-top" id="index-banner">
       <div class="card" id="top">
         <div class="container" *ngIf="(cat$ | async) as cat">
-            <a routerLink="/catalog" class="right"><i class="small material-icons">arrow_back</i></a>
+            <a routerLink="/catalog" class="right" queryParamsHandling="merge"><i class="small material-icons">arrow_back</i></a>
             <div id="topic"><h1 id="topic">{{ cat.title }}</h1></div>
             <span class="right"><i><small>Updated by:{{ cat.updatedBy }} - on: {{ cat.updatedAt }}</small></i></span><br>
         </div>

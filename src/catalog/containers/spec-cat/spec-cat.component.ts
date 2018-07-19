@@ -15,7 +15,7 @@ import { User } from '../../models/user.model';
     <div class="section no-pad-bot no-pad-top" id="index-banner" *ngIf="(content$ | async) as content">
       <div class="card" id="top">
         <div class="container">
-            <a routerLink="../" class="right no-print"><i class="small material-icons">arrow_back</i></a>
+            <a routerLink="../" class="right no-print" queryParamsHandling="merge"><i class="small material-icons">arrow_back</i></a>
             <div id="topic">
                 <h3 id="topic">Category: {{ content.sub | titlecase }}</h3>
                 <span *ngIf="(version$ | async) as version">

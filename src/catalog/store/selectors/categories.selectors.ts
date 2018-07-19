@@ -99,56 +99,48 @@ export const getMaterials = createSelector(fromRoot.getRouterState, getCategorie
 ////// Functions below this /////
 
 function organizeImages(entity, router) {
-  const images = { default: { title: null, image: null }, spec: { title: null, image: null }, array: [] };
+  const images = {
+    default: { title: null, image: null, arrayId: 0 },
+    spec: { title: null, image: null, arrayId: 0 },
+    array: []
+  };
   if (!entity) return images;
 
   let arrayId = 0;
-  const mat = router.state.queryParams.mat ? router.state.queryParams.mat : null;
-  const pc = router.state.queryParams.pc ? router.state.queryParams.pc + 'pc' : '';
-  const wr = router.state.queryParams.wr ? 'WR' : '';
-  let image = entity.image;
-  image = entity.images[`${mat}${wr}`] ? entity.images[`${mat}${wr}`] : image;
+  let mat = router.state.queryParams.mat ? router.state.queryParams.mat : 'painted';
+  mat = mat === 'euro materials' ? 'euro' : mat;
+  const pc = router.state.queryParams.pc ? router.state.queryParams.pc + 'PC' : '';
+  const wr = router.state.queryParams.wr === 'true' ? 'WR' : '';
+  images.default.image = entity.image;
+  images.default.title = entity.title;
+  const concatDoor = mat + pc + wr;
+  const ids = Object.keys(entity.images);
+  let pickDoor = mat;
+  let pickSpec = 'spec';
+  if (ids.includes(concatDoor)) pickDoor = concatDoor;
+  if (!entity.images[concatDoor] && entity.images[`${mat}${wr}`]) pickDoor = mat + wr;
+  if (ids.includes('spec' + pc + wr)) pickSpec = pickSpec + pc + wr;
+  if (!ids.includes('spec' + pc + wr) && ids.includes('spec' + wr)) pickSpec = pickSpec + wr;
+  images.default = entity.images[pickDoor];
 
-  Object.keys(entity.images).map(id => {
-    if (id === 'spec') {
-      const defa = { image: image.image, title: entity.title, arrayId };
-      // console.log(defa);
-      images.default = defa;
-      images.array.push(defa);
-      arrayId++;
-      let urlSpec;
-      let titleSpec;
-      if (entity.images[id + pc + wr]) {
-        urlSpec = entity.images[id + pc + wr].image;
-        titleSpec = entity.images[id + pc + wr].title;
-        console.log('PC and WR');
-      }
-      if (!urlSpec && entity.images[id + pc]) {
-        urlSpec = entity.images[id + pc + wr].image;
-        titleSpec = entity.images[id + pc + wr].title;
-        console.log('PC only');
-      }
-      if (!urlSpec && entity.images[id + wr]) {
-        urlSpec = entity.images[id + wr].image;
-        titleSpec = entity.images[id + wr].title;
-        console.log('WR only');
-      }
-
-      const spec = { image: urlSpec, title: titleSpec, arrayId };
-      images.spec = spec;
-    }
-    if (entity.images[id].imageVG) {
-      images.array.push({ title: entity.images[id].title + ' VGM', image: entity.images[id].imageVG });
+  ids.forEach((key, index) => {
+    if (key === pickSpec) images.spec.arrayId = arrayId;
+    if (key === pickDoor) images.default.arrayId = arrayId;
+    if (entity.images[key].imageVG) {
+      images.array.push({ title: entity.images[key].title + ' VGM', image: entity.images[key].imageVG, arrayId });
       arrayId++;
     }
-    if (entity.images[id].imageHG) {
-      images.array.push({ title: entity.images[id].title + ' HGM', image: entity.images[id].imageHG });
+    if (entity.images[key].imageHG) {
+      images.array.push({ title: entity.images[key].title + ' HGM', image: entity.images[key].imageHG, arrayId });
       arrayId++;
     }
-    images.array.push(entity.images[id]);
+    if (index === 0) {
+      images.spec = entity.images[pickSpec];
+    }
+    images.array.push({ ...entity.images[key], arrayId });
     arrayId++;
   });
-  console.log(images);
+  console.log(images, pickDoor, pickSpec);
   return images;
 }
 

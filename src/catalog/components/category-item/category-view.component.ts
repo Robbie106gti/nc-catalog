@@ -12,7 +12,7 @@ declare var $: any;
   template: `
 <tool-item *ngIf="(user$ | async) as user" [category]="item" [user]="user" [userFavs]="(userFavs$ | async)" (add)="BookmarkIt($event)"
   (remove)="UnbookmarkIt($event)" (turnOn)="Active($event)" (turnOff)="Unactive($event)" (edit)="Edit($event)"></tool-item>
-<a [routerLink]="[item.link]" [queryParams]="item.params">
+<a [routerLink]="[item.link]" [queryParams]="item.params" queryParamsHandling="merge">
   <div class="card-image waves-effect waves-block waves-light">
     <div class="bottom hide-on-med-and-down" *ngFor="let mat of item.materials">
       <div *ngFor="let mat of item.materials">
