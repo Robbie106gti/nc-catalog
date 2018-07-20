@@ -17,6 +17,9 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
     <li class="tab col s3">
       <a [routerLink]="['./']" [queryParams]="{ tab: 'metal' }" queryParamsHandling="merge" class="brown-text"  [ngClass]="{ 'active' : params.tab === 'metal'}">Metal Doors</a>
     </li>
+    <li class="tab col s3">
+      <a [routerLink]="['./']" [queryParams]="{ tab: 'custom' }" queryParamsHandling="merge" class="brown-text"  [ngClass]="{ 'active' : params.tab === 'custom'}">Custom Doors</a>
+    </li>
   </ul>`,
   styles: [
     `

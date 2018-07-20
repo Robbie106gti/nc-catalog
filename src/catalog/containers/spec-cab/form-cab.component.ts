@@ -63,6 +63,7 @@ export class FormCabComponent {
     //console.log(event);
     event = { ...event, user: this.user };
     this.store.dispatch({ type: fromStore.UPDATE_CABINET, payload: event });
+    this.edit.emit(true);
   }
   Search(event) {
     this.store.dispatch({ type: fromStore.SEARCH, payload: event });
