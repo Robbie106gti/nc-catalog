@@ -1,7 +1,7 @@
 <div *ngIf="(sop$ | async) as sop">
   <sop-modal *ngIf="add === true" [modal]="modal" [user]="(user$ | async)" [sop]="sop" [icons]="(icons$ | async)" [pct]="(pct$ | async)"
     [url]="(url$ | async)" (close)="Close($event)" (add)="Add($event)" (newList)="NewList($event)" (newTitle)="NewTitle($event)"
-    (notes)="Notes($event)" (newImages)="Images($event)" (file)="File($event)" (table)="NewTable($event)"></sop-modal>
+    (notes)="Notes($event)" (newImages)="Images($event)" (file)="File($event)" (table)="NewTable($event)" (html)="ToHtml($event)"></sop-modal>
   <div class="section no-pad-bot" id="index-banner">
     <div class="card" id="top">
       <div class="container">
@@ -22,6 +22,9 @@
   </div>
   <div class="row">
     <div class="col s12 m6">
+      <div *ngIf="sop.html" class="card-panel">
+        <div *ngFor="let section of sop.html.sections" [innerHTML]="section"></div>
+      </div>
       <description-card *ngIf="sop.description" [content]="sop.description"></description-card>
       <list-card *ngIf="sop.list" [list]="sop.list" [listTitle]="sop.listTitle"></list-card>
       <note *ngIf="sop.notes" [notes]="sop.notes"></note>

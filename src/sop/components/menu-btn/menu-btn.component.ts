@@ -18,6 +18,7 @@ declare var M: any;
     <li (click)="Menu('List')"><a class="btn-floating green tooltipped" data-position="top" data-tooltip="Add a bullet list"><i class="material-icons">list</i></a></li>
     <li (click)="Menu('Attach')"><a class="btn-floating blue tooltipped" data-position="top" data-tooltip="Attach a webquoin code"><i class="material-icons">widgets</i></a></li>
     <li (click)="Menu('Note')"><a class="btn-floating orange tooltipped" data-position="top" data-tooltip="Add a note"><i class="material-icons">announcement</i></a></li>
+    <li (click)="Menu('Html')"><a class="btn-floating purple tooltipped" data-position="top" data-tooltip="Html to sop"><i class="material-icons">developer_mode</i></a></li>
   </ul>
 </div>
 `

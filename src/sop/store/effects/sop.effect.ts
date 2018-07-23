@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { Effect, Actions } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
-import { map, switchMap, catchError, tap, filter, take } from 'rxjs/operators';
+import { map, switchMap, catchError, take } from 'rxjs/operators';
+import { replace } from 'lodash';
 
 import { Store } from '@ngrx/store';
 
@@ -91,7 +92,7 @@ export class SopEffects {
       return this.store.select(fromStore.getSelectedSop).pipe(
         take(1),
         map(sop => {
-          // console.log(action.payload, sop);
+          console.log(action.payload, sop);
           let value;
           let key;
           const user = action.payload.fullName;
@@ -126,8 +127,14 @@ export class SopEffects {
               value = action.payload.images;
               break;
             }
+            case 'Html': {
+              key = action.payload.action.toLowerCase();
+              value = action.payload.value;
+              value = this.cleanupHtml(value);
+              break;
+            }
           }
-          // console.log(key, value);
+          console.log(sop.idCat, sop.id, key, value);
           this.firestore.update(`sops/${sop.idCat}/entities/${sop.id}`, { [key]: value, updatedBy: user });
           return new fromStore.AddToSopSuccess({ [key]: value, edit: sop, user });
         }),
@@ -135,4 +142,19 @@ export class SopEffects {
       );
     })
   );
+
+  cleanupHtml(value) {
+    const arr = value.split('<div class="card">');
+    const fireArr = new Array();
+    arr.forEach(el => {
+      if (el.length < 1) return;
+      el = el.replace(/<ul/, '<ul class="collection"')
+      .replace(/<li/, '<li class="collection-item"')
+      .replace(/<table/, '<table class="striped highlight"')
+      .replace(/</div>/, '</section">');
+      fireArr.push(`<section>${el}`);
+    });
+    console.log(fireArr);
+    return { sections: fireArr, plain: value };
+  }
 }

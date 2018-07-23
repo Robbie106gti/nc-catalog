@@ -60,6 +60,11 @@ export class SopComponent {
         edit = { title: '', value: sop.images };
         break;
       }
+      case 'Html': {
+        sop.html = sop.html ? sop.html : {};
+        edit = { value: sop.html };
+        break;
+      }
       default: {
         edit = { title: '', value: '' };
       }
@@ -118,5 +123,9 @@ export class SopComponent {
   File(event) {
     this.file = event.file;
     this.store.dispatch(new fromStore.Upload(event));
+  }
+
+  ToHtml(event) {
+    this.store.dispatch({ type: fromStore.ADD_TO_SOP, payload: event });
   }
 }
