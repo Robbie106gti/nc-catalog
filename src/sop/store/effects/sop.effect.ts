@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
 import { map, switchMap, catchError, take } from 'rxjs/operators';
-import { replace } from 'lodash';
+import { replace, split } from 'lodash';
 
 import { Store } from '@ngrx/store';
 
@@ -144,17 +144,44 @@ export class SopEffects {
   );
 
   cleanupHtml(value) {
+    trysomthing(value);
+
+    value = value
+      .replace(/<section>/gi, '<div class="card">')
+      .replace(/<\/section>/gi, '</div>')
+      .replace(/<section class="card">/gi, '<div class="card">');
     const arr = value.split('<div class="card">');
     const fireArr = new Array();
     arr.forEach(el => {
+      el = this.cleanupEl(el);
       if (el.length < 1) return;
-      el = el.replace(/<ul/, '<ul class="collection"')
-      .replace(/<li/, '<li class="collection-item"')
-      .replace(/<table/, '<table class="striped highlight"')
-      .replace(/</div>/, '</section">');
-      fireArr.push(`<section>${el}`);
+      el = el
+        .replace(/<ul>↵            <li>/gi, '<ul class="collection with-header"><li class="collection-header">')
+        .replace(/<ul>/gi, '<ul class="collection">')
+        .replace(/<li>/gi, '<li class="collection-item">')
+        .replace(/<table/gi, '<table class="striped highlight"');
+      fireArr.push(`<section>${el}</section><div class="divider"></div>`);
     });
     console.log(fireArr);
     return { sections: fireArr, plain: value };
+  }
+
+  cleanupEl(el) {
+    el = el.trim();
+    el = el
+      .replace(/lang="en-US"/gi, '')
+      .replace(/align="center"/gi, '')
+      .replace(/align="right"/gi, '')
+      .replace(/<section>/gi, '')
+      .replace(/<\/div>/gi, '')
+      .replace(/↵            /gi, '')
+      .replace(/<\/section>/gi, '');
+    return el;
+  }
+
+  trysomething(str) {
+    // https://docs.microsoft.com/en-us/dotnet/standard/base-types/grouping-constructs-in-regular-expressions#zerowidth_positive_lookahead_assertion
+    // https://www.w3schools.com/jsref/jsref_obj_regexp.asp
+    console.log(str);
   }
 }
