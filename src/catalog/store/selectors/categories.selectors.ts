@@ -124,8 +124,6 @@ function organizeImages(entity, router) {
   images.default = entity.images[pickDoor];
 
   ids.forEach((key, index) => {
-    if (key === pickSpec) images.spec.arrayId = arrayId;
-    if (key === pickDoor) images.default.arrayId = arrayId;
     if (entity.images[key].imageVG) {
       images.array.push({ title: entity.images[key].title + ' VGM', image: entity.images[key].imageVG, arrayId });
       arrayId++;
@@ -137,6 +135,8 @@ function organizeImages(entity, router) {
     if (index === 0) {
       images.spec = entity.images[pickSpec];
     }
+    if (key === pickSpec) images.spec.arrayId = arrayId;
+    if (key === pickDoor) images.default.arrayId = arrayId;
     images.array.push({ ...entity.images[key], arrayId });
     arrayId++;
   });
@@ -179,11 +179,13 @@ function organizeDoors(list) {
   const recessed = list.filter(door => door['doorstyle'] === 'recessed panel door');
   const raised = list.filter(door => door['doorstyle'] === 'raised panel door');
   const metal = list.filter(door => door['doorstyle'] === 'metal door');
+  const custom = list.filter(door => door['doorstyle'] === 'custom door');
   const doors: any = {
     slab,
     recessed,
     raised,
-    metal
+    metal,
+    custom
   };
   return doors;
 }

@@ -30,7 +30,7 @@ export class SpecCabComponent implements OnInit {
   }
 
   Fetch(e) {
-    this.Take(1);
+    this.Take(2);
   }
 
   TransformCat(str) {
