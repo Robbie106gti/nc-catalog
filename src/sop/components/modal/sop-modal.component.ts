@@ -6,18 +6,18 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
   templateUrl: './sop-modal.html',
   styles: [
     `
-.new {
-  position: absolute;
-  z-index: 999;
-  margin-top: 12.5%;
-  margin-left: 33%;
-  width: 33%;
-  padding-bottom: 4rem;
-  padding-right: 1rem;
-  padding-left: 1rem;
-  padding-top: .2rem;
-}
-`
+      .new {
+        position: absolute;
+        z-index: 999;
+        margin-top: 12.5%;
+        margin-left: 33%;
+        width: 33%;
+        padding-bottom: 4rem;
+        padding-right: 1rem;
+        padding-left: 1rem;
+        padding-top: 0.2rem;
+      }
+    `
   ]
 })
 export class SopModalComponent {
@@ -35,6 +35,7 @@ export class SopModalComponent {
   @Output() notes = new EventEmitter<any>();
   @Output() file = new EventEmitter<any>();
   @Output() table = new EventEmitter<any>();
+  @Output() html = new EventEmitter<any>();
 
   titleImage: string;
 
@@ -83,5 +84,8 @@ export class SopModalComponent {
   }
   NewTable(event) {
     this.table.emit({ table: event, fullName: this.user, sop: this.sop });
+  }
+  ToHtml(event) {
+    this.html.emit({ value: event, fullName: this.user, sop: this.sop, action: 'Html' });
   }
 }

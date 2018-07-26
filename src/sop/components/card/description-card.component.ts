@@ -1,25 +1,18 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-  } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-selector: 'description-card',
-changeDetection: ChangeDetectionStrategy.OnPush,
-template: `
+  selector: 'description-card',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
 <div class="card-panel  blue-grey darken-1 white-text">
   <span class="card-title">
-      <h4>Description</h4>
+      <h4>{{ content.title }}</h4>
   </span>
   <div class="divider"></div>
-  <span id="des" class="flow-text">{{ content.title }}, {{ content.description || 'Add a description'}}</span>
+  <span id="des" class="flow-text">{{ content.description || 'Add a description'}}</span>
 </div>
-`,
+`
 })
 export class DescriptionCardComponent {
-@Input() content: any;
-
+  @Input() content: any;
 }

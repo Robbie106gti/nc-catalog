@@ -40,4 +40,7 @@
       </span>
     </button>
   </div>
+  <div class="modal-footer" *ngIf="modal.action === 'Html'">
+    <htmltojson (html)="ToHtml($event)"></htmltojson>
+  </div>
 </div>
