@@ -92,7 +92,7 @@ export class SopEffects {
       return this.store.select(fromStore.getSelectedSop).pipe(
         take(1),
         map(sop => {
-          console.log(action.payload, sop);
+          // console.log(action.payload, sop);
           let value;
           let key;
           const user = action.payload.fullName;
@@ -134,7 +134,7 @@ export class SopEffects {
               break;
             }
           }
-          console.log(sop.idCat, sop.id, key, value);
+          // console.log(sop.idCat, sop.id, key, value);
           this.firestore.update(`sops/${sop.idCat}/entities/${sop.id}`, { [key]: value, updatedBy: user });
           return new fromStore.AddToSopSuccess({ [key]: value, edit: sop, user });
         }),
@@ -143,45 +143,81 @@ export class SopEffects {
     })
   );
 
-  cleanupHtml(value) {
-    trysomthing(value);
+  cleanupHtml(str) {
+    const newstr = str
+      .replace(/\s+/g, ' ')
+      .replace(/>\s</g, '><')
+      .replace(/<div class="card">/, '<section>');
+    const html = { newstr, strDivArr: [], strDSArr: [], newHtml: '', newHtmlArr: [] };
+    html.strDivArr = newstr.split(/<section>/g);
+    html.strDivArr.forEach(sec => (sec !== '' ? html.strDSArr.push(sec) : null));
+    html.newHtmlArr = html.strDSArr.map(sec => this.fixStr(sec));
+    return { sections: html.newHtmlArr, plain: str };
+  }
 
-    value = value
-      .replace(/<section>/gi, '<div class="card">')
-      .replace(/<\/section>/gi, '</div>')
-      .replace(/<section class="card">/gi, '<div class="card">');
-    const arr = value.split('<div class="card">');
-    const fireArr = new Array();
-    arr.forEach(el => {
-      el = this.cleanupEl(el);
-      if (el.length < 1) return;
-      el = el
-        .replace(/<ul>↵            <li>/gi, '<ul class="collection with-header"><li class="collection-header">')
-        .replace(/<ul>/gi, '<ul class="collection">')
-        .replace(/<li>/gi, '<li class="collection-item">')
-        .replace(/<table/gi, '<table class="striped highlight"');
-      fireArr.push(`<section>${el}</section><div class="divider"></div>`);
+  fixStr(str) {
+    str = str.replace(/<section>/, '');
+    str = str.replace(/<\/section>*$/, '').replace(/<\/div>*$/, '');
+    const divCount = str.split(/<div*>/).length - 1;
+    const divcCount = str.split(/<\/div>/).length - 1;
+    if (divCount !== divcCount) {
+      const times = divcCount - divCount;
+      let i;
+      for (i = 0; i < times; i++) {
+        str = str.replace(/<\/div>$/, '');
+      }
+    }
+    str = str.match(/<ul/) ? this.listMarkUp(str) : str;
+    str = str.match(/<table/) ? this.tablesMarkUp(str) : str;
+    // console.log(str);
+    return str;
+  }
+
+  listMarkUp(str) {
+    str = str.replace(/<li*>/gi, '<li class="collection-item">');
+    const initLists = str.split(/<ul*>/g);
+    const list = new Array();
+    const list2 = new Array();
+    initLists.forEach(lis => {
+      if (lis === '') return;
+      lis = lis.match(/<\/li>/) ? `<ul class="collection with-header">${lis}` : lis;
+      list.push(lis);
     });
-    console.log(fireArr);
-    return { sections: fireArr, plain: value };
+    list.forEach((ul, index) => {
+      index = index === 0 ? 1 : index;
+      const f10 = list[index - 1].substring(list[index - 1].length - 13);
+      ul = f10.match(/<\/h/) ? ul : ul.replace(/<li class="collection-item">/i, '<li class="collection-header">');
+      list2.push(ul);
+    });
+    str = list2.join('');
+    return str;
   }
 
-  cleanupEl(el) {
-    el = el.trim();
-    el = el
-      .replace(/lang="en-US"/gi, '')
-      .replace(/align="center"/gi, '')
-      .replace(/align="right"/gi, '')
-      .replace(/<section>/gi, '')
-      .replace(/<\/div>/gi, '')
-      .replace(/↵            /gi, '')
-      .replace(/<\/section>/gi, '');
-    return el;
-  }
-
-  trysomething(str) {
-    // https://docs.microsoft.com/en-us/dotnet/standard/base-types/grouping-constructs-in-regular-expressions#zerowidth_positive_lookahead_assertion
-    // https://www.w3schools.com/jsref/jsref_obj_regexp.asp
-    console.log(str);
+  tablesMarkUp(str) {
+    const tables = { start: [], cleaned: [], str: '' };
+    tables.start = str.split(/<table/);
+    tables.start.forEach(tab => {
+      if (tab === '') return;
+      tab = `<table class="striped highlight responsive-table" ${tab}`;
+      if (tab.match(/<th/) && !tab.match(/<theader/)) {
+        const table = { tbody: [], trs: [], newtrs: [], newTableArr: [], newTable: '' };
+        table.tbody = tab.split(/<tbody*>/);
+        table.trs = table.tbody[1].split(/<tr/);
+        table.trs.forEach(tr => {
+          if (tr === '') return;
+          tr = tr.match(/<th/) ? `<theader><tr${tr}</theader><tbody>` : `<tr${tr}`;
+          table.newtrs.push(tr);
+        });
+        table.newTableArr.push(table.tbody[0]);
+        table.newtrs.forEach(tr => table.newTableArr.push(tr));
+        table.newTable = table.newTableArr.join('');
+        // console.log(table);
+        tab = table.newTable;
+      }
+      tables.cleaned.push(tab);
+    });
+    tables.str = tables.cleaned.join('');
+    // console.log(tables);
+    return tables.str;
   }
 }

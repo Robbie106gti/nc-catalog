@@ -22,9 +22,7 @@
   </div>
   <div class="row">
     <div class="col s12 m6">
-      <div *ngIf="sop.html" class="card-panel">
-        <div *ngFor="let section of sop.html.sections" [innerHTML]="section"></div>
-      </div>
+      <section *ngFor="let section of sop.html?.sections" class="card-panel" [innerHTML]="section"></section>
       <description-card *ngIf="sop.description" [content]="sop.description"></description-card>
       <list-card *ngIf="sop.list" [list]="sop.list" [listTitle]="sop.listTitle"></list-card>
       <note *ngIf="sop.notes" [notes]="sop.notes"></note>
