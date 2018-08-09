@@ -145,20 +145,29 @@ export class SopEffects {
 
   cleanupHtml(str) {
     const newstr = str
+      .trim()
       .replace(/\s+/g, ' ')
       .replace(/>\s</g, '><')
-      .replace(/<div class="card">/, '<section>');
+      .replace(/<div class="card">/g, '<section>')
+      .replace(/<section(.*?)>/g, '<section>');
     const html = { newstr, strDivArr: [], strDSArr: [], newHtml: '', newHtmlArr: [] };
     html.strDivArr = newstr.split(/<section>/g);
     html.strDivArr.forEach(sec => (sec !== '' ? html.strDSArr.push(sec) : null));
-    html.newHtmlArr = html.strDSArr.map(sec => this.fixStr(sec));
+    html.strDSArr.forEach(sec => {
+      const newsec = this.fixStr(sec);
+      newsec !== '' ? html.newHtmlArr.push(newsec) : null;
+    });
     return { sections: html.newHtmlArr, plain: str };
   }
 
   fixStr(str) {
-    str = str.replace(/<section>/, '');
-    str = str.replace(/<\/section>*$/, '').replace(/<\/div>*$/, '');
-    const divCount = str.split(/<div*>/).length - 1;
+    str = str.trim().replace(/<section *>/, '');
+    str = str
+      .replace(/<\/section>*$/, '')
+      .replace(/<\/div>*$/, '')
+      .trim();
+
+    const divCount = str.split(/<div(.*?)>/).length - 1;
     const divcCount = str.split(/<\/div>/).length - 1;
     if (divCount !== divcCount) {
       const times = divcCount - divCount;
@@ -167,6 +176,7 @@ export class SopEffects {
         str = str.replace(/<\/div>$/, '');
       }
     }
+    str = str.match(/<!--/) ? str.replace(/<!--(.*?)-->/, '') : str;
     str = str.match(/<ul/) ? this.listMarkUp(str) : str;
     str = str.match(/<table/) ? this.tablesMarkUp(str) : str;
     // console.log(str);
@@ -174,8 +184,8 @@ export class SopEffects {
   }
 
   listMarkUp(str) {
-    str = str.replace(/<li*>/gi, '<li class="collection-item">');
-    const initLists = str.split(/<ul*>/g);
+    str = str.replace(/<li(.*?)>/gi, '<li class="collection-item">');
+    const initLists = str.split(/<ul *>/g);
     const list = new Array();
     const list2 = new Array();
     initLists.forEach(lis => {
@@ -198,10 +208,11 @@ export class SopEffects {
     tables.start = str.split(/<table/);
     tables.start.forEach(tab => {
       if (tab === '') return;
-      tab = `<table class="striped highlight responsive-table" ${tab}`;
+      console.log(tab);
+      tab = tab.match(/<tr/) ? `<table class="striped highlight responsive-table" ${tab}` : tab;
       if (tab.match(/<th/) && !tab.match(/<theader/)) {
         const table = { tbody: [], trs: [], newtrs: [], newTableArr: [], newTable: '' };
-        table.tbody = tab.split(/<tbody*>/);
+        table.tbody = tab.split(/<tbody(.*?)>/);
         table.trs = table.tbody[1].split(/<tr/);
         table.trs.forEach(tr => {
           if (tr === '') return;
