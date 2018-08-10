@@ -1,7 +1,7 @@
 import * as fromSop from '../actions/sop.action';
 
 export interface SopState {
-  entities: { [id: string]: SopsLine};
+  entities: { [id: string]: SopsLine };
   load: string;
 }
 
@@ -14,12 +14,8 @@ export const initialState: SopState = {
   load: ''
 };
 
-export function reducer(
-  state = initialState,
-  action: fromSop.SopAction
-): SopState {
+export function reducer(state = initialState, action: fromSop.SopAction): SopState {
   switch (action.type) {
-
     case fromSop.LOAD_SOPS: {
       const load: string = action.payload.id;
       const entities = { [load]: { [load]: action.payload } };
@@ -39,10 +35,15 @@ export function reducer(
 
     case fromSop.LOAD_SOPS_SUCCESS: {
       const items = action.payload;
+      items.sort(function(a, b) {
+        if (a.title < b.title) return -1;
+        if (a.title > b.title) return 1;
+        return 0;
+      });
       const cat = state.load;
       let entity = {};
       items.map(item => {
-        entity = { ...entity, [item.title]: item};
+        entity = { ...entity, [item.title]: item };
       });
       const entities = { ...state.entities, [cat]: entity };
       return {
@@ -53,19 +54,19 @@ export function reducer(
 
     case fromSop.ADD_SOP_SUCCESS: {
       return {
-        ...state,
+        ...state
       };
     }
 
     case fromSop.UPDATE_SOP_TI: {
       return {
-        ...state,
+        ...state
       };
     }
 
     case fromSop.UPDATE_SOP_TI_FAIL: {
       return {
-        ...state,
+        ...state
       };
     }
 
@@ -75,11 +76,11 @@ export function reducer(
       newItem.title = item.title;
       newItem.image = item.image;
       newItem.updatedBy = item.updatedBy;
-        delete state.entities[item.edit.idCat][item.edit.titleOld];
-        delete newItem.titleOld;
-        state.entities = {...state.entities, [newItem.title]: newItem };
+      delete state.entities[item.edit.idCat][item.edit.titleOld];
+      delete newItem.titleOld;
+      state.entities = { ...state.entities, [newItem.title]: newItem };
       return {
-        ...state,
+        ...state
       };
     }
   }

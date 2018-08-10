@@ -8,29 +8,37 @@ declare var M: any;
   templateUrl: './modal.html',
   styles: [
     `
-.new {
-  position: absolute;
-  z-index: 999;
-  margin-top: 12.5%;
-  margin-left: 33%;
-  width: 33%;
-  padding-bottom: 4rem;
-  padding-right: 1rem;
-  padding-left: 1rem;
-  padding-top: .2rem;
-}
-`
+      .new {
+        position: fixed;
+        z-index: 999;
+        margin-top: 12.5%;
+        margin-left: 33%;
+        width: 33%;
+        padding-bottom: 4rem;
+        padding-right: 1rem;
+        padding-left: 1rem;
+        padding-top: 0.2rem;
+      }
+    `
   ]
 })
 export class ModalComponent {
-  @Input() modal: { title: string; action: string; edit?: any };
-  @Input() url: string;
-  @Input() pct: string;
-  @Input() user: string;
-  @Output() close = new EventEmitter<boolean>();
-  @Output() add = new EventEmitter<any>();
-  @Output() edited = new EventEmitter<any>();
-  @Output() file = new EventEmitter<any>();
+  @Input()
+  modal: { title: string; action: string; edit?: any };
+  @Input()
+  url: string;
+  @Input()
+  pct: string;
+  @Input()
+  user: string;
+  @Output()
+  close = new EventEmitter<boolean>();
+  @Output()
+  add = new EventEmitter<any>();
+  @Output()
+  edited = new EventEmitter<any>();
+  @Output()
+  file = new EventEmitter<any>();
   newCatagory: string;
 
   constructor() {

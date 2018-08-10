@@ -1,7 +1,7 @@
 import * as fromCat from '../actions/cat.action';
 
 export interface CatState {
-  entities: { [id: string]: any};
+  entities: { [id: string]: any };
   loaded: boolean;
   loading: boolean;
 }
@@ -12,12 +12,8 @@ export const initialState: CatState = {
   loading: false
 };
 
-export function reducer(
-  state = initialState,
-  action: fromCat.CatAction
-): CatState {
+export function reducer(state = initialState, action: fromCat.CatAction): CatState {
   switch (action.type) {
-
     case fromCat.LOAD_CAT: {
       return {
         ...state,
@@ -35,25 +31,31 @@ export function reducer(
     case fromCat.LOAD_CAT_SUCCESS: {
       const catagories = action.payload;
       // console.log(catagories);
-      catagories.sort((a, b) => a.sort - b.sort);
+      // catagories.sort((a, b) => a.title - b.title);
+      catagories.sort(function(a, b) {
+        if (a.title < b.title) return -1;
+        if (a.title > b.title) return 1;
+        return 0;
+      });
       const entities = catagories.reduce(
         // tslint:disable-next-line:no-shadowed-variable
-      (entities: { [id: string]: any }, cat: any) => {
-        return { ...entities, [cat.title]: { ...cat} };
-      },
-      { ...state.entities, });
+        (entities: { [id: string]: any }, cat: any) => {
+          return { ...entities, [cat.title]: { ...cat } };
+        },
+        { ...state.entities }
+      );
 
       return {
         ...state,
         loading: false,
         loaded: true,
-        entities,
+        entities
       };
     }
 
     case fromCat.ADD_CAT_SUCCESS: {
       return {
-        ...state,
+        ...state
       };
     }
 
@@ -62,7 +64,7 @@ export function reducer(
       state.entities[item.title].loading = false;
       state.entities[item.title].loaded = true;
       return {
-        ...state,
+        ...state
       };
     }
 
@@ -70,19 +72,19 @@ export function reducer(
       const item = action.payload;
       state.entities[item.title].loading = true;
       return {
-        ...state,
+        ...state
       };
     }
 
     case fromCat.UPDATE_CAT_TI: {
       return {
-        ...state,
+        ...state
       };
     }
 
     case fromCat.UPDATE_CAT_TI_FAIL: {
       return {
-        ...state,
+        ...state
       };
     }
 
@@ -92,11 +94,11 @@ export function reducer(
       newItem.title = item.title;
       newItem.image = item.image;
       newItem.updatedBy = item.updatedBy;
-        delete state.entities[item.edit.titleOld];
-        delete newItem.titleOld;
-        state.entities = {...state.entities, [newItem.title]: newItem };
+      delete state.entities[item.edit.titleOld];
+      delete newItem.titleOld;
+      state.entities = { ...state.entities, [newItem.title]: newItem };
       return {
-        ...state,
+        ...state
       };
     }
   }
