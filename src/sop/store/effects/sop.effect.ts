@@ -212,7 +212,7 @@ export class SopEffects {
       tab = tab.match(/<tr/) ? `<table class="striped highlight responsive-table" ${tab}` : tab;
       if (tab.match(/<th/) && !tab.match(/<theader/)) {
         const table = { tbody: [], trs: [], newtrs: [], newTableArr: [], newTable: '' };
-        table.tbody = tab.split(/<tbody(.*?)>/);
+        table.tbody = tab.split(/<tbody *>/);
         table.trs = table.tbody[1].split(/<tr/);
         table.trs.forEach(tr => {
           if (tr === '') return;
@@ -222,7 +222,7 @@ export class SopEffects {
         table.newTableArr.push(table.tbody[0]);
         table.newtrs.forEach(tr => table.newTableArr.push(tr));
         table.newTable = table.newTableArr.join('');
-        // console.log(table);
+        console.log(table);
         tab = table.newTable;
       }
       tables.cleaned.push(tab);
