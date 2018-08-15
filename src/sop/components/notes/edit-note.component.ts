@@ -11,8 +11,8 @@ declare var M: any;
       <li class="padding right-align"><small><i>Add a note</i></small><i class="material-icons right pointer" (click)="Add()">add</i></li>
       <li class="divider"></li>
       <li class="padding"></li>
-      <li *ngFor="let note of notes" class="limit">
-        <i class="material-icons">announcement</i>
+      <li *ngFor="let note of notes; let i = index" class="limit">
+        <list-reorder (reorderedList)="Reordered($event)" [list]="notes" [i]="i"></list-reorder>
         <span class="right">
           <i class="material-icons pointer" (click)="Edit(note)">edit</i>
           <i class="material-icons pointer" (click)="Remove(note)">remove_circle_outline</i>
@@ -40,9 +40,11 @@ declare var M: any;
   `
 })
 export class EditNoteComponent {
-  @Input() notes: any;
+  @Input()
+  notes: any;
   edit: any;
-  @Output() newNotes = new EventEmitter<any>();
+  @Output()
+  newNotes = new EventEmitter<any>();
 
   constructor() {
     $(document).ready(function() {
@@ -61,6 +63,11 @@ export class EditNoteComponent {
       $('#textarea1').val(event.content);
       M.textareaAutoResize($('#textarea1'));
     });
+  }
+
+  Reordered(event) {
+    this.notes = event;
+    this.newNotes.emit(event);
   }
 
   Remove(event) {

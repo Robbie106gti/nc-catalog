@@ -23,6 +23,7 @@ import { ManImageComponent } from './image-upload/man-image.component';
 import { CsvToJsonComponent } from './csvtojson/csvtojson.component';
 import { TableComponent } from './csvtojson/table.component';
 import { HtmlToJsonComponent } from './htmltojson/htmltojson.component';
+import { ListReorderComponent } from './reorder/list-reorder.component';
 
 export const components: any[] = [
   EditBtnComponent,
@@ -49,7 +50,8 @@ export const components: any[] = [
   ManImageComponent,
   CsvToJsonComponent,
   TableComponent,
-  HtmlToJsonComponent
+  HtmlToJsonComponent,
+  ListReorderComponent
 ];
 
 // export * from ''
@@ -78,3 +80,4 @@ export * from './image-upload/man-image.component';
 export * from './csvtojson/csvtojson.component';
 export * from './csvtojson/table.component';
 export * from './htmltojson/htmltojson.component';
+export * from './reorder/list-reorder.component';

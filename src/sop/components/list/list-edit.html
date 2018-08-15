@@ -1,10 +1,15 @@
 <ul>
-  <li class="padding right-align"><small><i>Add a item to the list</i></small><i class="material-icons right pointer" (click)="Add()">add</i></li>
+  <li class="padding right-align">
+    <small>
+      <i>Add a item to the list</i>
+    </small>
+    <i class="material-icons right pointer" (click)="Add()">add</i>
+  </li>
   <li class="divider"></li>
   <li class="padding"></li>
 
-  <li class="" *ngFor="let li of list" class="limit">
-    <i class="material-icons">{{ li.icon || 'label' }}</i>
+  <li class="" *ngFor="let li of list; let i = index" class="limit">
+    <list-reorder (reorderedList)="Reordered($event)" [list]="list" [i]="i"></list-reorder>
     <span class="right">
       <i class="material-icons pointer" (click)="Edit(li)">edit</i>
       <i class="material-icons pointer" (click)="Remove(li)">remove_circle_outline</i>
@@ -25,17 +30,21 @@
       <label for="textarea1">Text</label>
     </div>
     <div class="input-field col s8">
-        <div class="ddIcon btn">
-          <span><i class="material-icons left" >{{ edit.icon || 'label' }}</i> {{ edit.icon || 'Choose a Icon' }}</span>
-          <div class="ddIcon-content grey-text text-darken-3">
+      <div class="ddIcon btn">
+        <span>
+          <i class="material-icons left">{{ edit.icon || 'label' }}</i> {{ edit.icon || 'Choose a Icon' }}</span>
+        <div class="ddIcon-content grey-text text-darken-3">
           <p *ngFor="let i of icons" (click)="Icon(i)">
-            {{ i.icon }} <i class="material-icons left">{{ i.icon }}</i>
+            {{ i.icon }}
+            <i class="material-icons left">{{ i.icon }}</i>
           </p>
         </div>
       </div>
     </div>
     <div class="col s4">
-      <button class="btn right" [disabled]="(!edit.title && !edit.text)"><i class="material-icons" (click)="New()">add</i></button>
+      <button class="btn right" [disabled]="(!edit.title && !edit.text)">
+        <i class="material-icons" (click)="New()">add</i>
+      </button>
     </div>
   </div>
 </div>

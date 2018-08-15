@@ -7,11 +7,11 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
   styles: [
     `
       .new {
-        position: absolute;
+        position: fixed;
         z-index: 999;
         margin-top: 12.5%;
-        margin-left: 33%;
-        width: 33%;
+        margin-left: 12.5%;
+        width: 75%;
         padding-bottom: 4rem;
         padding-right: 1rem;
         padding-left: 1rem;
@@ -21,21 +21,36 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
   ]
 })
 export class SopModalComponent {
-  @Input() modal: { title: string; action: string; sop?: any; edit?: any; newTitle?: string };
-  @Input() user: string;
-  @Input() url: string;
-  @Input() pct: string;
-  @Input() sop: any;
-  @Input() icons: any;
-  @Output() close = new EventEmitter<boolean>();
-  @Output() add = new EventEmitter<any>();
-  @Output() newList = new EventEmitter<any>();
-  @Output() newImages = new EventEmitter<any>();
-  @Output() newTitle = new EventEmitter<any>();
-  @Output() notes = new EventEmitter<any>();
-  @Output() file = new EventEmitter<any>();
-  @Output() table = new EventEmitter<any>();
-  @Output() html = new EventEmitter<any>();
+  @Input()
+  modal: { title: string; action: string; sop?: any; edit?: any; newTitle?: string };
+  @Input()
+  user: string;
+  @Input()
+  url: string;
+  @Input()
+  pct: string;
+  @Input()
+  sop: any;
+  @Input()
+  icons: any;
+  @Output()
+  close = new EventEmitter<boolean>();
+  @Output()
+  add = new EventEmitter<any>();
+  @Output()
+  newList = new EventEmitter<any>();
+  @Output()
+  newImages = new EventEmitter<any>();
+  @Output()
+  newTitle = new EventEmitter<any>();
+  @Output()
+  notes = new EventEmitter<any>();
+  @Output()
+  file = new EventEmitter<any>();
+  @Output()
+  table = new EventEmitter<any>();
+  @Output()
+  html = new EventEmitter<any>();
 
   titleImage: string;
 

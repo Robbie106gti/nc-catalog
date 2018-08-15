@@ -5,13 +5,13 @@
     <h4>{{ modal.title }}</h4>
     <hr>
     <div class="row" *ngIf="modal.action === 'Image'">
-      <man-image [images]="modal.sop.value" (newImages)="NewImages($event)"></man-image>
       <input-title [title]="'Title ' + modal.action" [placeholder]="modal.sop.title" [size]="'s10'" (name)="TitleImage($event)"></input-title>
       <image-upload [size]="'s8'" [fileName]="'replace'" [title]="'Upload image'" [url]="url" [pct]="pct" (file)="File($event)"></image-upload>
       <div class="col s12">
         <button class="waves-effect waves-green btn red right" (click)="AddImage()" [disabled]="!url">
           <i class="material-icons left">add</i>Add</button>
       </div>
+      <man-image class="col s12" [images]="modal.sop.value" (newImages)="NewImages($event)"></man-image>
     </div>
     <div class="row" *ngIf="modal.action === 'Description'">
       <input-title [title]="'Title ' + modal.action" [placeholder]="modal.sop.title" [size]="'s10'" (name)="Title($event)"></input-title>

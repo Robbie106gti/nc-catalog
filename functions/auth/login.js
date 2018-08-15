@@ -11,7 +11,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const FieldValue = require('firebase-admin').firestore.FieldValue;
 const serviceAccount = require('../nickels-catalog-firebase-adminsdk-m8g1g-600cf4ab30.json');
-
+// Updated to V2 firebase-functions, if errors see this https://firebase.google.com/docs/functions/beta-v1-diff
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://nickels-catalog.firebaseio.com'
@@ -41,8 +41,7 @@ const trimit = require('../msc/trimit');
 
 exports.login = functions.https.onRequest((req, res) => {
   const handleError = (username, error) => {
-    console.error(
-      {
+    console.error({
         User: username
       },
       error
@@ -51,17 +50,14 @@ exports.login = functions.https.onRequest((req, res) => {
   };
 
   const handleResponse = (username, status, body) => {
-    console.log(
-      {
-        User: username
-      },
-      {
-        Response: {
-          Status: status,
-          Body: body
-        }
+    console.log({
+      User: username
+    }, {
+      Response: {
+        Status: status,
+        Body: body
       }
-    );
+    });
     if (body) {
       return res.status(200).json(body);
     }
@@ -93,14 +89,14 @@ exports.login = functions.https.onRequest((req, res) => {
         return admin
           .auth()
           .createCustomToken(uid)
-          .then(function(customToken, customClaims) {
+          .then(function (customToken, customClaims) {
             // Send token back to client
             // Update real-time database to notify client to force refresh.
             const metadataRef = admin.database().ref('metadata/' + username);
             return handleResponse(username, 200, customToken);
             // return res.sendStatus(200).json(customClaims);
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log('Error creating custom token:', error);
           });
       }
@@ -173,7 +169,7 @@ function authenticate(username, password) {
       }
     };
 
-    basicAuthRequest(options, function(error, response, body) {
+    basicAuthRequest(options, function (error, response, body) {
       if (error) throw new Error(error);
       if (error) {
         return reject(error);
