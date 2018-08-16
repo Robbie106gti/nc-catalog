@@ -18,7 +18,7 @@ template: `
 [url]="(url$ | async)" [pct]="(pct$ | async)" [user]="(user$ | async)"
 (close)="Close($event)" (add)="New($event)" (file)="Image($event)" (edited)="Edited($event, cat)"></modal>
 
-<div class="section no-pad-bot" id="index-banner">
+<div class="section no-pad-bot no-pad-top" id="index-banner">
   <div class="card" id="top">
     <div class="container">
         <a routerLink="../" class="right"><i class="small material-icons">arrow_back</i></a>

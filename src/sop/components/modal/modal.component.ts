@@ -11,7 +11,7 @@ declare var M: any;
       .new {
         position: fixed;
         z-index: 999;
-        margin-top: 12.5%;
+        margin-top: 5%;
         margin-left: 33%;
         width: 33%;
         padding-bottom: 4rem;

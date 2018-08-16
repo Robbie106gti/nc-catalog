@@ -11,10 +11,7 @@ import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 
-import {
-  StoreRouterConnectingModule,
-  RouterStateSerializer,
-} from '@ngrx/router-store';
+import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
 import { StoreModule, MetaReducer } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
@@ -35,11 +32,14 @@ import { HomeComponent } from './shared/ui/home.component';
 import * as fromServices from './services';
 // guards
 import * as fromGuards from './guards';
+import { ProfileComponent } from './shared/user/profile.component';
+import { UsersComponent } from './shared/user/users.component';
+import { UserComponent } from './shared/user/user.component';
 
 // this would be done dynamically with webpack for builds
 const env = {
   development: true,
-  production: false,
+  production: false
 };
 
 // routes
@@ -47,15 +47,25 @@ export const ROUTES: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
   {
     path: 'catalog',
-    loadChildren: '../catalog/catalog.module#CatalogModule',
+    loadChildren: '../catalog/catalog.module#CatalogModule'
   },
   {
     path: 'sop',
-    loadChildren: '../sop/sop.module#SopModule',
+    loadChildren: '../sop/sop.module#SopModule'
   },
   {
     path: 'mds',
-    loadChildren: '../mds/mds.module#MdsModule',
+    loadChildren: '../mds/mds.module#MdsModule'
+  },
+  {
+    path: 'profile',
+    pathMatch: 'full',
+    component: ProfileComponent
+  },
+  {
+    path: 'users',
+    pathMatch: 'full',
+    component: UsersComponent
   }
 ];
 
@@ -66,7 +76,10 @@ export const ROUTES: Routes = [
     HeaderComponent,
     FooterComponent,
     SliderComponent,
-    HomeComponent
+    HomeComponent,
+    ProfileComponent,
+    UsersComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -86,4 +99,4 @@ export const ROUTES: Routes = [
   providers: [...fromServices.services, { provide: RouterStateSerializer, useClass: CustomSerializer }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

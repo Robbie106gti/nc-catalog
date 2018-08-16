@@ -13,13 +13,18 @@ export const LOAD_LOGIN_FB_FAIL = '[Login] Login Firebase setup Fail';
 export const LOAD_LOGIN_FB_SUCCESS = '[Login] Login Firebase setup Success';
 
 export const LOAD_LOGIN_HB = '[Login] HB Login Header Bearer setup';
-export const LOAD_LOGIN_HB_SUCCESS =
-  '[Login] HB Login Header Bearer setup Success';
+export const LOAD_LOGIN_HB_SUCCESS = '[Login] HB Login Header Bearer setup Success';
 
 // load favorites
 export const LOAD_FAVORITES = '[User] Get Favorites';
 export const LOAD_FAVORITES_FAIL = '[User] Get Favorites Fail';
 export const LOAD_FAVORITES_SUCCESS = '[User] Get Favorites Success';
+
+export const LOGOUT = '[User] Logged out user';
+
+export const USERS = '[Users] Retrieving users';
+export const USERS_LOADED = '[Users] Loaded users';
+export const USERS_FAIL = '[Users] Retrieving users';
 
 export class LoadLogin implements Action {
   readonly type = LOAD_LOGIN;
@@ -126,6 +131,29 @@ export class CreateFBLoginSuccess implements Action {
 }
 // update items
 // delete items
+export class Logout implements Action {
+  readonly type = LOGOUT;
+}
+
+// users items
+export class GetUsers implements Action {
+  readonly type = USERS;
+  constructor(public payload: any) {
+    // console.log(payload);
+  }
+}
+export class GetUsersSuccess implements Action {
+  readonly type = USERS_LOADED;
+  constructor(public payload: any) {
+    // console.log(payload);
+  }
+}
+export class GetUsersFail implements Action {
+  readonly type = USERS_FAIL;
+  constructor(public payload: any) {
+    // console.log(payload);
+  }
+}
 
 // action types
 export type LoginAction =
@@ -143,4 +171,8 @@ export type LoginAction =
   | CreateFBLoginFail
   | CreateFBLoginSuccess
   | LoadLoginHeader
-  | LoadLoginHeaderSuccess;
+  | LoadLoginHeaderSuccess
+  | Logout
+  | GetUsers
+  | GetUsersSuccess
+  | GetUsersFail;

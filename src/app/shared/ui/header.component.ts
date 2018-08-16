@@ -1,4 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Store } from '@ngrx/store';
+import * as fromStore from '../../store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 declare var M: any;
@@ -43,14 +45,20 @@ declare var M: any;
     </ul>
     <ul id="dropdown2" class="dropdown-content uTop">
       <li>
-        <a [routerLink]="['./catalog', { root: 'Catalog'}]"
+        <a [routerLink]="['./profile']"
         class="right tooltipped" data-position="bottom" data-tooltip="Profile">
           <i class="material-icons blue-grey-text left">person</i>Profile
         </a>
       </li>
+      <li *ngIf="(user$ | async)?.fullName === 'Robert Leeuwerink'">
+        <a [routerLink]="['./users']"
+        class="right tooltipped" data-position="bottom" data-tooltip="Profile">
+          <i class="material-icons blue-grey-text left">recent_actors</i>Users
+        </a>
+      </li>
       <li class="divider"></li>
       <li>
-        <a class="right tooltipped" data-position="bottom" data-tooltip="Log out">
+        <a class="right tooltipped" data-position="bottom" data-tooltip="Log out" (click)="Logout()">
           <i class="material-icons left">settings_power</i>Log out
         </a>
       </li>
@@ -60,18 +68,20 @@ declare var M: any;
   `,
   styles: [
     `
-  .uTop {
-    top: auto !important;
-  }
-  `
+      .uTop {
+        top: auto !important;
+      }
+    `
   ]
 })
 export class HeaderComponent implements OnChanges {
-  @Input() user$: Observable<any>;
-  @Input() router$: Observable<any>;
+  @Input()
+  user$: Observable<any>;
+  @Input()
+  router$: Observable<any>;
   icon: Observable<string>;
 
-  constructor() {
+  constructor(private store: Store<fromStore.State>) {
     document.addEventListener('DOMContentLoaded', function() {
       const options = { hover: true };
       const elems = document.querySelectorAll('.dropdown-trigger');
@@ -120,5 +130,11 @@ export class HeaderComponent implements OnChanges {
         str = 'Nickels Cabinets';
     }
     return str;
+  }
+
+  Logout() {
+    const expires = 'Thu, 01 Jan 1970 01: 00: 08 UTC';
+    document.cookie = 'nc-catalog=' + expires + ';path=/';
+    location.reload();
   }
 }

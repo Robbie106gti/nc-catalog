@@ -9,8 +9,8 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
       .new {
         position: fixed;
         z-index: 999;
-        margin-top: 12.5%;
-        margin-left: 12.5%;
+        top: 6%;
+        left: 12.5%;
         width: 75%;
         padding-bottom: 4rem;
         padding-right: 1rem;

@@ -5,17 +5,7 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
 import { Effect, Actions } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
-import {
-  map,
-  switchMap,
-  catchError,
-  tap,
-  delay,
-  retry,
-  retryWhen,
-  delayWhen,
-  skipWhile
-} from 'rxjs/operators';
+import { map, switchMap, catchError, tap, delay, retry, retryWhen, delayWhen, skipWhile } from 'rxjs/operators';
 
 import * as loginActions from '../actions/login.action';
 import * as fromServices from '../../services';
@@ -94,21 +84,15 @@ export class LoginEffects {
   loadLoginFb$ = this.actions$.ofType(loginActions.LOAD_LOGIN_SUCCESS).pipe(
     switchMap((action: Ap) => {
       // console.log(action);
-      return this.firestoreService
-        .exists(`users/${action.payload.valid.Email}`)
-        .pipe(
-          skipWhile(snap => !snap.payload.exists),
-          switchMap(() => {
-            // console.log('Hello');
-            return this.firestoreService
-              .docWithRefs$(`users/${action.payload.valid.Email}`)
-              .pipe(
-                map(
-                  (userfb: User) => new loginActions.LoadLoginFbSuccess(userfb)
-                )
-              );
-          })
-        );
+      return this.firestoreService.exists(`users/${action.payload.valid.Email}`).pipe(
+        skipWhile(snap => !snap.payload.exists),
+        switchMap(() => {
+          // console.log('Hello');
+          return this.firestoreService
+            .docWithRefs$(`users/${action.payload.valid.Email}`)
+            .pipe(map((userfb: User) => new loginActions.LoadLoginFbSuccess(userfb)));
+        })
+      );
     })
   );
 
@@ -118,26 +102,22 @@ export class LoginEffects {
       // console.log(cookie);
       if (cookie !== null) {
         // console.log(cookie.payload.email);
-        return this.firestoreService
-          .docWithRefs$(`users/${cookie.payload.email}`)
-          .pipe(
-            map((userfb: User) => new loginActions.LoadLoginFbSuccess(userfb)),
-            catchError(err =>
-              of(
-                new loginActions.LoadLoginFail({
-                  ...err,
-                  wqData: cookie.payload
-                })
-              )
+        return this.firestoreService.docWithRefs$(`users/${cookie.payload.email}`).pipe(
+          map((userfb: User) => new loginActions.LoadLoginFbSuccess(userfb)),
+          catchError(err =>
+            of(
+              new loginActions.LoadLoginFail({
+                ...err,
+                wqData: cookie.payload
+              })
             )
-          );
+          )
+        );
       } else {
         console.log('I have gotten lost');
       }
     }),
-    catchError(err =>
-      of(new loginActions.LoadLoginFail({ ...err, cookie: 'No Cookie' }))
-    )
+    catchError(err => of(new loginActions.LoadLoginFail({ ...err, cookie: 'No Cookie' })))
   );
 
   @Effect()
@@ -163,28 +143,30 @@ export class LoginEffects {
         );
       }
     }),
-    catchError(err =>
-      of(new loginActions.LoadLoginFail({ ...err, cookie: 'No Cookie' }))
-    )
+    catchError(err => of(new loginActions.LoadLoginFail({ ...err, cookie: 'No Cookie' })))
   );
 
   @Effect()
-  UserFavorites$ = this.actions$
-    .ofType(loginActions.LOAD_LOGIN_FB_SUCCESS)
-    .pipe(
-      switchMap((action: Ap) => {
-        // console.log(action);
-        // this.firestoreService.checkCustomClaims();
-        return this.firestoreService
-          .col$(`users/${action.payload.email}/favorites`)
-          .pipe(
-            map(
-              (fav: Favorites[]) => new loginActions.UserFavoritesSuccess(fav)
-            ),
-            catchError(err => of(new loginActions.UserFavoritesFail(err)))
-          );
-      })
-    );
+  UserFavorites$ = this.actions$.ofType(loginActions.LOAD_LOGIN_FB_SUCCESS).pipe(
+    switchMap((action: Ap) => {
+      // console.log(action);
+      // this.firestoreService.checkCustomClaims();
+      return this.firestoreService.col$(`users/${action.payload.email}/favorites`).pipe(
+        map((fav: Favorites[]) => new loginActions.UserFavoritesSuccess(fav)),
+        catchError(err => of(new loginActions.UserFavoritesFail(err)))
+      );
+    })
+  );
+
+  @Effect()
+  Users$ = this.actions$.ofType(loginActions.USERS).pipe(
+    switchMap(action => {
+      return this.firestoreService.col$('/users').pipe(
+        map(users => new loginActions.GetUsersSuccess(users)),
+        catchError(err => of(new loginActions.GetUsersFail(err)))
+      );
+    })
+  );
 
   trimit(str) {
     return str ? str.trim() : null;
@@ -199,8 +181,7 @@ export class LoginEffects {
       email: data.email,
       username: data.username
     });
-    document.cookie =
-      'nc-catalog=' + base64Encode(cookie) + ';' + expires + ';path=/';
+    document.cookie = 'nc-catalog=' + base64Encode(cookie) + ';' + expires + ';path=/';
   }
 
   getCookie(cname) {
