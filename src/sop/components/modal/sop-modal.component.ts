@@ -51,6 +51,8 @@ export class SopModalComponent {
   table = new EventEmitter<any>();
   @Output()
   html = new EventEmitter<any>();
+  @Output()
+  mainImage = new EventEmitter<any>();
 
   titleImage: string;
 
@@ -102,5 +104,20 @@ export class SopModalComponent {
   }
   ToHtml(event) {
     this.html.emit({ value: event, fullName: this.user, sop: this.sop, action: 'Html' });
+  }
+
+  MainImage() {
+    if (this.sop.imageimportant === undefined) {
+      this.sop.imageimportant = false;
+    } else {
+      this.sop.imageimportant = this.sop.imageimportant ? false : true;
+    }
+    console.log(this.sop.imageimportant);
+    this.mainImage.emit({
+      fullName: this.user,
+      sop: this.sop,
+      action: 'imageimportant',
+      value: this.sop.imageimportant
+    });
   }
 }

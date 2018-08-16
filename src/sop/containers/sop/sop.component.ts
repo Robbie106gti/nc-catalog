@@ -128,4 +128,8 @@ export class SopComponent {
   ToHtml(event) {
     this.store.dispatch({ type: fromStore.ADD_TO_SOP, payload: event });
   }
+
+  MainImage(event) {
+    this.store.dispatch({ type: fromStore.ADD_TO_SOP, payload: event });
+  }
 }

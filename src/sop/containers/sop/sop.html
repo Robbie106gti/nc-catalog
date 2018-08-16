@@ -1,7 +1,8 @@
 <div *ngIf="(sop$ | async) as sop">
   <sop-modal *ngIf="add === true" [modal]="modal" [user]="(user$ | async)" [sop]="sop" [icons]="(icons$ | async)" [pct]="(pct$ | async)"
     [url]="(url$ | async)" (close)="Close($event)" (add)="Add($event)" (newList)="NewList($event)" (newTitle)="NewTitle($event)"
-    (notes)="Notes($event)" (newImages)="Images($event)" (file)="File($event)" (table)="NewTable($event)" (html)="ToHtml($event)"></sop-modal>
+    (notes)="Notes($event)" (newImages)="Images($event)" (file)="File($event)" (table)="NewTable($event)" (html)="ToHtml($event)"
+    (mainImage)="MainImage($event)"></sop-modal>
   <div class="section no-pad-bot no-pad-top" id="index-banner">
     <div class="card" id="top">
       <div class="container">
@@ -27,7 +28,7 @@
       <list-card *ngIf="sop.list" [list]="sop.list" [listTitle]="sop.listTitle"></list-card>
       <note *ngIf="sop.notes" [notes]="sop.notes"></note>
     </div>
-    <image-card *ngIf="sop.image" class="col s12 m6" [card]="{title: sop.title, image: sop.image, size: '' }"></image-card>
+    <image-card *ngIf="sop.image && sop.imageimportant !== false" class="col s12 m6" [card]="{title: sop.title, image: sop.image, size: '' }"></image-card>
     <image-card *ngFor="let image of sop.images" class="col s4 m3 l2" [card]="image"></image-card>
     <div class="col s12 m6">
       <table-item [table]="sop.table" (remove)="TableRemove($event)"></table-item>

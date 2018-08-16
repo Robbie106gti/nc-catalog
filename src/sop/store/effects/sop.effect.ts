@@ -133,6 +133,11 @@ export class SopEffects {
               value = this.cleanupHtml(value);
               break;
             }
+            case 'imageimportant': {
+              key = action.payload.action.toLowerCase();
+              value = action.payload.value;
+              break;
+            }
           }
           // console.log(sop.idCat, sop.id, key, value);
           this.firestore.update(`sops/${sop.idCat}/entities/${sop.id}`, { [key]: value, updatedBy: user });

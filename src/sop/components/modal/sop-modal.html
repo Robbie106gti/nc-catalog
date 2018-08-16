@@ -12,6 +12,10 @@
           <i class="material-icons left">add</i>Add</button>
       </div>
       <man-image class="col s12" [images]="modal.sop.value" (newImages)="NewImages($event)"></man-image>
+      <label class="col s12">
+        <input type="checkbox" class="filled-in" [(ngModel)]="this.sop.imageimportant" (click)="MainImage()" />
+        <span>Main Image Important?</span>
+      </label>
     </div>
     <div class="row" *ngIf="modal.action === 'Description'">
       <input-title [title]="'Title ' + modal.action" [placeholder]="modal.sop.title" [size]="'s10'" (name)="Title($event)"></input-title>

@@ -16,12 +16,12 @@ import * as resizer from './resizer';
     <input class="file-path validate" [placeholder]="title" type="text">
   </div>
 </div>
-<span>
+<div class="col s8">
   <label>
     <input type="checkbox" [(ngModel)]="replace" />
     <span>Replace Original Image</span>
   </label>
-</span>
+</div>
   `
 })
 export class ImageUploadComponent {
@@ -41,7 +41,7 @@ export class ImageUploadComponent {
 
   replace: boolean = false;
   constructor() {
-    console.log(this.url);
+    // console.log(this.url);
   }
 
   async startUpload(event: FileList) {
