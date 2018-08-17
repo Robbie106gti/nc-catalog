@@ -8,8 +8,8 @@
   <li class="divider"></li>
   <li class="padding"></li>
 
-  <li class="" *ngFor="let li of list; let i = index" class="limit">
-    <list-reorder (reorderedList)="Reordered($event)" [list]="list" [i]="i"></list-reorder>
+  <li style="min-height: 29px;" *ngFor="let li of list; let i = index; let first = first; let last = last">
+    <list-reorder class="left" [i]="{index:i, first: first, last: last}" (reorderedList)="Reordered($event)" [list]="list"></list-reorder>
     <span class="right">
       <i class="material-icons pointer" (click)="Edit(li)">edit</i>
       <i class="material-icons pointer" (click)="Remove(li)">remove_circle_outline</i>
@@ -29,7 +29,7 @@
       <textarea id="textarea1" class="materialize-textarea" [(ngModel)]="edit.text"></textarea>
       <label for="textarea1">Text</label>
     </div>
-    <div class="input-field col s8">
+    <div class="input-field col s6">
       <div class="ddIcon btn">
         <span>
           <i class="material-icons left">{{ edit.icon || 'label' }}</i> {{ edit.icon || 'Choose a Icon' }}</span>
@@ -41,9 +41,21 @@
         </div>
       </div>
     </div>
-    <div class="col s4">
+    <div class="input-field col s6">
+      <div class="ddIcon btn">
+        <span (click)="just()">
+          <i class="material-icons left">image</i> {{ edit?.image?.title || 'Add a Image' }}</span>
+        <div class="ddIcon-content grey-text text-darken-3">
+          <p *ngFor="let image of images" (click)="Image(image)">
+            {{ image.title }}
+            <img class="responsive-img" [alt]="image.title" [src]="image.image" />
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col s12">
       <button class="btn right" [disabled]="(!edit.title && !edit.text)">
-        <i class="material-icons" (click)="New()">add</i>
+        <i class="material-icons" (click)="New()">add</i> Add to list
       </button>
     </div>
   </div>

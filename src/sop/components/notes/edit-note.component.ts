@@ -11,8 +11,7 @@ declare var M: any;
       <li class="padding right-align"><small><i>Add a note</i></small><i class="material-icons right pointer" (click)="Add()">add</i></li>
       <li class="divider"></li>
       <li class="padding"></li>
-      <li *ngFor="let note of notes; let i = index" class="limit">
-        <list-reorder (reorderedList)="Reordered($event)" [list]="notes" [i]="i"></list-reorder>
+      <li class="limit" *ngFor="let note of notes; let i = index; let first = first; let last = last"><list-reorder [i]="{index:i, first: first, last: last}"(reorderedList)="Reordered($event)" [list]="notes"></list-reorder>
         <span class="right">
           <i class="material-icons pointer" (click)="Edit(note)">edit</i>
           <i class="material-icons pointer" (click)="Remove(note)">remove_circle_outline</i>

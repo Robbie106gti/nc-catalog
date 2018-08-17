@@ -12,10 +12,15 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
         top: 6%;
         left: 12.5%;
         width: 75%;
-        padding-bottom: 4rem;
+        padding-bottom: 2rem;
         padding-right: 1rem;
         padding-left: 1rem;
         padding-top: 0.2rem;
+      }
+      .heightmodal {
+        max-height: 80vh;
+        overflow-y: scroll;
+        margin-bottom: 0px !important;
       }
     `
   ]

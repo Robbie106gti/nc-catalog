@@ -48,12 +48,18 @@ export class ListEditComponent {
   list: any;
   @Input()
   icons: any;
+  @Input()
+  images: any;
   @Output()
   newList = new EventEmitter<any>();
   edit: any;
 
   constructor() {
     this.textfields();
+  }
+
+  just() {
+    console.log(this.images);
   }
 
   Add() {
@@ -80,6 +86,10 @@ export class ListEditComponent {
 
   Icon(ic) {
     this.edit.icon = ic.icon;
+  }
+
+  Image(i) {
+    this.edit.image = i;
   }
 
   New() {

@@ -6,7 +6,7 @@ declare var M: any;
   selector: 'image-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-<div class="card" [ngClass]="card.size || ''">
+<div class="card">
   <div class="card-image">
     <img [src]="card.image" [alt]="card.title" class="responsive-img materialboxed">
   </div>
@@ -17,7 +17,8 @@ declare var M: any;
 `
 })
 export class ImageCardComponent {
-  @Input() card: any;
+  @Input()
+  card: any;
 
   constructor() {
     $(document).ready(function() {

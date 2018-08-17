@@ -29,7 +29,12 @@
       <note *ngIf="sop.notes" [notes]="sop.notes"></note>
     </div>
     <image-card *ngIf="sop.image && sop.imageimportant !== false" class="col s12 m6" [card]="{title: sop.title, image: sop.image, size: '' }"></image-card>
-    <image-card *ngFor="let image of sop.images" class="col s4 m3 l2" [card]="image"></image-card>
+    <image-card *ngFor="let image of sop.images" class="col" [ngClass]="{
+        's4 m3 l2': !image.size || image.size === 'default',
+        's3 m2 l1': image.size === 'small',
+        's8 m6 l4': image.size === 'medium',
+        's12 m12 l6': image.size === 'large'
+      }" [card]="image"></image-card>
     <div class="col s12 m6">
       <table-item [table]="sop.table" (remove)="TableRemove($event)"></table-item>
     </div>
