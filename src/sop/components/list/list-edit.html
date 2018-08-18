@@ -29,11 +29,11 @@
       <textarea id="textarea1" class="materialize-textarea" [(ngModel)]="edit.text"></textarea>
       <label for="textarea1">Text</label>
     </div>
-    <div class="input-field col s6">
+    <div class="input-field col s4">
       <div class="ddIcon btn">
         <span>
           <i class="material-icons left">{{ edit.icon || 'label' }}</i> {{ edit.icon || 'Choose a Icon' }}</span>
-        <div class="ddIcon-content grey-text text-darken-3">
+        <div class="ddIcon-content grey-text text-darken-3 mt1">
           <p *ngFor="let i of icons" (click)="Icon(i)">
             {{ i.icon }}
             <i class="material-icons left">{{ i.icon }}</i>
@@ -41,21 +41,23 @@
         </div>
       </div>
     </div>
-    <div class="input-field col s6">
+    <div class="input-field col s4">
       <div class="ddIcon btn">
         <span (click)="just()">
           <i class="material-icons left">image</i> {{ edit?.image?.title || 'Add a Image' }}</span>
-        <div class="ddIcon-content grey-text text-darken-3">
-          <p *ngFor="let image of images" (click)="Image(image)">
-            {{ image.title }}
-            <img class="responsive-img" [alt]="image.title" [src]="image.image" />
-          </p>
+        <div class="ddIcon-content grey-text text-darken-3 mt2">
+          <ul class="collection">
+            <li *ngFor="let image of images" class="collection-item" (click)="Image(image)">
+              <img class="thumb" [alt]="image.title" [src]="image.image" />{{ image.title }}
+            </li>
+          </ul>
         </div>
       </div>
     </div>
     <div class="col s12">
-      <button class="btn right" [disabled]="(!edit.title && !edit.text)">
-        <i class="material-icons" (click)="New()">add</i> Add to list
+      <button class="btn right" [disabled]="(!edit.title && !edit.text)" (click)="New()">
+        <span>
+          <i class="material-icons left">add</i> Add to list</span>
       </button>
     </div>
   </div>

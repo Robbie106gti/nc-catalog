@@ -24,7 +24,6 @@ declare var M: any;
         padding-bottom: 0.5em;
         z-index: 999;
         margin-left: 8rem;
-        margin-top: -40rem;
       }
       .ddIcon-content > p {
         padding-left: 1rem;
@@ -39,6 +38,24 @@ declare var M: any;
       .ddIcon-content > p:hover {
         background-color: #455a64;
         color: #fff;
+      }
+
+      .mt1 {
+        margin-top: -40rem;
+      }
+
+      .mt2 {
+        margin-top: -4rem;
+      }
+      .thumb {
+        max-height: 5rem;
+        max-width: 8rem;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      .collection {
+        margin: 0 !important;
       }
     `
   ]

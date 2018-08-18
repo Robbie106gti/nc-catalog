@@ -1,0 +1,7 @@
+
+<div class="card-panel results" *ngIf="loaded === true">
+  <h3>Search results for: {{ search | titlecase }}</h3>
+  <div class="row">
+    {{ search | json }}
+  </div>
+</div>

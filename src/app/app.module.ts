@@ -27,14 +27,20 @@ import { HeaderComponent } from './shared/ui/header.component';
 import { FooterComponent } from './shared/ui/footer.component';
 import { SliderComponent } from './shared/ui/slider.component';
 import { HomeComponent } from './shared/ui/home.component';
+import { ProfileComponent } from './shared/user/profile.component';
+import { UsersComponent } from './shared/user/users.component';
+import { UserComponent } from './shared/user/user.component';
+import { SearchComponent } from './shared/search/search.component';
+import { ResultsComponent } from './shared/search/results/results.component';
+import { SpinnerComponent } from './shared/search/results/spinner.component';
 
 // services
 import * as fromServices from './services';
 // guards
 import * as fromGuards from './guards';
-import { ProfileComponent } from './shared/user/profile.component';
-import { UsersComponent } from './shared/user/users.component';
-import { UserComponent } from './shared/user/user.component';
+
+// directives
+import { AutofocusDirective } from './shared/search/autofocus.directive';
 
 // this would be done dynamically with webpack for builds
 const env = {
@@ -45,28 +51,12 @@ const env = {
 // routes
 export const ROUTES: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
-  {
-    path: 'catalog',
-    loadChildren: '../catalog/catalog.module#CatalogModule'
-  },
-  {
-    path: 'sop',
-    loadChildren: '../sop/sop.module#SopModule'
-  },
-  {
-    path: 'mds',
-    loadChildren: '../mds/mds.module#MdsModule'
-  },
-  {
-    path: 'profile',
-    pathMatch: 'full',
-    component: ProfileComponent
-  },
-  {
-    path: 'users',
-    pathMatch: 'full',
-    component: UsersComponent
-  }
+  { path: 'catalog', loadChildren: '../catalog/catalog.module#CatalogModule' },
+  { path: 'sop', loadChildren: '../sop/sop.module#SopModule' },
+  { path: 'mds', loadChildren: '../mds/mds.module#MdsModule' },
+  { path: 'profile', pathMatch: 'full', component: ProfileComponent },
+  { path: 'users', pathMatch: 'full', component: UsersComponent },
+  { path: 'search', pathMatch: 'full', component: SearchComponent }
 ];
 
 @NgModule({
@@ -79,7 +69,11 @@ export const ROUTES: Routes = [
     HomeComponent,
     ProfileComponent,
     UsersComponent,
-    UserComponent
+    UserComponent,
+    SearchComponent,
+    AutofocusDirective,
+    ResultsComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

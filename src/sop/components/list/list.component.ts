@@ -7,7 +7,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 <div class="card">
   <ul class="collection with-header">
     <li class="collection-header"><h4>{{ listTitle }}</h4></li>
-    <li class="collection-item avatar" [ngClass]="{ ' margin-image': li.image !== null }" *ngFor="let li of list">
+    <li class="collection-item avatar" [ngClass]="{ ' margin-image': li.image?.image }" *ngFor="let li of list">
       <i class="material-icons circle no-print">{{ li.icon || 'label' }}</i>
       <div class="secondary-content" *ngIf="li.image"><img class="responsive-img materialboxed" [src]="li.image.image" [alt]="li.image.title"/></div>
       <span class="title"><b>{{ li.title }}:</b></span>

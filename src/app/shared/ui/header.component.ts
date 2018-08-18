@@ -18,10 +18,10 @@ declare var M: any;
       </a>
 
       <ul class="right hide-on-med-and-down">
-        <li><a class="dropdown-trigger" href="#" data-target="dropdown2"><span>{{ (user$ | async)?.fullName }}</span></a></li>
-        <li><a href="#"><i class="material-icons">search</i></a></li>
+        <li><a class="dropdown-trigger" data-target="dropdown2"><span>{{ (user$ | async)?.fullName }}</span></a></li>
+        <li><a [routerLink]="['./search']"><i class="material-icons">search</i></a></li>
         <!-- Dropdown Trigger -->
-        <li ><a class="dropdown-trigger" href="#" data-target="dropdown1"><i class="large material-icons">apps</i></a></li>
+        <li ><a class="dropdown-trigger" data-target="dropdown1"><i class="large material-icons">apps</i></a></li>
       </ul>
     </div>
     <!-- Dropdown Structure -->
