@@ -1,9 +1,10 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { User, Favorites, Notes } from '../../models/user.model';
+import { User, Favorites } from '../../models/user.model';
 import * as fromServices from '../../services';
 import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
+import * as common from '../../utils/common';
 declare var M: any;
 declare var $: any;
 @Component({
@@ -32,6 +33,9 @@ declare var $: any;
     <chip *ngFor="let chip of item.tags" [chip]="chip"></chip>
   </div>
 </a>
+      <div class="center red-text text-darken-4" *ngIf="item.active === false">
+        <b>DISCONTINUED / INACTIVE!</b>
+      </div>
     `,
   styles: [
     `
@@ -66,17 +70,25 @@ declare var $: any;
       .mats.me {
         background-color: rgb(98, 137, 165);
       }
+      .card-image {
+        background-color: white !important;
+      }
     `
   ]
 })
 export class CategoryViewComponent {
   user$: Observable<User>;
   userFavs$: Observable<Favorites[]>;
-  @Input() item: any;
-  @Output() add = new EventEmitter<any>();
-  @Output() remove = new EventEmitter<any>();
-  @Output() turnOn = new EventEmitter<any>();
-  @Output() turnOff = new EventEmitter<any>();
+  @Input()
+  item: any;
+  @Output()
+  add = new EventEmitter<any>();
+  @Output()
+  remove = new EventEmitter<any>();
+  @Output()
+  turnOn = new EventEmitter<any>();
+  @Output()
+  turnOff = new EventEmitter<any>();
 
   constructor(private store: Store<fromStore.ProductsState>, private firestore: fromServices.FirestoreService) {
     this.user$ = this.store.select(fromStore.getUserData);
@@ -96,16 +108,24 @@ export class CategoryViewComponent {
     this.firestore.delete(`users/${event.user.email}/favorites/${event.cat.id}`);
   }
   Active(event) {
-    this.firestore.update(`structure/${this.CatOrCab(event.cat)}/${event.cat.sub.toLowerCase()}/${event.cat.id}`, {
-      active: true,
-      updatedBy: event.user.fullName
-    });
+    console.log(event);
+    this.firestore.update(
+      `structure/${this.CatOrCab(event.cat)}/${common.prepareFirestore(event.cat.sub.toLowerCase())}/${event.cat.id}`,
+      {
+        active: true,
+        updatedBy: event.user.fullName
+      }
+    );
   }
   Unactive(event) {
-    this.firestore.update(`structure/${this.CatOrCab(event.cat)}/${event.cat.sub.toLowerCase()}/${event.cat.id}`, {
-      active: false,
-      updatedBy: event.user.fullName
-    });
+    console.log(event);
+    this.firestore.update(
+      `structure/${this.CatOrCab(event.cat)}/${common.prepareFirestore(event.cat.sub.toLowerCase())}/${event.cat.id}`,
+      {
+        active: false,
+        updatedBy: event.user.fullName
+      }
+    );
   }
   CatOrCab(cat) {
     return cat.cabinet ? 'cabinets' : 'category';

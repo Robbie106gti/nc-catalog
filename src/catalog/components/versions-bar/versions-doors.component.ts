@@ -7,7 +7,7 @@ import { of } from '../../../../node_modules/rxjs/observable/of';
 @Component({
   selector: 'versions-doors',
   template: `
-<div class="col s12 m12 no-print card">
+<div class="col s12 m12 no-print card" [ngClass]="{'discontinued': content.active === false }">
   <div class="right no-print" *ngIf="(choices$ | async) as choices">
     <ul class="collection with-header" *ngIf="content.choices">
       <li class="collection-header">
@@ -96,9 +96,12 @@ import { of } from '../../../../node_modules/rxjs/observable/of';
   ]
 })
 export class VersionsDoorsrComponent {
-  @Input() content: any;
-  @Input() user: any;
-  @Output() edit = new EventEmitter<any>();
+  @Input()
+  content: any;
+  @Input()
+  user: any;
+  @Output()
+  edit = new EventEmitter<any>();
   mat: string;
   choices$: Observable<any>;
 

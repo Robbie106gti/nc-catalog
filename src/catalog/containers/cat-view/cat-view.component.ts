@@ -4,37 +4,36 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
 import { Catalog } from '../../models/catalog.model';
-import { tap, filter, take } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'category',
-  // styleUrls: ['products.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <edit-cat *ngIf="e$ | async"  [item]="item$ | async" (edit)="Edit($event)" (close)="Close($event)" (title)="TitleUpdate($event)"></edit-cat>
-    <div class="section no-pad-bot no-pad-top" id="index-banner" *ngIf="(cat$ | async) as cat">
-      <div class="card" id="top">
-        <div class="container">
-            <a routerLink="/catalog" class="right no-print"  queryParamsHandling="merge"><i class="small material-icons">arrow_back</i></a>
-            <div id="topic"><h1 id="topic">{{ cat.title }}</h1></div>
-            <div *ngIf="cat.title === 'Doors'" class="row">
-              <door-filter (filter)="Filter($event)" [filtered]="filters$ | async"></door-filter>
-            </div>
-        </div>
+<edit-cat *ngIf="e$ | async" [item]="item$ | async" (edit)="Edit($event)" (close)="Close($event)" (title)="TitleUpdate($event)"></edit-cat>
+<div class="section no-pad-bot no-pad-top" id="index-banner" *ngIf="(cat$ | async) as cat">
+  <div class="card" [ngClass]="{'discontinued': cat.active === false}" id="top">
+    <div class="container">
+      <a routerLink="/catalog" class="right no-print" queryParamsHandling="merge">
+        <i class="small material-icons">arrow_back</i>
+      </a>
+      <div id="topic">
+        <h1 id="topic">{{ cat.title }}</h1>
       </div>
-      <div class="row grid" id="catalog" *ngIf="cat.title !== 'Doors' && cat.title !== 'Materials and Finishes'">
-        <div *ngIf="!((category$ | async)?.length)">
-          No items in category, add one to get started.
-        </div>
-        <category-view
-          *ngFor="let category of (category$ | async)"
-          [item]="category" class="card">
-        </category-view>
+      <div *ngIf="cat.title === 'Doors'" class="row">
+        <door-filter (filter)="Filter($event)" [filtered]="filters$ | async"></door-filter>
       </div>
-      <doors *ngIf="cat.title === 'Doors'"></doors>
-      <materials *ngIf="cat.title === 'Materials and Finishes'"></materials>
     </div>
+  </div>
+  <div class="row grid" id="catalog" *ngIf="cat.title !== 'Doors' && cat.title !== 'Materials and Finishes'">
+    <div *ngIf="!((category$ | async)?.length)">
+      No items in category, add one to get started.
+    </div>
+    <category-view *ngFor="let category of (category$ | async)" [item]="category" class="card" [ngClass]="{'discontinued': category.active === false}">
+    </category-view>
+  </div>
+  <doors *ngIf="cat.title === 'Doors'"></doors>
+  <materials *ngIf="cat.title === 'Materials and Finishes'"></materials>
+</div>
   `
 })
 export class CatViewComponent implements OnInit {

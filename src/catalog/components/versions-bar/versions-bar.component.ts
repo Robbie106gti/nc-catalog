@@ -4,7 +4,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
   selector: 'versions-bar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="col s12 m12 card padding">
+    <div class="col s12 m12 card padding"  [ngClass]="{'discontinued': content.active === false}">
       <h5>Select height</h5>
       <div *ngFor="let version of content.heights">
         <image-bar [version]="version" [content]="content"></image-bar>
@@ -13,5 +13,6 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
     `
 })
 export class VersionsBarComponent {
-  @Input() content: any;
+  @Input()
+  content: any;
 }

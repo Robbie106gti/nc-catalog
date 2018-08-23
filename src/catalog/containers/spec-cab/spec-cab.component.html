@@ -2,7 +2,7 @@
   <div *ngIf="(user$ | async) as user">
 
     <div class="section no-pad-bot no-pad-top" id="index-banner" *ngIf="(specials$ | async) as specials">
-      <div class="card" id="top">
+      <div class="card" [ngClass]="{'discontinued': content.active === false}" id="top">
         <div class="container">
           <a routerLink="../" class="right" queryParamsHandling="merge">
             <i class="small material-icons">arrow_back</i>
@@ -13,6 +13,9 @@
               Item: {{ content.title }}
             </h4>
             <form-cab *ngIf="user.roles.admin" [user]="user" [content]="content" (edit)="Fetch($event)"></form-cab>
+            <div class="center red-text text-darken-4" *ngIf="content.active === false">
+              <b>DISCONTINUED / INACTIVE!</b>
+            </div>
             <br>
           </div>
         </div>

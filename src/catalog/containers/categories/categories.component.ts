@@ -21,6 +21,7 @@ import * as fromServices from '../../services';
           *ngFor="let category of (categories$ | async)"
           [category]="category" [user]="user" [userFavs]="(userFavs$ | async)"
           class="card"
+          [ngClass]="{'discontinued': category.active === false}"
           (add)="BookmarkIt($event)"
           (remove)="UnbookmarkIt($event)"
           (turnOn)="Active($event)"

@@ -3,17 +3,15 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
-import { Catalog } from '../../models/catalog.model';
-import { tap, filter, take } from 'rxjs/operators';
 import { User } from '../../models/user.model';
 
 @Component({
-  selector: 'spec-cab',
+  selector: 'spec-cat',
   // styleUrls: ['products.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="section no-pad-bot no-pad-top" id="index-banner" *ngIf="(content$ | async) as content">
-      <div class="card" id="top">
+      <div class="card" [ngClass]="{'discontinued': content.active === false}" id="top">
         <div class="container">
             <a routerLink="../" class="right no-print" queryParamsHandling="merge"><i class="small material-icons">arrow_back</i></a>
             <div id="topic">
@@ -21,6 +19,9 @@ import { User } from '../../models/user.model';
                 <span *ngIf="(version$ | async) as version">
                   <h4 id="topic" *ngIf="version.mat !== 'metal'">Item: {{ content.title | titlecase }}<span *ngIf="version.wr === 'true'"> WR</span><span *ngIf="version.pc"> {{version.pc}}PC</span> <span *ngIf="version.mat">- {{ version.mat | titlecase }}</span></h4>
                   <h4 id="topic" *ngIf="version.mat === 'metal'">Item: {{ content.title }}</h4></span><br>
+            <div class="center red-text text-darken-4" *ngIf="content.active === false">
+              <b>DISCONTINUED / INACTIVE!</b>
+            </div>
                 <i class="timenuser hide-on-med-and-down"><small>Updated:  {{ content.updatedAt }} - {{ content.updatedBy }}</small></i>
             </div>
         </div>

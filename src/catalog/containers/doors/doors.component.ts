@@ -13,7 +13,7 @@ import * as fromStore from '../../store';
     <door-menu class="row doorMenu" (menu)="Menu($event)" [params]="params"></door-menu>
     <div class="row">
       <div class="grid" *ngIf="params.tab; else slab">
-        <category-view *ngFor="let door of doors[params.tab]" [item]="door" class="card">
+        <category-view *ngFor="let door of doors[params.tab]" [item]="door" class="card" [ngClass]="{'discontinued': door.active === false}">
         </category-view>
       </div>
     </div>
@@ -22,7 +22,7 @@ import * as fromStore from '../../store';
     </a>
     <ng-template #slab>
       <div class="grid">
-        <category-view *ngFor="let door of doors.slab" [item]="door" class="card">
+        <category-view *ngFor="let door of doors.slab" [item]="door" class="card" [ngClass]="{'discontinued': door.active === false}">
         </category-view>
       </div>
     </ng-template>
