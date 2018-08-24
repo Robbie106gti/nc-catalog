@@ -26,6 +26,9 @@ import { EditCatComponent } from './edit-form/edit-cat.component';
 import { InputAddComponent } from './edit-form/input-add.component';
 import { MatItemComponent } from './cat-content/mat-item.component';
 import { SwitchMatComponent } from './buttons/switch-mat.component';
+import { SpecRetDirective } from './spec-content/spec.directive';
+import { UidSpecComponent } from './spec-content/uid-spec.component';
+import { UidIwhdComponent } from './spec-content/uid-iwhd.component';
 
 export const components: any[] = [
   CategoryItemComponent,
@@ -54,7 +57,10 @@ export const components: any[] = [
   DoorInfoComponent,
   InputAddComponent,
   MatItemComponent,
-  SwitchMatComponent
+  SwitchMatComponent,
+  SpecRetDirective,
+  UidSpecComponent,
+  UidIwhdComponent
 ];
 
 // export * from ''
@@ -85,3 +91,6 @@ export * from './edit-form/edit-cat.component';
 export * from './edit-form/input-add.component';
 export * from './cat-content/mat-item.component';
 export * from './buttons/switch-mat.component';
+export * from './spec-content/spec.directive';
+export * from './spec-content/uid-spec.component';
+export * from './spec-content/uid-iwhd.component';

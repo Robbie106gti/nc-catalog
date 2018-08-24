@@ -1,0 +1,35 @@
+<div class="card-panel grey lighten-3 bullet">
+  <span class="card-title">
+    <h4>Specifications</h4>
+  </span>
+  <div class="divider"></div>
+  <ul class="flow-text">
+    <li id="dim">
+      <ul>
+        <b>Dimensional adjustments</b>
+        <uid-iwhd [uid]="content.iwhd.increments" [where]="'iwhd'"></uid-iwhd>
+        <uid-iwhd *ngIf="v && content.versions[v].iwhd.depths; else depth" [uid]="content.versions[v].iwhd.depths" [where]="'iwhd'"></uid-iwhd>
+        <uid-iwhd *ngIf="v && content.versions[v].iwhd.heights; else height" [uid]="content.versions[v].iwhd.heights" [where]="'iwhd'"></uid-iwhd>
+        <uid-iwhd *ngIf="v && content.versions[v].iwhd.widths; else width" [uid]="content.versions[v].iwhd.widths" [where]="'iwhd'"></uid-iwhd>
+      </ul>
+    </li>
+  </ul>
+  <ul class="flow-text">
+    <uid-spec *ngFor="let spec of content.specifications" [uid]="spec" [where]="'specifications'"></uid-spec>
+  </ul>
+  <ul class="flow-text" *ngIf="v">
+    <uid-spec *ngFor="let spec of content.versions[v].specifications" [uid]="spec" [where]="'specifications'"></uid-spec>
+  </ul>
+</div>
+
+<ng-template #depth>
+  <uid-iwhd [uid]="content.iwhd.depths" [where]="'iwhd'"></uid-iwhd>
+</ng-template>
+
+<ng-template #width>
+  <uid-iwhd [uid]="content.iwhd.widths" [where]="'iwhd'"></uid-iwhd>
+</ng-template>
+
+<ng-template #height>
+  <uid-iwhd [uid]="content.iwhd.heights" [where]="'iwhd'"></uid-iwhd>
+</ng-template>

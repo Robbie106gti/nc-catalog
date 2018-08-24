@@ -1,4 +1,6 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import * as fromServices from '../../services';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'note-item',
@@ -19,6 +21,11 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
     `
 })
 export class NoteItemComponent {
-  @Input() specials: any;
-  @Input() v: any;
+  @Input() where: string;
+  @Input() uid: string;
+  note$: Observable<any>;
+  constructor(private firestore: fromServices.FirestoreService) {
+    this.note$ = this.firestore.doc$(`/structure/helpers/${this.where}/${this.uid}');
+  }
+
 }
