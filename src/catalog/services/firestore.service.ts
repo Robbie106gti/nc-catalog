@@ -30,6 +30,7 @@ export class FirestoreService {
   /// Get Data
   /// **************
   doc$<T>(ref: DocPredicate<T>): Observable<T> {
+    // console.log(ref);
     return this.doc(ref)
       .snapshotChanges()
       .map(doc => {

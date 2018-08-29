@@ -26,7 +26,7 @@
           <div class="col s12 m6">
             <description-card [content]="content"></description-card>
             <spec-content [specials]="specials" [v]="param.Version" [content]="content"></spec-content>
-            <note-item *ngFor="let note of content.notes" [uid]="note" [where]="notes"></note-item>
+            <note-item *ngFor="let note of content.notes" [uid]="note"></note-item>
           </div>
           <div class="col s12 m6">
             <slider-images [content]="content" [param]="param"></slider-images>

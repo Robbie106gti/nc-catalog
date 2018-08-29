@@ -24,10 +24,6 @@ export class CatalogGuard implements CanActivate {
       tap(loaded => {
         if (!loaded) {
           this.store.dispatch(new fromStore.LoadCatalog());
-          this.store.dispatch({type: fromStore.LOAD_HELPERS_ADDONS});
-          this.store.dispatch({type: fromStore.LOAD_HELPERS_IWHD});
-          this.store.dispatch({type: fromStore.LOAD_HELPERS_NOTES});
-          this.store.dispatch({type: fromStore.LOAD_HELPERS_SPEC});
         }
       }),
       filter(loaded => loaded),
