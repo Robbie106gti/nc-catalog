@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
 import { Observable } from 'rxjs/Observable';
@@ -9,19 +10,21 @@ declare var M: any;
   selector: 'app-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <nav>
+  <nav >
     <div class="nav-wrapper brown darken-3">
       <div class="whiteLine"></div>
-      <a href="https://nickels-catalog.firebaseapp.com/" class="brand-logo">
+      <a href="https://nickels-catalog.firebaseapp.com/" class="brand-logo" *ngIf="(router$ | async) as router">
         <img class="imageLogo" src="/assets/icons/logoNC.png" alt="Nickels Cabinets"/>
-        <span class="headingLogo" *ngIf="(router$ | async) as router"><i class="material-icons">{{ icon | async }}</i> {{ TitleChange(router.state.url) | titlecase }}</span>
+        <span class="headingLogo" ><i class="material-icons">{{ icon | async }}</i> {{ TitleChange(router.state.url) | titlecase }}</span>
       </a>
 
       <ul class="right hide-on-med-and-down">
         <li><a class="dropdown-trigger" data-target="dropdown2"><span>{{ (user$ | async)?.fullName }}</span></a></li>
-        <li><a [routerLink]="['./search']"><i class="material-icons">search</i></a></li>
+        <li >
+        <a [routerLink]="[where, 'search']"><i class="material-icons">search</i></a>
+        </li>
         <!-- Dropdown Trigger -->
-        <li ><a class="dropdown-trigger" data-target="dropdown1"><i class="large material-icons">apps</i></a></li>
+        <li><a class="dropdown-trigger" data-target="dropdown1"><i class="large material-icons">apps</i></a></li>
       </ul>
     </div>
     <!-- Dropdown Structure -->
@@ -80,8 +83,9 @@ export class HeaderComponent implements OnChanges {
   @Input()
   router$: Observable<any>;
   icon: Observable<string>;
+  where: string;
 
-  constructor(private store: Store<fromStore.State>) {
+  constructor(private store: Store<fromStore.State>, private router: Router) {
     document.addEventListener('DOMContentLoaded', function() {
       const options = { hover: true };
       const elems = document.querySelectorAll('.dropdown-trigger');
@@ -114,14 +118,17 @@ export class HeaderComponent implements OnChanges {
     str = str[1] ? str[1] : null;
     switch (str) {
       case 'catalog':
+        this.where = str;
         this.icon = of('collections_bookmark');
         str = 'Catalog';
         break;
       case 'sop':
+        this.where = str;
         this.icon = of('assignment');
         str = 'Standard operating procedure';
         break;
       case 'mds':
+        this.where = str;
         this.icon = of('style');
         str = 'Material Data Sheets';
         break;
@@ -130,6 +137,24 @@ export class HeaderComponent implements OnChanges {
         str = 'Nickels Cabinets';
     }
     return str;
+  }
+
+  Search(str) {
+    str = str.split('/');
+    str = str[1] ? str[1] : null;
+    switch (str) {
+      case 'catalog':
+        this.router.navigate(['catalog', 'search']);
+        break;
+      case 'sop':
+        this.router.navigate(['../sop/search']);
+        break;
+      case 'mds':
+        this.router.navigate(['mds', 'search']);
+        break;
+      default:
+        this.router.navigate(['search']);
+    }
   }
 
   Logout() {

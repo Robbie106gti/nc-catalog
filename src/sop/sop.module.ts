@@ -26,21 +26,10 @@ import * as fromGuards from './guards';
 
 // routes
 export const ROUTES: Routes = [
-  {
-    path: '',
-    canActivate: [fromGuards.CatGuard],
-    component: fromContainers.MainComponent
-  },
-  {
-    path: 'new',
-    canActivate: [fromGuards.CatGuard],
-    component: fromContainers.NewComponent
-  },
-  {
-    path: ':Sop',
-    canActivate: [fromGuards.CatGuard, fromGuards.SopsGuard],
-    component: fromContainers.SubComponent
-  },
+  { path: '', canActivate: [fromGuards.CatGuard], component: fromContainers.MainComponent },
+  { path: 'new', canActivate: [fromGuards.CatGuard], component: fromContainers.NewComponent },
+  { path: 'search', component: fromContainers.SearchComponent, canActivate: [fromGuards.CatGuard], pathMatch: 'full' },
+  { path: ':Sop', canActivate: [fromGuards.CatGuard, fromGuards.SopsGuard], component: fromContainers.SubComponent },
   {
     path: ':Sop/:Item',
     canActivate: [fromGuards.CatGuard, fromGuards.SopsGuard],

@@ -2,7 +2,7 @@ import * as fromSearch from '../actions/search.action';
 
 export interface SearchState {
   results: { [id: string]: any };
-  query: { value: string, category: string };
+  query: { value: string; category: string };
   loaded: boolean;
   loading: boolean;
 }
@@ -11,17 +11,13 @@ export const initialState: SearchState = {
   results: {},
   query: { value: null, category: null },
   loaded: false,
-  loading: false,
+  loading: false
 };
 
-export function reducer(
-  state = initialState,
-  action: fromSearch.SearchAction
-): SearchState {
+export function reducer(state = initialState, action: fromSearch.SearchAction): SearchState {
   switch (action.type) {
-
-    case fromSearch.SEARCH: {
-      const query = action.payload;
+    case fromSearch.SEARCH_SOP: {
+      const query = { value: action.payload, category: null };
       return {
         ...state,
         loading: true,
@@ -29,32 +25,37 @@ export function reducer(
       };
     }
 
-    case fromSearch.SEARCH_SUCCESS: {
+    case fromSearch.SEARCH_SOP_SUCCESS: {
       const search = Object.values(action.payload);
       const query = state.query;
       // tslint:disable-next-line:no-inferrable-types
       let max: number = 10;
       const results = new Array();
       search.forEach(el => {
-          const str = el.code + el.title + el.content;
-          // tslint:disable-next-line:triple-equals
-          if (max == 0) { return; }
-          if (str.toLowerCase().includes(query.value.toLowerCase())) { results.push(el); max--; }
+        const str = el.title;
+        // tslint:disable-next-line:triple-equals
+        if (max == 0) {
+          return;
+        }
+        if (str.toLowerCase().includes(query.value.toLowerCase())) {
+          results.push(el);
+          max--;
+        }
       });
 
       return {
         ...state,
         loading: false,
         loaded: true,
-        results,
+        results
       };
     }
 
-    case fromSearch.SEARCH_FAIL: {
+    case fromSearch.SEARCH_SOP_FAIL: {
       return {
         ...state,
         loading: false,
-        loaded: false,
+        loaded: false
       };
     }
   }
