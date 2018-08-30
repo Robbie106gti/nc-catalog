@@ -1,4 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import * as fromServices from '../../services';
+import { Observable } from 'rxjs/Observable';
 declare var $: any;
 declare var M: any;
 
@@ -6,20 +8,16 @@ declare var M: any;
   selector: 'add-custom',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="card padding unset" *ngIf="specials.addons['main'].length">
+    <div class="card padding unset" *ngIf="content?.addons">
         <h4>Popular Attachments and Applications:</h4>
         <ul class="collapsible popout" data-collapsible="accordion">
-            <li *ngFor="let addon of specials.addons['main']">
-                <div class="collapsible-header"><i class="material-icons">{{ addon.icon }}</i>{{ addon.title }}</div>
-                <div class="collapsible-body">
-                    <span><b>{{ addon.title}}</b> {{ addon.content }}</span>
-                </div>
+            <li *ngFor="let addon of content.addons">
+                <div class="collapsible-header"><addon-title [uid]="addon"></addon-title></div>
+                <div class="collapsible-body"><addon-content [uid]="addon"></addon-content></div>
             </li>
-            <li *ngFor="let addon of specials.addons[v]">
-                <div class="collapsible-header"><i class="material-icons">{{ addon.icon }}</i>{{ addon.title }}</div>
-                <div class="collapsible-body">
-                    <span><b>{{ addon.title}}</b> {{ addon.content }}</span>
-                </div>
+            <li *ngFor="let addon of content.versions[v]?.addons">
+                <div class="collapsible-header"><addon-title [uid]="addon"></addon-title></div>
+                <div class="collapsible-body"><addon-content [uid]="addon"></addon-content></div>
             </li>
             <li>
                 <div class="collapsible-header"><i class="material-icons">import_contacts</i>Bottom cabinet - Application (example)</div>
@@ -32,8 +30,10 @@ declare var M: any;
     `
 })
 export class AddCustomComponent {
-  @Input() specials: any;
-  @Input() v: any;
+  @Input()
+  content: any;
+  @Input()
+  v: any;
 
   constructor() {
     $(document).ready(function() {

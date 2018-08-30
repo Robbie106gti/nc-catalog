@@ -29,6 +29,8 @@ import { SwitchMatComponent } from './buttons/switch-mat.component';
 import { SpecRetDirective } from './spec-content/spec.directive';
 import { UidSpecComponent } from './spec-content/uid-spec.component';
 import { UidIwhdComponent } from './spec-content/uid-iwhd.component';
+import { AddonLiComponent } from './add-custom/addon-li.component';
+import { AddonContentComponent } from './add-custom/addon-content.component';
 
 export const components: any[] = [
   CategoryItemComponent,
@@ -60,7 +62,9 @@ export const components: any[] = [
   SwitchMatComponent,
   SpecRetDirective,
   UidSpecComponent,
-  UidIwhdComponent
+  UidIwhdComponent,
+  AddonLiComponent,
+  AddonContentComponent
 ];
 
 // export * from ''
@@ -94,3 +98,5 @@ export * from './buttons/switch-mat.component';
 export * from './spec-content/spec.directive';
 export * from './spec-content/uid-spec.component';
 export * from './spec-content/uid-iwhd.component';
+export * from './add-custom/addon-li.component';
+export * from './add-custom/addon-content.component';

@@ -7,10 +7,13 @@
     <li id="dim">
       <ul>
         <b>Dimensional adjustments</b>
-        <uid-iwhd [uid]="content.iwhd.increments" [where]="'iwhd'"></uid-iwhd>
-        <uid-iwhd *ngIf="v && content.versions[v].iwhd.depths; else depth" [uid]="content.versions[v].iwhd.depths" [where]="'iwhd'"></uid-iwhd>
-        <uid-iwhd *ngIf="v && content.versions[v].iwhd.heights; else height" [uid]="content.versions[v].iwhd.heights" [where]="'iwhd'"></uid-iwhd>
-        <uid-iwhd *ngIf="v && content.versions[v].iwhd.widths; else width" [uid]="content.versions[v].iwhd.widths" [where]="'iwhd'"></uid-iwhd>
+        <uid-iwhd *ngIf="content.iwhd.increments" [uid]="content.iwhd.increments" [where]="'iwhd'"></uid-iwhd>
+        <uid-iwhd *ngIf="v && content.versions[v].iwhd?.depths; else depth" [uid]="content.versions[v].iwhd.depths"
+          [where]="'iwhd'"></uid-iwhd>
+        <uid-iwhd *ngIf="v && content.versions[v].iwhd?.heights; else height" [uid]="content.versions[v].iwhd.heights"
+          [where]="'iwhd'"></uid-iwhd>
+        <uid-iwhd *ngIf="v && content.versions[v].iwhd?.widths; else width" [uid]="content.versions[v].iwhd.widths"
+          [where]="'iwhd'"></uid-iwhd>
       </ul>
     </li>
   </ul>
@@ -23,13 +26,13 @@
 </div>
 
 <ng-template #depth>
-  <uid-iwhd [uid]="content.iwhd.depths" [where]="'iwhd'"></uid-iwhd>
+  <uid-iwhd *ngIf="content.iwhd.depths" [uid]="content.iwhd.depths" [where]="'iwhd'"></uid-iwhd>
 </ng-template>
 
 <ng-template #width>
-  <uid-iwhd [uid]="content.iwhd.widths" [where]="'iwhd'"></uid-iwhd>
+  <uid-iwhd *ngIf="content.iwhd.widths" [uid]="content.iwhd.widths" [where]="'iwhd'"></uid-iwhd>
 </ng-template>
 
 <ng-template #height>
-  <uid-iwhd [uid]="content.iwhd.heights" [where]="'iwhd'"></uid-iwhd>
+  <uid-iwhd *ngIf="content.iwhd.heights" [uid]="content.iwhd.heights" [where]="'iwhd'"></uid-iwhd>
 </ng-template>

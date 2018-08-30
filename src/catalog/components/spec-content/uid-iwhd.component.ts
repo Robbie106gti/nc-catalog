@@ -19,6 +19,8 @@ export class UidIwhdComponent implements OnInit {
 
   constructor(private firestore: fromServices.FirestoreService) {}
   ngOnInit() {
-    this.spec$ = this.firestore.doc$(`/structure/helpers/${this.where}/${this.uid}`);
+    if (this.uid && this.uid !== undefined) {
+      this.spec$ = this.firestore.doc$(`/structure/helpers/${this.where}/${this.uid}`);
+    }
   }
 }

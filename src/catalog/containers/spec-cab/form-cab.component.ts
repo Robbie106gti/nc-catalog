@@ -29,9 +29,12 @@ import { of } from 'rxjs/observable/of';
 })
 export class FormCabComponent {
   editing: Boolean;
-  @Input() content: any;
-  @Input() user: any;
-  @Output() edit = new EventEmitter<boolean>();
+  @Input()
+  content: any;
+  @Input()
+  user: any;
+  @Output()
+  edit = new EventEmitter<boolean>();
 
   param$: Observable<any>;
   results$: Observable<any>;
@@ -51,6 +54,10 @@ export class FormCabComponent {
 
   Edit(event) {
     this.store.dispatch({ type: fromStore.CREATE_EDIT_CAB, payload: event });
+    this.store.dispatch({ type: fromStore.LOAD_HELPERS_ADDONS });
+    this.store.dispatch({ type: fromStore.LOAD_HELPERS_IWHD });
+    this.store.dispatch({ type: fromStore.LOAD_HELPERS_NOTES });
+    this.store.dispatch({ type: fromStore.LOAD_HELPERS_SPEC });
     this.editing = true;
   }
 

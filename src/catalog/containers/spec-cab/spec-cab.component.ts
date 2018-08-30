@@ -12,10 +12,6 @@ import { User } from '../../models/user.model';
 })
 export class SpecCabComponent implements OnInit {
   content: any;
-  specs: any;
-  iwhd: any;
-  notes: any;
-  addons: any;
   user$: Observable<User>;
   param$: Observable<any>;
   specials$: Observable<any>;
@@ -43,21 +39,5 @@ export class SpecCabComponent implements OnInit {
       .select(fromStore.getSelectedCabinetItem)
       .take(count)
       .subscribe(c => (this.content = c));
-    this.store
-      .select(fromStore.getCabSpecs)
-      .take(count)
-      .subscribe(s => (this.specs = s));
-    this.store
-      .select(fromStore.getCabIWHDs)
-      .take(count)
-      .subscribe(i => (this.iwhd = i));
-    this.store
-      .select(fromStore.getCabNotes)
-      .take(count)
-      .subscribe(n => (this.notes = n));
-    this.store
-      .select(fromStore.getCabAddons)
-      .take(count)
-      .subscribe(a => (this.addons = a));
   }
 }

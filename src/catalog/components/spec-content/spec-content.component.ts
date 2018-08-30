@@ -9,7 +9,5 @@ export class SpecContentComponent {
   @Input()
   content: any;
   @Input()
-  specials: any;
-  @Input()
   v: string;
 }

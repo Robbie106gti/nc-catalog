@@ -7,7 +7,8 @@
             <a class="brown-text" [ngClass]="{ active: id === 'main' }" (click)="setId('main')">{{content.title}}</a>
           </li>
           <li class="tab col" *ngFor="let v of content.heights">
-            <a class="brown-text" [ngClass]="{ active: id === v.id }" (click)="setId(v.id)">{{ v.title }}{{ v.version || "\""}}</a>
+            <a class="brown-text" [ngClass]="{ active: id === v.id }" (click)="setId(v.id)">{{ v.title }}{{ v.version
+              || "\""}}</a>
           </li>
         </ul>
         <i class="material-icons tool-item small" (click)="Closed()">close</i>
@@ -24,7 +25,7 @@
           <ul>
             <b>Dimensional</b>
             <li class="second" *ngFor="let i of specials.iwhd['main']">
-              <i class="material-icons">tune</i> {{i.title}} - {{i.content}}
+              <i class="material-icons">tune</i> {{i?.title}} - {{i?.content}}
               <a (click)="Remove(i)" class="secondary-content">
                 <i class="material-icons red-text pointer tiny">clear</i>
               </a>
@@ -63,7 +64,8 @@
         </div>
         <div class="col s12 m6">
           <div class="input-field">
-            <textarea id="description" class="materialize-textarea" (keydown.enter)="onDes($event)" formControlName="description" [(ngModel)]="content.description"></textarea>
+            <textarea id="description" class="materialize-textarea" (keydown.enter)="onDes($event)" formControlName="description"
+              [(ngModel)]="content.description"></textarea>
             <label for="description">Description</label>
           </div>
           <a class="waves-effect waves-light btn-small" (click)="setItem('dimensions')">
