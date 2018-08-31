@@ -13,7 +13,7 @@ declare var M: any;
   <nav >
     <div class="nav-wrapper brown darken-3">
       <div class="whiteLine"></div>
-      <a href="https://nickels-catalog.firebaseapp.com/" class="brand-logo" *ngIf="(router$ | async) as router">
+      <a [routerLink]="['..']" class="brand-logo" *ngIf="(router$ | async) as router">
         <img class="imageLogo" src="/assets/icons/logoNC.png" alt="Nickels Cabinets"/>
         <span class="headingLogo" ><i class="material-icons">{{ icon | async }}</i> {{ TitleChange(router.state.url) | titlecase }}</span>
       </a>
@@ -34,12 +34,12 @@ declare var M: any;
           <i class="material-icons blue-grey-text">collections_bookmark</i>
         </a>
       </li>
-      <li *ngIf="(user$ | async)?.roles?.admin">
+      <li *ngIf="(user$ | async)?.roles?.nickels">
         <a class="right tooltipped" data-position="bottom" data-tooltip="(SOP) Standard Operating Procedure" [routerLink]="['./sop']">
           <i class="material-icons red-text">assignment</i>
         </a>
       </li>
-      <li *ngIf="(user$ | async)?.roles?.admin">
+      <li *ngIf="(user$ | async)?.roles?.nickels">
         <a class="right tooltipped" data-position="bottom" data-tooltip="(MDS) Material Data Sheet" [routerLink]="['./mds']">
           <i class="material-icons orange-text">style</i>
         </a>

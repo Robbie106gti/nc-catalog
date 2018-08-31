@@ -29,7 +29,7 @@ export function reducer(state = initialState, action: fromSearch.SearchAction): 
       const search = Object.values(action.payload);
       const query = state.query;
       // tslint:disable-next-line:no-inferrable-types
-      let max: number = 10;
+      let max: number = 25;
       const results = new Array();
       search.forEach(el => {
         if (el.search) {

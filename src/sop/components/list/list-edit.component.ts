@@ -8,6 +8,13 @@ declare var M: any;
   changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     `
+      .thumb {
+        max-width: 3rem !important;
+        max-height: 2.5rem !important;
+        position: relative !important;
+        top: -0.6rem !important;
+        float: right;
+      }
       .ddIcon {
         position: relative;
         display: inline-block;
