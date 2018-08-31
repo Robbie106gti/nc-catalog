@@ -32,14 +32,18 @@ export function reducer(state = initialState, action: fromSearch.SearchAction): 
       let max: number = 10;
       const results = new Array();
       search.forEach(el => {
-        const str = el.title;
-        // tslint:disable-next-line:triple-equals
-        if (max == 0) {
-          return;
-        }
-        if (str.toLowerCase().includes(query.value.toLowerCase())) {
-          results.push(el);
-          max--;
+        if (el.search) {
+          el.search.map((item, index) => {
+            const str = item.title;
+            // tslint:disable-next-line:triple-equals
+            if (max == 0) {
+              return;
+            }
+            if (str.toLowerCase().includes(query.value.toLowerCase())) {
+              results.push(item);
+              max--;
+            }
+          });
         }
       });
 

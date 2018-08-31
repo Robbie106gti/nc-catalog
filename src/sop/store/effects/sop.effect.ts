@@ -24,10 +24,25 @@ export class SopEffects {
   load_sops$ = this.actions$.ofType(sopActions.LOAD_SOPS).pipe(
     switchMap((action: Payload) => {
       // console.log(action);
+      const user = this.checkUser();
+      const search = {
+        items: new Array(),
+        length: 0,
+        item: 0
+      };
       this.store.dispatch({ type: fromStore.UPDATE_CAT_LOADING, payload: action.payload });
       return this.firestore.colWithIds$(`sops/${action.payload.id}/entities`).pipe(
         map(entities => {
-          const item = entities.map(b => {
+          search.length = entities.length;
+          const item = entities.map((b, index) => {
+            if (user === 'Robert Leeuwerink') {
+              search.item = index + 1;
+              search.items.push(this.updateSearch({ ...b, sub: action.payload.title, idCat: action.payload.id }));
+              if (search.item === search.length) {
+                const data = { search: search.items, updatedBy: user };
+                this.firestore.update(`sops/${action.payload.id}`, data);
+              }
+            }
             return { ...b, sub: action.payload.title, idCat: action.payload.id };
           });
           this.store.dispatch({ type: fromStore.UPDATE_CAT_LOADED, payload: action.payload });
@@ -235,5 +250,36 @@ export class SopEffects {
     tables.str = tables.cleaned.join('');
     // console.log(tables);
     return tables.str;
+  }
+
+  checkUser() {
+    let user = '';
+    this.store
+      .select(fromStore.getUserName)
+      .take(1)
+      .subscribe(u => (user = u));
+    return user;
+  }
+
+  updateSearch(item) {
+    const content = new Array();
+    // ...b, sub: action.payload.title, idCat: action.payload.id
+    if (item.listTitle) content.push(item.listTitle);
+    if (item.images) {
+      item.images.map(image => (image.title ? content.push(image.title) : ''));
+    }
+    if (item.description) {
+      content.push(item.description.description);
+      content.push(item.description.title);
+    }
+
+    return {
+      title: item.title,
+      id: item.id,
+      idCat: item.idCat,
+      image: item.image,
+      sub: item.sub,
+      content
+    };
   }
 }
