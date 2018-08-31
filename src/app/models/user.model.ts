@@ -13,6 +13,9 @@ export interface User {
   login?: LastloginWQ;
   address?: Address;
   status?: string;
+  image?: string;
+  ext?: string;
+  position?: string;
 }
 
 export interface Roles {

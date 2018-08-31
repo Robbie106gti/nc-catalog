@@ -2,7 +2,7 @@ export const peopleArray = [
   {
     fname: 'Scott',
     lname: 'Alkema',
-    image: 'http://www.nickelscabinets.com/images/team/scott.jpg',
+    image: 'https://webquoin.com/catalog/images/team/scott.jpg',
     position: 'custom millwork engineer',
     email: 'scott@nickelscabinets.com',
     phone: '228'
@@ -10,7 +10,7 @@ export const peopleArray = [
   {
     fname: 'Leo',
     lname: 'Almeida',
-    image: 'http://www.nickelscabinets.com/images/team/leo.jpg',
+    image: 'https://webquoin.com/catalog/images/team/leo.jpg',
     position: 'breakout teamleader',
     email: 'breakout@nickelscabinets.com',
     phone: '238'
@@ -18,7 +18,7 @@ export const peopleArray = [
   {
     fname: 'Ken',
     lname: 'Baerg',
-    image: 'http://www.nickelscabinets.com/images/team/ken.jpg',
+    image: 'https://webquoin.com/catalog/images/team/ken.jpg',
     position: 'engineering team leader',
     email: 'ken@nickelscabinets.com',
     phone: '237'
@@ -26,7 +26,7 @@ export const peopleArray = [
   {
     fname: 'Kal',
     lname: 'Bopari',
-    image: 'http://www.nickelscabinets.com/images/team/kal.jpg',
+    image: 'https://webquoin.com/catalog/images/team/kal.jpg',
     position: 'doors lead hand',
     email: 'doors@nickelscabinets.com',
     phone: '252'
@@ -34,7 +34,7 @@ export const peopleArray = [
   {
     fname: 'David',
     lname: 'Chan',
-    image: 'http://www.nickelscabinets.com/images/team/dchan.jpg',
+    image: 'https://webquoin.com/catalog/images/team/dchan.jpg',
     position: 'purchasing',
     email: 'purchasing@nickelscabinets.com',
     phone: '235'
@@ -42,7 +42,7 @@ export const peopleArray = [
   {
     fname: 'Arion',
     lname: 'Choi',
-    image: 'http://www.nickelscabinets.com/images/team/arion.jpg',
+    image: 'https://webquoin.com/catalog/images/team/arion.jpg',
     position: 'custom millwork engineer',
     email: 'arion@nickelscabinets.com',
     phone: '225'
@@ -50,7 +50,7 @@ export const peopleArray = [
   {
     fname: 'Giuliano Correa',
     lname: 'Cristofaro',
-    image: 'http://www.nickelscabinets.com/images/team/Giuliano.jpg',
+    image: 'https://webquoin.com/catalog/images/team/Giuliano.jpg',
     position: 'finishing team coordinator',
     email: 'finishing@nickelscabinets.com',
     phone: '226'
@@ -58,7 +58,7 @@ export const peopleArray = [
   {
     fname: 'Chris',
     lname: 'Czapiewski',
-    image: 'http://www.nickelscabinets.com/images/team/chris.jpg',
+    image: 'https://webquoin.com/catalog/images/team/chris.jpg',
     position: 'engineer',
     email: 'chris@nickelscabinets.com',
     phone: '232'
@@ -66,7 +66,7 @@ export const peopleArray = [
   {
     fname: 'Khin',
     lname: 'Dang',
-    image: 'http://www.nickelscabinets.com/images/team/khin.jpg',
+    image: 'https://webquoin.com/catalog/images/team/khin.jpg',
     position: 'drawer assembly lead hand',
     email: '',
     phone: ''
@@ -74,7 +74,7 @@ export const peopleArray = [
   {
     fname: 'Ted',
     lname: 'Federau',
-    image: 'http://www.nickelscabinets.com/images/team/ted.jpg',
+    image: 'https://webquoin.com/catalog/images/team/ted.jpg',
     position: 'general manager',
     email: 'ted@nickelscabinets.com',
     phone: '236'
@@ -82,7 +82,7 @@ export const peopleArray = [
   {
     fname: 'Tony',
     lname: 'Flores',
-    image: 'http://www.nickelscabinets.com/images/team/tony.jpg',
+    image: 'https://webquoin.com/catalog/images/team/tony.jpg',
     position: 'spray booth coordinator',
     email: '',
     phone: ''
@@ -90,7 +90,7 @@ export const peopleArray = [
   {
     fname: 'Keith J.',
     lname: 'Grubaugh',
-    image: 'http://www.nickelscabinets.com/images/team/keith.jpg',
+    image: 'https://webquoin.com/catalog/images/team/keith.jpg',
     position: 'director of sales and marketing',
     email: 'keith@nickelscabinets.com',
     phone: '241'
@@ -98,7 +98,7 @@ export const peopleArray = [
   {
     fname: 'Harry',
     lname: 'Janzen',
-    image: 'http://www.nickelscabinets.com/images/team/harry.jpg',
+    image: 'https://webquoin.com/catalog/images/team/harry.jpg',
     position: 'lean team leader',
     email: 'harry@nickelscabinets.com',
     phone: '242'
@@ -106,7 +106,7 @@ export const peopleArray = [
   {
     fname: 'Stanimir',
     lname: 'Kolev',
-    image: 'http://www.nickelscabinets.com/images/team/stan.jpg',
+    image: 'https://webquoin.com/catalog/images/team/stan.jpg',
     position: 'engineer',
     email: 'stan@nickelscabinets.com',
     phone: '223'
@@ -114,7 +114,7 @@ export const peopleArray = [
   {
     fname: 'Tina',
     lname: 'Krumhardt',
-    image: 'http://www.nickelscabinets.com/images/team/tina.jpg',
+    image: 'https://webquoin.com/catalog/images/team/tina.jpg',
     position: 'designer support',
     email: 'tina@nickelscabinets.com',
     phone: '249'
@@ -122,7 +122,7 @@ export const peopleArray = [
   {
     fname: 'Robert',
     lname: 'Leeuwerink',
-    image: 'http://www.nickelscabinets.com/images/team/rob.jpg',
+    image: 'https://webquoin.com/catalog/images/team/rob.jpg',
     position: 'graphics/web designer',
     email: 'rob@nickelscabinets.com',
     phone: '234'
@@ -130,7 +130,7 @@ export const peopleArray = [
   {
     fname: 'Dan',
     lname: 'Lenz',
-    image: 'http://www.nickelscabinets.com/images/team/dan.jpg',
+    image: 'https://webquoin.com/catalog/images/team/dan.jpg',
     position: 'custom millwork lead hand',
     email: '',
     phone: ''
@@ -138,7 +138,7 @@ export const peopleArray = [
   {
     fname: 'Danny',
     lname: 'Lenz',
-    image: 'http://www.nickelscabinets.com/images/team/danny.jpg',
+    image: 'https://webquoin.com/catalog/images/team/danny.jpg',
     position: 'designer support team leader',
     email: 'danny@nickelscabinets.com',
     phone: '233'
@@ -146,7 +146,7 @@ export const peopleArray = [
   {
     fname: 'Sophia',
     lname: 'Li',
-    image: 'http://www.nickelscabinets.com/images/team/sophia.jpg',
+    image: 'https://webquoin.com/catalog/images/team/sophia.jpg',
     position: 'accountant',
     email: 'sophia@nickelscabinets.com',
     phone: '229'
@@ -154,7 +154,7 @@ export const peopleArray = [
   {
     fname: 'Megan',
     lname: 'McCrea',
-    image: 'http://www.nickelscabinets.com/images/team/megan.jpg',
+    image: 'https://webquoin.com/catalog/images/team/megan.jpg',
     position: 'dealer relations',
     email: 'megan@nickelscabinets.com',
     phone: '221'
@@ -162,7 +162,7 @@ export const peopleArray = [
   {
     fname: 'Benny',
     lname: 'Ng',
-    image: 'http://www.nickelscabinets.com/images/team/benny.jpg',
+    image: 'https://webquoin.com/catalog/images/team/benny.jpg',
     position: 'engineer',
     email: 'benny@nickelscabinets.com',
     phone: '',
@@ -171,7 +171,7 @@ export const peopleArray = [
   {
     fname: 'Dennis',
     lname: 'Ng',
-    image: 'http://www.nickelscabinets.com/images/team/dennis.jpg',
+    image: 'https://webquoin.com/catalog/images/team/dennis.jpg',
     position: 'millwork / service lead hand',
     email: '',
     phone: ''
@@ -179,7 +179,7 @@ export const peopleArray = [
   {
     fname: 'Dieter',
     lname: 'Nickel',
-    image: 'http://www.nickelscabinets.com/images/team/dieter.jpg',
+    image: 'https://webquoin.com/catalog/images/team/dieter.jpg',
     position: 'president',
     email: 'dieter@nickelscabinets.com',
     phone: '230'
@@ -187,7 +187,7 @@ export const peopleArray = [
   {
     fname: 'David',
     lname: 'Richer',
-    image: 'http://www.nickelscabinets.com/images/team/davidr.jpg',
+    image: 'https://webquoin.com/catalog/images/team/davidr.jpg',
     position: 'office manager',
     email: 'dricher@nickelscabinets.com',
     phone: '231'
@@ -195,7 +195,7 @@ export const peopleArray = [
   {
     fname: 'Derek',
     lname: 'Stewart',
-    image: 'http://www.nickelscabinets.com/images/team/Derek%20Stewart.JPG',
+    image: 'https://webquoin.com/catalog/images/team/Derek%20Stewart.JPG',
     position: 'shipping team leader',
     email: 'shipping@nickelscabinets.com',
     phone: '243'
@@ -203,7 +203,7 @@ export const peopleArray = [
   {
     fname: 'Miyuki',
     lname: 'Tai',
-    image: 'http://www.nickelscabinets.com/images/team/miyuki.jpg',
+    image: 'https://webquoin.com/catalog/images/team/miyuki.jpg',
     position: 'accounts payable / receivable',
     email: 'accounting@nickelscabinets.com',
     phone: '224'
@@ -211,7 +211,7 @@ export const peopleArray = [
   {
     fname: 'Sukhi',
     lname: 'Uppal',
-    image: 'http://www.nickelscabinets.com/images/team/sukhi.jpg',
+    image: 'https://webquoin.com/catalog/images/team/sukhi.jpg',
     position: 'final assembly lead hand',
     email: '',
     phone: ''
@@ -219,7 +219,7 @@ export const peopleArray = [
   {
     fname: 'Sven',
     lname: 'Weller',
-    image: 'http://www.nickelscabinets.com/images/team/sven.jpg',
+    image: 'https://webquoin.com/catalog/images/team/sven.jpg',
     position: 'millwright',
     email: 'sven@nickelscabinets.com',
     phone: '242'
@@ -227,7 +227,7 @@ export const peopleArray = [
   {
     fname: 'Garett',
     lname: 'White',
-    image: 'http://www.nickelscabinets.com/images/team/garett.jpg',
+    image: 'https://webquoin.com/catalog/images/team/garett.jpg',
     position: 'pre-assembly team leader',
     email: 'garett@nickelscabinets.com',
     phone: '240'
@@ -235,7 +235,7 @@ export const peopleArray = [
   {
     fname: 'Ide',
     lname: 'Wong',
-    image: 'http://www.nickelscabinets.com/images/team/Wong-Ide.jpg',
+    image: 'https://webquoin.com/catalog/images/team/Wong-Ide.jpg',
     position: 'designer support',
     email: 'ide@nickelscabinets.com',
     phone: '244'
@@ -243,7 +243,7 @@ export const peopleArray = [
   {
     fname: 'Leo',
     lname: 'Wong',
-    image: 'http://www.nickelscabinets.com/images/team/leo.jpg',
+    image: 'https://webquoin.com/catalog/images/team/leo.jpg',
     position: 'engineer',
     email: 'leo@nickelscabinets.com',
     phone: '222'
@@ -251,7 +251,7 @@ export const peopleArray = [
   {
     fname: 'Elly',
     lname: 'Federau',
-    image: 'http://www.nickelscabinets.com/images/team/elly.jpg',
+    image: 'https://webquoin.com/catalog/images/team/elly.jpg',
     position: 'dealer service',
     email: 'elly@nickelscabinets.com',
     phone: ''

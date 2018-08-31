@@ -1,6 +1,6 @@
 import * as fromLogin from '../actions/login.action';
-import { Login } from '../../models/login.model';
-import { User, WQUser, Favorites, Notes } from '../../models/user.model';
+import { User, Favorites, Notes } from '../../models/user.model';
+import * as usersExtras from '../../shared/user/images';
 
 export interface UserState {
   data: User;
@@ -56,7 +56,17 @@ export function reducer(state = initialState, action: fromLogin.LoginAction): Us
     }
 
     case fromLogin.LOAD_LOGIN_FB_SUCCESS: {
-      const user = action.payload;
+      let user = action.payload;
+      if (user.fullName && usersExtras) {
+        const image = usersExtras.peopleArray.filter(u => {
+          const fullname = `${u.fname} ${u.lname}`;
+          const img = fullname === user.fullName ? u : null;
+          return img;
+        });
+        if (image.length >= 1) {
+          user = { ...user, image: image[0].image, ext: image[0].phone, position: image[0].position };
+        }
+      }
 
       return { ...state, loading: false, loaded: true, firestore: true, data: user };
     }

@@ -10,8 +10,7 @@ import { Observable } from 'rxjs/Observable';
 <div class="container" *ngIf="(user$ | async ) as user">
   <div class="card horizontal">
     <div class="card-image">
-      <img *ngIf="user.image" src="https://lorempixel.com/100/190/nature/6">
-      <i class="material-icons large" *ngIf="!user.image">assignment_ind</i>
+      <img *ngIf="user.image; else img" [src]="user.image">
     </div>
     <div class="card-stacked">
       <div class="card-content row">
@@ -83,6 +82,9 @@ import { Observable } from 'rxjs/Observable';
   </div>
   </div>
 </div>
+<ng-template #img>
+<i class="material-icons large" >assignment_ind</i>
+</ng-template>
   `
 })
 export class ProfileComponent {
