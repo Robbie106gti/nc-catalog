@@ -98,7 +98,7 @@ export class ListEditComponent {
 
   Edit(li) {
     this.edit = li;
-    console.log(this.edit);
+    // console.log(this.edit);
     this.list = this.list.filter(item => item !== li);
     setTimeout(this.textfields(), 1000);
   }

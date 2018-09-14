@@ -109,32 +109,38 @@ export class SopEffects {
         map(sop => {
           // console.log(action.payload, sop);
           let value;
+          let old;
           let key;
           const user = action.payload.fullName;
           switch (action.payload.action) {
             case 'Description': {
               key = action.payload.action.toLowerCase();
               value = { [key]: action.payload.edit, title: action.payload.newTitle };
+              old = { [`old_${key}`]: sop[key] ? sop[key] : null, old_title: sop.title };
               break;
             }
             case 'List': {
               key = action.payload.action.toLowerCase();
               value = action.payload.list;
+              old = { [`old_${key}`]: sop[key] ? sop[key] : null };
               break;
             }
             case 'ListTitle': {
               key = 'listTitle';
               value = action.payload.listTitle;
+              old = { [`old_${key}`]: sop[key] ? sop[key] : null };
               break;
             }
             case 'Table': {
               key = 'table';
               value = action.payload.table;
+              old = { [`old_${key}`]: sop[key] ? sop[key] : null };
               break;
             }
             case 'Notes': {
               key = action.payload.action.toLowerCase();
               value = action.payload.notes;
+              old = { [`old_${key}`]: sop[key] ? sop[key] : null };
               break;
             }
             case 'Images': {
@@ -146,6 +152,7 @@ export class SopEffects {
               key = action.payload.action.toLowerCase();
               value = action.payload.value;
               value = this.cleanupHtml(value);
+              old = { [`old_${key}`]: sop[key] ? sop[key] : null };
               break;
             }
             case 'imageimportant': {
@@ -155,6 +162,7 @@ export class SopEffects {
             }
           }
           // console.log(sop.idCat, sop.id, key, value);
+          this.firestore.add(`sops/${sop.idCat}/entities/${sop.id}/histroy`, { [key]: value, changesBy: user, ...old });
           this.firestore.update(`sops/${sop.idCat}/entities/${sop.id}`, { [key]: value, updatedBy: user });
           return new fromStore.AddToSopSuccess({ [key]: value, edit: sop, user });
         }),

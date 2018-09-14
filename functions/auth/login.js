@@ -158,7 +158,7 @@ function authenticate(username, password) {
   return new Promise((resolve, reject) => {
     var options = {
       method: 'POST',
-      url: 'http://www.testquoin.com/API/Authenticate',
+      url: 'https://www.webquoin.com/API/Authenticate',
       headers: {
         'Cache-Control': 'no-cache',
         'Content-Type': 'application/x-www-form-urlencoded'
