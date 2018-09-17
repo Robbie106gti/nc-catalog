@@ -29,6 +29,7 @@
       <note *ngIf="sop.notes" [notes]="sop.notes"></note>
     </div>
     <image-card *ngIf="sop.image && sop.imageimportant !== false" class="col s12 m6" [card]="{title: sop.title, image: sop.image, size: '' }"></image-card>
+    <pdfs-table class="col s12 m6" *ngIf="sop.pdfs" [pdfs]="sop.pdfs"></pdfs-table>
     <image-card *ngFor="let image of sop.images" class="col" [ngClass]="{
         's4 m3 l2': !image.size || image.size === 'default',
         's3 m2 l1': image.size === 'small',

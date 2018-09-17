@@ -25,6 +25,7 @@ import { TableComponent } from './csvtojson/table.component';
 import { HtmlToJsonComponent } from './htmltojson/htmltojson.component';
 import { ListReorderComponent } from './reorder/list-reorder.component';
 import { ResultsCardComponent } from './card/results-card.component';
+import { PdfsTableComponent } from './pdfs/pdfs-table.component';
 
 export const components: any[] = [
   EditBtnComponent,
@@ -53,7 +54,8 @@ export const components: any[] = [
   TableComponent,
   HtmlToJsonComponent,
   ListReorderComponent,
-  ResultsCardComponent
+  ResultsCardComponent,
+  PdfsTableComponent
 ];
 
 // export * from ''
@@ -84,3 +86,4 @@ export * from './csvtojson/table.component';
 export * from './htmltojson/htmltojson.component';
 export * from './reorder/list-reorder.component';
 export * from './card/results-card.component';
+export * from './pdfs/pdfs-table.component';
