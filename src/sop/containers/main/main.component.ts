@@ -1,26 +1,20 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
 import { of } from 'rxjs/observable/of';
 
 @Component({
-selector: 'main',
-changeDetection: ChangeDetectionStrategy.OnPush,
-template: `
-<modal *ngIf="add === true" [modal]="modal" [url]="(url$ | async)" [pct]="(pct$ | async)" [user]="(user$ | async)" (close)="Close($event)" (add)="New($event)" (file)="Image($event)" (edited)="Edited($event)"></modal>
+  selector: 'main',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `<div *ngIf="user$ | async as user">
+<modal *ngIf="add === true" [modal]="modal" [url]="(url$ | async)" [pct]="(pct$ | async)" [user]="user" (close)="Close($event)" (add)="New($event)" (file)="Image($event)" (edited)="Edited($event)"></modal>
 <div class="row grid" *ngIf="(cats$ | async) as cards">
-  <card class="card" *ngFor="let card of cards" [card]="card" (edit)="Edit($event)"></card>
+  <card class="card" *ngFor="let card of cards" [card]="card" [user]="user" (edit)="Edit($event)"></card>
 </div>
-<add-btn (add)="Add($event)"></add-btn>
-
-`,
+<add-btn *ngIf="user.roles.editer" (add)="Add($event)"></add-btn>
+</div>
+`
 })
 export class MainComponent {
   add: boolean;
@@ -33,7 +27,7 @@ export class MainComponent {
   file: any;
 
   constructor(private store: Store<fromStore.SopsState>) {
-    this.user$ = this.store.select(fromStore.getUserName);
+    this.user$ = this.store.select(fromStore.getUserData);
     this.cats$ = this.store.select(fromStore.getCats);
     this.url$ = this.store.select(fromStore.getUploadUrl);
     this.pct$ = this.store.select(fromStore.getUploadPercentage);
@@ -43,18 +37,20 @@ export class MainComponent {
     console.log(event);
     this.add = true;
     this.modal = { title: 'Edit Category', action: event.title, edit: event };
-    this.store.dispatch({type: fromStore.UPLOAD_SUCCESS, payload: { bytesTransferred: 1100, totalBytes: 1100 }});
-    this.store.dispatch({type: fromStore.UPLOAD_URL_SUCCESS, payload: { url: event.image }});
+    this.store.dispatch({ type: fromStore.UPLOAD_SUCCESS, payload: { bytesTransferred: 1100, totalBytes: 1100 } });
+    this.store.dispatch({ type: fromStore.UPLOAD_URL_SUCCESS, payload: { url: event.image } });
   }
 
   Add(event) {
     this.add = event;
     this.modal = { title: 'Add a Category', action: '' };
-    this.store.dispatch({type: fromStore.UPLOAD_SUCCESS, payload: { bytesTransferred: 0, totalBytes: 1100 }});
-    this.store.dispatch({type: fromStore.UPLOAD_URL_SUCCESS, payload: { url: '' }});
+    this.store.dispatch({ type: fromStore.UPLOAD_SUCCESS, payload: { bytesTransferred: 0, totalBytes: 1100 } });
+    this.store.dispatch({ type: fromStore.UPLOAD_URL_SUCCESS, payload: { url: '' } });
   }
 
-  Close(event) { this.add = event; }
+  Close(event) {
+    this.add = event;
+  }
   Edited(event) {
     this.store.dispatch({ type: fromStore.UPDATE_CAT_TI, payload: event });
     this.add = false;
@@ -67,7 +63,7 @@ export class MainComponent {
   }
 
   Image(event) {
-    event = { ...event, dir: '/main'};
+    event = { ...event, dir: '/main' };
     this.file = event.file;
     this.store.dispatch(new fromStore.Upload(event));
   }

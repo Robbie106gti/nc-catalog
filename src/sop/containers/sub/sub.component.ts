@@ -1,18 +1,12 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
 
 @Component({
-selector: 'sub',
-changeDetection: ChangeDetectionStrategy.OnPush,
-template: `
+  selector: 'sub',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
 <div *ngIf="(cat$ | async ) as cat">
 <modal *ngIf="add === true" [modal]="modal"
 [url]="(url$ | async)" [pct]="(pct$ | async)" [user]="(user$ | async)"
@@ -29,26 +23,26 @@ template: `
 </div>
 
 <div class="row grid" *ngIf="(cats$ | async) as cards">
-  <card class="card" *ngFor="let card of cards" [card]="card" (edit)="Edit($event)"></card>
+  <card class="card" *ngFor="let card of cards" [card]="card" [user]="(user$ | async)" (edit)="Edit($event)"></card>
 </div>
 
-<add-btn (add)="Add($event, cat)"></add-btn>
+<add-btn *ngIf="(user$ | async).roles.editor" (add)="Add($event, cat)"></add-btn>
 </div>
-`,
+`
 })
 export class SubComponent {
   modal: any;
   add: boolean;
   url$: Observable<string>;
   pct$: Observable<string>;
-  user$: Observable<string>;
+  user$: Observable<any>;
   cats$: Observable<any>;
   cat$: Observable<any>;
 
   file: any;
 
   constructor(private store: Store<fromStore.SopsState>) {
-    this.user$ = this.store.select(fromStore.getUserName);
+    this.user$ = this.store.select(fromStore.getUserData);
     this.cats$ = this.store.select(fromStore.getSelectedSops);
     this.url$ = this.store.select(fromStore.getUploadUrl);
     this.pct$ = this.store.select(fromStore.getUploadPercentage);
@@ -58,8 +52,8 @@ export class SubComponent {
   Edit(event) {
     this.add = true;
     this.modal = { title: 'Edit Category', action: event.title, edit: event };
-    this.store.dispatch({type: fromStore.UPLOAD_SUCCESS, payload: { bytesTransferred: 1100, totalBytes: 1100 }});
-    this.store.dispatch({type: fromStore.UPLOAD_URL_SUCCESS, payload: { url: event.image }});
+    this.store.dispatch({ type: fromStore.UPLOAD_SUCCESS, payload: { bytesTransferred: 1100, totalBytes: 1100 } });
+    this.store.dispatch({ type: fromStore.UPLOAD_URL_SUCCESS, payload: { url: event.image } });
     console.log(event);
   }
   Edited(event) {
@@ -86,7 +80,7 @@ export class SubComponent {
 
   Image(event) {
     console.log(event);
-    event = { ...event, dir: `/${event.edit.title}`};
+    event = { ...event, dir: `/${event.edit.title}` };
     this.file = event.file;
     this.store.dispatch(new fromStore.Upload(event));
   }

@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-selector: 'card',
-changeDetection: ChangeDetectionStrategy.OnPush,
-template: `
-<edit-btn class="tool-item" (edit)="Edit($event)"></edit-btn>
+  selector: 'card',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+<edit-btn *ngIf="user.roles.editor" class="tool-item" (edit)="Edit($event)"></edit-btn>
 <a [routerLink]="[card.title]">
   <div class="card-image of-hidden">
     <img [src]="card.image" [alt]="card.title" class="responsive-img image20 activator">
@@ -16,8 +16,12 @@ template: `
 `
 })
 export class CardComponent {
-  @Input() card: any;
-  @Output() edit = new EventEmitter<any>();
+  @Input()
+  card: any;
+  @Input()
+  user: any;
+  @Output()
+  edit = new EventEmitter<any>();
 
   Edit(event) {
     this.edit.emit({ ...this.card, titleOld: this.card.title });

@@ -254,6 +254,14 @@ export const peopleArray = [
     image: 'https://webquoin.com/catalog/images/team/elly.jpg',
     position: 'dealer service',
     email: 'elly@nickelscabinets.com',
-    phone: ''
+    phone: '247'
+  },
+  {
+    fname: 'Ito',
+    lname: 'Alexandre',
+    image: 'https://webquoin.com/catalog/images/team/ito alexandre.jpg',
+    position: 'data/information associate',
+    email: 'ito@nickelscabinets.com',
+    phone: '246'
   }
 ];

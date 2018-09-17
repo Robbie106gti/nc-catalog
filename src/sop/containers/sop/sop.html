@@ -34,10 +34,11 @@
         's3 m2 l1': image.size === 'small',
         's8 m6 l4': image.size === 'medium',
         's12 m12 l6': image.size === 'large'
-      }" [card]="image"></image-card>
+      }"
+      [card]="image"></image-card>
     <div class="col s12 m6">
       <table-item [table]="sop.table" (remove)="TableRemove($event)"></table-item>
     </div>
-    <menu-btn (menu)="Menu($event, sop)"></menu-btn>
+    <menu-btn *ngIf="(user$ | async)?.roles.editor" (menu)="Menu($event, sop)"></menu-btn>
   </div>
 </div>
