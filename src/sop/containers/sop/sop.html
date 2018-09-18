@@ -40,6 +40,6 @@
     <div class="col s12 m6">
       <table-item [table]="sop.table" (remove)="TableRemove($event)"></table-item>
     </div>
-    <menu-btn *ngIf="(user$ | async)?.roles.editor" (menu)="Menu($event, sop)"></menu-btn>
+    <menu-btn *ngIf="(roles$ | async)?.editor" (menu)="Menu($event, sop)"></menu-btn>
   </div>
 </div>

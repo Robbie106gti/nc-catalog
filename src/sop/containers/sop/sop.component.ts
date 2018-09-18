@@ -20,13 +20,15 @@ export class SopComponent {
   };
   add: boolean;
   user$: Observable<any>;
+  roles$: Observable<any>;
   icons$: Observable<any>;
   url$: Observable<string>;
   pct$: Observable<any>;
   file: any;
 
   constructor(private store: Store<fromStore.SopsState>) {
-    this.user$ = this.store.select(fromStore.getUserData);
+    this.user$ = this.store.select(fromStore.getUserName);
+    this.roles$ = this.store.select(fromStore.getUserRoles);
     this.sop$ = this.store.select(fromStore.getSelectedSop);
     this.icons$ = this.store.select(fromStore.getIcons);
     this.url$ = this.store.select(fromStore.getUploadUrl);

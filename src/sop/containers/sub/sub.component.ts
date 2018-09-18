@@ -23,10 +23,10 @@ import * as fromStore from '../../store';
 </div>
 
 <div class="row grid" *ngIf="(cats$ | async) as cards">
-  <card class="card" *ngFor="let card of cards" [card]="card" [user]="(user$ | async)" (edit)="Edit($event)"></card>
+  <card class="card" *ngFor="let card of cards" [card]="card" [roles]="(roles$ | async)" (edit)="Edit($event)"></card>
 </div>
 
-<add-btn *ngIf="(user$ | async).roles.editor" (add)="Add($event, cat)"></add-btn>
+<add-btn *ngIf="(roles$ | async)?.editor" (add)="Add($event, cat)"></add-btn>
 </div>
 `
 })
@@ -36,13 +36,15 @@ export class SubComponent {
   url$: Observable<string>;
   pct$: Observable<string>;
   user$: Observable<any>;
+  roles$: Observable<any>;
   cats$: Observable<any>;
   cat$: Observable<any>;
 
   file: any;
 
   constructor(private store: Store<fromStore.SopsState>) {
-    this.user$ = this.store.select(fromStore.getUserData);
+    this.user$ = this.store.select(fromStore.getUserName);
+    this.roles$ = this.store.select(fromStore.getUserRoles);
     this.cats$ = this.store.select(fromStore.getSelectedSops);
     this.url$ = this.store.select(fromStore.getUploadUrl);
     this.pct$ = this.store.select(fromStore.getUploadPercentage);

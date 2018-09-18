@@ -7,12 +7,12 @@ import { of } from 'rxjs/observable/of';
 @Component({
   selector: 'main',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div *ngIf="user$ | async as user">
-<modal *ngIf="add === true" [modal]="modal" [url]="(url$ | async)" [pct]="(pct$ | async)" [user]="user" (close)="Close($event)" (add)="New($event)" (file)="Image($event)" (edited)="Edited($event)"></modal>
+  template: `<div>
+<modal *ngIf="add === true" [modal]="modal" [url]="(url$ | async)" [pct]="(pct$ | async)" [user]="(user$ | async)" (close)="Close($event)" (add)="New($event)" (file)="Image($event)" (edited)="Edited($event)"></modal>
 <div class="row grid" *ngIf="(cats$ | async) as cards">
-  <card class="card" *ngFor="let card of cards" [card]="card" [user]="user" (edit)="Edit($event)"></card>
+  <card class="card" *ngFor="let card of cards" [card]="card" [roles]="(roles$ | async)" (edit)="Edit($event)"></card>
 </div>
-<add-btn *ngIf="user.roles.editer" (add)="Add($event)"></add-btn>
+<add-btn *ngIf="(roles$ | async)?.editer" (add)="Add($event)"></add-btn>
 </div>
 `
 })
@@ -22,12 +22,14 @@ export class MainComponent {
   url$: Observable<string>;
   pct$: Observable<any>;
   user$: Observable<string>;
+  roles$: Observable<any>;
   cats$: Observable<any>;
 
   file: any;
 
   constructor(private store: Store<fromStore.SopsState>) {
-    this.user$ = this.store.select(fromStore.getUserData);
+    this.user$ = this.store.select(fromStore.getUserName);
+    this.roles$ = this.store.select(fromStore.getUserRoles);
     this.cats$ = this.store.select(fromStore.getCats);
     this.url$ = this.store.select(fromStore.getUploadUrl);
     this.pct$ = this.store.select(fromStore.getUploadPercentage);

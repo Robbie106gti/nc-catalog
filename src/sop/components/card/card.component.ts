@@ -4,7 +4,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
   selector: 'card',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-<edit-btn *ngIf="user.roles.editor" class="tool-item" (edit)="Edit($event)"></edit-btn>
+<edit-btn *ngIf="roles.editor" class="tool-item" (edit)="Edit($event)"></edit-btn>
 <a [routerLink]="[card.title]">
   <div class="card-image of-hidden">
     <img [src]="card.image" [alt]="card.title" class="responsive-img image20 activator">
@@ -19,7 +19,7 @@ export class CardComponent {
   @Input()
   card: any;
   @Input()
-  user: any;
+  roles: any;
   @Output()
   edit = new EventEmitter<any>();
 
