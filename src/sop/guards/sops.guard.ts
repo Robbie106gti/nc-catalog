@@ -12,7 +12,7 @@ import { map } from 'rxjs/operator/map';
 
 @Injectable()
 export class SopsGuard implements CanActivate {
-  constructor(private store: Store<fromStore.SopsState>) { }
+  constructor(private store: Store<fromStore.SopsState>) {}
 
   canActivate(): Observable<boolean> {
     return this.checkStore().pipe(
@@ -22,16 +22,15 @@ export class SopsGuard implements CanActivate {
   }
 
   checkStore(): Observable<boolean> {
-    let loaded;
     return this.store.select(fromStore.getSelectedCat).pipe(
-      skipWhile(load => !load),
-      tap(load => {
-        if (!loaded) {
-          this.store.dispatch({ type: fromStore.LOAD_SOPS, payload: load});
-          loaded = true;
+      skipWhile(sop => !sop),
+      tap(sop => {
+        // console.log(sop);
+        if (!sop.loaded) {
+          this.store.dispatch({ type: fromStore.LOAD_SOPS, payload: sop });
         }
       }),
-      filter(load => load)
+      filter(sop => sop)
     );
   }
 }

@@ -1,7 +1,7 @@
 import * as fromSop from '../actions/sop.action';
 
 export interface SopState {
-  entities: { [id: string]: SopsLine };
+  entities: any;
   load: string;
 }
 
@@ -17,8 +17,9 @@ export const initialState: SopState = {
 export function reducer(state = initialState, action: fromSop.SopAction): SopState {
   switch (action.type) {
     case fromSop.LOAD_SOPS: {
+      // console.log(state);
       const load: string = action.payload.id;
-      const entities = { [load]: { [load]: action.payload } };
+      const entities = { ...state.entities, [load]: { [load]: action.payload } };
       return {
         ...state,
         load,
