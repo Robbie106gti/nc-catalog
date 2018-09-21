@@ -97,8 +97,10 @@ declare var M: any;
     `
 })
 export class EditModalBarComponent {
-  @Input() edit: any;
-  @Input() user: any;
+  @Input()
+  edit: any;
+  @Input()
+  user: any;
 
   constructor() {
     $(document).ready(function() {
@@ -110,7 +112,7 @@ export class EditModalBarComponent {
   }
 
   Edit() {
-    if (this.edit.user.roles.admin) {
+    if (this.edit.user.roles.catEditor) {
       $('#modal1').modal('open');
     }
     $(document).ready(function() {

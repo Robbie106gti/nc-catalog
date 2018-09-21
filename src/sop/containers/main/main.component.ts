@@ -12,7 +12,7 @@ import { of } from 'rxjs/observable/of';
 <div class="row grid" *ngIf="(cats$ | async) as cards">
   <card class="card" *ngFor="let card of cards" [card]="card" [roles]="(roles$ | async)" (edit)="Edit($event)"></card>
 </div>
-<add-btn *ngIf="(roles$ | async)?.editer" (add)="Add($event)"></add-btn>
+<add-btn *ngIf="(roles$ | async)?.editor" (add)="Add($event)"></add-btn>
 </div>
 `
 })

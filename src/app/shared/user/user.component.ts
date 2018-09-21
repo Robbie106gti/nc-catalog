@@ -25,6 +25,7 @@ import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from 
         <li class="collection-item"><div>Dealer: <on-off class="secondary-content" [active]="user.roles.dealer" (offOn)="UpdateRoles($event, user.roles, 'dealer', user.id)"></on-off></div></li>
         <li class="collection-item"><div>Nickels: <on-off class="secondary-content" [active]="user.roles.nickels" (offOn)="UpdateRoles($event, user.roles, 'nickels', user.id)"></on-off></div></li>
         <li class="collection-item"><div>Editor: <on-off class="secondary-content" [active]="user.roles.editor" (offOn)="UpdateRoles($event, user.roles, 'editor', user.id)"></on-off></div></li>
+        <li class="collection-item"><div>Catalog Editor: <on-off class="secondary-content" [active]="user.roles.catEditor" (offOn)="UpdateRoles($event, user.roles, 'catEditor', user.id)"></on-off></div></li>
         <li class="collection-item"><div>Sop: <on-off class="secondary-content" [active]="user.roles.sop" (offOn)="UpdateRoles($event, user.roles, 'sop', user.id)"></on-off></div></li>
         <li class="collection-item"><div>Reader: <on-off class="secondary-content" [active]="user.roles.reader" (offOn)="UpdateRoles($event, user.roles, 'reader', user.id)"></on-off></div></li>
         <li class="collection-item"><div>Admin: <on-off class="secondary-content" [active]="user.roles.admin" (offOn)="UpdateRoles($event, user.roles, 'admin', user.id)"></on-off></div></li>

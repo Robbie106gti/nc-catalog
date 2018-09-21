@@ -26,6 +26,7 @@ export interface Roles {
   dealer?: boolean;
   sop?: boolean;
   editor?: boolean;
+  canEditor?: boolean;
 }
 
 export interface Address {

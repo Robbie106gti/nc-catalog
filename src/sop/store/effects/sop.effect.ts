@@ -35,7 +35,7 @@ export class SopEffects {
         map(entities => {
           search.length = entities.length;
           const item = entities.map((b, index) => {
-            if (user === 'Rober Leeuwerink') {
+            if (user === 'Robert Leeuwerink') {
               search.item = index + 1;
               search.items.push(this.updateSearch({ ...b, sub: action.payload.title, idCat: action.payload.id }));
               if (search.item === search.length) {

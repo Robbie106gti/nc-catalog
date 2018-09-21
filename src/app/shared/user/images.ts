@@ -13,12 +13,12 @@ export const peopleArray = [
     image: 'https://webquoin.com/catalog/images/team/leo.jpg',
     position: 'engineer',
     email: 'leo@nickelscabinets.com',
-    phone: '?'
+    phone: '222'
   },
   {
     fname: 'Alex',
     lname: 'Macdougalll',
-    image: 'http://www.nickelscabinets.com/images/team/alex.jpg',
+    image: 'https://webquoin.com/catalog/images/team/alex.jpg',
     position: 'breakout teamleader',
     email: 'breakout@nickelscabinets.com',
     phone: '238'
@@ -247,14 +247,6 @@ export const peopleArray = [
     position: 'designer support',
     email: 'ide@nickelscabinets.com',
     phone: '244'
-  },
-  {
-    fname: 'Leo',
-    lname: 'Wong',
-    image: 'https://webquoin.com/catalog/images/team/leo.jpg',
-    position: 'engineer',
-    email: 'leo@nickelscabinets.com',
-    phone: '222'
   },
   {
     fname: 'Elly',

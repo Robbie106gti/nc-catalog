@@ -13,7 +13,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="tool-item">
-        <span *ngIf="user.roles.admin">
+        <span *ngIf="user.roles.catEditor">
             <i class="material-icons indigo-text text-darken-1" (click)="Edit(category)">edit</i>
             <i *ngIf="category?.active; else active" (click)="TurnOff()" class="material-icons blue-grey-text text-darken-4">visibility</i>
         </span>
@@ -24,15 +24,23 @@ import {
     `
 })
 export class ToolItemComponent implements OnChanges {
-  @Input() category: any;
-  @Input() user: any;
-  @Input() userFavs: any;
+  @Input()
+  category: any;
+  @Input()
+  user: any;
+  @Input()
+  userFavs: any;
   bookmark: Boolean;
-  @Output() add = new EventEmitter<any>();
-  @Output() remove = new EventEmitter<any>();
-  @Output() turnOn = new EventEmitter<any>();
-  @Output() turnOff = new EventEmitter<any>();
-  @Output() edit = new EventEmitter<any>();
+  @Output()
+  add = new EventEmitter<any>();
+  @Output()
+  remove = new EventEmitter<any>();
+  @Output()
+  turnOn = new EventEmitter<any>();
+  @Output()
+  turnOff = new EventEmitter<any>();
+  @Output()
+  edit = new EventEmitter<any>();
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['userFavs']) {

@@ -1,72 +1,76 @@
 export interface User {
-    wqData?: WQUser;
-    class?: string;
-    dealerName?: string;
-    displayName?: string;
-    email?: string;
-    firstName?: string;
-    lastName?: string;
-    fullName?: string;
-    username?: string;
-    dealerID?: string;
-    roles?: Roles;
-    login?: LastloginWQ;
-    address?: Address;
-    status?: string;
+  wqData?: WQUser;
+  class?: string;
+  dealerName?: string;
+  displayName?: string;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  fullName?: string;
+  username?: string;
+  dealerID?: string;
+  roles?: Roles;
+  login?: LastloginWQ;
+  address?: Address;
+  status?: string;
 }
 
 export interface Roles {
-    admin?: boolean;
-    nickels?: boolean;
-    reader?: boolean;
-    writer?: boolean;
+  admin?: boolean;
+  nickels?: boolean;
+  reader?: boolean;
+  writer?: boolean;
+  dealer?: boolean;
+  sop?: boolean;
+  editor?: boolean;
+  canEditor?: boolean;
 }
 
 export interface Address {
-    street: string;
-    city: string;
-    state: string;
-    postcode: string;
+  street: string;
+  city: string;
+  state: string;
+  postcode: string;
 }
 
 export interface LastloginWQ {
-    lastLogin: string;
-    firstLogin: string;
-    dataUpdated: string;
+  lastLogin: string;
+  firstLogin: string;
+  dataUpdated: string;
 }
 
 export interface WQUser {
-    token: string;
-    valid: Valid;
+  token: string;
+  valid: Valid;
 }
 
 export interface Valid {
-    DealerAddress1: string;
-    DealerAddress2: string;
-    DealerAddress3: string;
-    DealerID: string;
-    DealerName: string;
-    DealerPostalCode: string;
-    DisplayName: string;
-    FirstName: string;
-    LastName: string;
-    UserName: string;
-    Email: string;
-    Error?: string;
+  DealerAddress1: string;
+  DealerAddress2: string;
+  DealerAddress3: string;
+  DealerID: string;
+  DealerName: string;
+  DealerPostalCode: string;
+  DisplayName: string;
+  FirstName: string;
+  LastName: string;
+  UserName: string;
+  Email: string;
+  Error?: string;
 }
 
 export interface Favorites {
-    id?: string;
-    name?: string;
-    createdAt?: string;
-    updatedAt?: string;
+  id?: string;
+  name?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Notes {
-    id?: string;
-    name?: string;
-    createdAt?: string;
-    updatedAt?: string;
+  id?: string;
+  name?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 ///// Example get from Webquoin

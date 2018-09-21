@@ -9,5 +9,7 @@ export const getUserName = createSelector(getUserData, (data: any) => (data.full
 export const getUserRoles = createSelector(
   getUserData,
   (data: any) =>
-    data.roles ? data.roles : { sop: false, editor: false, admin: false, dealer: true, nickels: false, reader: true }
+    data.roles
+      ? data.roles
+      : { sop: false, editor: false, catEditor: false, admin: false, dealer: true, nickels: false, reader: true }
 );

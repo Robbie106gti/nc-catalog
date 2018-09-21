@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  SimpleChanges,
-  OnChanges
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, SimpleChanges, OnChanges } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import * as fromStore from '../store';
@@ -15,21 +9,9 @@ import { Login } from '../models/login.model';
   selector: 'app-root',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <login-form
-  [loaded]="(loaded$ | async)"
-  [loading]="(loading$ | async)"
-  [status]="(status$ | async)"
-  [fails]="(fails$ | async)"
-  (login)="loginWQ($event)"
-  ></login-form>
-
   <app-header [user$]="user$" [router$]="router$"></app-header>
-  <router-outlet *ngIf="(loaded$ | async); else notLoggedin"></router-outlet>
+  <router-outlet *ngIf="(loaded$ | async)"></router-outlet>
   <app-footer></app-footer>
-
-  <ng-template #notLoggedin>
-    <slider></slider>
-  </ng-template>
   `,
   styleUrls: ['../app.styles.scss']
 })
@@ -50,7 +32,6 @@ export class AppComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.store.dispatch(new fromStore.LoadLoginHeader());
     this.loaded$ = this.store.select(fromStore.getUserLoaded);
     this.loading$ = this.store.select(fromStore.getUserLoading);
     this.status$ = this.store.select(fromStore.getUserStatus);

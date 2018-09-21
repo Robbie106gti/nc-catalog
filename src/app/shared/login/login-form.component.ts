@@ -12,22 +12,23 @@ import { Login } from '../../models/login.model';
   templateUrl: './login-form.html'
 })
 export class LoginFormComponent {
-  @Input() loaded: boolean;
-  @Input() loading: boolean;
-  @Input() status: string;
-  @Input() fails: number;
-  @Output() login = new EventEmitter<Login>();
+  @Input()
+  loaded: boolean;
+  @Input()
+  loading: boolean;
+  @Input()
+  status: string;
+  @Input()
+  fails: number;
+  @Output()
+  login = new EventEmitter<Login>();
 
   form = this.fb.group({
     username: ['', Validators.required && Validators.minLength(3)],
     password: ['', Validators.required && Validators.minLength(3)]
   });
 
-  constructor(private fb: FormBuilder) {
-    $(document).ready(function() {
-      M.updateTextFields();
-    });
-  }
+  constructor(private fb: FormBuilder) {}
 
   get formTouched() {
     return this.form.untouched && (this.form.pristine as Boolean);

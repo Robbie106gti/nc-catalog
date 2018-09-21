@@ -12,7 +12,7 @@
             <h4 id="topic">
               Item: {{ content.title }}
             </h4>
-            <form-cab *ngIf="user.roles.admin" [user]="user" [content]="content" (edit)="Fetch($event)"></form-cab>
+            <form-cab *ngIf="user.roles.catEditor" [user]="user" [content]="content" (edit)="Fetch($event)"></form-cab>
             <div class="center red-text text-darken-4" *ngIf="content.active === false">
               <b>DISCONTINUED / INACTIVE!</b>
             </div>

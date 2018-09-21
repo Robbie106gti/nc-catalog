@@ -230,6 +230,7 @@ function createUser(user) {
     sop: false,
     admin: false,
     editor: false,
+    catEditor: false,
     dealer: true
   };
   if (user.class === 'NICKELSM') {

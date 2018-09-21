@@ -33,7 +33,15 @@ export function reducer(state = initialState, action: fromLogin.LoginAction): Us
     case fromLogin.LOAD_LOGIN_SUCCESS: {
       // console.log(action.payload);
       const data = action.payload.user;
-      const roles = { admin: false, reader: true, dealer: true, sop: false, nickels: false, editor: false };
+      const roles = {
+        admin: false,
+        reader: true,
+        dealer: true,
+        sop: false,
+        nickels: false,
+        editor: false,
+        catEditor: false
+      };
       data['roles'] = roles;
 
       return { ...state, loading: true, loaded: true, data };
