@@ -33,6 +33,7 @@ import { UserComponent } from './shared/user/user.component';
 import { SearchComponent } from './shared/search/search.component';
 import { ResultsComponent } from './shared/search/results/results.component';
 import { SpinnerComponent } from './shared/search/results/spinner.component';
+import { OnOffComponent } from './shared/buttons/onOff.component';
 
 // services
 import * as fromServices from './services';
@@ -73,7 +74,8 @@ export const ROUTES: Routes = [
     SearchComponent,
     AutofocusDirective,
     ResultsComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    OnOffComponent
   ],
   imports: [
     BrowserModule,

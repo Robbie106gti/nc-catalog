@@ -11,6 +11,14 @@ export const peopleArray = [
     fname: 'Leo',
     lname: 'Almeida',
     image: 'https://webquoin.com/catalog/images/team/leo.jpg',
+    position: 'engineer',
+    email: 'leo@nickelscabinets.com',
+    phone: '?'
+  },
+  {
+    fname: 'Alex',
+    lname: 'Macdougalll',
+    image: 'http://www.nickelscabinets.com/images/team/alex.jpg',
     position: 'breakout teamleader',
     email: 'breakout@nickelscabinets.com',
     phone: '238'
