@@ -18,7 +18,7 @@ export const initialState: UserState = {
   data: null,
   loaded: false,
   firestore: false,
-  loading: true,
+  loading: false,
   favorites: new Array(),
   notes: new Array(),
   fails: -1

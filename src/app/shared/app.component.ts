@@ -42,7 +42,7 @@ export class AppComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.store.dispatch(new fromStore.LoadLoginHeader());
+    // this.store.dispatch(new fromStore.LoadLoginHeader());
     this.loaded$ = this.store.select(fromStore.getUserLoaded);
     this.loading$ = this.store.select(fromStore.getUserLoading);
     this.status$ = this.store.select(fromStore.getUserStatus);
