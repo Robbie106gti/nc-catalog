@@ -28,7 +28,11 @@ export class LoginFormComponent {
     password: ['', Validators.required && Validators.minLength(3)]
   });
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {
+    $(document).ready(function() {
+      M.updateTextFields();
+    });
+  }
 
   get formTouched() {
     return this.form.untouched && (this.form.pristine as Boolean);

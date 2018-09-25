@@ -12,31 +12,9 @@ import * as fromStore from '../store';
 
 @Injectable()
 export class LoginGuard implements CanActivate {
-  endpoint = 'https://us-central1-nickels-catalog.cloudfunctions.net/auth-login';
   constructor(private router: Router, private store: Store<fromStore.State>, private http: HttpClient) {}
 
   canActivate(): Observable<boolean> {
-    const cookie = this.parseCookie();
-    cookie.pipe(
-      switchMap(c => {
-        if (c['value'] !== null) {
-          const data = c['value'];
-          return this.http.post(this.endpoint, { ...data, cookie: true }).pipe(
-            map(success => {
-              this.store.dispatch({
-                type: fromStore.LOAD_LOGIN_HB_SUCCESS,
-                payload: success
-              });
-              this.firestoreService.refreshCustomClaims(success);
-              return new loginActions.LoadLoginFbCk(data);
-            }),
-            catchError(err => of(console.log(`Header error ${err}`, err)))
-          );
-        } else {
-          return this.router.navigate(['/login']);
-        }
-      })
-    );
     return this.checkStore().pipe(
       switchMap(() => of(true)),
       catchError(() => of(false))
@@ -45,32 +23,5 @@ export class LoginGuard implements CanActivate {
 
   checkStore(): Observable<boolean> {
     return this.store.select(fromStore.getUserLoaded);
-  }
-
-  getCookie(cname) {
-    const name = cname + '=';
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) === 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return '';
-  }
-
-  parseCookie() {
-    const ck = this.getCookie('nc-catalog');
-    let cookie: Observable<any>;
-    if (ck === '') {
-      return of((cookie = null));
-    } else {
-      cookie = JSON.parse(base64Decode(ck));
-      // console.log(cookie);
-      return of(cookie);
-    }
   }
 }

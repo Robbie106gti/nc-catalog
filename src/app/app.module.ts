@@ -52,46 +52,13 @@ const env = {
 
 // routes
 export const ROUTES: Routes = [
-  {
-    path: '',
-    pathMatch: 'full',
-    component: HomeComponent,
-    canActivate: [fromGuards.LoginGuard]
-  },
-  {
-    path: 'catalog',
-    loadChildren: '../catalog/catalog.module#CatalogModule',
-    canActivate: [fromGuards.LoginGuard]
-  },
-  {
-    path: 'sop',
-    loadChildren: '../sop/sop.module#SopModule',
-    canActivate: [fromGuards.LoginGuard]
-  },
-  {
-    path: 'mds',
-    loadChildren: '../mds/mds.module#MdsModule',
-    canActivate: [fromGuards.LoginGuard]
-  },
-  {
-    path: 'profile',
-    pathMatch: 'full',
-    component: ProfileComponent,
-    canActivate: [fromGuards.LoginGuard]
-  },
-  {
-    path: 'users',
-    pathMatch: 'full',
-    component: UsersComponent,
-    canActivate: [fromGuards.LoginGuard]
-  },
-  {
-    path: 'search',
-    pathMatch: 'full',
-    component: SearchComponent,
-    canActivate: [fromGuards.LoginGuard]
-  },
-  { path: 'login', pathMatch: 'full', component: LoginComponent }
+  { path: '', pathMatch: 'full', component: HomeComponent },
+  { path: 'catalog', loadChildren: '../catalog/catalog.module#CatalogModule' },
+  { path: 'sop', loadChildren: '../sop/sop.module#SopModule' },
+  { path: 'mds', loadChildren: '../mds/mds.module#MdsModule' },
+  { path: 'profile', pathMatch: 'full', component: ProfileComponent },
+  { path: 'users', pathMatch: 'full', component: UsersComponent },
+  { path: 'search', pathMatch: 'full', component: SearchComponent }
 ];
 
 @NgModule({
@@ -127,7 +94,11 @@ export const ROUTES: Routes = [
     AngularFirestoreModule,
     AngularFireStorageModule
   ],
-  providers: [...fromServices.services, { provide: RouterStateSerializer, useClass: CustomSerializer }],
+  providers: [
+    ...fromServices.services,
+    ...fromGuards.guards,
+    { provide: RouterStateSerializer, useClass: CustomSerializer }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
