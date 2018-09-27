@@ -22,11 +22,12 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
           </div>
         </div>
       </div> -->
-      <div class="footer-copyright">
-        <div class="container">
-        © 2018 Copyright Nickels Cabinets
+      <div class="footer-copyright container">
+        <div class="row valign-wrapper">
+        <span class="center-align">© 2018 Copyright Nickels Cabinets</span>
        <!-- <a class="grey-text text-lighten-4 right" href="https://nickels-catalog.firebaseapp.com/">Start Catalog</a> -->
         </div>
+       <div class="right"><small>Version 0.1.2 @ Alpha</small></div>
       </div>
       <a id="BottomPage"></a>
     </footer>

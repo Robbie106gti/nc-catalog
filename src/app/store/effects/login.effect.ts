@@ -88,9 +88,12 @@ export class LoginEffects {
         skipWhile(snap => !snap.payload.exists),
         switchMap(() => {
           // console.log('Hello');
-          return this.firestoreService
-            .docWithRefs$(`users/${action.payload.valid.Email}`)
-            .pipe(map((userfb: User) => new loginActions.LoadLoginFbSuccess(userfb)));
+          return this.firestoreService.docWithRefs$(`users/${action.payload.valid.Email}`).pipe(
+            map((userfb: User) => {
+              this.store.dispatch({ type: fromStore.BACK });
+              return new loginActions.LoadLoginFbSuccess(userfb);
+            })
+          );
         })
       );
     })

@@ -4,7 +4,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
   selector: 'results-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-<a [routerLink]="['..',card.sub,card.title]">
+<a [routerLink]="['..',card.sub,card.link]">
   <div class="card-image of-hidden">
     <img [src]="card.image" [alt]="card.title" class="responsive-img image20 activator">
   </div>

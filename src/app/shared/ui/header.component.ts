@@ -1,16 +1,16 @@
-import { Component, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnChanges, SimpleChanges, AfterContentInit } from '@angular/core';
+declare var M: any;
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-declare var M: any;
 
 @Component({
   selector: 'app-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <nav >
+  <nav>
     <div class="nav-wrapper brown darken-3">
       <div class="whiteLine"></div>
       <a [routerLink]="['..']" class="brand-logo" *ngIf="(router$ | async) as router">
@@ -71,21 +71,28 @@ declare var M: any;
   `,
   styles: [
     `
+      nav {
+        z-index: 4;
+        position: relative;
+      }
       .uTop {
         top: auto !important;
       }
     `
   ]
 })
-export class HeaderComponent implements OnChanges {
-  @Input()
+export class HeaderComponent implements AfterContentInit, OnChanges {
   user$: Observable<any>;
-  @Input()
   router$: Observable<any>;
   icon: Observable<string>;
   where: string;
 
   constructor(private store: Store<fromStore.State>, private router: Router) {
+    this.user$ = this.store.select(fromStore.getUserData);
+    this.router$ = this.store.select(fromStore.getRouterState);
+  }
+
+  ngAfterContentInit() {
     document.addEventListener('DOMContentLoaded', function() {
       const options = { hover: true };
       const elems = document.querySelectorAll('.dropdown-trigger');

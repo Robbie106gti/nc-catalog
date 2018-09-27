@@ -52,14 +52,45 @@ const env = {
 
 // routes
 export const ROUTES: Routes = [
-  { path: '', pathMatch: 'full', component: HomeComponent, canActivate: [fromGuards.LoginGuard] },
-  { path: 'catalog', loadChildren: '../catalog/catalog.module#CatalogModule', canActivate: [fromGuards.LoginGuard] },
-  { path: 'sop', loadChildren: '../sop/sop.module#SopModule', canActivate: [fromGuards.LoginGuard] },
-  { path: 'mds', loadChildren: '../mds/mds.module#MdsModule', canActivate: [fromGuards.LoginGuard] },
-  { path: 'profile', pathMatch: 'full', component: ProfileComponent, canActivate: [fromGuards.LoginGuard] },
-  { path: 'users', pathMatch: 'full', component: UsersComponent, canActivate: [fromGuards.LoginGuard] },
-  { path: 'search', pathMatch: 'full', component: SearchComponent, canActivate: [fromGuards.LoginGuard] },
-  { path: 'login', pathMatch: 'full', component: LoginComponent }
+  {
+    path: '',
+    pathMatch: 'full',
+    component: HomeComponent,
+    canActivate: [fromGuards.LoginGuard]
+  },
+  {
+    path: '',
+    runGuardsAndResolvers: 'always',
+    canActivate: [fromGuards.LoginGuard],
+    children: [
+      { path: 'catalog', loadChildren: '../catalog/catalog.module#CatalogModule' },
+      { path: 'sop', loadChildren: '../sop/sop.module#SopModule', canActivate: [fromGuards.SopGuard] },
+      { path: 'mds', loadChildren: '../mds/mds.module#MdsModule' }
+    ]
+  },
+  {
+    path: 'profile',
+    pathMatch: 'full',
+    component: ProfileComponent,
+    canActivate: [fromGuards.LoginGuard]
+  },
+  {
+    path: 'users',
+    pathMatch: 'full',
+    component: UsersComponent,
+    canActivate: [fromGuards.LoginGuard]
+  },
+  {
+    path: 'search',
+    pathMatch: 'full',
+    component: SearchComponent,
+    canActivate: [fromGuards.LoginGuard]
+  },
+  {
+    path: 'login',
+    pathMatch: 'full',
+    component: LoginComponent
+  }
 ];
 
 @NgModule({

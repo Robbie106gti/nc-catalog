@@ -1,4 +1,5 @@
 import * as fromSop from '../actions/sop.action';
+import * as common from '../../utils/common';
 
 export interface SopState {
   entities: any;
@@ -44,7 +45,7 @@ export function reducer(state = initialState, action: fromSop.SopAction): SopSta
       const cat = state.load;
       let entity = {};
       items.map(item => {
-        entity = { ...entity, [item.title]: item };
+        entity = { ...entity, [common.makelink(item.title)]: { ...item, link: common.makelink(item.title) } };
       });
       const entities = { ...state.entities, [cat]: entity };
       return {
@@ -79,7 +80,10 @@ export function reducer(state = initialState, action: fromSop.SopAction): SopSta
       newItem.updatedBy = item.updatedBy;
       delete state.entities[item.edit.idCat][item.edit.titleOld];
       delete newItem.titleOld;
-      state.entities = { ...state.entities, [newItem.title]: newItem };
+      state.entities = {
+        ...state.entities,
+        [common.makelink(newItem.title)]: { ...newItem, link: common.makelink(newItem.title) }
+      };
       return {
         ...state
       };

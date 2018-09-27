@@ -23,6 +23,8 @@ export const getUserStatus = createSelector(getUserState, user => user.status);
 
 export const getUserRoles = createSelector(getUserData, user => user.roles);
 
+export const getEntrypoint = createSelector(getUserState, fromLogin.getEntry);
+
 export const getUsers = createSelector(getUserState, user => {
   const images = peopleArray.peopleArray;
   const users = user.users;

@@ -21,6 +21,7 @@ export const LOAD_FAVORITES_FAIL = '[User] Get Favorites Fail';
 export const LOAD_FAVORITES_SUCCESS = '[User] Get Favorites Success';
 
 export const LOGOUT = '[User] Logged out user';
+export const ENTERY_POINT = '[User] Entery point';
 
 export const USERS = '[Users] Retrieving users';
 export const USERS_LOADED = '[Users] Loaded users';
@@ -130,6 +131,13 @@ export class CreateFBLoginSuccess implements Action {
   }
 }
 // update items
+export class EnteryPoint implements Action {
+  readonly type = ENTERY_POINT;
+  constructor(public payload: string) {
+    // console.log(payload);
+  }
+}
+
 // delete items
 export class Logout implements Action {
   readonly type = LOGOUT;
@@ -173,6 +181,7 @@ export type LoginAction =
   | LoadLoginHeader
   | LoadLoginHeaderSuccess
   | Logout
+  | EnteryPoint
   | GetUsers
   | GetUsersSuccess
   | GetUsersFail;

@@ -6,6 +6,7 @@ export interface UserState {
   data: User;
   loaded: boolean;
   loading: boolean;
+  enterypoint: string;
   firestore: boolean;
   favorites: Favorites[];
   notes: Notes[];
@@ -17,6 +18,7 @@ export interface UserState {
 export const initialState: UserState = {
   data: null,
   loaded: false,
+  enterypoint: '',
   firestore: false,
   loading: false,
   favorites: new Array(),
@@ -101,10 +103,12 @@ export function reducer(state = initialState, action: fromLogin.LoginAction): Us
 
     case fromLogin.USERS_FAIL: {
       const users = action.payload;
-      return {
-        ...state,
-        users
-      };
+      return { ...state, users };
+    }
+
+    case fromLogin.ENTERY_POINT: {
+      const entry = action.payload;
+      return { ...state, ...state.users, enterypoint: entry };
     }
   }
 
@@ -118,3 +122,4 @@ export const getUserStore = (state: UserState) => state.firestore;
 export const getUserFav = (state: UserState) => state.favorites;
 export const getUserNotes = (state: UserState) => state.notes;
 export const getUsers = (state: UserState) => state.users;
+export const getEntry = (state: UserState) => state.enterypoint;

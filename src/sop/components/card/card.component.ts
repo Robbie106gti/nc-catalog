@@ -5,7 +5,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
 <edit-btn *ngIf="roles.editor" class="tool-item" (edit)="Edit($event)"></edit-btn>
-<a [routerLink]="[card.title]">
+<a [routerLink]="[card.link]">
   <div class="card-image of-hidden">
     <img [src]="card.image" [alt]="card.title" class="responsive-img image20 activator">
   </div>

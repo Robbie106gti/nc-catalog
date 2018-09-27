@@ -1,6 +1,5 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-declare var $: any;
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, AfterContentInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 declare var M: any;
 
 import { Login } from '../../models/login.model';
@@ -11,7 +10,7 @@ import { Login } from '../../models/login.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './login-form.html'
 })
-export class LoginFormComponent {
+export class LoginFormComponent implements AfterContentInit {
   @Input()
   loaded: boolean;
   @Input()
@@ -28,10 +27,10 @@ export class LoginFormComponent {
     password: ['', Validators.required && Validators.minLength(3)]
   });
 
-  constructor(private fb: FormBuilder) {
-    $(document).ready(function() {
-      M.updateTextFields();
-    });
+  constructor(private fb: FormBuilder) {}
+
+  ngAfterContentInit() {
+    M.updateTextFields();
   }
 
   get formTouched() {

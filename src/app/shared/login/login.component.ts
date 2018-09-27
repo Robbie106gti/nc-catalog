@@ -1,45 +1,74 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+
+import { Store } from '@ngrx/store';
+import * as fromStore from '../../store';
+import { Observable } from 'rxjs/Observable';
+import { Login } from '../../models/login.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <!-- <login-form
+  <login-form
   [loaded]="(loaded$ | async)"
   [loading]="(loading$ | async)"
   [status]="(status$ | async)"
   [fails]="(fails$ | async)"
   (login)="loginWQ($event)"
-  ></login-form> -->
-
-  <div class="slider fullscreen" style="touch-action: pan-y; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-    <ul class="slides">
-      <li class="velocity-animating" style="opacity: 0.940592; transform: translateX(0px) translateY(0px);">
-        <img src="https://webquoin.com/catalog/build/assets/nickels%20kitchens/09.jpg"> <!-- random image -->
-        <div class="caption center-align velocity-animating" style="opacity: 0.997476; transform: translateY(-0.252449px) translateX(0px);">
-          <h3>Retro modern</h3>
-          <h5 class="light grey-text text-lighten-3">Black walnut with clean lines</h5>
-        </div>
-      </li>
-      <li class="velocity-animating active" style="opacity: 0.0594076; transform: translateX(0px) translateY(0px);">
-        <img src="https://webquoin.com/catalog/build/assets/nickels%20kitchens/img_8297-1024x708.jpg"> <!-- random image -->
-        <div class="caption left-align velocity-animating" style="opacity: 0; transform: translateX(-100px) translateY(0px);">
-          <h3>Old and new</h3>
-          <h5 class="light grey-text text-lighten-3">Combing latest materials on more classical styles.</h5>
-        </div>
-      </li>
-      <li class="" style="opacity: 0; transform: translateX(0px) translateY(0px);">
-        <img src="https://webquoin.com/catalog/build/assets/nickels%20kitchens/oseen-kitchen-1024x579.jpg"> <!-- random image -->
-        <div class="caption right-align" style="opacity: 0; transform: translateX(100px) translateY(0px);">
-          <h3>Clean modern kitchens</h3>
-          <h5 class="light grey-text text-lighten-3">Clean integrated handles accross all cabinets</h5>
-        </div>
-      </li>
-    </ul>
-    <ul class="indicators"><li class="indicator-item"></li><li class="indicator-item active"></li><li class="indicator-item"></li></ul>
-  </div>
+  ></login-form>
+  <slider></slider>
   `
 })
-export class LoginComponent {
-  constructor() {}
+export class LoginComponent implements OnInit {
+  loaded$: Observable<boolean>;
+  loading$: Observable<boolean>;
+  fails$: Observable<number>;
+  router$: Observable<any>;
+  status$: Observable<any>;
+  redirect$: Observable<any>;
+
+  constructor(private router: Router, private store: Store<fromStore.State>) {
+    this.router$ = this.store.select(fromStore.getRouterState);
+  }
+
+  ngOnInit() {
+    this.store.dispatch(new fromStore.LoadLoginHeader());
+    this.loaded$ = this.store.select(fromStore.getUserLoaded);
+    this.loading$ = this.store.select(fromStore.getUserLoading);
+    this.fails$ = this.store.select(fromStore.getUserFails);
+    this.status$ = this.store.select(fromStore.getUserStatus);
+    this.redirect$ = this.store.select(fromStore.getEntrypoint);
+    this.loaded$.subscribe(loaded => (loaded === true ? this.Redirect() : null));
+  }
+
+  loginWQ(event) {
+    const data: Login = event;
+    this.store.dispatch(new fromStore.LoadLogin(data));
+  }
+
+  Redirect() {
+    this.redirect$.subscribe(red => {
+      // /catalog/category/doors/dover?tab=recessed&pc=5&wr=false
+
+      const url = red.replace(/\%20/gi, ' ').replace(/\%25252520/gi, ' ');
+      /* const params = url.split('?');
+      let param;
+      url = params[0];
+      params.forEach((p, i) => {
+        if (i === 0) return;
+        const obj = p.split('&');
+        obj.forEach(o => {
+          let key = o.split('=');
+          const value = key[1];
+          key = key[0];
+          param = { ...param, [key]: value };
+        });
+      });
+
+      console.log('url: ' + url);
+      console.log(param); */
+      this.router.navigateByUrl(url);
+    });
+  }
 }

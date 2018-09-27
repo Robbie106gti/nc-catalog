@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
 import { map, switchMap, catchError, take } from 'rxjs/operators';
-import { replace, split } from 'lodash';
 
 import { Store } from '@ngrx/store';
 
@@ -11,6 +10,7 @@ import * as fromStore from '../../store';
 import * as fromServices from '../../services';
 import * as sopActions from '../actions';
 import { Payload } from '../../models/payload.model';
+import * as common from '../../utils/common';
 
 @Injectable()
 export class SopEffects {
@@ -283,10 +283,11 @@ export class SopEffects {
 
     return {
       title: item.title,
+      link: common.makelink(item.title),
       id: item.id,
       idCat: item.idCat,
       image: item.image,
-      sub: item.sub,
+      sub: common.makelink(item.sub),
       content
     };
   }

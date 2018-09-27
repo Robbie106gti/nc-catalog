@@ -1,4 +1,5 @@
 import * as fromCat from '../actions/cat.action';
+import * as common from '../../utils/common';
 
 export interface CatState {
   entities: { [id: string]: any };
@@ -40,7 +41,7 @@ export function reducer(state = initialState, action: fromCat.CatAction): CatSta
       const entities = catagories.reduce(
         // tslint:disable-next-line:no-shadowed-variable
         (entities: { [id: string]: any }, cat: any) => {
-          return { ...entities, [cat.title]: { ...cat } };
+          return { ...entities, [common.makelink(cat.title)]: { ...cat, link: common.makelink(cat.title) } };
         },
         { ...state.entities }
       );
@@ -61,8 +62,8 @@ export function reducer(state = initialState, action: fromCat.CatAction): CatSta
 
     case fromCat.UPDATE_CAT_LOADED: {
       const item = action.payload;
-      state.entities[item.title].loading = false;
-      state.entities[item.title].loaded = true;
+      state.entities[item.link].loading = false;
+      state.entities[item.link].loaded = true;
       return {
         ...state
       };
@@ -70,7 +71,7 @@ export function reducer(state = initialState, action: fromCat.CatAction): CatSta
 
     case fromCat.UPDATE_CAT_LOADING: {
       const item = action.payload;
-      state.entities[item.title].loading = true;
+      state.entities[item.link].loading = true;
       return {
         ...state
       };
@@ -94,6 +95,7 @@ export function reducer(state = initialState, action: fromCat.CatAction): CatSta
       newItem.title = item.title;
       newItem.image = item.image;
       newItem.updatedBy = item.updatedBy;
+      newItem.link = common.makelink(newItem.title);
       delete state.entities[item.edit.titleOld];
       delete newItem.titleOld;
       state.entities = { ...state.entities, [newItem.title]: newItem };
