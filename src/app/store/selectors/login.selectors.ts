@@ -23,6 +23,12 @@ export const getUserStatus = createSelector(getUserState, user => user.status);
 
 export const getUserRoles = createSelector(getUserData, user => user.roles);
 
+export const allowUserSop = createSelector(getUserRoles, roles => roles.sop);
+
+export const allowUserCat = createSelector(getUserRoles, roles => roles.reader);
+
+export const allowUserMds = createSelector(getUserRoles, roles => roles.nickels);
+
 export const getEntrypoint = createSelector(getUserState, fromLogin.getEntry);
 
 export const getUsers = createSelector(getUserState, user => {

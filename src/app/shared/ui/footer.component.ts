@@ -27,7 +27,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
         <span class="center-align">© 2018 Copyright Nickels Cabinets</span>
        <!-- <a class="grey-text text-lighten-4 right" href="https://nickels-catalog.firebaseapp.com/">Start Catalog</a> -->
         </div>
-       <div class="right"><small>Version 0.1.2 @ Alpha</small></div>
+       <div class="right"><small>Version 0.1.2.1 @ Alpha</small></div>
       </div>
       <a id="BottomPage"></a>
     </footer>

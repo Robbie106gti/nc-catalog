@@ -34,7 +34,7 @@ import { of } from 'rxjs/observable/of';
           <i class="material-icons blue-grey-text">collections_bookmark</i>
         </a>
       </li>
-      <li *ngIf="(user$ | async)?.roles?.nickels">
+      <li *ngIf="(user$ | async)?.roles?.sop">
         <a class="right tooltipped" data-position="bottom" data-tooltip="(SOP) Standard Operating Procedure" [routerLink]="['./sop']">
           <i class="material-icons red-text">assignment</i>
         </a>
@@ -53,7 +53,7 @@ import { of } from 'rxjs/observable/of';
           <i class="material-icons blue-grey-text left">person</i>Profile
         </a>
       </li>
-      <li *ngIf="(user$ | async)?.fullName === 'Robert Leeuwerink'">
+      <li *ngIf="(user$ | async)?.roles?.nickels">
         <a [routerLink]="['./users']"
         class="right tooltipped" data-position="bottom" data-tooltip="Profile">
           <i class="material-icons blue-grey-text left">recent_actors</i>Users

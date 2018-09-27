@@ -8,14 +8,14 @@ import { catchError, map, skipWhile } from 'rxjs/operators';
 
 import * as fromStore from '../store';
 @Injectable()
-export class SopGuard implements CanActivate {
+export class CatGuard implements CanActivate {
   constructor(private router: Router, private store: Store<fromStore.State>) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
     return this.checkStore().pipe(
       map(c => {
         if (c === false) {
-          this.router.navigate(['catalog']);
+          this.router.navigate(['']);
         }
         return c;
       }),
@@ -24,6 +24,6 @@ export class SopGuard implements CanActivate {
   }
 
   checkStore(): Observable<boolean> {
-    return this.store.select(fromStore.allowUserSop);
+    return this.store.select(fromStore.allowUserCat);
   }
 }

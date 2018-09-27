@@ -205,7 +205,7 @@ export class LoginEffects {
   parseCookie() {
     const ck = this.getCookie('nc-catalog');
     let cookie: Observable<Res>;
-    if (ck === '') {
+    if (ck === '' || ck === 'Thu, 01 Jan 1970 01: 00: 08 UTC') {
       return of((cookie = null));
     } else {
       cookie = JSON.parse(base64Decode(ck));

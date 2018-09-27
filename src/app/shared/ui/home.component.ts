@@ -18,7 +18,7 @@ import { Observable } from 'rxjs/Observable';
         </div>
       </a>
     </div>
-    <div class="card red darken-3" *ngIf="roles.nickels">
+    <div class="card red darken-3" *ngIf="roles.sop">
       <a [routerLink]="['./sop']">
         <div class="card-image card20">
           <img src="../../../assets/images/SOP.jpg" class="responsive-img">

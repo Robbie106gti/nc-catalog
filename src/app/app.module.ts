@@ -63,9 +63,9 @@ export const ROUTES: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [fromGuards.LoginGuard],
     children: [
-      { path: 'catalog', loadChildren: '../catalog/catalog.module#CatalogModule' },
+      { path: 'catalog', loadChildren: '../catalog/catalog.module#CatalogModule', canActivate: [fromGuards.CatGuard] },
       { path: 'sop', loadChildren: '../sop/sop.module#SopModule', canActivate: [fromGuards.SopGuard] },
-      { path: 'mds', loadChildren: '../mds/mds.module#MdsModule' }
+      { path: 'mds', loadChildren: '../mds/mds.module#MdsModule', canActivate: [fromGuards.MdsGuard] }
     ]
   },
   {
@@ -78,7 +78,7 @@ export const ROUTES: Routes = [
     path: 'users',
     pathMatch: 'full',
     component: UsersComponent,
-    canActivate: [fromGuards.LoginGuard]
+    canActivate: [fromGuards.LoginGuard, fromGuards.UsersGuard]
   },
   {
     path: 'search',
@@ -89,7 +89,8 @@ export const ROUTES: Routes = [
   {
     path: 'login',
     pathMatch: 'full',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [fromGuards.UserGuard]
   }
 ];
 

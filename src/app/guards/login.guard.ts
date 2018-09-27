@@ -37,9 +37,5 @@ export class LoginGuard implements CanActivate {
     return this.store.select(fromStore.getUserLoaded);
   }
 
-  checkRouter(): Observable<any> {
-    return this.store.select(fromStore.getUserLoaded);
-  }
-
   // https://netbasal.com/implementing-auth-guard-with-componentless-route-in-angular-b50a21f3bd77
 }
