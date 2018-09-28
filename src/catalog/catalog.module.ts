@@ -21,6 +21,9 @@ import * as fromComponents from './components';
 // containers
 import * as fromContainers from './containers';
 
+// containers
+import * as fromDirectives from './directives';
+
 // guards
 import * as fromGuards from './guards';
 
@@ -88,7 +91,12 @@ export const ROUTES: Routes = [
     AngularFireStorageModule
   ],
   providers: [...fromServices.services, ...fromGuards.guards],
-  declarations: [...fromContainers.containers, ...fromComponents.components, ...fromPipes.pipes],
+  declarations: [
+    ...fromContainers.containers,
+    ...fromComponents.components,
+    ...fromPipes.pipes,
+    ...fromDirectives.directives
+  ],
   exports: [...fromContainers.containers, ...fromComponents.components]
 })
 export class CatalogModule {}

@@ -1,11 +1,20 @@
-import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
+  AfterViewInit,
+  ViewChildren,
+  ElementRef,
+  QueryList
+} from '@angular/core';
 declare var M: any;
-declare var $: any;
 
 @Component({
   selector: 'door-filter',
   template: `
-  <ul class="collapsible z-depth-0 right">
+  <ul #collapsible class="collapsible z-depth-0 right">
     <li>
       <div class="collapsible-header">
         <i class="material-icons">filter_list</i>Filters</div>
@@ -114,14 +123,16 @@ declare var $: any;
     `
   ]
 })
-export class DoorFilterComponent {
-  @Output() filter = new EventEmitter<any>();
-  @Input() filtered: any;
+export class DoorFilterComponent implements AfterViewInit {
+  @Output()
+  filter = new EventEmitter<any>();
+  @Input()
+  filtered: any;
+  @ViewChildren('collapsible', { read: ElementRef })
+  elemsCollapsible: QueryList<ElementRef>;
 
-  constructor() {
-    $(document).ready(function() {
-      $('.collapsible').collapsible();
-    });
+  ngAfterViewInit(): void {
+    this.elemsCollapsible.forEach(el => new M.Collapsible(el.nativeElement, {}));
   }
 
   Filter(mat) {

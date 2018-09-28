@@ -1,11 +1,19 @@
-import { Component, ChangeDetectionStrategy, AfterContentInit } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  AfterContentInit,
+  AfterViewInit,
+  ViewChildren,
+  ElementRef,
+  QueryList
+} from '@angular/core';
 declare var M: any;
 
 @Component({
   selector: 'slider',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <div class="slider fullscreen">
+  <div #slider class="slider fullscreen">
     <ul class="slides">
       <li>
         <img src="https://webquoin.com/catalog/build/assets/nickels%20kitchens/09.jpg">
@@ -33,13 +41,18 @@ declare var M: any;
   </div>
   `
 })
-export class SliderComponent implements AfterContentInit {
+export class SliderComponent implements AfterViewInit {
+  @ViewChildren('slider', { read: ElementRef })
+  slider: QueryList<ElementRef>;
+
   constructor() {}
-  ngAfterContentInit() {
-    document.addEventListener('DOMContentLoaded', function() {
+  ngAfterViewInit(): void {
+    /*     document.addEventListener('DOMContentLoaded', function() {
       const options = {};
       const elems = document.querySelectorAll('.slider');
       const instances = M.Slider.init(elems, options);
-    });
+    }); */
+
+    M.Slider.init(this.slider, {});
   }
 }

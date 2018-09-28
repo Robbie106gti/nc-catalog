@@ -1,5 +1,4 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-declare var $: any;
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
 declare var M: any;
 
 @Component({
@@ -67,7 +66,7 @@ declare var M: any;
     `
   ]
 })
-export class ListEditComponent {
+export class ListEditComponent implements AfterViewInit {
   @Input()
   list: any;
   @Input()
@@ -78,7 +77,9 @@ export class ListEditComponent {
   newList = new EventEmitter<any>();
   edit: any;
 
-  constructor() {
+  constructor() {}
+
+  ngAfterViewInit(): void {
     this.textfields();
   }
 
@@ -123,9 +124,7 @@ export class ListEditComponent {
   }
 
   textfields() {
-    $(document).ready(function() {
-      M.updateTextFields();
-      $('#textarea1').trigger('autoresize');
-    });
+    M.updateTextFields();
+    M.AutoInit();
   }
 }

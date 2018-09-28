@@ -1,4 +1,15 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  AfterContentInit,
+  ViewChildren,
+  ElementRef,
+  QueryList,
+  AfterViewInit
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { User, Favorites } from '../../models/user.model';
 import * as fromServices from '../../services';
@@ -6,7 +17,6 @@ import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
 import * as common from '../../utils/common';
 declare var M: any;
-declare var $: any;
 @Component({
   selector: 'category-view',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -76,7 +86,7 @@ declare var $: any;
     `
   ]
 })
-export class CategoryViewComponent {
+export class CategoryViewComponent implements AfterViewInit {
   user$: Observable<User>;
   userFavs$: Observable<Favorites[]>;
   @Input()
@@ -89,13 +99,16 @@ export class CategoryViewComponent {
   turnOn = new EventEmitter<any>();
   @Output()
   turnOff = new EventEmitter<any>();
+  @ViewChildren('tooltipped', { read: ElementRef })
+  tooltips: QueryList<ElementRef>;
 
   constructor(private store: Store<fromStore.ProductsState>, private firestore: fromServices.FirestoreService) {
     this.user$ = this.store.select(fromStore.getUserData);
     this.userFavs$ = this.store.select(fromStore.getUserFavs);
-    $(document).ready(function() {
-      $('.tooltipped').tooltip();
-    });
+  }
+
+  ngAfterViewInit(): void {
+    const tooltips = M.Tooltip.init(this.tooltips, {});
   }
 
   BookmarkIt(event) {

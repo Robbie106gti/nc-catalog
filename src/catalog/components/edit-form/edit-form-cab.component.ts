@@ -1,8 +1,17 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  AfterViewInit,
+  ViewChildren,
+  ElementRef,
+  QueryList,
+  ViewChild
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-
-declare var $: any;
 declare var M: any;
 
 @Component({
@@ -11,39 +20,70 @@ declare var M: any;
   templateUrl: './edit-form-cab.component.html',
   styles: [
     `
+      .modal {
+        z-index: 100;
+        display: block !important;
+      }
       .modal.bottom-sheet {
         height: 87%;
         max-height: 87%;
+        bottom: auto !important;
       }
     `
   ]
 })
-export class EditFormCabComponent {
+export class EditFormCabComponent implements AfterViewInit {
   form: FormGroup;
-  @Input() content: any;
-  @Input() user: any;
-  @Input() pct: number;
-  @Input() pctfile: string;
-  @Input() url: string;
-  @Input() results$: Observable<any>;
-  @Input() specials: any;
+  @Input()
+  content: any;
+  @Input()
+  user: any;
+  @Input()
+  pct: number;
+  @Input()
+  pctfile: string;
+  @Input()
+  url: string;
+  @Input()
+  results$: Observable<any>;
+  @Input()
+  specials: any;
 
-  @Output() close = new EventEmitter<boolean>();
-  @Output() file = new EventEmitter<any>();
-  @Output() update = new EventEmitter<any>();
-  @Output() search = new EventEmitter<any>();
-  @Output() remove = new EventEmitter<any>();
+  @Output()
+  close = new EventEmitter<boolean>();
+  @Output()
+  file = new EventEmitter<any>();
+  @Output()
+  update = new EventEmitter<any>();
+  @Output()
+  search = new EventEmitter<any>();
+  @Output()
+  remove = new EventEmitter<any>();
 
   cat: string;
   version: string;
 
+  @ViewChildren('tab', { read: ElementRef })
+  elemsTab: QueryList<ElementRef>;
+
+  @ViewChild('modal1', { read: ElementRef })
+  elModal1: ElementRef;
+
+  @ViewChildren('modals', { read: ElementRef })
+  elemsModal: QueryList<ElementRef>;
+  instance: any;
+
   constructor(private fb: FormBuilder) {
     this.ToEdit();
     this.createForm();
-    $(document).ready(function() {
-      $('ul.tabs').tabs();
-    });
     this.version = 'main';
+  }
+
+  ngAfterViewInit(): void {
+    // console.log({ modals: this.elemsModal, tabs: this.elemsTab, modal: this.elModal1 });
+    const modals = M.Modal.init(this.elemsModal, { dismissible: false });
+    const tabs = M.Tabs.init(this.elemsTab, {});
+    this.instance = M.Modal.getInstance(this.elModal1.nativeElement);
   }
 
   setId(id) {
@@ -76,11 +116,7 @@ export class EditFormCabComponent {
   }
 
   ToEdit() {
-    $(document).ready(function() {
-      // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-      $('.modal').modal({ dismissible: false });
-      $('#modal1').modal('open');
-    });
+    // this.instance.open();
   }
 
   onDes(event) {
@@ -108,7 +144,6 @@ export class EditFormCabComponent {
 
   Closed() {
     this.close.emit(true);
-    $('#modal1').modal('close');
   }
 
   OffOn(event) {

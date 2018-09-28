@@ -1,6 +1,4 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-declare var $: any;
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 declare var M: any;
 
 @Component({
@@ -102,46 +100,5 @@ export class EditModalBarComponent {
   @Input()
   user: any;
 
-  constructor() {
-    $(document).ready(function() {
-      // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-      $('.modal').modal();
-    });
-    console.log(this.edit, this.user);
-    // this.Edit(this.edit);
-  }
-
-  Edit() {
-    if (this.edit.user.roles.catEditor) {
-      $('#modal1').modal('open');
-    }
-    $(document).ready(function() {
-      $('input.autocompleteSpec').autocomplete({
-        data: {
-          Apple: null,
-          Microsoft: null,
-          Google: 'https://placehold.it/250x250'
-        },
-        limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-        onAutocomplete: function(val) {
-          // Callback function when value is autcompleted.
-          console.log(val);
-        },
-        minLength: 1 // The minimum length of the input for the autocomplete to start. Default: 1.
-      });
-      $('input.autocompleteNote').autocomplete({
-        data: {
-          Apple: null,
-          Microsoft: null,
-          Google: 'https://placehold.it/250x250'
-        },
-        limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-        onAutocomplete: function(val) {
-          // Callback function when value is autcompleted.
-          console.log(val);
-        },
-        minLength: 1 // The minimum length of the input for the autocomplete to start. Default: 1.
-      });
-    });
-  }
+  constructor() {}
 }

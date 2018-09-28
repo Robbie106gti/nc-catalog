@@ -1,7 +1,13 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import * as fromServices from '../../services';
-import { Observable } from 'rxjs/Observable';
-declare var $: any;
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  AfterViewInit,
+  ElementRef,
+  ViewChildren,
+  QueryList
+} from '@angular/core';
+
 declare var M: any;
 
 @Component({
@@ -10,7 +16,7 @@ declare var M: any;
   template: `
     <div class="card padding unset" *ngIf="content?.addons">
         <h4>Popular Attachments and Applications:</h4>
-        <ul class="collapsible popout" data-collapsible="accordion">
+        <ul  #collapsible class="collapsible popout" data-collapsible="accordion">
             <li *ngFor="let addon of content.addons">
                 <div class="collapsible-header"><addon-title [uid]="addon"></addon-title></div>
                 <div class="collapsible-body"><addon-content [uid]="addon"></addon-content></div>
@@ -29,15 +35,18 @@ declare var M: any;
    </div>
     `
 })
-export class AddCustomComponent {
+export class AddCustomComponent implements AfterViewInit {
   @Input()
   content: any;
   @Input()
   v: any;
+  @ViewChildren('collapsible', { read: ElementRef })
+  elemsCollapsible: QueryList<ElementRef>;
 
-  constructor() {
-    $(document).ready(function() {
-      $('.collapsible').collapsible();
-    });
+  constructor() {}
+
+  ngAfterViewInit(): void {
+    const elems = this.elemsCollapsible;
+    elems.forEach(el => new M.Collapsible(el.nativeElement, {}));
   }
 }

@@ -1,8 +1,5 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
-declare var $: any;
-declare var M: any;
-
 @Component({
   selector: 'edit-cat',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,11 +21,16 @@ declare var M: any;
   ]
 })
 export class EditCatComponent {
-  @Input() item: any;
-  @Input() user: any;
-  @Output() edit = new EventEmitter<any>();
-  @Output() close = new EventEmitter<boolean>();
-  @Output() title = new EventEmitter<boolean>();
+  @Input()
+  item: any;
+  @Input()
+  user: any;
+  @Output()
+  edit = new EventEmitter<any>();
+  @Output()
+  close = new EventEmitter<boolean>();
+  @Output()
+  title = new EventEmitter<boolean>();
   constructor() {}
 
   Edit(e) {

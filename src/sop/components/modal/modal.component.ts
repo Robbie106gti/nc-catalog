@@ -1,5 +1,14 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-declare var $: any;
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  AfterViewInit,
+  ViewChildren,
+  ElementRef,
+  QueryList
+} from '@angular/core';
 declare var M: any;
 
 @Component({
@@ -10,7 +19,7 @@ declare var M: any;
     `
       .new {
         position: fixed;
-        z-index: 999;
+        z-index: 5;
         margin-top: 5%;
         margin-left: 33%;
         width: 33%;
@@ -22,7 +31,7 @@ declare var M: any;
     `
   ]
 })
-export class ModalComponent {
+export class ModalComponent implements AfterViewInit {
   @Input()
   modal: { title: string; action: string; edit?: any };
   @Input()
@@ -41,11 +50,20 @@ export class ModalComponent {
   file = new EventEmitter<any>();
   newCatagory: string;
 
-  constructor() {
-    $(document).ready(function() {
-      $('.tooltipped').tooltip();
-    });
+  @ViewChildren('tooltipped', { read: ElementRef })
+  tooltips: QueryList<ElementRef>;
+
+  constructor() {}
+
+  ngAfterViewInit(): void {
+    /*     document.addEventListener('DOMContentLoaded', function() {
+      const options = {};
+      const elems = document.querySelectorAll('.tooltipped');
+      const instances = M.Tooltip.init(elems, options);
+    }); */
+    const tooltips = M.Tooltip.init(this.tooltips, {});
   }
+
   File(event) {
     console.log(this.modal);
     this.file.emit({ edit: this.modal.edit, file: event, fullName: this.user });

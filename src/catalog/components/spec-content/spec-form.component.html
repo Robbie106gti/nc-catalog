@@ -5,7 +5,7 @@
         <a (click)="Close()" class="secondary-content">
           <i class="material-icons small grey-text pointer">clear</i>
         </a>
-        <ul class="tabs  tabs-fixed-width tab-demo z-depth-1">
+        <ul #tabs class="tabs  tabs-fixed-width tab-demo z-depth-1">
           <li class="tab">
             <a class="brown-text" [ngClass]="{ active: id === 'main' }" (click)="setId('main')">{{ content.title }}</a>
           </li>

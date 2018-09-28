@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, AfterContentInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 declare var M: any;
 
@@ -10,7 +10,7 @@ import { Login } from '../../models/login.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './login-form.html'
 })
-export class LoginFormComponent implements AfterContentInit {
+export class LoginFormComponent implements AfterViewInit {
   @Input()
   loaded: boolean;
   @Input()
@@ -29,7 +29,7 @@ export class LoginFormComponent implements AfterContentInit {
 
   constructor(private fb: FormBuilder) {}
 
-  ngAfterContentInit() {
+  ngAfterViewInit(): void {
     M.updateTextFields();
   }
 
