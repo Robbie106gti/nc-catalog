@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
-declare var M: any;
+import { TextfieldsUpdate } from '../../../app/shared/materialize/selectors';
 
 @Component({
   selector: 'list-edit',
@@ -124,7 +124,6 @@ export class ListEditComponent implements AfterViewInit {
   }
 
   textfields() {
-    M.updateTextFields();
-    M.AutoInit();
+    TextfieldsUpdate();
   }
 }

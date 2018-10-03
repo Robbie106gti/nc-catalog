@@ -33,6 +33,9 @@ export class ImageCardComponent implements AfterViewInit {
   constructor() {}
 
   ngAfterViewInit(): void {
-    this.elemsMaterialboxed.forEach(el => new M.Materialbox(el.nativeElement, {}));
+    const elems = this.elemsMaterialboxed;
+    elems.forEach(el => {
+      const instanceMaterialboxed = new M.Materialbox(el.nativeElement, {});
+    });
   }
 }

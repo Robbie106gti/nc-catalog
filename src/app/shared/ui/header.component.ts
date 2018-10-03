@@ -1,20 +1,10 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  OnChanges,
-  SimpleChanges,
-  AfterContentInit,
-  AfterViewInit,
-  ViewChildren,
-  ElementRef,
-  QueryList
-} from '@angular/core';
-declare var M: any;
+import { Component, ChangeDetectionStrategy, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { Dropdowns, Tooltips } from '../materialize/selectors';
 
 @Component({
   selector: 'app-header',
@@ -29,28 +19,28 @@ import { of } from 'rxjs/observable/of';
       </a>
 
       <ul class="right hide-on-med-and-down">
-        <li><a #dropdown class="dropdown-trigger" data-target="dropdown2"><span>{{ (user$ | async)?.fullName }}</span></a></li>
+        <li><a #dropdown name="dropdown" class="dropdown-trigger" data-target="dropdown2"><span>{{ (user$ | async)?.fullName }}</span></a></li>
         <li >
         <a [routerLink]="[where, 'search']"><i class="material-icons">search</i></a>
         </li>
         <!-- Dropdown Trigger -->
-        <li><a #dropdown class="dropdown-trigger" data-target="dropdown1"><i class="large material-icons">apps</i></a></li>
+        <li><a #dropdown name="dropdown" class="dropdown-trigger" data-target="dropdown1"><i class="large material-icons">apps</i></a></li>
       </ul>
     </div>
     <!-- Dropdown Structure -->
     <ul id="dropdown1" class="dropdown-content uTop">
-      <li #tooltipped class="tooltipped" data-position="bottom" data-tooltip="Catalogue">
+      <li #tooltipped class="tooltipped" data-position="left" data-tooltip="Catalogue">
         <a [routerLink]="['./catalog']" class="right">
           <i class="material-icons blue-grey-text">collections_bookmark</i>
         </a>
       </li>
       <li *ngIf="(user$ | async)?.roles?.sop">
-        <a #tooltipped class="right tooltipped" data-position="bottom" data-tooltip="(SOP) Standard Operating Procedure" [routerLink]="['./sop']">
+        <a #tooltipped class="right tooltipped" data-position="left" data-tooltip="(SOP) Standard Operating Procedure" [routerLink]="['./sop']">
           <i class="material-icons red-text">assignment</i>
         </a>
       </li>
       <li *ngIf="(user$ | async)?.roles?.nickels">
-        <a #tooltipped class="right tooltipped" data-position="bottom" data-tooltip="(MDS) Material Data Sheet" [routerLink]="['./mds']">
+        <a #tooltipped class="right tooltipped" data-position="left" data-tooltip="(MDS) Material Data Sheet" [routerLink]="['./mds']">
           <i class="material-icons orange-text">style</i>
         </a>
       </li>
@@ -59,19 +49,19 @@ import { of } from 'rxjs/observable/of';
     <ul id="dropdown2" class="dropdown-content uTop">
       <li>
         <a [routerLink]="['./profile']" #tooltipped
-        class="right tooltipped" data-position="bottom" data-tooltip="Profile">
+        class="right tooltipped" data-position="left" data-tooltip="Profile">
           <i class="material-icons blue-grey-text left">person</i>Profile
         </a>
       </li>
       <li *ngIf="(user$ | async)?.roles?.nickels">
         <a [routerLink]="['./users']" #tooltipped
-        class="right tooltipped" data-position="bottom" data-tooltip="Profile">
+        class="right tooltipped" data-position="left" data-tooltip="Profile">
           <i class="material-icons blue-grey-text left">recent_actors</i>Users
         </a>
       </li>
       <li class="divider"></li>
       <li>
-        <a #tooltipped class="right tooltipped" data-position="bottom" data-tooltip="Log out" (click)="Logout()">
+        <a #tooltipped class="right tooltipped" data-position="left" data-tooltip="Log out" (click)="Logout()">
           <i class="material-icons left">settings_power</i>Log out
         </a>
       </li>
@@ -97,26 +87,20 @@ export class HeaderComponent implements AfterViewInit, OnChanges {
   icon: Observable<string>;
   where: string;
 
-  @ViewChildren('tooltipped', { read: ElementRef })
-  tooltips: QueryList<ElementRef>;
-
-  @ViewChildren('dropdown', { read: ElementRef })
-  dropdowns: QueryList<ElementRef>;
-
   constructor(private store: Store<fromStore.State>, private router: Router) {
     this.user$ = this.store.select(fromStore.getUserData);
     this.router$ = this.store.select(fromStore.getRouterState);
   }
 
   ngAfterViewInit(): void {
-    const dropdowns = M.Dropdown.init(this.dropdowns, { hover: true });
-    const tooltips = M.Tooltip.init(this.tooltips, {});
+    Dropdowns();
+    Tooltips();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['user$'] || changes['router$']) {
-      const dropdowns = M.Dropdown.init(this.dropdowns, { hover: true });
-      const tooltips = M.Tooltip.init(this.tooltips, {});
+      Dropdowns();
+      Tooltips();
     }
   }
 

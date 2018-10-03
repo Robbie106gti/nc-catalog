@@ -4,7 +4,6 @@ import {
   Output,
   EventEmitter,
   ChangeDetectionStrategy,
-  AfterContentInit,
   ViewChildren,
   ElementRef,
   QueryList,

@@ -11,14 +11,12 @@ import { SliderImagesComponent } from './slider-images/slider-images.component';
 import { AddCustomComponent } from './add-custom/add-custom.component';
 import { VersionsBarComponent } from './versions-bar/versions-bar.component';
 import { ImageBarComponent } from './versions-bar/image-bar.component';
-import { EditModalBarComponent } from './versions-bar/edit-modal-bar.component';
 import { EditFormCabComponent } from './edit-form/edit-form-cab.component';
 import { DropZoneDirective } from './upload-dir/upload-dir.directive';
 import { UploadInputComponent } from './upload-dir/upload-input.component';
 import { LoaderComponent } from './loader/loader.component';
 import { CatContentComponent } from './cat-content/cat-content.component';
 import { GenInfoComponent } from './cat-content/gen-info.component';
-import { SpecFormComponent } from './spec-content/spec-form.component';
 import { VersionsDoorsrComponent } from './versions-bar/versions-doors.component';
 import { DoorFilterComponent } from './filter/door-filter.component';
 import { DoorInfoComponent } from './cat-content/door-info.comonent';
@@ -45,7 +43,6 @@ export const components: any[] = [
   AddCustomComponent,
   VersionsBarComponent,
   ImageBarComponent,
-  EditModalBarComponent,
   EditFormCabComponent,
   EditCatComponent,
   DropZoneDirective,
@@ -53,7 +50,6 @@ export const components: any[] = [
   LoaderComponent,
   CatContentComponent,
   GenInfoComponent,
-  SpecFormComponent,
   VersionsDoorsrComponent,
   DoorFilterComponent,
   DoorInfoComponent,
@@ -80,14 +76,12 @@ export * from './slider-images/slider-images.component';
 export * from './add-custom/add-custom.component';
 export * from './versions-bar/versions-bar.component';
 export * from './versions-bar/image-bar.component';
-export * from './versions-bar/edit-modal-bar.component';
 export * from './edit-form/edit-form-cab.component';
 export * from './upload-dir/upload-dir.directive';
 export * from './upload-dir/upload-input.component';
 export * from './loader/loader.component';
 export * from './cat-content/cat-content.component';
 export * from './cat-content/gen-info.component';
-export * from './spec-content/spec-form.component';
 export * from './versions-bar/versions-doors.component';
 export * from './filter/door-filter.component';
 export * from './cat-content/door-info.comonent';

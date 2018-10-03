@@ -2,11 +2,11 @@ import {
   Component,
   Input,
   ChangeDetectionStrategy,
-  ViewChildren,
-  ElementRef,
   AfterViewInit,
-  QueryList,
-  ViewChild
+  ElementRef,
+  ViewChild,
+  ViewChildren,
+  QueryList
 } from '@angular/core';
 declare var M: any;
 
@@ -15,7 +15,7 @@ declare var M: any;
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
 <div class="card large" *ngIf="param.Version; else cover">
-  <div #carousel class="carousel carousel-slider" data-indicators="true">
+  <div #slider class="carousel carousel-slider" data-indicators="true">
     <div class="carousel-item">
       <h2 class="padding">Spec {{ content.title}} {{ content.versions[param.Version].title }}</h2>
       <span *ngIf="content.versions[param.Version].images; else icon">
@@ -35,7 +35,7 @@ declare var M: any;
 
 <ng-template #cover>
   <div class="card">
-    <div #carousel class="carousel carousel-slider" data-indicators="true">
+    <div #slider class="carousel carousel-slider" data-indicators="true">
       <div class="carousel-item">
         <h2 class="padding">{{ content.title }}</h2>
         <img #materialboxed [src]="content.image" [alt]="content.title" class="responsive-img materialboxed">
@@ -62,17 +62,16 @@ export class SliderImagesComponent implements AfterViewInit {
   content: any;
   @Input()
   param: any;
-  @ViewChildren('carousel', { read: ElementRef })
-  elemsCarousel: QueryList<ElementRef>;
+  @ViewChild('slider', { read: ElementRef })
+  slider: ElementRef;
   @ViewChildren('materialboxed', { read: ElementRef })
   elemsMaterialboxed: QueryList<ElementRef>;
 
   constructor() {}
-
   ngAfterViewInit(): void {
-    // console.log({ carousel: [this.elemsCarousel.nativeElement], boxed: this.elemsMaterialboxed });
-    const elems = new M.Carousel.init(this.elemsCarousel, {});
-    this.elemsMaterialboxed.forEach(el => new M.Materialbox(el.nativeElement, {}));
-    M.AutoInit();
+    M.Carousel.init(this.slider.nativeElement, {});
+    this.elemsMaterialboxed.forEach(el => {
+      const instanceMaterialboxed = new M.Materialbox(el.nativeElement, {});
+    });
   }
 }

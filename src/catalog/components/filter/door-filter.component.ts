@@ -13,6 +13,7 @@ declare var M: any;
 
 @Component({
   selector: 'door-filter',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <ul #collapsible class="collapsible z-depth-0 right">
     <li>

@@ -1,6 +1,7 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, OnInit, AfterViewInit } from '@angular/core';
 import * as fromServices from '../../services';
 import { Observable } from 'rxjs/Observable';
+import { Tooltips } from '../../../app/shared/materialize/selectors';
 
 @Component({
   selector: 'table-item',
@@ -16,14 +17,14 @@ import { Observable } from 'rxjs/Observable';
             </tr>
             </thead>
             <tbody id="tbody">
-                <tr *ngFor="let w of widths.codes"><td>{{w}}"</td><td><ul><li><span class="ordercode" cart="">{{ content.code }}{{w}}{{ v }}</span></li></ul></td></tr>
+                <tr class="tooltipped" *ngFor="let w of widths.codes" data-position="bottom" data-tooltip="returnCode(conent.code,w,v)"><td>{{w}}"</td><td><ul><li><span class="ordercode" cart="">{{ content.code }}{{w}}{{ v }}</span></li></ul></td></tr>
             </tbody>
         </table>
     </div>
 </div>
 `
 })
-export class TableItemComponent implements OnInit {
+export class TableItemComponent implements OnInit, AfterViewInit {
   @Input()
   content: any;
   @Input()
@@ -35,5 +36,13 @@ export class TableItemComponent implements OnInit {
   constructor(private firestore: fromServices.FirestoreService) {}
   ngOnInit() {
     this.width$ = this.firestore.doc$(`/structure/helpers/iwhd/${this.width}`);
+  }
+
+  ngAfterViewInit(): void {
+    Tooltips();
+  }
+
+  returnCode(code, w, v) {
+    return `Add ${code}${w}${v} to your order)`;
   }
 }

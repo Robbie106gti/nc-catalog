@@ -53,6 +53,9 @@ export class ListCardComponent implements AfterViewInit {
   elemsMaterialboxed: QueryList<ElementRef>;
 
   ngAfterViewInit(): void {
-    this.elemsMaterialboxed.forEach(el => new M.Materialbox(el.nativeElement, {}));
+    const elems = this.elemsMaterialboxed;
+    elems.forEach(el => {
+      const instanceMaterialboxed = new M.Materialbox(el.nativeElement, {});
+    });
   }
 }

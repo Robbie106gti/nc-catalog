@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-declare var M: any;
 
 import { Login } from '../../models/login.model';
+declare var M: any;
 
 @Component({
   selector: 'login-form',

@@ -1,15 +1,5 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-  AfterViewInit,
-  ViewChildren,
-  ElementRef,
-  QueryList
-} from '@angular/core';
-declare var M: any;
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
+import { Tooltips, TextfieldsUpdate } from '../../../app/shared/materialize/selectors';
 
 @Component({
   selector: 'modal',
@@ -50,18 +40,11 @@ export class ModalComponent implements AfterViewInit {
   file = new EventEmitter<any>();
   newCatagory: string;
 
-  @ViewChildren('tooltipped', { read: ElementRef })
-  tooltips: QueryList<ElementRef>;
-
   constructor() {}
 
   ngAfterViewInit(): void {
-    /*     document.addEventListener('DOMContentLoaded', function() {
-      const options = {};
-      const elems = document.querySelectorAll('.tooltipped');
-      const instances = M.Tooltip.init(elems, options);
-    }); */
-    const tooltips = M.Tooltip.init(this.tooltips, {});
+    Tooltips();
+    TextfieldsUpdate();
   }
 
   File(event) {
