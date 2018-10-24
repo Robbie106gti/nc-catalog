@@ -29,6 +29,7 @@ import { UidSpecComponent } from './spec-content/uid-spec.component';
 import { UidIwhdComponent } from './spec-content/uid-iwhd.component';
 import { AddonLiComponent } from './add-custom/addon-li.component';
 import { AddonContentComponent } from './add-custom/addon-content.component';
+import { TrimMoldingContentComponent } from './cat-content/trimsNmoldings.component';
 
 export const components: any[] = [
   CategoryItemComponent,
@@ -60,7 +61,8 @@ export const components: any[] = [
   UidSpecComponent,
   UidIwhdComponent,
   AddonLiComponent,
-  AddonContentComponent
+  AddonContentComponent,
+  TrimMoldingContentComponent
 ];
 
 // export * from ''
@@ -94,3 +96,4 @@ export * from './spec-content/uid-spec.component';
 export * from './spec-content/uid-iwhd.component';
 export * from './add-custom/addon-li.component';
 export * from './add-custom/addon-content.component';
+export * from './cat-content/trimsNmoldings.component';
