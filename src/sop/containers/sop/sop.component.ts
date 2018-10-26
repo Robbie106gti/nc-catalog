@@ -119,6 +119,7 @@ export class SopComponent {
   }
 
   Add(event) {
+    console.log(event);
     this.store.dispatch({ type: fromStore.ADD_TO_SOP, payload: event });
   }
 

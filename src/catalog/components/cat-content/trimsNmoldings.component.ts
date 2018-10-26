@@ -18,7 +18,7 @@ declare var M: any;
   template: `
 <div class="col s12 m6">
   <description-card [content]="content"></description-card>
-  <div class="card-panel grey lighten-3 bullet">
+  <div class="card-panel grey lighten-3">
     <span class="card-title">
       <h4>Standards</h4>
     </span>

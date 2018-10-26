@@ -73,6 +73,7 @@ export class SopModalComponent {
   }
   Des(event) {
     this.modal.edit = event;
+    console.log(this.modal);
   }
   File(event) {
     this.file.emit({ file: event, fullName: this.user, dir: `/${this.sop.sub}/${this.sop.title}` });
