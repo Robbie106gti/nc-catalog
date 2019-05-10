@@ -76,6 +76,7 @@ export class ListEditComponent implements AfterViewInit {
   @Output()
   newList = new EventEmitter<any>();
   edit: any;
+  id: any;
 
   constructor() {}
 
@@ -98,9 +99,10 @@ export class ListEditComponent implements AfterViewInit {
   }
 
   Edit(li) {
-    this.edit = li;
+    this.edit = li; 
+      this.id = true;
     // console.log(this.edit);
-    this.list = this.list.filter(item => item !== li);
+    // this.list = this.list.filter(item => item !== li);
     setTimeout(this.textfields(), 1000);
   }
 
@@ -118,7 +120,10 @@ export class ListEditComponent implements AfterViewInit {
   }
 
   New() {
-    this.list.push(this.edit);
+    console.log(this.edit)
+
+    this.id ? null : this.list.push(this.edit);
+    this.id = false;
     this.newList.emit(this.list);
     this.edit = null;
   }
