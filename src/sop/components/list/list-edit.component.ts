@@ -1,6 +1,5 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-declare var $: any;
-declare var M: any;
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
+import { TextfieldsUpdate } from '../../../app/shared/materialize/selectors';
 
 @Component({
   selector: 'list-edit',
@@ -67,7 +66,7 @@ declare var M: any;
     `
   ]
 })
-export class ListEditComponent {
+export class ListEditComponent implements AfterViewInit {
   @Input()
   list: any;
   @Input()
@@ -77,16 +76,17 @@ export class ListEditComponent {
   @Output()
   newList = new EventEmitter<any>();
   edit: any;
+  exists: any = false;
 
   constructor() {
+  }
+
+  ngAfterViewInit(): void {
     this.textfields();
   }
 
-  just() {
-    console.log(this.images);
-  }
-
   Add() {
+    this.exists = false;
     this.edit = new Object();
     setTimeout(this.textfields(), 1000);
   }
@@ -96,10 +96,17 @@ export class ListEditComponent {
     this.newList.emit(this.list);
   }
 
+  RemoveImage(li) {
+    this.edit =li;
+    this.exists = true;
+    delete this.edit.image;
+  }
+
   Edit(li) {
-    this.edit = li;
+    this.exists = true;
+    this.edit = li; 
     // console.log(this.edit);
-    this.list = this.list.filter(item => item !== li);
+    // this.list = this.list.filter(item => item !== li);
     setTimeout(this.textfields(), 1000);
   }
 
@@ -117,15 +124,15 @@ export class ListEditComponent {
   }
 
   New() {
-    this.list.push(this.edit);
+    // console.log(this.edit)
+    this.exists ? null : this.list.push(this.edit);
+    this.exists = false;
     this.newList.emit(this.list);
     this.edit = null;
   }
 
   textfields() {
-    $(document).ready(function() {
-      M.updateTextFields();
-      $('#textarea1').trigger('autoresize');
-    });
+    TextfieldsUpdate();
+    return null;
   }
 }

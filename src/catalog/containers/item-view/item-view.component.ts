@@ -4,8 +4,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
 import { Catalog } from '../../models/catalog.model';
-import { Cabinets } from '../../models/cabinets.model';
-import { tap, filter, take } from 'rxjs/operators';
 
 @Component({
   selector: 'category',

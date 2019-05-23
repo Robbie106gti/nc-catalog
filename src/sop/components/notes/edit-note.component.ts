@@ -1,5 +1,4 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-declare var $: any;
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
 declare var M: any;
 
 @Component({
@@ -38,17 +37,17 @@ declare var M: any;
   </div>
   `
 })
-export class EditNoteComponent {
+export class EditNoteComponent implements AfterViewInit {
   @Input()
   notes: any;
   edit: any;
   @Output()
   newNotes = new EventEmitter<any>();
 
-  constructor() {
-    $(document).ready(function() {
-      M.textareaAutoResize($('#textarea1'));
-    });
+  constructor() {}
+
+  ngAfterViewInit(): void {
+    M.updateTextFields();
   }
 
   Add() {
@@ -58,10 +57,7 @@ export class EditNoteComponent {
   Edit(event) {
     this.edit = event;
     this.notes = this.notes.filter(item => item !== event);
-    $(document).ready(function() {
-      $('#textarea1').val(event.content);
-      M.textareaAutoResize($('#textarea1'));
-    });
+    M.updateTextFields();
   }
 
   Reordered(event) {

@@ -42,8 +42,9 @@
       </div>
     </div>
     <div class="input-field col s4">
+      <span *ngIf="edit?.image"><i class="material-icons pointer" (click)="RemoveImage(edit)">remove_circle_outline</i></span>
       <div class="ddIcon btn">
-        <span (click)="just()">
+        <span>
           <i class="material-icons left">image</i> {{ edit?.image?.title || 'Add a Image' }}</span>
         <div class="ddIcon-content grey-text text-darken-3 mt2">
           <ul class="collection">
@@ -56,9 +57,15 @@
     </div>
     <div class="col s12">
       <button class="btn right" [disabled]="(!edit.title && !edit.text)" (click)="New()">
-        <span>
-          <i class="material-icons left">add</i> Add to list</span>
+        <div *ngIf="exists === false; then NewBlock else UpdateBlock"></div>
       </button>
     </div>
   </div>
 </div>
+
+<ng-template #NewBlock>
+    <span >
+      <i class="material-icons left">add</i> Add to list</span></ng-template>
+      <ng-template #UpdateBlock>
+          <span >
+            <i class="material-icons left">add</i> Update item</span></ng-template>

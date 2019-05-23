@@ -15,7 +15,7 @@ import { User } from '../../models/user.model';
         <div class="container">
             <a routerLink="../" class="right no-print" queryParamsHandling="merge"><i class="small material-icons">arrow_back</i></a>
             <div id="topic">
-                <h3 id="topic">Category: {{ content.sub | titlecase }}</h3>
+                <h3 id="topic">Category: {{ TransformCat(content.sub) | titlecase }}</h3>
                 <span *ngIf="(version$ | async) as version">
                   <h4 id="topic" *ngIf="version.mat !== 'metal'">Item: {{ content.title | titlecase }}<span *ngIf="version.wr === 'true'"> WR</span><span *ngIf="version.pc"> {{version.pc}}PC</span> <span *ngIf="version.mat">- {{ version.mat | titlecase }}</span></h4>
                   <h4 id="topic" *ngIf="version.mat === 'metal'">Item: {{ content.title }}</h4></span><br>
@@ -56,6 +56,11 @@ export class SpecCatComponent implements OnInit {
     this.user$ = this.store.select(fromStore.getUserData);
     this.content$ = this.store.select(fromStore.getSelectedCategoryItem).take(1);
     this.version$ = this.store.select(fromStore.getRouterQueryParams);
+  }
+
+  TransformCat(str) {
+    str = str.replace(/-/g, ' ');
+    return str;
   }
 
   Edit(event) {

@@ -1,8 +1,8 @@
-<div id="modal1" class="modal bottom-sheet" *ngIf="(results$ | async) as results">
+<div #modal1 #modals id="modal1" class="modal bottom-sheet" *ngIf="(results$ | async) as results">
   <form [formGroup]="form" novalidate>
     <div class="row">
       <div class="col s12">
-        <ul class="tabs tabs-fixed-width">
+        <ul #tab class="tabs tabs-fixed-width">
           <li class="tab col">
             <a class="brown-text" [ngClass]="{ active: id === 'main' }" (click)="setId('main')">{{content.title}}</a>
           </li>

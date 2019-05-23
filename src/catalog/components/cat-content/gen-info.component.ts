@@ -1,7 +1,13 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-declare var $: any;
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  AfterViewInit,
+  ElementRef,
+  ViewChildren,
+  QueryList
+} from '@angular/core';
 declare var M: any;
-
 @Component({
   selector: 'gen-info',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,7 +24,7 @@ declare var M: any;
                 </div>
                 <div class="">
                     <div class="card-panel" *ngFor="let img of att.images">
-                        <img class="responsive-img materialboxed" [src]="img.image" [alt]="img.title">
+                        <img #materialboxed class="responsive-img materialboxed" [src]="img.image" [alt]="img.title">
                     </div>
                 </div>
             </div>
@@ -28,20 +34,27 @@ declare var M: any;
     `,
   styles: [
     `
-    .cards-2 {
-      display: -ms-grid;
-      display: grid;
-      -ms--ms-grid-columns: 65% 35%;
+      .cards-2 {
+        display: -ms-grid;
+        display: grid;
+        -ms--ms-grid-columns: 65% 35%;
         grid-template-columns: 65% 35%;
-    }
+      }
     `
   ]
 })
-export class GenInfoComponent {
-  @Input() content: any;
-  constructor() {
-    $(document).ready(function() {
-      $('.materialboxed').materialbox();
+export class GenInfoComponent implements AfterViewInit {
+  @Input()
+  content: any;
+  @ViewChildren('materialboxed', { read: ElementRef })
+  elemsMaterialboxed: QueryList<ElementRef>;
+
+  constructor() {}
+
+  ngAfterViewInit(): void {
+    const elems = this.elemsMaterialboxed;
+    elems.forEach(el => {
+      const instanceMaterialboxed = new M.Materialbox(el.nativeElement, {});
     });
   }
 }

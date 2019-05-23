@@ -30,7 +30,6 @@
               "src/sass/styles.scss"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
               "node_modules/materialize-css/dist/js/materialize.min.js"
             ]
           },
@@ -81,7 +80,6 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
               "node_modules/materialize-css/dist/js/materialize.min.js"
             ],
             "styles": [

@@ -11,8 +11,7 @@ import { of } from 'rxjs/observable/of';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <i class="material-icons pointer offset" (click)="Edit({content: content})">edit</i>
-  <edit-form-cab
-  *ngIf="editing" [specials]="specials$ | async"
+  <edit-form-cab *ngIf="editing" [specials]="specials$ | async"
   [content]="content" [user]="user" [pct]="pct" [pctfile]="pctfile" [url]="downloadURL" [results$]="results$"
   (close)="Close($event)" (file)="UploadFile($event)" (update)="Update($event)" (search)="Search($event)" (remove)="Remove($event)"
   ></edit-form-cab>
@@ -28,7 +27,7 @@ import { of } from 'rxjs/observable/of';
   ]
 })
 export class FormCabComponent {
-  editing: Boolean;
+  editing: Boolean = false;
   @Input()
   content: any;
   @Input()

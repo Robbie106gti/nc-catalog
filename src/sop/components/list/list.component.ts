@@ -1,4 +1,13 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  ViewChildren,
+  ElementRef,
+  AfterViewInit,
+  QueryList
+} from '@angular/core';
+declare var M: any;
 
 @Component({
   selector: 'list-card',
@@ -9,7 +18,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
     <li class="collection-header"><h4>{{ listTitle }}</h4></li>
     <li class="collection-item avatar" [ngClass]="{ ' margin-image': li.image?.image }" *ngFor="let li of list">
       <i class="material-icons circle no-print">{{ li.icon || 'label' }}</i>
-      <div class="secondary-content" *ngIf="li.image"><img class="responsive-img materialboxed" [src]="li.image.image" [alt]="li.image.title"/></div>
+      <div class="secondary-content" *ngIf="li.image"><img #materialboxed class="responsive-img materialboxed" [src]="li.image.image" [alt]="li.image.title"/></div>
       <span class="title"><b>{{ li.title }}:</b></span>
       <p >{{ li.text }}</p>
     </li>
@@ -35,9 +44,18 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
     `
   ]
 })
-export class ListCardComponent {
+export class ListCardComponent implements AfterViewInit {
   @Input()
   list: any;
   @Input()
   listTitle: string;
+  @ViewChildren('materialboxed', { read: ElementRef })
+  elemsMaterialboxed: QueryList<ElementRef>;
+
+  ngAfterViewInit(): void {
+    const elems = this.elemsMaterialboxed;
+    elems.forEach(el => {
+      const instanceMaterialboxed = new M.Materialbox(el.nativeElement, {});
+    });
+  }
 }

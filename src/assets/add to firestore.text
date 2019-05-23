@@ -1,0 +1,18 @@
+
+import * as fromServices from '../../services';
+import * as trimsNmoldings from '../../../assets/json/trims moldings.json';
+
+trims: any = trimsNmoldings['Trims Moldings'];
+constructor(private firestore: fromServices.FirestoreService) { }
+
+addTrims() {
+  this.trims.forEach(trim =>
+    this.firestore.add('structure/category/trims and moldings', {
+      ...trim,
+      UpdatedBy: 'Robert Leeuwerink',
+      CreatedBy: 'Robert Leeuwerink'
+    })
+  );
+}
+
+<button (click)="addTrims()" class="btn big red">Add trims</button>

@@ -1,5 +1,13 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-declare var $: any;
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  AfterViewInit,
+  ViewChildren,
+  ElementRef,
+  QueryList
+} from '@angular/core';
+
 declare var M: any;
 
 @Component({
@@ -8,7 +16,7 @@ declare var M: any;
   template: `
 <div class="card">
   <div class="card-image">
-    <img [src]="card.image" [alt]="card.title" class="responsive-img materialboxed">
+    <img #materialboxed [src]="card.image" [alt]="card.title" class="responsive-img materialboxed">
   </div>
   <div class="card-content">
     <span class="card-title">{{ card.title }}</span>
@@ -16,13 +24,18 @@ declare var M: any;
 </div>
 `
 })
-export class ImageCardComponent {
+export class ImageCardComponent implements AfterViewInit {
   @Input()
   card: any;
+  @ViewChildren('materialboxed', { read: ElementRef })
+  elemsMaterialboxed: QueryList<ElementRef>;
 
-  constructor() {
-    $(document).ready(function() {
-      $('.materialboxed').materialbox();
+  constructor() {}
+
+  ngAfterViewInit(): void {
+    const elems = this.elemsMaterialboxed;
+    elems.forEach(el => {
+      const instanceMaterialboxed = new M.Materialbox(el.nativeElement, {});
     });
   }
 }

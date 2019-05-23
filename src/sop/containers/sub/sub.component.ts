@@ -56,11 +56,11 @@ export class SubComponent {
     this.modal = { title: 'Edit Category', action: event.title, edit: event };
     this.store.dispatch({ type: fromStore.UPLOAD_SUCCESS, payload: { bytesTransferred: 1100, totalBytes: 1100 } });
     this.store.dispatch({ type: fromStore.UPLOAD_URL_SUCCESS, payload: { url: event.image } });
-    console.log(event);
+    // console.log(event);
   }
   Edited(event) {
     this.store.dispatch({ type: fromStore.UPDATE_SOP_TI, payload: event });
-    console.log(event);
+    // console.log(event);
     this.add = false;
   }
 
@@ -75,13 +75,13 @@ export class SubComponent {
 
   New(event) {
     event = { ...event, name: this.file.name, size: this.file.size, type: this.file.type };
-    console.log(event);
+    // console.log(event);
     this.store.dispatch(new fromStore.AddSop(event));
     this.add = false;
   }
 
   Image(event) {
-    console.log(event);
+    // console.log(event);
     event = { ...event, dir: `/${event.edit.title}` };
     this.file = event.file;
     this.store.dispatch(new fromStore.Upload(event));

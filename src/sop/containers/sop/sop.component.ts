@@ -98,11 +98,11 @@ export class SopComponent {
   }
 
   TableRemove(event) {
-    console.log(event);
+    // console.log(event);
   }
 
   NewTitle(event) {
-    console.log(event);
+    // console.log(event);
     this.store.dispatch({
       type: fromStore.ADD_TO_SOP,
       payload: { ...event, action: 'ListTitle' }
@@ -110,7 +110,7 @@ export class SopComponent {
   }
 
   Notes(event) {
-    console.log(event);
+    // console.log(event);
     this.store.dispatch({ type: fromStore.ADD_TO_SOP, payload: event });
   }
 
@@ -119,6 +119,7 @@ export class SopComponent {
   }
 
   Add(event) {
+    console.log(event);
     this.store.dispatch({ type: fromStore.ADD_TO_SOP, payload: event });
   }
 
