@@ -38,7 +38,7 @@ export class CatEffects {
   @Effect()
   add_cat$ = this.actions$.ofType(catActions.ADD_CAT_SUCCESS).pipe(
     switchMap((action: Payload) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       const cat = {
         title: action.payload.title,
         createdBy: action.payload.fullName,
@@ -57,7 +57,7 @@ export class CatEffects {
       return this.store.select(fromStore.getUploadUrl).pipe(
         take(1),
         map(url => {
-          console.log(action.payload, url);
+          // console.log(action.payload, url);
           let cat;
           if (action.payload.remove) {
             this.firestore.delete(`sops/${action.payload.edit.id}`);

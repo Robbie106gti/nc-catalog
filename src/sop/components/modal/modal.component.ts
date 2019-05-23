@@ -48,7 +48,7 @@ export class ModalComponent implements AfterViewInit {
   }
 
   File(event) {
-    console.log(this.modal);
+    // console.log(this.modal);
     this.file.emit({ edit: this.modal.edit, file: event, fullName: this.user });
   }
   Add() {

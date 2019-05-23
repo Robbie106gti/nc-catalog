@@ -36,7 +36,7 @@ export class MainComponent {
   }
 
   Edit(event) {
-    console.log(event);
+    // console.log(event);
     this.add = true;
     this.modal = { title: 'Edit Category', action: event.title, edit: event };
     this.store.dispatch({ type: fromStore.UPLOAD_SUCCESS, payload: { bytesTransferred: 1100, totalBytes: 1100 } });
