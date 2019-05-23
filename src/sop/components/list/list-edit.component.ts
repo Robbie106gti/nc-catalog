@@ -133,5 +133,6 @@ export class ListEditComponent implements AfterViewInit {
 
   textfields() {
     TextfieldsUpdate();
+    return null;
   }
 }
