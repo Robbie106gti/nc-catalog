@@ -4,8 +4,8 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   selector: 'app-footer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <footer class="page-footer brown darken-3 no-print">
-  <!-- <div class="container">
+    <footer class="page-footer brown darken-3 no-print">
+      <!-- <div class="container">
         <div class="row">
           <div class="col l6 s12">
             <h5 class="white-text">Footer Content</h5>
@@ -24,10 +24,10 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
       </div> -->
       <div class="footer-copyright container">
         <div class="row valign-wrapper">
-        <span class="center-align">© 2018 Copyright Nickels Cabinets</span>
-       <!-- <a class="grey-text text-lighten-4 right" href="https://nickels-catalog.firebaseapp.com/">Start Catalog</a> -->
+          <span class="center-align">© 2019 Copyright Nickels Cabinets</span>
+          <!-- <a class="grey-text text-lighten-4 right" href="https://nickels-catalog.firebaseapp.com/">Start Catalog</a> -->
         </div>
-       <div class="right"><small>Version 0.1.2.1 @ Alpha</small></div>
+        <div class="right"><small>Version 0.2.2.1 @ Beta</small></div>
       </div>
       <a id="BottomPage"></a>
     </footer>
