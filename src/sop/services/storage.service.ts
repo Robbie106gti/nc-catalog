@@ -15,7 +15,7 @@ export class StorageService {
   ) {}
 
   upload(event) {
-    console.log(event);
+    // console.log(event);
     const file = event.file;
     const newFileName = event.file.replace ? file.name : `${new Date().getTime()}_${file.name}`;
     // The storage path

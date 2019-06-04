@@ -76,19 +76,17 @@ export class ListEditComponent implements AfterViewInit {
   @Output()
   newList = new EventEmitter<any>();
   edit: any;
-  id: any;
+  exists: any = false;
 
-  constructor() {}
+  constructor() {
+  }
 
   ngAfterViewInit(): void {
     this.textfields();
   }
 
-  just() {
-    console.log(this.images);
-  }
-
   Add() {
+    this.exists = false;
     this.edit = new Object();
     setTimeout(this.textfields(), 1000);
   }
@@ -98,9 +96,15 @@ export class ListEditComponent implements AfterViewInit {
     this.newList.emit(this.list);
   }
 
+  RemoveImage(li) {
+    this.edit =li;
+    this.exists = true;
+    delete this.edit.image;
+  }
+
   Edit(li) {
+    this.exists = true;
     this.edit = li; 
-      this.id = true;
     // console.log(this.edit);
     // this.list = this.list.filter(item => item !== li);
     setTimeout(this.textfields(), 1000);
@@ -120,15 +124,15 @@ export class ListEditComponent implements AfterViewInit {
   }
 
   New() {
-    console.log(this.edit)
-
-    this.id ? null : this.list.push(this.edit);
-    this.id = false;
+    // console.log(this.edit)
+    this.exists ? null : this.list.push(this.edit);
+    this.exists = false;
     this.newList.emit(this.list);
     this.edit = null;
   }
 
   textfields() {
     TextfieldsUpdate();
+    return null;
   }
 }

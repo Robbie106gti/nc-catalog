@@ -81,7 +81,7 @@ export class SopEffects {
       return this.store.select(fromStore.getUploadUrl).pipe(
         take(1),
         map(url => {
-          console.log(action.payload, url);
+          // console.log(action.payload, url);
           let cat;
           if (action.payload.remove) {
             this.firestore.delete(`sops/${action.payload.edit.idCat}/entities/${action.payload.edit.id}`);
@@ -236,7 +236,7 @@ export class SopEffects {
     tables.start = str.split(/<table/);
     tables.start.forEach(tab => {
       if (tab === '') return;
-      console.log(tab);
+      // console.log(tab);
       tab = tab.match(/<tr/) ? `<table class="striped highlight responsive-table" ${tab}` : tab;
       if (tab.match(/<th/) && !tab.match(/<theader/)) {
         const table = { tbody: [], trs: [], newtrs: [], newTableArr: [], newTable: '' };
@@ -250,7 +250,7 @@ export class SopEffects {
         table.newTableArr.push(table.tbody[0]);
         table.newtrs.forEach(tr => table.newTableArr.push(tr));
         table.newTable = table.newTableArr.join('');
-        console.log(table);
+        // console.log(table);
         tab = table.newTable;
       }
       tables.cleaned.push(tab);

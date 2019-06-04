@@ -48,10 +48,10 @@ export class ImageUploadComponent {
     // The File object
     const file2 = event.item(0);
     this.fileName = file2.name;
-    console.log(file2);
+    // console.log(file2);
     // Client-side validation example
     if (file2.type.split('/')[0] !== 'image') {
-      console.error('unsupported file type :( ');
+      // console.error('unsupported file type :( ');
       return;
     }
     const config = {

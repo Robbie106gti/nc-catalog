@@ -73,7 +73,7 @@ export class SopModalComponent {
   }
   Des(event) {
     this.modal.edit = event;
-    console.log(this.modal);
+    // console.log(this.modal);
   }
   File(event) {
     this.file.emit({ file: event, fullName: this.user, dir: `/${this.sop.sub}/${this.sop.title}` });
@@ -118,7 +118,7 @@ export class SopModalComponent {
     } else {
       this.sop.imageimportant = this.sop.imageimportant ? false : true;
     }
-    console.log(this.sop.imageimportant);
+    // console.log(this.sop.imageimportant);
     this.mainImage.emit({
       fullName: this.user,
       sop: this.sop,

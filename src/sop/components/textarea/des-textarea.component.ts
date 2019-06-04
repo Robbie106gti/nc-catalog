@@ -5,7 +5,7 @@ import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter } from 
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <div *ngIf="title" class="input-field col {{ size || 's6' }}" >
-    <textarea id="textarea1" [(ngModel)]="textarea" class="materialize-textarea" (keydown.enter)="Des()"></textarea>
+    <textarea id="textarea1" [(ngModel)]="textarea" class="materialize-textarea" (blur)="Des()"></textarea>
     <label for="textarea1">{{ title }}</label>
   </div>`
 })
