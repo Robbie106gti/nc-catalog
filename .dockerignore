@@ -2,3 +2,4 @@ node_modules
 .firebase
 .vscode
 e2e
+npm-debug.log
