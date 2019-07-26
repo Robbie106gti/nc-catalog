@@ -88,6 +88,13 @@ export function reducer(state = initialState, action: fromSop.SopAction): SopSta
         ...state
       };
     }
+
+    case fromSop.MOVE_SOP_TI_SUCCESS: {
+      const item = action.payload;
+      return {
+        ...state
+      };
+    }
   }
 
   return state;

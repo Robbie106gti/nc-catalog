@@ -62,6 +62,13 @@ export class ModalComponent implements AfterViewInit {
       imageNew: this.url
     });
   }
+  Move() {
+    console.log({
+      edit: this.modal.edit,
+      fullName: this.user,
+      imageNew: this.url
+    })
+  }
   Close() {
     this.close.emit(false);
   }

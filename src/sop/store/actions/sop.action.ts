@@ -75,6 +75,24 @@ export class UpdateSopTIsuccess implements Action {
   constructor(public payload: any) {}
 }
 
+// move item
+export const MOVE_SOP_TI = '[SOP] Move SOP title & image';
+export const MOVE_SOP_TI_FAIL = '[SOP] Move SOP title & image fail';
+export const MOVE_SOP_TI_SUCCESS = '[SOP] Move SOP title & image success';
+
+export class MoveSopTI implements Action {
+  readonly type = MOVE_SOP_TI;
+  constructor(public payload: any) {}
+}
+export class MoveSopTIfail implements Action {
+  readonly type = MOVE_SOP_TI_FAIL;
+  constructor(public payload: any) {}
+}
+export class MoveSopTIsuccess implements Action {
+  readonly type = MOVE_SOP_TI_SUCCESS;
+  constructor(public payload: any) {}
+}
+
 // delete items
 
 // action types
@@ -87,4 +105,7 @@ export type SopAction =
   | LoadSopsSuccess
   | UpdateSopTI
   | UpdateSopTIfail
-  | UpdateSopTIsuccess;
+  | UpdateSopTIsuccess
+  | MoveSopTI
+  | MoveSopTIfail
+  | MoveSopTIsuccess;

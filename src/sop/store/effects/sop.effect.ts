@@ -102,6 +102,32 @@ export class SopEffects {
   );
 
   @Effect()
+  move_sop_ti$ = this.actions$.ofType(sopActions.MOVE_SOP_TI).pipe(
+    switchMap((action: Payload) => {
+      return this.store.select(fromStore.getUploadUrl).pipe(
+        take(1),
+        map(url => {
+          // console.log(action.payload, url);
+          let cat;
+          if (action.payload.remove) {
+            this.firestore.delete(`sops/${action.payload.edit.idCat}/entities/${action.payload.edit.id}`);
+            cat = 'removed';
+          } else {
+            cat = {
+              title: action.payload.titleNew,
+              updatedBy: action.payload.fullName,
+              image: action.payload.imageNew
+            };
+            this.firestore.update(`sops/${action.payload.edit.idCat}/entities/${action.payload.edit.id}`, cat);
+          }
+          return new fromStore.MoveSopTIsuccess({ ...cat, edit: action.payload.edit });
+        }),
+        catchError(error => of(new fromStore.MoveSopTIfail(error)))
+      );
+    })
+  );
+
+  @Effect()
   add_to_sop$ = this.actions$.ofType(sopActions.ADD_TO_SOP).pipe(
     switchMap((action: Payload) => {
       return this.store.select(fromStore.getSelectedSop).pipe(

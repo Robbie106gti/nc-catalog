@@ -16,11 +16,12 @@
 </div>
 
 <ng-template #edit>
-  <button class="waves-effect waves-green btn deep-orange darken-4 tooltipped" (click)="Remove()" #tooltipped
+  <button class="waves-effect waves-green btn deep-orange darken-4 tooltipped" disabled (click)="Remove()" #tooltipped
     data-position="bottom" data-tooltip="This will remove the item or catagory with everything attached!">
     <i class="material-icons left">delete_forever</i>Remove
   </button>
-  <button class="waves-effect waves-green btn red right" (click)="Edit()" [disabled]="!url">
-    <i class="material-icons left">edit</i>Edit
+  <move-btn (Move)="move($event)"></move-btn>
+  <button class="waves-effect waves-green btn green right" disabled (click)="Edit()" >
+    <i class="material-icons left">save</i>Save
   </button>
 </ng-template>
