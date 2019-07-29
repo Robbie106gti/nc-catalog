@@ -10,12 +10,16 @@ export const Tooltips = function tooltips() {
 };
 
 export const Dropdowns = function dropdowns() {
-  document.addEventListener('DOMContentLoaded', function() {
-    const options = { hover: true };
-    const elems = document.querySelectorAll('.dropdown-trigger');
-    // console.log(elems);
-    const instances = M.Dropdown.init(elems, options);
-  });
+  try {
+    document.addEventListener('DOMContentLoaded', function() {
+      const options = { hover: true };
+      const elems = document.querySelectorAll('.dropdown-trigger');
+      const instances = M.Dropdown.init(elems, options);
+      return elems;
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const Boxed = function boxed() {

@@ -3,25 +3,43 @@
   <div class="modal-content">
     <i (click)="Close()" class="material-icons left right pointer">close</i>
     <h4>{{ modal.title }}</h4>
-    <hr>
+    <hr />
     <div class="row">
       <input-add [title]="modal.action" [size]="'s8'" (name)="Name($event)"></input-add>
-      <image-upload [size]="'s8'" [fileName]="'replace'" [title]="'Upload image'" [url]="url" [pct]="pct" (file)="File($event)"></image-upload>
+      <image-upload
+        [size]="'s8'"
+        [fileName]="'replace'"
+        [title]="'Upload image'"
+        [url]="url"
+        [pct]="pct"
+        (file)="File($event)"
+      ></image-upload>
     </div>
   </div>
   <div class="modal-footer">
-    <button *ngIf="!modal.action; else edit" class="waves-effect waves-green btn red right" (click)="Add()" [disabled]="!url">
-      <i class="material-icons left">add</i>Add</button>
+    <button
+      *ngIf="!modal.action; else edit"
+      class="waves-effect waves-green btn red right"
+      (click)="Add()"
+      [disabled]="!url"
+    >
+      <i class="material-icons left">add</i>Add
+    </button>
   </div>
 </div>
 
 <ng-template #edit>
-  <button class="waves-effect waves-green btn deep-orange darken-4 tooltipped" disabled (click)="Remove()" #tooltipped
-    data-position="bottom" data-tooltip="This will remove the item or catagory with everything attached!">
+  <button
+    class="waves-effect waves-green btn deep-orange darken-4 tooltipped"
+    (click)="Remove()"
+    #tooltipped
+    data-position="bottom"
+    data-tooltip="This will remove the item or catagory with everything attached!"
+  >
     <i class="material-icons left">delete_forever</i>Remove
   </button>
-  <move-btn (Move)="move($event)"></move-btn>
-  <button class="waves-effect waves-green btn green right" disabled (click)="Edit()" >
+  <move-btn *ngIf="modal.edit.sub !== 'main'" (move)="Move($event)"></move-btn>
+  <button class="waves-effect waves-green btn green right" (click)="Edit()">
     <i class="material-icons left">save</i>Save
   </button>
 </ng-template>

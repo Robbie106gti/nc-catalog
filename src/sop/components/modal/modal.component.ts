@@ -22,25 +22,19 @@ import { Tooltips, TextfieldsUpdate } from '../../../app/shared/materialize/sele
   ]
 })
 export class ModalComponent implements AfterViewInit {
-  @Input()
-  modal: { title: string; action: string; edit?: any };
-  @Input()
-  url: string;
-  @Input()
-  pct: string;
-  @Input()
-  user: string;
-  @Output()
-  close = new EventEmitter<boolean>();
-  @Output()
-  add = new EventEmitter<any>();
-  @Output()
-  edited = new EventEmitter<any>();
-  @Output()
-  file = new EventEmitter<any>();
+  @Input() modal: { title: string; action: string; edit?: any };
+  @Input() url: string;
+  @Input() pct: string;
+  @Input() user: string;
+  @Output() close = new EventEmitter<boolean>();
+  @Output() add = new EventEmitter<any>();
+  @Output() edited = new EventEmitter<any>();
+  @Output() file = new EventEmitter<any>();
+  @Output() movesop = new EventEmitter<any>();
+  @Output() del = new EventEmitter<any>();
   newCatagory: string;
 
-  constructor() {}
+  constructor() { }
 
   ngAfterViewInit(): void {
     Tooltips();
@@ -62,13 +56,16 @@ export class ModalComponent implements AfterViewInit {
       imageNew: this.url
     });
   }
-  Move() {
-    console.log({
+
+  Move(event) {
+    const move = {
       edit: this.modal.edit,
       fullName: this.user,
-      imageNew: this.url
-    })
+      newCat: event
+    };
+    return this.movesop.emit(move);
   }
+
   Close() {
     this.close.emit(false);
   }
@@ -76,6 +73,6 @@ export class ModalComponent implements AfterViewInit {
     this.newCatagory = event;
   }
   Remove() {
-    this.edited.emit({ edit: this.modal.edit, fullName: this.user, remove: 'true' });
+    this.del.emit({ edit: this.modal.edit, fullName: this.user, remove: 'true' });
   }
 }

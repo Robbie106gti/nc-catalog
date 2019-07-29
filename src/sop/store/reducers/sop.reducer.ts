@@ -37,7 +37,7 @@ export function reducer(state = initialState, action: fromSop.SopAction): SopSta
 
     case fromSop.LOAD_SOPS_SUCCESS: {
       const items = action.payload;
-      items.sort(function(a, b) {
+      items.sort(function (a, b) {
         if (a.title < b.title) return -1;
         if (a.title > b.title) return 1;
         return 0;
@@ -89,8 +89,20 @@ export function reducer(state = initialState, action: fromSop.SopAction): SopSta
       };
     }
 
-    case fromSop.MOVE_SOP_TI_SUCCESS: {
-      const item = action.payload;
+    case fromSop.MOVE_SOP_DELETE_SUCCESS: {
+      // console.log(action)
+      const sop = action.payload;
+      const del = sop.item_movefrom_id && sop.link ? true : false;
+      del ? delete state.entities[sop.item_movefrom_id][sop.link] : null;
+      return {
+        ...state
+      };
+    }
+
+    case fromSop.SOP_DELETE_SUCCESS: {
+      const sop = action.payload.edit;
+      const del = sop.idCat && sop.link ? true : false;
+      del ? delete state.entities[sop.idCat][sop.link] : null;
       return {
         ...state
       };

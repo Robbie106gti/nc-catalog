@@ -18,7 +18,7 @@ export class SopEffects {
     private store: Store<fromStore.SopsState>,
     private actions$: Actions,
     private firestore: fromServices.FirestoreService
-  ) {}
+  ) { }
 
   @Effect()
   load_sops$ = this.actions$.ofType(sopActions.LOAD_SOPS).pipe(
@@ -102,29 +102,51 @@ export class SopEffects {
   );
 
   @Effect()
-  move_sop_ti$ = this.actions$.ofType(sopActions.MOVE_SOP_TI).pipe(
-    switchMap((action: Payload) => {
-      return this.store.select(fromStore.getUploadUrl).pipe(
-        take(1),
-        map(url => {
-          // console.log(action.payload, url);
-          let cat;
-          if (action.payload.remove) {
-            this.firestore.delete(`sops/${action.payload.edit.idCat}/entities/${action.payload.edit.id}`);
-            cat = 'removed';
-          } else {
-            cat = {
-              title: action.payload.titleNew,
-              updatedBy: action.payload.fullName,
-              image: action.payload.imageNew
-            };
-            this.firestore.update(`sops/${action.payload.edit.idCat}/entities/${action.payload.edit.id}`, cat);
-          }
-          return new fromStore.MoveSopTIsuccess({ ...cat, edit: action.payload.edit });
-        }),
-        catchError(error => of(new fromStore.MoveSopTIfail(error)))
-      );
-    })
+  move_sop$ = this.actions$.ofType(sopActions.MOVE_SOP).pipe(
+    map((action: Payload) => {
+      const sop = action.payload.edit;
+      sop.movedfrom = sop.sub;
+      sop.sub = action.payload.newCat.title;
+      const item = {
+        item_title: sop.title,
+        item_id: sop.id,
+        item_movefrom: sop.movedfrom,
+        item_moveto: sop.sub,
+        item_movefrom_id: sop.idCat,
+        item_moveto_id: action.payload.newCat.id,
+        link: sop.link
+      }
+      sop.updatedBy = action.payload.fullName;
+      delete sop.updatedAt;
+      delete sop.id;
+      delete sop.idCat;
+      // console.log({ item, sop, newcat: action.payload.newCat, edit: action.payload })
+      this.firestore.add(`verify/`, item);
+      this.firestore.add(`sops/${action.payload.newCat.id}/entities/`, sop);
+      this.store.dispatch({ type: fromStore.MOVE_SOP_DELETE, payload: item });
+      return new fromStore.MoveSopSuccess(action.payload);
+    }),
+    catchError(error => of(new fromStore.MoveSopFail(error)))
+  );
+
+  @Effect()
+  move_sop_delete$ = this.actions$.ofType(sopActions.MOVE_SOP_DELETE).pipe(
+    map((action: Payload) => {
+      // console.log(action)
+      this.firestore.delete(`sops/${action.payload.item_movefrom_id}/entities/${action.payload.item_id}`);
+      return new fromStore.MoveSopDeleteSuccess(action.payload);
+    }),
+    catchError(error => of(new fromStore.MoveSopDeleteFail(error)))
+  );
+
+  @Effect()
+  sop_delete$ = this.actions$.ofType(sopActions.SOP_DELETE).pipe(
+    map((action: Payload) => {
+      // console.log(action)
+      this.firestore.delete(`sops/${action.payload.edit.idCat}/entities/${action.payload.edit.id}`);
+      return new fromStore.SopDeletesuccess(action.payload);
+    }),
+    catchError(error => of(new fromStore.SopDeletefail(error)))
   );
 
   @Effect()

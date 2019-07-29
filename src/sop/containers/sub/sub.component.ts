@@ -8,9 +8,19 @@ import * as fromStore from '../../store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
 <div *ngIf="(cat$ | async ) as cat">
-<modal *ngIf="add === true" [modal]="modal"
-[url]="(url$ | async)" [pct]="(pct$ | async)" [user]="(user$ | async)"
-(close)="Close($event)" (add)="New($event)" (file)="Image($event)" (edited)="Edited($event, cat)"></modal>
+<modal
+*ngIf="add === true"
+[modal]="modal"
+[url]="(url$ | async)"
+[pct]="(pct$ | async)"
+[user]="(user$ | async)"
+(close)="Close($event)"
+(add)="New($event)"
+(file)="Image($event)"
+(edited)="Edited($event, cat)"
+(movesop)="MoveSop($event)"
+(del)="Remove($event)"
+></modal>
 
 <div class="section no-pad-bot no-pad-top" id="index-banner">
   <div class="card" id="top">
@@ -59,8 +69,27 @@ export class SubComponent {
     // console.log(event);
   }
   Edited(event) {
-    this.store.dispatch({ type: fromStore.UPDATE_SOP_TI, payload: event });
-    // console.log(event);
+    console.log(event)
+    if (event.remove === true) {
+      this.store.dispatch({ type: fromStore.SOP_DELETE, payload: event });
+    } else {
+      this.store.dispatch({ type: fromStore.UPDATE_SOP_TI, payload: event });
+    }
+    console.log('event');
+    this.add = false;
+  }
+  Remove(event) {
+    // console.log(event)
+    this.store.dispatch({ type: fromStore.SOP_DELETE, payload: event });
+    this.add = false;
+  }
+
+  MoveSop(event) {
+    // console.log('event:', event);
+    if (event.edit.sub === event.newCat.title) {
+      return confirm('The new Category is the same as the old Category, please select an other one.');
+    }
+    this.store.dispatch({ type: fromStore.MOVE_SOP, payload: event });
     this.add = false;
   }
 
