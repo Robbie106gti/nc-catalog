@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Effect, Actions } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
-import { map, switchMap, catchError, take } from 'rxjs/operators';
+import { map, switchMap, catchError, take, mergeMap } from 'rxjs/operators';
 
 import { Store } from '@ngrx/store';
 
@@ -120,11 +120,12 @@ export class SopEffects {
       delete sop.updatedAt;
       delete sop.id;
       delete sop.idCat;
-      // console.log({ item, sop, newcat: action.payload.newCat, edit: action.payload })
-      this.firestore.add(`verify/`, item);
+      this.firestore.add(`verify/sops/moved/`, {...sop, item});
       this.firestore.add(`sops/${action.payload.newCat.id}/entities/`, sop);
-      this.store.dispatch({ type: fromStore.MOVE_SOP_DELETE, payload: item });
-      return new fromStore.MoveSopSuccess(action.payload);
+      return {payload: action.payload, item}
+    }),
+    mergeMap(data => {
+      return [new fromStore.MoveSopSuccess(data.payload), new fromStore.MoveSopDelete(data.item)];
     }),
     catchError(error => of(new fromStore.MoveSopFail(error)))
   );
@@ -132,7 +133,6 @@ export class SopEffects {
   @Effect()
   move_sop_delete$ = this.actions$.ofType(sopActions.MOVE_SOP_DELETE).pipe(
     map((action: Payload) => {
-      // console.log(action)
       this.firestore.delete(`sops/${action.payload.item_movefrom_id}/entities/${action.payload.item_id}`);
       return new fromStore.MoveSopDeleteSuccess(action.payload);
     }),
@@ -142,8 +142,8 @@ export class SopEffects {
   @Effect()
   sop_delete$ = this.actions$.ofType(sopActions.SOP_DELETE).pipe(
     map((action: Payload) => {
-      // console.log(action)
-      this.firestore.delete(`sops/${action.payload.edit.idCat}/entities/${action.payload.edit.id}`);
+        this.firestore.add(`verify/sops/deleted/`, action.payload.edit);
+        this.firestore.delete(`sops/${action.payload.edit.idCat}/entities/${action.payload.edit.id}`);
       return new fromStore.SopDeletesuccess(action.payload);
     }),
     catchError(error => of(new fromStore.SopDeletefail(error)))

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
-import { Tooltips, TextfieldsUpdate } from '../../../app/shared/materialize/selectors';
+declare var M: any;
 
 @Component({
   selector: 'modal',
@@ -37,8 +37,10 @@ export class ModalComponent implements AfterViewInit {
   constructor() { }
 
   ngAfterViewInit(): void {
-    Tooltips();
-    TextfieldsUpdate();
+    const options = {};
+    const elems = document.querySelectorAll('.tooltipped');
+    const instances = M.Tooltip.init(elems, options);
+    M.updateTextFields();
   }
 
   File(event) {

@@ -7,7 +7,6 @@ import {
   ViewChild,
   ElementRef
 } from '@angular/core';
-import { ActionMenu, Tooltips } from '../../../app/shared/materialize/selectors';
 
 declare var M: any;
 
@@ -15,21 +14,50 @@ declare var M: any;
   selector: 'menu-btn',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <div #actionmenu class="fixed-action-btn">
-  <a class="btn-floating btn-large red" >
-    <i class="large material-icons">mode_edit</i>
-  </a>
-  <ul>
-  <li (click)="Menu('Image')"><a class="btn-floating purple tooltipped" #tooltipped data-position="top" data-tooltip="Add an image"><i class="material-icons">camera</i></a></li>
-  <li (click)="Menu('Table')"><a class="btn-floating red tooltipped" #tooltipped data-position="top" data-tooltip="Add a table"><i class="material-icons">web</i></a></li>
-    <li (click)="Menu('Description')"><a class="btn-floating yellow darken-1 tooltipped" #tooltipped data-position="top" data-tooltip="Add a description"><i class="material-icons">format_quote</i></a></li>
-    <li (click)="Menu('List')"><a class="btn-floating green tooltipped" #tooltipped data-position="top" data-tooltip="Add a bullet list"><i class="material-icons">list</i></a></li>
-    <li (click)="Menu('Attach')"><a class="btn-floating blue tooltipped" #tooltipped data-position="top" data-tooltip="Attach a webquoin code"><i class="material-icons">widgets</i></a></li>
-    <li (click)="Menu('Note')"><a class="btn-floating orange tooltipped" #tooltipped data-position="top" data-tooltip="Add a note"><i class="material-icons">announcement</i></a></li>
-    <li (click)="Menu('Html')"><a class="btn-floating purple tooltipped" #tooltipped data-position="top" data-tooltip="Html to sop"><i class="material-icons">developer_mode</i></a></li>
-  </ul>
-</div>
-`
+    <div #actionmenu class="fixed-action-btn">
+      <a class="btn-floating btn-large red tooltipped" #tooltipped data-position="top" data-tooltip="Edit this SOP">
+        <i class="large material-icons">mode_edit</i>
+      </a>
+      <ul>
+        <li (click)="Menu('Image')" class="tooltipped" #tooltipped data-position="top" data-tooltip="Add/Edit an image">
+          <a class="btn-floating purple"
+            ><i class="material-icons">camera</i></a
+          >
+        </li>
+        <li (click)="Menu('Table')" class="tooltipped" #tooltipped data-position="top" data-tooltip="Add/Edit a table">
+          <a class="btn-floating red"
+            ><i class="material-icons">web</i></a
+          >
+        </li>
+        <li (click)="Menu('Description')" class="tooltipped" #tooltipped data-position="top" data-tooltip="Add/Edit a description">
+          <a
+            class="btn-floating yellow darken-1"
+            ><i class="material-icons">format_quote</i></a
+          >
+        </li>
+        <li (click)="Menu('List')" class="tooltipped" #tooltipped data-position="top" data-tooltip="Add/Edit a bullet list">
+          <a class="btn-floating green"
+            ><i class="material-icons">list</i></a
+          >
+        </li>
+        <li (click)="Menu('Attach')" class="tooltipped" #tooltipped data-position="top" data-tooltip="Attach/Update a webquoin code">
+          <a class="btn-floating blue" disabled
+            ><i class="material-icons">widgets</i></a
+          >
+        </li>
+        <li (click)="Menu('Note')" class="tooltipped" #tooltipped data-position="top" data-tooltip="Add/Edit a note">
+          <a class="btn-floating orange"
+            ><i class="material-icons">announcement</i></a
+          >
+        </li>
+        <li (click)="Menu('Html')" class="tooltipped" #tooltipped data-position="top" data-tooltip="Insert HTML code into sop">
+          <a class="btn-floating purple" disabled
+            ><i class="material-icons">developer_mode</i></a
+          >
+        </li>
+      </ul>
+    </div>
+  `
 })
 export class MenuBtnComponent implements AfterViewInit {
   @Output()
@@ -40,13 +68,11 @@ export class MenuBtnComponent implements AfterViewInit {
   constructor() {}
 
   ngAfterViewInit(): void {
-    const menu = M.FloatingActionButton.init(this.actionmenu.nativeElement, {
+    M.FloatingActionButton.init(this.actionmenu.nativeElement, {
       direction: 'left',
       hoverEnabled: false
     });
-    setTimeout(() => {
-      const hello = Tooltips();
-    }, 1000);
+    M.Tooltip.init(document.querySelectorAll('.tooltipped'), {});
   }
 
   Menu(kind) {

@@ -21,7 +21,7 @@ import { Dropdowns, Tooltips } from '../materialize/selectors';
       <ul class="right hide-on-med-and-down">
         <li><a #dropdown name="dropdown" class="dropdown-trigger" data-target="dropdown2"><span>{{ (user$ | async)?.fullName }}</span></a></li>
         <li >
-        <a [routerLink]="[where, 'search']"><i class="material-icons">search</i></a>
+        <a [routerLink]="[where, 'search']"  #tooltipped class="tooltipped" data-position="left" data-tooltip="Search SOPs only"><i class="material-icons">search</i></a>
         </li>
         <!-- Dropdown Trigger -->
         <li><a #dropdown name="dropdown" class="dropdown-trigger" data-target="dropdown1"><i class="large material-icons">apps</i></a></li>
@@ -55,7 +55,7 @@ import { Dropdowns, Tooltips } from '../materialize/selectors';
       </li>
       <li *ngIf="(user$ | async)?.roles?.nickels">
         <a [routerLink]="['./users']" #tooltipped
-        class="right tooltipped" data-position="left" data-tooltip="Profile">
+        class="right tooltipped" data-position="left" data-tooltip="All users">
           <i class="material-icons blue-grey-text left">recent_actors</i>Users
         </a>
       </li>

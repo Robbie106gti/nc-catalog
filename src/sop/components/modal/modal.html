@@ -30,6 +30,7 @@
 
 <ng-template #edit>
   <button
+  *ngIf="modal.edit.sub !== 'main'" 
     class="waves-effect waves-green btn deep-orange darken-4 tooltipped"
     (click)="Remove()"
     #tooltipped
@@ -39,7 +40,10 @@
     <i class="material-icons left">delete_forever</i>Remove
   </button>
   <move-btn *ngIf="modal.edit.sub !== 'main'" (move)="Move($event)"></move-btn>
-  <button class="waves-effect waves-green btn green right" (click)="Edit()">
+  <button class="waves-effect waves-green btn green right tooltipped" (click)="Edit()"
+  #tooltipped
+  data-position="bottom"
+  data-tooltip="Save Changes to SOP">
     <i class="material-icons left">save</i>Save
   </button>
 </ng-template>

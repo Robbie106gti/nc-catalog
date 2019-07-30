@@ -58,8 +58,14 @@ export class MoveBtnComponent implements AfterViewInit, OnChanges {
   }
 
   updateDropdown() {
+    const options = {
+    hover: true,
+    alignment: 'left',
+    constrainWidth: false,
+    coverTrigger: false
+  };
     this.elems = document.querySelectorAll('.dropdown-trigger');
-    const instances = M.Dropdown.init(this.elems, { hover: true });
+    const instances = M.Dropdown.init(this.elems, options);
   }
 
   Move(newCat) {

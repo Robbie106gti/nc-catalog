@@ -28,21 +28,28 @@ export function reducer(state = initialState, action: fromSearch.SearchAction): 
     case fromSearch.SEARCH_SOP_SUCCESS: {
       const search = Object.values(action.payload);
       const query = state.query;
+      // console.log({search, query})
       // tslint:disable-next-line:no-inferrable-types
       let max: number = 25;
       const results = new Array();
       search.forEach(el => {
         if (el.search) {
           el.search.map((item, index) => {
-            const str = item.title;
+            const str = item.title.toLowerCase();
+            const arr = item.content.length >= 0 ? item.content.map(i => i.toLowerCase()) : [];
+            arr.push(str);
+            // console.log(arr)
             // tslint:disable-next-line:triple-equals
             if (max == 0) {
               return;
             }
-            if (str.toLowerCase().includes(query.value.toLowerCase())) {
-              results.push(item);
-              max--;
+            arr.forEach(param => {
+              if (param.includes(query.value.toLowerCase())) {
+                results.push(item);
+                max--;
+              }
             }
+              )
           });
         }
       });

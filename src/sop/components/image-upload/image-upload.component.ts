@@ -8,7 +8,10 @@ import * as resizer from './resizer';
 <div class="file-field input-field col {{ size }}" dragNdrop>
   <chip-image *ngIf="pct >= 99 && url && fileName" [url]="url" [size]="'s12'" [fileName]="fileName"></chip-image>
   <loader *ngIf="pct <= 99 && pct >= 1" [pct]="pct"></loader>
-  <div class="btn">
+  <div class="btn tooltipped"
+  #tooltipped
+  data-position="bottom"
+  data-tooltip="Add/Change image">
     <span>Image</span>
     <input type="file" (change)="startUpload($event.target.files)">
   </div>

@@ -69,13 +69,13 @@ export class SubComponent {
     // console.log(event);
   }
   Edited(event) {
-    console.log(event)
+    // console.log(event)
     if (event.remove === true) {
       this.store.dispatch({ type: fromStore.SOP_DELETE, payload: event });
     } else {
       this.store.dispatch({ type: fromStore.UPDATE_SOP_TI, payload: event });
     }
-    console.log('event');
+    // console.log('event');
     this.add = false;
   }
   Remove(event) {

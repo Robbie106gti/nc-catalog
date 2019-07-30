@@ -79,13 +79,11 @@ export class UpdateSopTIsuccess implements Action {
 export const MOVE_SOP = '[SOP] Move SOP to other Category';
 export const MOVE_SOP_FAIL = '[SOP] Move SOP to other Category fail';
 export const MOVE_SOP_SUCCESS = '[SOP] Move SOP to other Category success';
-export const MOVE_SOP_DELETE = '[SOP] Move SOP delete';
-export const MOVE_SOP_DELETE_SUCCESS = '[SOP] Move SOP delete success';
-export const MOVE_SOP_DELETE_FAIL = '[SOP] Move SOP delete fail';
 
 export class MoveSop implements Action {
   readonly type = MOVE_SOP;
-  constructor(public payload: any) { }
+  constructor(public payload: any) {    
+  }
 }
 export class MoveSopFail implements Action {
   readonly type = MOVE_SOP_FAIL;
@@ -95,34 +93,40 @@ export class MoveSopSuccess implements Action {
   readonly type = MOVE_SOP_SUCCESS;
   constructor(public payload: any) { }
 }
+
+// Move delete process
+export const MOVE_SOP_DELETE = '[SOP] Move SOP delete';
+export const MOVE_SOP_DELETE_FAIL = '[SOP] Move SOP delete fail';
+export const MOVE_SOP_DELETE_SUCCESS = '[SOP] Move SOP delete success';
+
 export class MoveSopDelete implements Action {
   readonly type = MOVE_SOP_DELETE;
-  constructor(public payload: any) { }
-}
-export class MoveSopDeleteSuccess implements Action {
-  readonly type = MOVE_SOP_DELETE_SUCCESS;
   constructor(public payload: any) { }
 }
 export class MoveSopDeleteFail implements Action {
   readonly type = MOVE_SOP_DELETE_FAIL;
   constructor(public payload: any) { }
 }
+export class MoveSopDeleteSuccess implements Action {
+  readonly type = MOVE_SOP_DELETE_SUCCESS;
+  constructor(public payload: any) { }
+}
 
 // delete items
-export const SOP_DELETE = '[SOP] Move SOP delete';
-export const SOP_DELETE_SUCCESS = '[SOP] Move SOP delete success';
-export const SOP_DELETE_FAIL = '[SOP] Move SOP delete fail';
+export const SOP_DELETE = '[SOP] SOP delete';
+export const SOP_DELETE_SUCCESS = '[SOP] SOP delete success';
+export const SOP_DELETE_FAIL = '[SOP] SOP delete fail';
 
+export class SopDelete implements Action {
+  readonly type = SOP_DELETE;
+  constructor(public payload: any) { }
+}
 export class SopDeletefail implements Action {
   readonly type = SOP_DELETE_FAIL;
   constructor(public payload: any) { }
 }
 export class SopDeletesuccess implements Action {
   readonly type = SOP_DELETE_SUCCESS;
-  constructor(public payload: any) { }
-}
-export class SopDelete implements Action {
-  readonly type = SOP_DELETE;
   constructor(public payload: any) { }
 }
 
@@ -140,9 +144,9 @@ export type SopAction =
   | MoveSop
   | MoveSopFail
   | MoveSopSuccess
-  | SopDelete
-  | SopDeletefail
-  | SopDeletesuccess
   | MoveSopDelete
   | MoveSopDeleteFail
-  | MoveSopDeleteSuccess;
+  | MoveSopDeleteSuccess
+  | SopDelete
+  | SopDeletefail
+  | SopDeletesuccess;

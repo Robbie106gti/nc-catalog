@@ -91,6 +91,7 @@ export function reducer(state = initialState, action: fromSop.SopAction): SopSta
 
     case fromSop.MOVE_SOP_DELETE_SUCCESS: {
       // console.log(action)
+      // console.log('MOVE DELETE SOP SUCCESS - Reducer', action)
       const sop = action.payload;
       const del = sop.item_movefrom_id && sop.link ? true : false;
       del ? delete state.entities[sop.item_movefrom_id][sop.link] : null;
@@ -99,7 +100,16 @@ export function reducer(state = initialState, action: fromSop.SopAction): SopSta
       };
     }
 
+    case fromSop.MOVE_SOP_DELETE_FAIL: {
+      // console.log(action)
+      console.log('MOVE DELETE SOP Fail - Reducer', action)
+      return {
+        ...state
+      };
+    }
+
     case fromSop.SOP_DELETE_SUCCESS: {
+      // console.log('DELETE SOP SUCCESS - Reducer', action)
       const sop = action.payload.edit;
       const del = sop.idCat && sop.link ? true : false;
       del ? delete state.entities[sop.idCat][sop.link] : null;
