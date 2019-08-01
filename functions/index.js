@@ -16,7 +16,7 @@ var db = admin.database();
 var basicAuthRequest = require('request');
 
 const login = require('./auth/login');
-const sopSearchUpdate = require('./sops/search');
+const SopEvents = require('./sops/events');
 
 exports.auth = login;
-exports.sopSearch = sopSearchUpdate;
+exports.sop = SopEvents;

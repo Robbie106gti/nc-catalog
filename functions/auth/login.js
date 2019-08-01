@@ -12,7 +12,7 @@ const admin = require('firebase-admin');
 const FieldValue = require('firebase-admin').firestore.FieldValue;
 
 // Database access as admin
-const db = admin.database();
+const db = admin.firestore();
 
 // We use Request to make the basic authentication request in our example.
 const basicAuthRequest = require('request');
