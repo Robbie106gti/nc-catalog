@@ -10,12 +10,6 @@ const cors = require('cors')({
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const FieldValue = require('firebase-admin').firestore.FieldValue;
-const serviceAccount = require('../nickels-catalog-firebase-adminsdk-m8g1g-600cf4ab30.json');
-// Updated to V2 firebase-functions, if errors see this https://firebase.google.com/docs/functions/beta-v1-diff
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://nickels-catalog.firebaseio.com'
-});
 
 // Database access as admin
 const db = admin.database();
@@ -72,14 +66,14 @@ exports.login = functions.https.onRequest((req, res) => {
         return handleResponse(username, 403);
       }
 
-      console.log(req.body);
+      // console.log(req.body);
       const email = req.body.email ? trimit(req.body.email) : 'empty';
       const uid = email;
       const cookie = req.body.cookie ? true : false;
       const password = req.body.password;
 
       if (cookie === true) {
-        console.log('////// new request below //////' + Date.now());
+        // console.log('////// new request below //////' + Date.now());
         const msg = 'cookies received, me hungry';
         const customClaims = {
           username,
@@ -100,7 +94,7 @@ exports.login = functions.https.onRequest((req, res) => {
             console.log('Error creating custom token:', error);
           });
       }
-      console.log('past cookie');
+      // console.log('past cookie');
       if (!username) {
         return handleResponse(username, 400, 'line 101');
       }
@@ -125,7 +119,7 @@ exports.login = functions.https.onRequest((req, res) => {
           let user = {};
           if (valid.Email) {
             user = cleanUpUser(valid);
-            console.log(user);
+            // console.log(user);
             updateUser(user);
           }
           // On success return the Firebase Custom Auth Token.
@@ -204,14 +198,14 @@ function updateUser(updateUser) {
     .doc(updateUser.email)
     .get()
     .then(doc => {
-      console.log(doc);
+      // console.log(doc);
       if (!doc.data()) {
         return createUser(updateUser);
       } else {
         let firestoreUser = doc.data();
         updateUser.createdAt = firestoreUser.createdAt;
         updateUser = Object.assign(firestoreUser, updateUser);
-        console.log(updateUser);
+        // console.log(updateUser);
         console.log('About to update User: ' + updateUser.fullName);
         return admin
           .firestore()
@@ -240,7 +234,7 @@ function createUser(user) {
   }
   user.roles = roles;
   user.createdAt = FieldValue.serverTimestamp();
-  console.log(user);
+  // console.log(user);
   console.log('About to create a new User for: ' + user.fullName);
   return admin
     .firestore()

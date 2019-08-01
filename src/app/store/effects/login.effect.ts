@@ -40,8 +40,8 @@ export interface Res {
 
 @Injectable()
 export class LoginEffects {
-  endpoint = 'https://us-central1-nickels-catalog.cloudfunctions.net/auth-login';
-  // endpoint = 'http://localhost:5000/nickels-catalog/us-central1/auth-login';
+  // endpoint = 'https://us-central1-nickels-catalog.cloudfunctions.net/auth-login';
+   endpoint = 'http://localhost:5000/nickels-catalog/us-central1/auth-login';
   res = new Observable<Res>();
 
   constructor(
