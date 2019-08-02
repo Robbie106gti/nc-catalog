@@ -7,6 +7,7 @@ const admin = require('firebase-admin');
 // Database access as admin
 const db = admin.firestore();
 const makeLink = require('../msc/link');
+const updateItem = require('../msc/updateItem');
 
 // Update happens on Update event
 /* exports.update = functions.firestore.document('sops/{sopCatId}').onUpdate(async (snapshot, context) => {
@@ -14,61 +15,109 @@ const makeLink = require('../msc/link');
     const docAfter = snapshot.after.data();
     console.log({docBefore, docAfter, context});
 }) */
-/* exports.updateSubSearch = functions.firestore.document('sops/{sopCatId}/entities/{sopSubId}').onUpdate(async (snapshot, context) => {
-    const docBefore = snapshot.before.data();
+exports.updateSubSearch = functions.firestore
+  .document('sops/{sopCatId}/entities/{sopSubId}')
+  .onUpdate(async (snapshot, context) => {
     const docAfter = snapshot.after.data();
-    console.log({docBefore, docAfter, context});
-    const sopCatRef = db.doc(`sops/${context.params.sopCatId}`);;
+    const sopCatRef = db.doc(`sops/${context.params.sopCatId}`);
     const sopCatSnap = await sopCatRef.get();
-    const newSearch = new Array();
-    sopCatSnap.search.forEach(s => s.id !== content.sopSubId ? newSearch.push(s) : '');
-    const item = updateSearch({docAfter, context});
-    console.log([...newSearch, item]);
-    return sopCatRef.update({search: [...newSearch, item]});
-}) */
+    const sopCatData = await sopCatSnap.data();
+    const item = await updateItem(docAfter, context);
+    const sub = makeLink(sopCatData.title);
+    let search = sopCatData.search.filter(item => item.id !== context.params.sopSubId);
+    search.push(item);
+    search = search.map(item => {
+      item.sub = sub
+      return item;
+    });
+    console.log({item: { title: docAfter.title, cat: sopCatData.title}, context})
+      return sopCatRef.update({ 
+        search
+      });
+  });
 // Remove happens on Delete event
 /* exports.remove = functions.firestore.document('sops/{sopCatId}').onDelete(async (snapshot, context) => {
     const doc = snapshot.data();
     console.log({doc, context});
 }) */
+exports.removeSubSearch = functions.firestore.document('sops/{sopCatId}/entities/{sopSubId}').onDelete(async (snapshot, context) => {
+  const doc = snapshot.data();
+  const sopCatRef = db.doc(`sops/${context.params.sopCatId}`);
+  const sopCatSnap = await sopCatRef.get();
+  const sopCatData = await sopCatSnap.data();
+  console.log({doc, context});
+  let search = sopCatData.search.filter(item => item.id !== context.params.sopSubId);
+  console.log({item: { title: doc.title, cat: sopCatData.title}, context})
+  return sopCatRef.update({ 
+    search
+  });
+})
+exports.removeSubHistroy = functions.firestore.document('sops/{sopCatId}/entities/{sopSubId}').onDelete(async (snapshot, context) => {
+    const doc = snapshot.data();
+    const sopCatRef = db.doc(`sops/${context.params.sopCatId}`);
+    console.log({doc, context});
+    let search = sopCatData.search.filter(item => item.id !== context.params.sopSubId);
+    console.log({item: { title: doc.title, cat: doc.sub}, context})
+    return sopCatRef.update({ 
+      search
+    });
+})
 // Add happens on Create event
 exports.add = functions.firestore.document('sops/{sopCatId}').onCreate(async (snapshot, context) => {
+  const doc = snapshot.data();
+  const defaultProps = {
+    id: context.params.sopCatId,
+    sub: 'main',
+    link: makeLink(doc.title)
+  };
+  console.log({ doc, context, defaultProps });
+  const sopCatRef = db.doc(`sops/${context.params.sopCatId}`);
+  return sopCatRef.update({ ...defaultProps });
+});
+exports.addSub = functions.firestore
+  .document('sops/{sopCatId}/entities/{sopSubId}')
+  .onCreate(async (snapshot, context) => {
     const doc = snapshot.data();
+    const sopCatSnap = await sopCatRef.get();
+    const sopCatData = await sopCatSnap.data();
     const defaultProps = {
-        id: context.params.sopCatId,
-        sub: 'main',
-        link: makeLink(doc.title)
-    }
-    console.log({doc, context, defaultProps});
-    const sopCatRef = db.doc(`sops/${context.params.sopCatId}`);
-    return sopCatRef.update({...defaultProps})
-})
-exports.addSub = functions.firestore.document('sops/{sopCatId}/entities/{sopSubId}').onCreate( async (snapshot, context) => {
-    const doc = snapshot.data();
-    const defaultProps = {
-        id: context.params.sopSubId,
-        idCat: context.params.sopCatId,
-        sub: '',
-        link: makeLink(doc.title)
-    }
-    console.log({doc, context, defaultProps});
+      id: context.params.sopSubId,
+      idCat: context.params.sopCatId,
+      sub: makeLink(sopCatData.title),
+      link: makeLink(doc.title)
+    };
+    console.log({ doc, context, defaultProps });
     const sopRef = db.doc(`sops/${context.params.sopCatId}/entities/${context.params.sopSubId}`);
-    return sopRef.update({...defaultProps})
-})
-exports.addSubSub = functions.firestore.document('sops/{sopCatId}/entities/{sopSubId}/entities/{sopId}').onCreate( async (snapshot, context) => {
+    return sopRef.update({ ...defaultProps });
+  });
+  exports.addSubSearch = functions.firestore
+    .document('sops/{sopCatId}/entities/{sopSubId}')
+    .onCreate(async (snapshot, context) => {
+      const doc = snapshot.data();
+      const sopCatRef = db.doc(`sops/${context.params.sopCatId}`);
+      const item = await updateItem(doc, context);
+      return sopCatRef.update({ 
+        search: admin.firestore.FieldValue.arrayUnion(item)
+      });
+    });
+exports.addSubSub = functions.firestore
+  .document('sops/{sopCatId}/entities/{sopSubId}/entities/{sopId}')
+  .onCreate(async (snapshot, context) => {
     const doc = snapshot.data();
     const defaultProps = {
-        id: context.params.sopId,
-        idSub: context.params.sopSubId,
-        idCat: context.params.sopCatId,
-        sub: '',
-        subCat: '',
-        link: makeLink(doc.title)
-    }
-    console.log({doc, context, defaultProps});
-    const sopRef = db.doc(`sops/${context.params.sopCatId}/entities/${context.params.sopSubId}/entities/${context.params.sopId}`);
-    return sopRef.update({...defaultProps})
-})
+      id: context.params.sopId,
+      idSub: context.params.sopSubId,
+      idCat: context.params.sopCatId,
+      sub: '',
+      subCat: '',
+      link: makeLink(doc.title)
+    };
+    console.log({ doc, context, defaultProps });
+    const sopRef = db.doc(
+      `sops/${context.params.sopCatId}/entities/${context.params.sopSubId}/entities/${context.params.sopId}`
+    );
+    return sopRef.update({ ...defaultProps });
+  });
 
 // Write happens on all events, Create, Update, Delete
 /* exports.write = functions.firestore.document('sops/{sopCatId}').onWrite(async (snapshot, context) => {
@@ -76,23 +125,3 @@ exports.addSubSub = functions.firestore.document('sops/{sopCatId}/entities/{sopS
     const docAfter = snapshot.after.data();
     console.log({docBefore, docAfter, context});
 }) */
-
-function updateSearch(item) {
-      const content = new Array();
-      const image = item.docAfter.image;
-      if (item.docAfter.images) item.docAfter.images.map(img => (img.title ? content.push(img.title) : ''));
-      if (item.docAfter.listTitle) content.push(item.docAfter.listTitle);
-      if (item.docAfter.description) {
-        content.push(item.docAfter.description.description);
-        content.push(item.docAfter.description.title);
-      }
-      return {
-        title: item.docAfter.title,
-        link: common.makeLink(item.docAfter.title),
-        id: item.content.sopSubId,
-        idCat: item.content.sopCatId,
-        image,
-        sub: common.makeLink(item.docAfter.sub),
-        content
-      };
-  };

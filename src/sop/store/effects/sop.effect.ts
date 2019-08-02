@@ -35,14 +35,15 @@ export class SopEffects {
         map(entities => {
           search.length = entities.length;
           const item = entities.map((b, index) => {
-            if (user === 'Robert Leeuwerink') {
+            /* if (user === 'Robert Leeuwerink') {
               search.item = index + 1;
               search.items.push(this.updateSearch({ ...b, sub: action.payload.title, idCat: action.payload.id }));
               if (search.item === search.length) {
                 const data = { search: search.items, updatedBy: user };
+                console.log(data)
                 this.firestore.update(`sops/${action.payload.id}`, data);
               }
-            }
+            } */
             return { ...b, sub: action.payload.title, idCat: action.payload.id };
           });
           this.store.dispatch({ type: fromStore.UPDATE_CAT_LOADED, payload: action.payload });
