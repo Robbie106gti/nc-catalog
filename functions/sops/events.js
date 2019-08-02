@@ -14,6 +14,18 @@ const makeLink = require('../msc/link');
     const docAfter = snapshot.after.data();
     console.log({docBefore, docAfter, context});
 }) */
+/* exports.updateSubSearch = functions.firestore.document('sops/{sopCatId}/entities/{sopSubId}').onUpdate(async (snapshot, context) => {
+    const docBefore = snapshot.before.data();
+    const docAfter = snapshot.after.data();
+    console.log({docBefore, docAfter, context});
+    const sopCatRef = db.doc(`sops/${context.params.sopCatId}`);;
+    const sopCatSnap = await sopCatRef.get();
+    const newSearch = new Array();
+    sopCatSnap.search.forEach(s => s.id !== content.sopSubId ? newSearch.push(s) : '');
+    const item = updateSearch({docAfter, context});
+    console.log([...newSearch, item]);
+    return sopCatRef.update({search: [...newSearch, item]});
+}) */
 // Remove happens on Delete event
 /* exports.remove = functions.firestore.document('sops/{sopCatId}').onDelete(async (snapshot, context) => {
     const doc = snapshot.data();
@@ -28,8 +40,8 @@ exports.add = functions.firestore.document('sops/{sopCatId}').onCreate(async (sn
         link: makeLink(doc.title)
     }
     console.log({doc, context, defaultProps});
-    const sopRef = db.doc(`sops/${context.params.sopCatId}`);
-    return sopRef.update({...defaultProps})
+    const sopCatRef = db.doc(`sops/${context.params.sopCatId}`);
+    return sopCatRef.update({...defaultProps})
 })
 exports.addSub = functions.firestore.document('sops/{sopCatId}/entities/{sopSubId}').onCreate( async (snapshot, context) => {
     const doc = snapshot.data();
@@ -64,3 +76,23 @@ exports.addSubSub = functions.firestore.document('sops/{sopCatId}/entities/{sopS
     const docAfter = snapshot.after.data();
     console.log({docBefore, docAfter, context});
 }) */
+
+function updateSearch(item) {
+      const content = new Array();
+      const image = item.docAfter.image;
+      if (item.docAfter.images) item.docAfter.images.map(img => (img.title ? content.push(img.title) : ''));
+      if (item.docAfter.listTitle) content.push(item.docAfter.listTitle);
+      if (item.docAfter.description) {
+        content.push(item.docAfter.description.description);
+        content.push(item.docAfter.description.title);
+      }
+      return {
+        title: item.docAfter.title,
+        link: common.makeLink(item.docAfter.title),
+        id: item.content.sopSubId,
+        idCat: item.content.sopCatId,
+        image,
+        sub: common.makeLink(item.docAfter.sub),
+        content
+      };
+  };
