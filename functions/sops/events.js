@@ -52,7 +52,7 @@ exports.removeSubSearch = functions.firestore.document('sops/{sopCatId}/entities
     search
   });
 })
-exports.removeSubHistroy = functions.firestore.document('sops/{sopCatId}/entities/{sopSubId}').onDelete(async (snapshot, context) => {
+/* exports.removeSubHistroy = functions.firestore.document('sops/{sopCatId}/entities/{sopSubId}').onDelete(async (snapshot, context) => {
     const doc = snapshot.data();
     const sopCatRef = db.doc(`sops/${context.params.sopCatId}`);
     console.log({doc, context});
@@ -61,7 +61,7 @@ exports.removeSubHistroy = functions.firestore.document('sops/{sopCatId}/entitie
     return sopCatRef.update({ 
       search
     });
-})
+}) */
 // Add happens on Create event
 exports.add = functions.firestore.document('sops/{sopCatId}').onCreate(async (snapshot, context) => {
   const doc = snapshot.data();
