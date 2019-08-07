@@ -99,7 +99,10 @@ exports.addSubSearch = functions.firestore
   .onCreate(async (snapshot, context) => {
     const doc = snapshot.data();
     const sopCatRef = db.doc(`sops/${context.params.sopCatId}`);
+    const sopCatSnap = await sopCatRef.get();
+    const sopCatData = await sopCatSnap.data();
     const item = await updateItem(doc, context);
+    item.sub = makeLink(sopCatData.title)
     return sopCatRef.update({
       search: admin.firestore.FieldValue.arrayUnion(item)
     });
