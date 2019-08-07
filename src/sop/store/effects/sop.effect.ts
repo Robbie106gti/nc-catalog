@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ContentChild } from '@angular/core';
 
 import { Effect, Actions } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
@@ -23,33 +23,89 @@ export class SopEffects {
   @Effect()
   load_sops$ = this.actions$.ofType(sopActions.LOAD_SOPS).pipe(
     switchMap((action: Payload) => {
+      this.store.dispatch({ type: fromStore.UPDATE_CAT_LOADING, payload: action.payload });
+      return this.firestore.col$(`sops/${action.payload.id}/entities`).pipe(
+        map(entities => {
+          const update = new Array();
+          entities.forEach((b: any) => {
+            let item = false;
+            b.sub ? '' : item = true;
+            b.idCat ? '' : item = true;
+            b.link ? '' : item = true;
+            b.id ? '' : item = true;
+            update.push(item);
+            item === true ? console.log('Found an item that needs updating: ' + b.title, b) : '';
+          });
+          if (update.includes(true)) {
+            this.store.dispatch({ type: fromStore.LOAD_SOPS_UPDATE, payload: action.payload });
+          }
+          this.store.dispatch({ type: fromStore.UPDATE_CAT_LOADED, payload: action.payload });
+          return new sopActions.LoadSopsSuccess(entities);
+        }),
+        catchError(error => of(new sopActions.LoadSopsFail(error)))
+      );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  load_sops_update_check$ = this.actions$.ofType(sopActions.LOAD_SOPS_UPDATE).pipe(
+    switchMap((action: Payload) => {
       // console.log(action);
       const user = this.checkUser();
       const search = {
-        items: new Array(),
+        items: new Object(),
         length: 0,
-        item: 0
+        item: 0,
+        oldlength: action.payload.search.length
       };
       this.store.dispatch({ type: fromStore.UPDATE_CAT_LOADING, payload: action.payload });
       return this.firestore.colWithIds$(`sops/${action.payload.id}/entities`).pipe(
+        take(1),
         map(entities => {
           search.length = entities.length;
-          const item = entities.map((b, index) => {
-            /* if (user === 'Robert Leeuwerink') {
-              search.item = index + 1;
-              search.items.push(this.updateSearch({ ...b, sub: action.payload.title, idCat: action.payload.id }));
-              if (search.item === search.length) {
-                const data = { search: search.items, updatedBy: user };
-                console.log(data)
-                this.firestore.update(`sops/${action.payload.id}`, data);
+          if (user === 'Robert Leeuwerink') {
+            let process = 0;
+            entities.forEach((b) => {
+              let update = b.updated ? false : true;
+              const data = new Object();
+              b.sub ? '' : data['sub'] = common.makelink(action.payload.title);
+              b.idCat ? '' : data['idCat'] = action.payload.id;
+              b.link ? '' : data['link'] = common.makelink(b.title);
+              Object.values(data).length >= 1 ? update = true : '';
+              console.log({ data, length: Object.values(data).length });
+
+              if (update === true) {
+                process++;
+                data['id'] = b.id;
+                data['updatedBy'] = user;
+                data['updated'] = true;
+                console.log({ b, data, update: 'This item needs updating' })
+                this.firestore.update(`sops/${action.payload.id}/entities/${b.id}`, data);
               }
-            } */
-            return { ...b, sub: action.payload.title, idCat: action.payload.id };
-          });
-          this.store.dispatch({ type: fromStore.UPDATE_CAT_LOADED, payload: action.payload });
-          return new sopActions.LoadSopsSuccess(item);
+            });
+          }
+          if (search.length !== search.oldlength && user === 'Robert Leeuwerink') {
+            entities.forEach(item => {
+              const searchItem = {
+                content: this.updateSearch(item),
+                id: item.id,
+                idCat: action.payload.id,
+                image: item.image,
+                link: common.makelink(item.title),
+                sub: common.makelink(action.payload.title),
+                title: item.title
+              }
+              search.items[item.id] = searchItem;
+              searchItem.content.length === 0 ? console.log(searchItem) : '';
+            });
+            const data = { search: Object.values(search.items), updatedBy: user };
+            console.log({ newSearch: data.search, oldSearch: action.payload.search, update: 'Search has been updated' })
+            this.firestore.update(`sops/${action.payload.id}`, data);
+          }
+          console.log('Done updating a total of: ' + process);
+          return of(null);
         }),
-        catchError(error => of(new sopActions.LoadSopsFail(error)))
+        catchError(error => of(null))
       );
     })
   );
@@ -121,9 +177,9 @@ export class SopEffects {
       delete sop.updatedAt;
       delete sop.id;
       delete sop.idCat;
-      this.firestore.add(`verify/sops/moved/`, {...sop, item});
+      this.firestore.add(`verify/sops/moved/`, { ...sop, item });
       this.firestore.add(`sops/${action.payload.newCat.id}/entities/`, sop);
-      return {payload: action.payload, item}
+      return { payload: action.payload, item }
     }),
     mergeMap(data => {
       return [new fromStore.MoveSopSuccess(data.payload), new fromStore.MoveSopDelete(data.item)];
@@ -143,8 +199,8 @@ export class SopEffects {
   @Effect()
   sop_delete$ = this.actions$.ofType(sopActions.SOP_DELETE).pipe(
     map((action: Payload) => {
-        this.firestore.add(`verify/sops/deleted/`, action.payload.edit);
-        this.firestore.delete(`sops/${action.payload.edit.idCat}/entities/${action.payload.edit.id}`);
+      this.firestore.add(`verify/sops/deleted/`, action.payload.edit);
+      this.firestore.delete(`sops/${action.payload.edit.idCat}/entities/${action.payload.edit.id}`);
       return new fromStore.SopDeletesuccess(action.payload);
     }),
     catchError(error => of(new fromStore.SopDeletefail(error)))
@@ -320,7 +376,7 @@ export class SopEffects {
 
   updateSearch(item) {
     const content = new Array();
-    // ...b, sub: action.payload.title, idCat: action.payload.id
+    content.push(item.title);
     if (item.listTitle) content.push(item.listTitle);
     if (item.images) {
       item.images.map(image => (image.title ? content.push(image.title) : ''));
@@ -329,15 +385,6 @@ export class SopEffects {
       content.push(item.description.description);
       content.push(item.description.title);
     }
-
-    return {
-      title: item.title,
-      link: common.makelink(item.title),
-      id: item.id,
-      idCat: item.idCat,
-      image: item.image,
-      sub: common.makelink(item.sub),
-      content
-    };
+    return content;
   }
 }

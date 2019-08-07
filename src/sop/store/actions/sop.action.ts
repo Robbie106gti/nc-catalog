@@ -4,10 +4,17 @@ import { Action } from '@ngrx/store';
 export const LOAD_SOPS = '[SOP] Load SOP category';
 export const LOAD_SOPS_FAIL = '[SOP] Load SOP category Fail';
 export const LOAD_SOPS_SUCCESS = '[SOP] Load SOP category Success';
+export const LOAD_SOPS_UPDATE = '[SOP] Load SOP category need updating';
 
 export class LoadSops implements Action {
   readonly type = LOAD_SOPS;
   constructor(public payload: any) { }
+}
+export class LoadSopsUpdate implements Action {
+  readonly type = LOAD_SOPS_UPDATE;
+  constructor(public payload: any) {
+    console.log('Updated needed')
+  }
 }
 
 export class LoadSopsFail implements Action {
@@ -82,7 +89,7 @@ export const MOVE_SOP_SUCCESS = '[SOP] Move SOP to other Category success';
 
 export class MoveSop implements Action {
   readonly type = MOVE_SOP;
-  constructor(public payload: any) {    
+  constructor(public payload: any) {
   }
 }
 export class MoveSopFail implements Action {
@@ -136,6 +143,7 @@ export type SopAction =
   | AddSop
   | AddSopFail
   | LoadSops
+  | LoadSopsUpdate
   | LoadSopsFail
   | LoadSopsSuccess
   | UpdateSopTI
