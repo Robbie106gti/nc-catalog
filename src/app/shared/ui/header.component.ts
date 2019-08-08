@@ -124,6 +124,7 @@ export class HeaderComponent implements AfterViewInit, OnChanges {
         str = 'Material Data Sheets';
         break;
       default:
+        this.where = 'sop';
         this.icon = of('collections_bookmark');
         str = 'Nickels Cabinets';
     }
