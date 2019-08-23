@@ -8,13 +8,33 @@ const admin = require('firebase-admin');
 const db = admin.firestore();
 const makeLink = require('../msc/link');
 const updateItem = require('../msc/updateItem');
+const sql = require('./sqlsearch');
 
 // Update happens on Update event
-/* exports.update = functions.firestore.document('sops/{sopCatId}').onUpdate(async (snapshot, context) => {
+exports.update = functions.firestore.document('sops/{sopCatId}').onUpdate(async (snapshot, context) => {
     const docBefore = snapshot.before.data();
     const docAfter = snapshot.after.data();
-    console.log({docBefore, docAfter, context});
-}) */
+    if (docBefore.title === docAfter.title || docBefore.image === docAfter.image) {
+      console.log('title and/or image is equal!')
+      return null;
+    }
+    // console.log({docBefore, docAfter, context});
+    const sqlsearch = await sql(docAfter);
+    // console.log(sqlsearch);
+    const sopCatRef = db.doc(`sops/${docAfter.id}`);
+    const link = makeLink(docAfter.title);
+    const search = docAfter.search ? docAfter.search.map(s => s = {...s, sub: link}): [];
+    const data = {
+      link,
+      search,
+      sub: 'main',
+      type: 'sop'
+    }
+    return sopCatRef.update({
+      ...data
+    });
+
+})
 exports.updateSubSearch = functions.firestore
   .document('sops/{sopCatId}/entities/{sopSubId}')
   .onUpdate(async (snapshot, context) => {
@@ -28,9 +48,9 @@ exports.updateSubSearch = functions.firestore
     sopCatData.search.forEach(item => newSearch[item.id] = { ...item, sub });
     newSearch[item.id] = { ...item, sub };
     const search = Object.values(newSearch)
-    // let search = sopCatData.search.filter(item => item.id !== context.params.sopSubId);
-    // search.push(item);
-    console.log({ item: { title: docAfter.title, cat: sopCatData.title }, context })
+    // console.log({ item: { title: docAfter.title, cat: sopCatData.title }, context })
+    const sqlsearch = await sql(newSearch[item.id]);
+    // console.log(sqlsearch);
     return sopCatRef.update({
       search
     });
@@ -73,6 +93,8 @@ exports.add = functions.firestore.document('sops/{sopCatId}').onCreate(async (sn
     sub: 'main',
     link: makeLink(doc.title)
   };
+  const sqlsearch = await sql({...doc, ...defaultProps});
+  // console.log(sqlsearch);
   console.log({ doc, context, defaultProps });
   const sopCatRef = db.doc(`sops/${context.params.sopCatId}`);
   return sopCatRef.update({ ...defaultProps });
@@ -103,6 +125,7 @@ exports.addSubSearch = functions.firestore
     const sopCatData = await sopCatSnap.data();
     const item = await updateItem(doc, context);
     item.sub = makeLink(sopCatData.title)
+    const sqlsearch = await sql(item);
     return sopCatRef.update({
       search: admin.firestore.FieldValue.arrayUnion(item)
     });

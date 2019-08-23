@@ -1,6 +1,4 @@
 'use strict';
-// Sample trigger function that copies new Firebase data to a Google Sheet
-
 // CORS Express middleware to enable CORS Requests.
 const cors = require('cors')({
   origin: true
