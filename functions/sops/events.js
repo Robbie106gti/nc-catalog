@@ -23,7 +23,11 @@ exports.update = functions.firestore.document('sops/{sopCatId}').onUpdate(async 
     // console.log(sqlsearch);
     const sopCatRef = db.doc(`sops/${docAfter.id}`);
     const link = makeLink(docAfter.title);
-    const search = docAfter.search ? docAfter.search.map(s => s = {...s, sub: link}): [];
+    const search = docAfter.search ? docAfter.search.map(async s => {
+      s = {...s, sub: link};
+      const search = await sql(s);
+      return s;
+    }): [];
     const data = {
       link,
       search,
@@ -124,8 +128,7 @@ exports.addSubSearch = functions.firestore
     const sopCatSnap = await sopCatRef.get();
     const sopCatData = await sopCatSnap.data();
     const item = await updateItem(doc, context);
-    item.sub = makeLink(sopCatData.title)
-    const sqlsearch = await sql(item);
+    item.sub = makeLink(sopCatData.title);
     return sopCatRef.update({
       search: admin.firestore.FieldValue.arrayUnion(item)
     });

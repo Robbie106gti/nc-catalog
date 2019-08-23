@@ -21,15 +21,19 @@ const mysqlUpdateSearch = async (doc) => {
   doc.idCat ? form.append('idCat', doc.idCat) : null;
   form.append('title', doc.title);
   form.append('image', doc.image);
-  doc.content ? form.append('content', JSON.stringify(doc.content)) : null;
+  doc.content ? form.append('content', doc.content.join()) : null;
   form.append('type', (doc.type ? doc.type : 'sop'));
   form.append('sub', (doc.sub ? doc.sub : 'main'));
   form.append('link', makeLink(doc.title));
-  const data = {title: doc.title, id: doc.id, message: ''};
+  let message = '';
+  const data = {title: doc.title, id: doc.id};
   await fetch(url, { method: 'POST', body: form })
-    .then(res => data.message = res.json())
+    .then(res => message = res.json())
+    .then(mes => {
+      console.log(mes)
+      console.log(data)
+    })
     .catch(err => { throw(err); });
-  console.log(data);
   return data;
 };
 
