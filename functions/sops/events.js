@@ -19,13 +19,13 @@ exports.update = functions.firestore.document('sops/{sopCatId}').onUpdate(async 
       return null;
     }
     // console.log({docBefore, docAfter, context});
-    const sqlsearch = await sql(docAfter);
+    const sqlsearch = await sql.mysqlUpdateSearch(docAfter);
     // console.log(sqlsearch);
     const sopCatRef = db.doc(`sops/${docAfter.id}`);
     const link = makeLink(docAfter.title);
     const search = docAfter.search ? docAfter.search.map(async s => {
       s = {...s, sub: link};
-      const search = await sql(s);
+      const search = await sql.mysqlUpdateSearch(s);
       return s;
     }): [];
     const data = {
@@ -53,17 +53,19 @@ exports.updateSubSearch = functions.firestore
     newSearch[item.id] = { ...item, sub };
     const search = Object.values(newSearch)
     // console.log({ item: { title: docAfter.title, cat: sopCatData.title }, context })
-    const sqlsearch = await sql(newSearch[item.id]);
+    const sqlsearch = await sql.mysqlUpdateSearch(newSearch[item.id]);
     // console.log(sqlsearch);
     return sopCatRef.update({
       search
     });
   });
 // Remove happens on Delete event
-/* exports.remove = functions.firestore.document('sops/{sopCatId}').onDelete(async (snapshot, context) => {
+exports.remove = functions.firestore.document('sops/{sopCatId}').onDelete(async (snapshot, context) => {
     const doc = snapshot.data();
     console.log({doc, context});
-}) */
+    await sql.deleteMySqlData(doc.id);
+    return null;
+})
 exports.removeSubSearch = functions.firestore.document('sops/{sopCatId}/entities/{sopSubId}').onDelete(async (snapshot, context) => {
   const doc = snapshot.data();
   const sopCatRef = db.doc(`sops/${context.params.sopCatId}`);
@@ -74,6 +76,7 @@ exports.removeSubSearch = functions.firestore.document('sops/{sopCatId}/entities
   sopCatData.search.forEach(item => newSearch[item.id] = { ...item, sub });
   delete newSearch[context.params.sopSubId];
   const search = Object.values(newSearch);
+  await sql.deleteMySqlData(context.params.sopSubId);
   console.log({ item: { title: doc.title, cat: sopCatData.title, sub }, context })
   return sopCatRef.update({
     search
@@ -97,7 +100,7 @@ exports.add = functions.firestore.document('sops/{sopCatId}').onCreate(async (sn
     sub: 'main',
     link: makeLink(doc.title)
   };
-  const sqlsearch = await sql({...doc, ...defaultProps});
+  const sqlsearch = await sql.mysqlUpdateSearch({...doc, ...defaultProps});
   // console.log(sqlsearch);
   console.log({ doc, context, defaultProps });
   const sopCatRef = db.doc(`sops/${context.params.sopCatId}`);

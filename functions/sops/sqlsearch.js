@@ -1,4 +1,5 @@
 'use strict';
+
 // CORS Express middleware to enable CORS Requests.
 const fetch = require('node-fetch');
 const makeLink = require('../msc/link');
@@ -13,6 +14,7 @@ const urlUpdate = root + folder + '/search/update/';
 const urlID = root + folder +     '/search/s/';
 const urlDelete = root + folder + '/search/delete/';
 const urlSearch = root + folder + '/search/';
+
 
 const mysqlUpdateSearch = async (doc) => {
   const url = await checkMySqlData(doc.id);
@@ -35,7 +37,7 @@ const mysqlUpdateSearch = async (doc) => {
     })
     .catch(err => { throw(err); });
   return data;
-};
+}
 
 const checkMySqlData = async (id) => {
   let result = {};
@@ -45,4 +47,13 @@ const checkMySqlData = async (id) => {
   return result;
 }
 
-module.exports = mysqlUpdateSearch;
+const deleteMySqlData = async (id) => {
+  let result = {};
+  await fetch(urlDelete + id, {method: 'DELETE'})
+  .then((response) => result = response.json())
+  .then(res => console.log(res))
+  .catch(err => { throw(err); });
+  return result;
+}
+
+module.exports = { mysqlUpdateSearch, checkMySqlData, deleteMySqlData};
