@@ -12,31 +12,32 @@ const sql = require('./sqlsearch');
 
 // Update happens on Update event
 exports.update = functions.firestore.document('sops/{sopCatId}').onUpdate(async (snapshot, context) => {
-    const docBefore = snapshot.before.data();
-    const docAfter = snapshot.after.data();
-    if (docBefore.title === docAfter.title || docBefore.image === docAfter.image) {
-      console.log('title and/or image is equal!')
-      return null;
-    }
+  const docBefore = snapshot.before.data();
+  const docAfter = snapshot.after.data();
+  console.log(docAfter.title);
+  console.log(docAfter.search);
+  if (docBefore.title !== docAfter.title || docBefore.image !== docAfter.image) {
+    console.log('title and/or image are not equal!')
     // console.log({docBefore, docAfter, context});
     const sqlsearch = await sql.mysqlUpdateSearch(docAfter);
     // console.log(sqlsearch);
-    const sopCatRef = db.doc(`sops/${docAfter.id}`);
-    const link = makeLink(docAfter.title);
-    const search = docAfter.search ? docAfter.search.map(async s => {
-      s = {...s, sub: link};
-      const search = await sql.mysqlUpdateSearch(s);
-      return s;
-    }): [];
-    const data = {
-      link,
-      search,
-      sub: 'main',
-      type: 'sop'
-    }
-    return sopCatRef.update({
-      ...data
-    });
+    return null;
+  }
+  const sopCatRef = db.doc(`sops/${docAfter.id}`);
+  const link = makeLink(docAfter.title);
+  const search = docAfter.search ? docAfter.search.map(s => {
+    s = { ...s, sub: link };
+    return s;
+  }) : false;
+  const data = {
+    link,
+    sub: 'main',
+    type: 'sop'
+  }
+  search !== false ? data['search'] = search : null;
+  return sopCatRef.update({
+    ...data
+  });
 
 })
 exports.updateSubSearch = functions.firestore
@@ -61,10 +62,10 @@ exports.updateSubSearch = functions.firestore
   });
 // Remove happens on Delete event
 exports.remove = functions.firestore.document('sops/{sopCatId}').onDelete(async (snapshot, context) => {
-    const doc = snapshot.data();
-    console.log({doc, context});
-    await sql.deleteMySqlData(doc.id);
-    return null;
+  const doc = snapshot.data();
+  console.log({ doc, context });
+  await sql.deleteMySqlData(doc.id);
+  return null;
 })
 exports.removeSubSearch = functions.firestore.document('sops/{sopCatId}/entities/{sopSubId}').onDelete(async (snapshot, context) => {
   const doc = snapshot.data();
@@ -100,7 +101,7 @@ exports.add = functions.firestore.document('sops/{sopCatId}').onCreate(async (sn
     sub: 'main',
     link: makeLink(doc.title)
   };
-  const sqlsearch = await sql.mysqlUpdateSearch({...doc, ...defaultProps});
+  const sqlsearch = await sql.mysqlUpdateSearch({ ...doc, ...defaultProps });
   // console.log(sqlsearch);
   console.log({ doc, context, defaultProps });
   const sopCatRef = db.doc(`sops/${context.params.sopCatId}`);
@@ -119,6 +120,7 @@ exports.addSub = functions.firestore
       sub: makeLink(sopCatData.title),
       link: makeLink(doc.title)
     };
+    const sqlsearch = await sql.mysqlUpdateSearch({ ...doc, ...defaultProps });
     console.log({ doc, context, defaultProps });
     const sopRef = db.doc(`sops/${context.params.sopCatId}/entities/${context.params.sopSubId}`);
     return sopRef.update({ ...defaultProps });
@@ -143,7 +145,7 @@ exports.addSubSub = functions.firestore
     const sopCatRef = db.doc(`sops/${context.params.sopCatId}`);
     const sopCatSnap = await sopCatRef.get();
     const sopCatData = await sopCatSnap.data();
-    const sopSubRef = db.doc(`sops/${context.params.sopCatId}/entities/${sopSubId}`);
+    const sopSubRef = db.doc(`sops/${context.params.sopCatId}/entities/${context.params.sopSubId}`);
     const sopSubSnap = await sopSubRef.get();
     const sopSubData = await sopSubSnap.data();
     const defaultProps = {
@@ -158,6 +160,7 @@ exports.addSubSub = functions.firestore
     const sopRef = db.doc(
       `sops/${context.params.sopCatId}/entities/${context.params.sopSubId}/entities/${context.params.sopId}`
     );
+    const sqlsearch = await sql.mysqlUpdateSearch({ ...defaultProps, content: [''] });
     return sopRef.update({ ...defaultProps });
   });
 
