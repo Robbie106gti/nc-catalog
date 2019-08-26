@@ -41,6 +41,7 @@ testem.log
 /e2e/*.js
 /e2e/*.map
 
+
 # System Files
 .DS_Store
 Thumbs.db
@@ -54,3 +55,5 @@ firebase-debug.log
 functions/nickels-catalog-firebase-adminsdk-m8g1g-600cf4ab30.json
 src/environments/environment.prod.ts
 src/environments/environment.ts
+/src/environments/*.*
+src/environments/*.*
