@@ -50,6 +50,15 @@ src/assets/user code temp.txt
 .firebase/hosting.ZGlzdA.cache
 firebase-debug.log
 
+# System Files
+.DS_Store
+Thumbs.db
+functions/firebase-debug.log
+src/assets/json/*.json
+src/assets/user code temp.txt
+.firebase/hosting.ZGlzdA.cache
+firebase-debug.log
+
 #Config files Firebase
 functions/nickels-catalog-firebase-adminsdk-m8g1g-600cf4ab30.json
 src/environments/environment.prod.ts
