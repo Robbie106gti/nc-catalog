@@ -17,10 +17,10 @@ const urlSearch = root + folder + '/search/';
 
 
 const mysqlUpdateSearch = async (doc) => {
-  console.log(doc.title, doc.id)
+  console.log(doc.title, doc.id, makeLink(doc.title))
   const sqlData = await checkMySqlData(doc.id);
   const url = sqlData === false ? urlAdd : urlUpdate + doc.id;
-  const content = doc.title + doc.content.join();
+  const content = doc.title + ' ,' + doc.content.join();
   const sqlcontent = sqlData.title + sqlData.content;
   console.log({ content, sqlcontent });
   if (sqlData === false || (sqlcontent !== content)) {
@@ -28,13 +28,13 @@ const mysqlUpdateSearch = async (doc) => {
     form.append('id', doc.id);
     doc.idCat ? form.append('idCat', doc.idCat) : null;
     form.append('title', doc.title);
-    form.append('image', doc.image);
+    form.append('image', (doc.image ? doc.image : './assets/images/underconstruction.png'));
     doc.content ? form.append('content', content) : null;
     form.append('type', (doc.type ? doc.type : 'sop'));
     form.append('sub', (doc.sub ? doc.sub : 'main'));
     form.append('link', makeLink(doc.title));
     form.append('idSub', (doc.idSub ? doc.idSub : 'false'));
-    form.append('link', (doc.subCat ? doc.subCat : 'false'));
+    form.append('subCat', (doc.subCat ? doc.subCat : 'false'));
     let message = '';
     const data = { title: doc.title, id: doc.id };
     await fetch(url, { method: 'POST', body: form })

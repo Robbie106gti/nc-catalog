@@ -54,6 +54,7 @@ exports.updateSubSearch = functions.firestore
     newSearch[item.id] = { ...item, sub };
     const search = Object.values(newSearch)
     // console.log({ item: { title: docAfter.title, cat: sopCatData.title }, context })
+    console.log(newSearch[item.id])
     const sqlsearch = await sql.mysqlUpdateSearch(newSearch[item.id]);
     // console.log(sqlsearch);
     return sopCatRef.update({
@@ -154,13 +155,14 @@ exports.addSubSub = functions.firestore
       idCat: context.params.sopCatId,
       sub: makeLink(sopCatData.title),
       subCat: makeLink(sopSubData.title),
-      link: makeLink(doc.title)
+      link: makeLink(doc.title),
+      image: doc.image ? doc.image : './assets/images/underconstruction.png'
     };
     console.log({ doc, context, defaultProps });
     const sopRef = db.doc(
       `sops/${context.params.sopCatId}/entities/${context.params.sopSubId}/entities/${context.params.sopId}`
     );
-    const sqlsearch = await sql.mysqlUpdateSearch({ ...defaultProps, content: [''] });
+    const sqlsearch = await sql.mysqlUpdateSearch({ ...defaultProps, content: [''], title: doc.title });
     return sopRef.update({ ...defaultProps });
   });
 
