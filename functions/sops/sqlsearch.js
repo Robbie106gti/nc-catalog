@@ -20,7 +20,7 @@ const mysqlUpdateSearch = async (doc) => {
   console.log(doc.title, doc.id, makeLink(doc.title))
   const sqlData = await checkMySqlData(doc.id);
   const url = sqlData === false ? urlAdd : urlUpdate + doc.id;
-  const content = doc.title + ' ,' + doc.content.join();
+  const content = doc.title + ' ,' + (doc.content ? doc.content.join() : '');
   const sqlcontent = sqlData.title + sqlData.content;
   console.log({ content, sqlcontent });
   if (sqlData === false || (sqlcontent !== content)) {
