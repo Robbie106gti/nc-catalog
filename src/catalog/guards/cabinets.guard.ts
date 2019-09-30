@@ -2,13 +2,12 @@ import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable ,  of } from 'rxjs';
 import { tap, filter, take, switchMap, catchError } from 'rxjs/operators';
 
 import * as fromStore from '../store';
 import * as fromRoot from '../../app/store';
-import { map } from 'rxjs/operator/map';
+
 
 @Injectable()
 export class CabinetsGuard implements CanActivate {

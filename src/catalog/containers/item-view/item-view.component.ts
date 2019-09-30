@@ -1,7 +1,9 @@
+
+import {take} from 'rxjs/operators';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import * as fromStore from '../../store';
 import { Catalog } from '../../models/catalog.model';
 
@@ -37,7 +39,7 @@ export class ItemViewComponent implements OnInit {
   constructor(private store: Store<fromStore.ProductsState>) {}
 
   ngOnInit() {
-    this.cat$ = this.store.select(fromStore.getSelectedCategory).take(1);
-    this.category$ = this.store.select(fromStore.getCabinets).take(1);
+    this.cat$ = this.store.select(fromStore.getSelectedCategory).pipe(take(1));
+    this.category$ = this.store.select(fromStore.getCabinets).pipe(take(1));
   }
 }

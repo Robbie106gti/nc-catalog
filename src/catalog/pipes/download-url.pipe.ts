@@ -1,3 +1,5 @@
+
+import {tap} from 'rxjs/operators';
 import { Pipe, PipeTransform } from '@angular/core';
 import { AngularFireStorage } from 'angularfire2/storage';
 
@@ -10,8 +12,8 @@ export class DownloadUrlPipe implements PipeTransform {
   transform(featuredPhoto: any): any {
     const photo = this.storage
       .ref(featuredPhoto)
-      .getDownloadURL()
-      .do(console.log);
+      .getDownloadURL().pipe(
+      tap(console.log));
     return photo;
   }
 }

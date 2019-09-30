@@ -1,10 +1,9 @@
 import { Injectable, Pipe } from '@angular/core';
 
 import { Effect, Actions } from '@ngrx/effects';
-import { of } from 'rxjs/observable/of';
+import { of ,  Observable } from 'rxjs';
 import { map, switchMap, catchError, mergeMap, take, delayWhen, takeWhile } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 import * as common from '../../utils/common';
 
 import * as fromStore from '../../store';

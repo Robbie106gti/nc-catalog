@@ -1,7 +1,9 @@
+
+import {take} from 'rxjs/operators';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import * as fromStore from '../../store';
 import { User } from '../../models/user.model';
 
@@ -36,8 +38,8 @@ export class SpecCabComponent implements OnInit {
 
   Take(count) {
     this.store
-      .select(fromStore.getSelectedCabinetItem)
-      .take(count)
+      .select(fromStore.getSelectedCabinetItem).pipe(
+      take(count))
       .subscribe(c => (this.content = c));
   }
 }

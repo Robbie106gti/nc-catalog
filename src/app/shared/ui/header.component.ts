@@ -2,8 +2,7 @@ import { Component, ChangeDetectionStrategy, OnChanges, SimpleChanges, AfterView
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable ,  of } from 'rxjs';
 import { Dropdowns, Tooltips } from '../materialize/selectors';
 
 @Component({

@@ -1,7 +1,9 @@
+
+import {take} from 'rxjs/operators';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import * as fromStore from '../../store';
 import { User } from '../../models/user.model';
 
@@ -54,7 +56,7 @@ export class SpecCatComponent implements OnInit {
 
   ngOnInit() {
     this.user$ = this.store.select(fromStore.getUserData);
-    this.content$ = this.store.select(fromStore.getSelectedCategoryItem).take(1);
+    this.content$ = this.store.select(fromStore.getSelectedCategoryItem).pipe(take(1));
     this.version$ = this.store.select(fromStore.getRouterQueryParams);
   }
 

@@ -1,7 +1,7 @@
 import { Injectable, ContentChild } from '@angular/core';
 
 import { Effect, Actions } from '@ngrx/effects';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { map, switchMap, catchError, take, mergeMap } from 'rxjs/operators';
 
 import { Store } from '@ngrx/store';
@@ -368,8 +368,8 @@ export class SopEffects {
   checkUser() {
     let user = '';
     this.store
-      .select(fromStore.getUserName)
-      .take(1)
+      .select(fromStore.getUserName).pipe(
+      take(1))
       .subscribe(u => (user = u));
     return user;
   }

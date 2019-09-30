@@ -4,14 +4,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
 import { Effect, Actions } from '@ngrx/effects';
-import { of } from 'rxjs/observable/of';
+import { of ,  Observable } from 'rxjs';
 import { map, switchMap, catchError, tap, delay, retry, retryWhen, delayWhen, skipWhile } from 'rxjs/operators';
 
 import * as loginActions from '../actions/login.action';
 import * as fromServices from '../../services';
 import { User, WQUser, Favorites } from '../../models/user.model';
 import { Login } from '../../models/login.model';
-import { Observable } from 'rxjs/Observable';
 import { base64Encode, base64Decode } from '@firebase/util';
 
 export interface Ap {

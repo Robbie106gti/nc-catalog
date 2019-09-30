@@ -11,7 +11,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 declare var M: any;
 
 @Component({

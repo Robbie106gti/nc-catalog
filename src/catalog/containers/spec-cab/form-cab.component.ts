@@ -1,10 +1,9 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  of } from 'rxjs';
 import * as fromStore from '../../store';
 import { User } from '../../models/user.model';
-import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'form-cab',

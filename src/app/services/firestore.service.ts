@@ -1,19 +1,15 @@
+
+import {tap, take, map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
   AngularFirestoreDocument
 } from 'angularfire2/firestore';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  of } from 'rxjs';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { WQUser, User } from '../models/user.model';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/switchMap';
-import { of } from 'rxjs/observable/of';
 
 type CollectionPredicate<T> = string | AngularFirestoreCollection<T>;
 type DocPredicate<T> = string | AngularFirestoreDocument<T>;
@@ -36,30 +32,30 @@ export class FirestoreService {
   /// **************
   doc$<T>(ref: DocPredicate<T>): Observable<T> {
     return this.doc(ref)
-      .snapshotChanges()
-      .map(doc => {
+      .snapshotChanges().pipe(
+      map(doc => {
         return doc.payload.data() as T;
-      });
+      }));
   }
   col$<T>(ref: CollectionPredicate<T>, queryFn?): Observable<T[]> {
     return this.col(ref, queryFn)
-      .snapshotChanges()
-      .map(docs => {
+      .snapshotChanges().pipe(
+      map(docs => {
         return docs.map(a => a.payload.doc.data()) as T[];
-      });
+      }));
   }
   /// with Ids
   colWithIds$<T>(ref: CollectionPredicate<T>, queryFn?): Observable<any[]> {
     // console.log(ref);
     return this.col(ref, queryFn)
-      .snapshotChanges()
-      .map(actions => {
+      .snapshotChanges().pipe(
+      map(actions => {
         return actions.map(a => {
           const data = a.payload.doc.data();
           const id = a.payload.doc.id;
           return { id, ...data };
         });
-      });
+      }));
   }
 
   refreshCustomClaims(token) {
@@ -153,8 +149,8 @@ export class FirestoreService {
   upsert<T>(ref: DocPredicate<T>, data: any) {
     // console.log(ref, data);
     const doc = this.doc(ref)
-      .snapshotChanges()
-      .take(1)
+      .snapshotChanges().pipe(
+      take(1))
       .toPromise();
     return doc.then(snap => {
       // console.log(snap.payload);
@@ -176,23 +172,23 @@ export class FirestoreService {
   inspectDoc(ref: DocPredicate<any>): void {
     const tick = new Date().getTime();
     this.doc(ref)
-      .snapshotChanges()
-      .take(1)
-      .do(d => {
+      .snapshotChanges().pipe(
+      take(1),
+      tap(d => {
         const tock = new Date().getTime() - tick;
         console.log(`Loaded Document in ${tock}ms`, d);
-      })
+      }),)
       .subscribe();
   }
   inspectCol(ref: CollectionPredicate<any>): void {
     const tick = new Date().getTime();
     this.col(ref)
-      .snapshotChanges()
-      .take(1)
-      .do(c => {
+      .snapshotChanges().pipe(
+      take(1),
+      tap(c => {
         const tock = new Date().getTime() - tick;
         console.log(`Loaded Collection in ${tock}ms`, c);
-      })
+      }),)
       .subscribe();
   }
   /// **************
@@ -204,14 +200,14 @@ export class FirestoreService {
   }
   /// returns a documents references mapped to AngularFirestoreDocument
   docWithRefs$<T>(ref: DocPredicate<T>) {
-    return this.doc$(ref).map(doc => {
+    return this.doc$(ref).pipe(map(doc => {
       for (const k of Object.keys(doc)) {
         if (doc[k] instanceof firebase.firestore.DocumentReference) {
           doc[k] = this.doc(doc[k].path);
         }
       }
       return doc;
-    });
+    }));
   }
   /// **************
   /// Atomic batch example

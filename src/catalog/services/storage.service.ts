@@ -1,3 +1,5 @@
+
+import {take} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AngularFirestore,
   AngularFirestoreCollection,
@@ -32,7 +34,7 @@ export class StorageService {
     this.task = this.storage.upload(path, file, { customMetadata });
     // Progress monitoring
     const snap = this.task.snapshotChanges();
-    this.task.downloadURL().take(1).subscribe(url => this.store.dispatch({ type: fromStore.DOWNLOAD_URL, payload: { url, ...event, newFileName, path, customMetadata}}));
+    this.task.downloadURL().pipe(take(1)).subscribe(url => this.store.dispatch({ type: fromStore.DOWNLOAD_URL, payload: { url, ...event, newFileName, path, customMetadata}}));
     // this.store.dispatch({ type: fromStore.UPLOAD_CABINET, payload: snap});
     return snap;
   }

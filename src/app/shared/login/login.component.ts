@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, OnChanges, OnInit, SimpleChanges } 
 
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Login } from '../../models/login.model';
 import { Router } from '@angular/router';
 

@@ -1,6 +1,6 @@
 import { Component, Input, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import * as fromServices from '../../services';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'uid-spec',

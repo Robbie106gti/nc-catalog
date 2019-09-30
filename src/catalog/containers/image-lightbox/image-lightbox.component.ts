@@ -1,9 +1,8 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  of } from 'rxjs';
 import * as fromStore from '../../store';
-import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'image-lightbox',

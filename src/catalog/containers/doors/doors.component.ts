@@ -1,7 +1,9 @@
+
+import {take} from 'rxjs/operators';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import * as fromStore from '../../store';
 
 @Component({
@@ -58,7 +60,7 @@ export class DoorsComponent {
   }
 
   Adddoors() {
-    this.doors$.take(1).subscribe(doors => {
+    this.doors$.pipe(take(1)).subscribe(doors => {
       console.log(doors);
       const newDoor = doors.slab[4];
       this.store.dispatch({

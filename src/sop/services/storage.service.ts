@@ -1,3 +1,5 @@
+
+import {take} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
@@ -31,8 +33,8 @@ export class StorageService {
     // Progress monitoring
     const snap = this.task.snapshotChanges();
     this.task
-      .downloadURL()
-      .take(1)
+      .downloadURL().pipe(
+      take(1))
       .subscribe(url =>
         this.store.dispatch({
           type: fromStore.UPLOAD_URL_SUCCESS,

@@ -1,6 +1,6 @@
 import { Component, Input, ChangeDetectionStrategy, OnInit, AfterViewInit } from '@angular/core';
 import * as fromServices from '../../services';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Tooltips } from '../../../app/shared/materialize/selectors';
 
 @Component({

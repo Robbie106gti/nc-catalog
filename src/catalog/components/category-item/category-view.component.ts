@@ -12,7 +12,7 @@ import {
 import { Store } from '@ngrx/store';
 import { User, Favorites } from '../../models/user.model';
 import * as fromServices from '../../services';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import * as fromStore from '../../store';
 import * as common from '../../utils/common';
 declare var M: any;
