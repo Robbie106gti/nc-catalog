@@ -57,7 +57,7 @@ Thumbs.db
 functions/firebase-debug.log
 src/assets/json/*.json
 src/assets/user code temp.txt
-.firebase/hosting.ZGlzdA.cache
+.firebase/
 firebase-debug.log
 
 #Config files Firebase
