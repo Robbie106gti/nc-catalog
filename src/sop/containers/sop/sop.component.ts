@@ -2,7 +2,6 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
-import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'sop',
@@ -134,5 +133,9 @@ export class SopComponent {
 
   MainImage(event) {
     this.store.dispatch({ type: fromStore.ADD_TO_SOP, payload: event });
+  }
+
+  RemoveTable(event) {
+    this.store.dispatch({ type: fromStore.SOP_TABLE_REMOVE, payload: event });
   }
 }

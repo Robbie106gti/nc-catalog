@@ -108,6 +108,23 @@ export function reducer(state = initialState, action: fromSop.SopAction): SopSta
       };
     }
 
+    case fromSop.SOP_TABLE_REMOVE_FAIL: {
+      // console.log(action)
+      console.log('Remove table SOP Fail - Reducer', action)
+      return {
+        ...state
+      };
+    }
+
+    case fromSop.SOP_TABLE_REMOVE_SUCCESS: {
+      // console.log(action)
+      const sop = action.payload;
+      delete state.entities[sop.idCat][sop.link].table;
+      return {
+        ...state
+      };
+    }
+
     case fromSop.SOP_DELETE_SUCCESS: {
       // console.log('DELETE SOP SUCCESS - Reducer', action)
       const sop = action.payload.edit;

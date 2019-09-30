@@ -188,6 +188,17 @@ export class SopEffects {
   );
 
   @Effect()
+  remove_sop_table$ = this.actions$.ofType(sopActions.SOP_TABLE_REMOVE).pipe(
+    map((action: Payload) => {
+      const sop = action.payload;
+      // console.log(sop);
+      this.firestore.deleteField(`sops/${sop.idCat}/entities/${sop.id}`, 'table');
+      return new fromStore.RemoveTableFromSopSuccess(sop);
+    }),
+    catchError(error => of(new fromStore.RemoveTableFromSopFail(error)))
+  );
+
+  @Effect()
   move_sop_delete$ = this.actions$.ofType(sopActions.MOVE_SOP_DELETE).pipe(
     map((action: Payload) => {
       this.firestore.delete(`sops/${action.payload.item_movefrom_id}/entities/${action.payload.item_id}`);

@@ -58,8 +58,14 @@ export class SopModalComponent {
   html = new EventEmitter<any>();
   @Output()
   mainImage = new EventEmitter<any>();
+  @Output()
+  remove_Table = new EventEmitter<any>();
 
   titleImage: string;
+
+  RemoveTable(e) {
+    this.remove_Table.emit({ ...this.sop, fullName: this.user });
+  }
 
   // Add() { this.add.emit({ title: this.modal.title, fullName: this.user }); }
   Close() {

@@ -11,11 +11,11 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../store';
 
 type CollectionPredicate<T> = string | AngularFirestoreCollection<T>;
-type DocPredicate<T> = string | AngularFirestoreDocument<T>;
+type DocPredicate<T> = string | AngularFirestoreDocument<T> | any;
 
 @Injectable()
 export class FirestoreService {
-  constructor(public afs: AngularFirestore, private store: Store<fromStore.SopsState>) {}
+  constructor(public afs: AngularFirestore, private store: Store<fromStore.SopsState>) { }
 
   /// **************
   /// Get a Reference
@@ -96,6 +96,12 @@ export class FirestoreService {
   }
   delete<T>(ref: DocPredicate<T>) {
     return this.doc(ref).delete();
+  }
+  deleteField<T>(ref: DocPredicate<T>, field: string) {
+    const doc = this.doc(ref);
+    return doc.update({
+      [field]: firebase.firestore.FieldValue.delete()
+    });
   }
   add<T>(ref: CollectionPredicate<T>, data) {
     // console.log(data);

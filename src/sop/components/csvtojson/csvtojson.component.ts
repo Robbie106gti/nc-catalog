@@ -7,11 +7,13 @@ import * as csv from 'csvtojson';
   template: `
   hello from csvtojson <br>
   <input type="file" accept=".csv" (change)="convertFile($event)">
+  <button class="btn red" (click)="removeTable()">Delete table</button>
   `
 })
 export class CsvToJsonComponent {
   file: File;
   @Output() table = new EventEmitter<any>();
+  @Output() remove = new EventEmitter<any>();
 
   convertFile(event: any) {
     this.file = event.target.files[0];
@@ -20,6 +22,10 @@ export class CsvToJsonComponent {
     reader.onload = () => {
       this.textToCsv(reader.result);
     };
+  }
+
+  removeTable() {
+    this.remove.emit(true);
   }
 
   textToCsv(text) {

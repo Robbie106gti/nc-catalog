@@ -3,13 +3,26 @@
   <div class="modal-content">
     <i (click)="Close()" class="material-icons left right pointer">close</i>
     <h4>{{ modal.title }}</h4>
-    <hr>
+    <hr />
     <div class="row heightmodal" *ngIf="modal.action === 'Image'">
-      <input-title [title]="'Title ' + modal.action" [placeholder]="modal.sop.title" [size]="'s10'" (name)="TitleImage($event)"></input-title>
-      <image-upload [size]="'s8'" [fileName]="'replace'" [title]="'Upload image'" [url]="url" [pct]="pct" (file)="File($event)"></image-upload>
+      <input-title
+        [title]="'Title ' + modal.action"
+        [placeholder]="modal.sop.title"
+        [size]="'s10'"
+        (name)="TitleImage($event)"
+      ></input-title>
+      <image-upload
+        [size]="'s8'"
+        [fileName]="'replace'"
+        [title]="'Upload image'"
+        [url]="url"
+        [pct]="pct"
+        (file)="File($event)"
+      ></image-upload>
       <div class="col s12">
         <button class="waves-effect waves-green btn red right" (click)="AddImage()" [disabled]="!url">
-          <i class="material-icons left">add</i>Add</button>
+          <i class="material-icons left">add</i>Add
+        </button>
       </div>
       <man-image class="col s12" [images]="modal.sop.value" (newImages)="NewImages($event)"></man-image>
       <label class="col s12">
@@ -18,18 +31,39 @@
       </label>
     </div>
     <div class="row heightmodal" *ngIf="modal.action === 'Description'">
-      <input-title [title]="'Title ' + modal.action" [placeholder]="modal.sop.title" [size]="'s10'" (name)="Title($event)"></input-title>
-      <des-textarea [title]="modal.action" [size]="'s8'" [textarea]="modal.sop.value" (des)="Des($event)"></des-textarea>
+      <input-title
+        [title]="'Title ' + modal.action"
+        [placeholder]="modal.sop.title"
+        [size]="'s10'"
+        (name)="Title($event)"
+      ></input-title>
+      <des-textarea
+        [title]="modal.action"
+        [size]="'s8'"
+        [textarea]="modal.sop.value"
+        (des)="Des($event)"
+      ></des-textarea>
     </div>
     <div class="row heightmodal" *ngIf="modal.action === 'Note'">
       <edit-note class="col s12" [notes]="modal.sop.value" (newNotes)="Notes($event)"></edit-note>
     </div>
     <div class="row heightmodal" *ngIf="modal.action === 'List'">
-      <input-title [title]="'Title ' + modal.action" [placeholder]="modal.sop.title" [size]="'s10'" (name)="Title($event)"></input-title>
-      <list-edit class="col s12" [list]="modal.sop.value" [images]="sop.images" [icons]="icons" (newList)="NewList($event)"></list-edit>
+      <input-title
+        [title]="'Title ' + modal.action"
+        [placeholder]="modal.sop.title"
+        [size]="'s10'"
+        (name)="Title($event)"
+      ></input-title>
+      <list-edit
+        class="col s12"
+        [list]="modal.sop.value"
+        [images]="sop.images"
+        [icons]="icons"
+        (newList)="NewList($event)"
+      ></list-edit>
     </div>
     <div class="row heightmodal" *ngIf="modal.action === 'Table'">
-      <csvtojson (table)="NewTable($event)"></csvtojson>
+      <csvtojson (table)="NewTable($event)" (remove)="RemoveTable($event)"></csvtojson>
     </div>
   </div>
   <div class="modal-footer" *ngIf="modal.action === 'Description'">

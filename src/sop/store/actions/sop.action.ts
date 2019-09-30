@@ -83,6 +83,27 @@ export class UpdateSopTIsuccess implements Action {
 }
 
 // move item
+export const SOP_TABLE_REMOVE = '[SOP] Remove table from SOP';
+export const SOP_TABLE_REMOVE_SUCCESS = '[SOP] Remove table from SOP success';
+export const SOP_TABLE_REMOVE_FAIL = '[SOP] Remove table from SOP fail';
+
+export class RemoveTableFromSop implements Action {
+  readonly type = SOP_TABLE_REMOVE;
+  constructor(public payload: any) {
+  }
+}
+export class RemoveTableFromSopSuccess implements Action {
+  readonly type = SOP_TABLE_REMOVE_SUCCESS;
+  constructor(public payload: any) {
+  }
+}
+export class RemoveTableFromSopFail implements Action {
+  readonly type = SOP_TABLE_REMOVE_FAIL;
+  constructor(public payload: any) {
+  }
+}
+
+// move item
 export const MOVE_SOP = '[SOP] Move SOP to other Category';
 export const MOVE_SOP_FAIL = '[SOP] Move SOP to other Category fail';
 export const MOVE_SOP_SUCCESS = '[SOP] Move SOP to other Category success';
@@ -157,4 +178,7 @@ export type SopAction =
   | MoveSopDeleteSuccess
   | SopDelete
   | SopDeletefail
-  | SopDeletesuccess;
+  | SopDeletesuccess
+  | RemoveTableFromSop
+  | RemoveTableFromSopFail
+  | RemoveTableFromSopSuccess;
