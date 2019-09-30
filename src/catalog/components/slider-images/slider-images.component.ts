@@ -67,7 +67,7 @@ export class SliderImagesComponent implements AfterViewInit {
   @ViewChildren('materialboxed', { read: ElementRef })
   elemsMaterialboxed: QueryList<ElementRef>;
 
-  constructor() {}
+  constructor() { }
   ngAfterViewInit(): void {
     M.Carousel.init(this.slider.nativeElement, {});
     this.elemsMaterialboxed.forEach(el => {

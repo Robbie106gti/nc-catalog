@@ -117,7 +117,7 @@ export const ROUTES: Routes = [
     RouterModule.forRoot(ROUTES),
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot(effects),
-    StoreRouterConnectingModule,
+    StoreRouterConnectingModule.forRoot(),
     env.development ? StoreDevtoolsModule.instrument() : [],
     env.production ? ServiceWorkerModule.register('/ngsw-worker.js') : [],
     FormsModule,
